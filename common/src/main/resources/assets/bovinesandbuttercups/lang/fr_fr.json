@@ -12,7 +12,7 @@
   
     "block.bovinesandbuttercups.buttercup": "Bouton d'Or",
     "block.bovinesandbuttercups.pink_daisy": "Marguerite Rose",
-    "block.bovinesandbuttercups.limelight": "Limelight",
+    "block.bovinesandbuttercups.limelight": "Hortensia",
     "block.bovinesandbuttercups.bird_of_paradise": "Oiseau du Paradis",
     "block.bovinesandbuttercups.chargelily": "Rafflesia",
     "block.bovinesandbuttercups.hyacinth": "Jacinthe",
@@ -32,7 +32,7 @@
     "block.bovinesandbuttercups.potted_lingholm": "Lingholm En Pot",
     "block.bovinesandbuttercups.buttercup_cupcake": "Gâteau au Bouton d'Or",
     "block.bovinesandbuttercups.pink_daisy_cupcake": "Gâteau à la Marguerite Rose",
-    "block.bovinesandbuttercups.limelight_cupcake": "Gâteau au Limelight",
+    "block.bovinesandbuttercups.limelight_cupcake": "Gâteau a l'Hortensia",
     "block.bovinesandbuttercups.bird_of_paradise_cupcake": "Gâteau à l'Oiseau du Paradis",
     "block.bovinesandbuttercups.chargelily_cupcake": "Gâteau à la Rafflesia",
     "block.bovinesandbuttercups.hyacinth_cupcake": "Gâteau à la Jacinthe",
@@ -59,7 +59,7 @@
     "item.bovinesandbuttercups.flower_crown.petal_amount": "%s \u00D7%s",
     "flower_crown_material.bovinesandbuttercups.buttercup": "Fleur de Bouton d'or",
     "flower_crown_material.bovinesandbuttercups.pink_daisy": "Fleur de Marguerite Rose",
-    "flower_crown_material.bovinesandbuttercups.limelight": "Fleur de Limelight",
+    "flower_crown_material.bovinesandbuttercups.limelight": "Fleur d'Hortensia",
     "flower_crown_material.bovinesandbuttercups.bird_of_paradise": "Fleur d'Oiseau du Paradis",
     "flower_crown_material.bovinesandbuttercups.chargelily": "Fleur de Rafflesia",
     "flower_crown_material.bovinesandbuttercups.hyacinth": "Fleur de Jacinthe",
@@ -90,9 +90,9 @@
     "cow_type.bovinesandbuttercups.missing_moobloom.name": "Inconnue",
   
     "resourcePack.bovinesandbuttercups.mojang.name": "Texture de Mojang",
-    "resourcePack.bovinesandbuttercups.mojang.description": "Change les yeux de la Mooblomm en noir.",
+    "resourcePack.bovinesandbuttercups.mojang.description": "Change les yeux de la moobloom en noir.",
     "resourcePack.bovinesandbuttercups.noGrass.name": "Pas d'herbe sur le dos",
-    "resourcePack.bovinesandbuttercups.noGrass.description": "Enlève l'herbe et le Mycélium du dos des vaches.",
+    "resourcePack.bovinesandbuttercups.noGrass.description": "Enlève l'herbe et le mycélium du dos des vaches.",
     "resourcePack.bovinesandbuttercups.noBuds.name": "Pas de bourgeons",
     "resourcePack.bovinesandbuttercups.noBuds.description": "Change les bourgeons des bébé moobloom en fleurs.",
   
