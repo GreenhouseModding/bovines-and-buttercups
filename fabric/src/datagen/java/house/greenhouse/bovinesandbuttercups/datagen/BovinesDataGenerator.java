@@ -7,7 +7,6 @@ import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.block.CandleCupcakeBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
@@ -109,6 +108,11 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(FlowerCrownMaterialTagProvider::new);
         pack.addProvider(ItemTagProvider::new);
         pack.addProvider(NectarTagProvider::new);
+    }
+
+    @Override
+    public String getEffectiveModId() {
+        return BovinesAndButtercups.MOD_ID;
     }
 
     @Override
@@ -517,20 +521,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         protected void addTags(HolderLookup.Provider lookup) {
             ((FabricTagBuilder)tag(BlockTags.SMALL_FLOWERS))
                     .forceAddTag(BovinesTags.BlockTags.MOOBLOOM_FLOWERS);
-
-            List<ResourceKey<Block>> candleVariants = new ArrayList<>();
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.BUTTERCUP_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.PINK_DAISY_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.LIMELIGHT_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.BIRD_OF_PARADISE_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.CHARGELILY_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.HYACINTH_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.SNOWDROP_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.TROPICAL_BLUE_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.FREESIA_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.LINGHOLM_CUPCAKE, block -> candleVariants.add(reverseLookup(block)));
-            tag(BovinesTags.BlockTags.CANDLE_CUPCAKES)
-                    .add(candleVariants.toArray(ResourceKey[]::new));
 
             ((FabricTagBuilder)tag(BovinesTags.BlockTags.DOES_NOT_STICK_RICH_HONEY_BLOCK))
                     .add(reverseLookup(Blocks.SLIME_BLOCK))

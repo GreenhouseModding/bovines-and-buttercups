@@ -5,9 +5,11 @@ import com.mojang.math.Axis;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
-import house.greenhouse.bovinesandbuttercups.client.bovinestate.BovineStatesAssociationRegistry;
-import house.greenhouse.bovinesandbuttercups.client.bovinestate.BovineBlockstateTypes;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.MoobloomModel;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import net.minecraft.client.Minecraft;
@@ -45,30 +47,52 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
 
         Optional<BlockState> blockState;
-        ResourceLocation resourceLocation = null;
+        BakedModel model = null;
 
         if (entity.isBaby()) {
-            if (configuration.bud().modelLocation().isPresent())
-                resourceLocation = BovineStatesAssociationRegistry.getBlock(configuration.bud().modelLocation().get(), BovineBlockstateTypes.GENERIC).map(rl -> rl.withPath(s -> s +"/")).orElse(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower/"));
-            else if (configuration.bud().customType().isPresent())
-                resourceLocation = BovineStatesAssociationRegistry.getBlock(configuration.bud().customType().map(holder -> holder.unwrapKey().orElse(CustomFlowerType.MISSING_KEY).location()).orElse(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower")), BovineBlockstateTypes.FLOWER).orElseGet(() -> BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower")).withPath(s -> s + "/");
-            else if (configuration.flower().blockState().isEmpty())
+            if (configuration.bud().modelLocation().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.bud().modelLocation().get());
+                if (modelSet != null) {
+                    model = modelSet.getModel();
+                    if (model == null)
+                        model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_flower")), BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                }
+            }
+            else if (configuration.bud().customType().isPresent() && configuration.bud().customType().orElseThrow().unwrapKey().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.bud().customType().orElseThrow().unwrapKey().get().location());
+                if (modelSet != null) {
+                    model = StateDefinitionBovinesModelSetType.getBlockModel(modelSet, BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                    if (model == null)
+                        model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_flower")), BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                }
+            } else if (configuration.flower().blockState().isEmpty())
                 return;
             blockState = configuration.bud().blockState();
-            handleMoobudRender(poseStack, buffer, packedLight, bl, m, blockState, resourceLocation);
+            handleMoobudRender(poseStack, buffer, packedLight, bl, m, blockState, model);
         } else {
-            if (configuration.flower().modelLocation().isPresent())
-                resourceLocation = BovineStatesAssociationRegistry.getBlock(configuration.bud().modelLocation().get(), BovineBlockstateTypes.GENERIC).map(rl -> rl.withPath(s -> s +"/")).orElse(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower/"));
-            else if (configuration.flower().customType().isPresent())
-                resourceLocation = BovineStatesAssociationRegistry.getBlock(configuration.flower().customType().map(holder -> holder.unwrapKey().orElse(CustomFlowerType.MISSING_KEY).location()).orElse(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower")), BovineBlockstateTypes.FLOWER).orElseGet(() -> BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower")).withPath(s -> s + "/");
-            else if (configuration.flower().blockState().isEmpty())
+            if (configuration.flower().modelLocation().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.flower().modelLocation().get());
+                if (modelSet != null) {
+                    model = modelSet.getModel();
+                    if (model == null)
+                        model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_flower")), BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                }
+            }
+            else if (configuration.flower().customType().isPresent() && configuration.flower().customType().orElseThrow().unwrapKey().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.flower().customType().orElseThrow().unwrapKey().get().location());
+                if (modelSet != null) {
+                    model = StateDefinitionBovinesModelSetType.getBlockModel(modelSet, BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                    if (model == null)
+                        model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_flower")), BovinesBlocks.CUSTOM_FLOWER.defaultBlockState());
+                }
+            } else if (configuration.flower().blockState().isEmpty())
                 return;
             blockState = configuration.flower().blockState();
-            handleMoobloomRender(poseStack, buffer, packedLight, bl, m, blockState, resourceLocation);
+            handleMoobloomRender(poseStack, buffer, packedLight, bl, m, blockState, model);
         }
     }
 
-    private void handleMoobudRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable ResourceLocation resourceLocation) {
+    private void handleMoobudRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable BakedModel model) {
         poseStack.pushPose();
 
         poseStack.pushPose();
@@ -77,7 +101,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-1.0f, -1.0f, -1.0f);
         poseStack.translate(0.25f, 0.37, -0.25f);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
 
         poseStack.pushPose();
@@ -86,7 +110,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-1.0f, -1.0f, -1.0f);
         poseStack.translate(0.25f, 0.37, 0.05f);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
         poseStack.popPose();
 
@@ -98,11 +122,11 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-0.5, -0.5, -0.5);
         poseStack.translate(-0.05, -0.12, 0.15);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
     }
 
-    private void handleMoobloomRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable ResourceLocation resourceLocation) {
+    private void handleMoobloomRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable BakedModel model) {
         poseStack.pushPose();
 
         this.getParentModel().getBody().translateAndRotate(poseStack);
@@ -114,7 +138,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-0.5, -0.5, -0.5);
         poseStack.translate(-0.65, -0.18, -0.55);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
 
         poseStack.pushPose();
@@ -123,7 +147,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-0.5, -0.5, -0.5);
         poseStack.translate(-0.03, -0.18, -0.85);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
 
         poseStack.pushPose();
@@ -132,7 +156,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-0.5, -0.5, -0.5);
         poseStack.translate(0.15, -0.18, -0.2);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
         poseStack.popPose();
 
@@ -143,12 +167,12 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.scale(-0.75f, -0.75f, 0.75f);
         poseStack.translate(-0.5, -0.5, -0.5);
         poseStack.translate(-0.05, -0.17, 0.15);
-        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, resourceLocation);
+        this.renderFlowerOrBud(poseStack, buffer, i, outlineAndInvisible, blockRenderer, overlay, blockState, model);
         poseStack.popPose();
     }
 
-    private void renderFlowerOrBud(PoseStack poseStack, MultiBufferSource buffer, int light, boolean outlineAndInvisible, BlockRenderDispatcher blockRenderDispatcher, int overlay, Optional<BlockState> flowerState, ResourceLocation resourceLocation) {
-        BakedModel flowerModel = flowerState.map(blockRenderDispatcher::getBlockModel).orElseGet(() -> BovinesAndButtercupsClient.getHelper().getModel(resourceLocation));
+    private void renderFlowerOrBud(PoseStack poseStack, MultiBufferSource buffer, int light, boolean outlineAndInvisible, BlockRenderDispatcher blockRenderDispatcher, int overlay, Optional<BlockState> flowerState, BakedModel model) {
+        BakedModel flowerModel = flowerState.map(blockRenderDispatcher::getBlockModel).orElse(model);
 
         if (flowerModel == null)
             flowerModel = BovinesAndButtercupsClient.getHelper().getModel(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower/"));

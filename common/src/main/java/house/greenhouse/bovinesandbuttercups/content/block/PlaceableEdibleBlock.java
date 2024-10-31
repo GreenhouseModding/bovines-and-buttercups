@@ -17,9 +17,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -28,9 +29,10 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public class CupcakeBlock extends Block {
-    public static final MapCodec<CupcakeBlock> CODEC = simpleCodec(CupcakeBlock::new);
+public class PlaceableEdibleBlock extends BaseEntityBlock {
+    public static final MapCodec<PlaceableEdibleBlock> CODEC = simpleCodec(PlaceableEdibleBlock::new);
     public static final int MIN_CUPCAKES = 1;
     public static final int MAX_CUPCAKES = 4;
     public static final IntegerProperty COUNT = IntegerProperty.create("count", MIN_CUPCAKES, MAX_CUPCAKES);
@@ -42,9 +44,14 @@ public class CupcakeBlock extends Block {
             Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0)
     };
 
-    public CupcakeBlock(Properties properties) {
+    public PlaceableEdibleBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(COUNT, 1));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -78,11 +85,11 @@ public class CupcakeBlock extends Block {
             player.awardStat(Stats.ITEM_USED.get(item));
             return ItemInteractionResult.SUCCESS;
         }
-        if (stack.is(ItemTags.CANDLES) && Block.byItem(item) instanceof CandleBlock candleBlock) {
+        // TODO: Modify me!
+        if (stack.is(ItemTags.CANDLES)) {
             stack.consume(1, player);
             level.playSound(null, pos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.setBlockAndUpdate(pos, CandleCupcakeBlock.from(this, candleBlock, i));
-            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+            level.blockEntityChanged(pos);
             player.awardStat(Stats.ITEM_USED.get(item));
             return ItemInteractionResult.SUCCESS;
         }
@@ -137,5 +144,10 @@ public class CupcakeBlock extends Block {
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType computationType) {
         return false;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return null;
     }
 }

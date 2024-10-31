@@ -1,8 +1,4 @@
 {
   "type": "bovinesandbuttercups:generic",
-  "variants": {
-    "": {
-      "model": "bovinesandbuttercups:block/pink_daisy_bud"
-    }
-  }
+  "model": "bovinesandbuttercups:block/pink_daisy_bud"
 }

@@ -1,4 +1,4 @@
 {
   "type": "bovinesandbuttercups:item",
-  "inventory": "bovinesandbuttercups:snowdrop_nectar_bowl"
+  "item_model": "bovinesandbuttercups:snowdrop_nectar_bowl"
 }

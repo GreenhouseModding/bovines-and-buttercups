@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:bovinesandbuttercups/bird_of_paradise_bud"
+    "model_location": "bovinesandbuttercups:bird_of_paradise_bud"
   },
   "flower": {
     "block_state": {

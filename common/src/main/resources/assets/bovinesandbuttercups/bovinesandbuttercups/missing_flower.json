@@ -1,10 +1,9 @@
 {
   "type": "bovinesandbuttercups:flower",
-  "linked_block_type": "bovinesandbuttercups:missing_flower",
   "variants": {
     "": {
       "model": "bovinesandbuttercups:block/missing_flower"
     }
   },
-  "inventory": "bovinesandbuttercups:missing_flower"
+  "item_model": "bovinesandbuttercups:missing_flower"
 }

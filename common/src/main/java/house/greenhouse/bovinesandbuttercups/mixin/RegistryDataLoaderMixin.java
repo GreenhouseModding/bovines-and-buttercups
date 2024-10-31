@@ -7,6 +7,7 @@ import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
+import house.greenhouse.bovinesandbuttercups.api.block.PlaceableEdibleType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.RegistrationInfo;
@@ -41,6 +42,9 @@ public class RegistryDataLoaderMixin {
 
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE)
             registry.register((ResourceKey<E>) CustomMushroomType.MISSING_KEY, (E) CustomMushroomType.MISSING, RegistrationInfo.BUILT_IN);
+
+        if (registry.key() == (ResourceKey) BovinesRegistryKeys.EDIBLE_BLOCK_TYPE)
+            registry.register((ResourceKey<E>) PlaceableEdibleType.MISSING_KEY, (E) PlaceableEdibleType.createMissing(lookup), RegistrationInfo.BUILT_IN);
     }
 
     @Inject(method = "loadElementFromResource", at = @At("HEAD"), cancellable = true)
@@ -63,6 +67,11 @@ public class RegistryDataLoaderMixin {
 
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE && key.location().equals(CustomMushroomType.MISSING_KEY.location())){
             BovinesAndButtercups.LOG.error("Attempted modification of default custom mushroom type '{}'. (Skipping).", CustomMushroomType.MISSING_KEY.location());
+            ci.cancel();
+        }
+
+        if (registry.key() == (ResourceKey) BovinesRegistryKeys.EDIBLE_BLOCK_TYPE && key.location().equals(PlaceableEdibleType.MISSING_KEY.location())){
+            BovinesAndButtercups.LOG.error("Attempted modification of default edible block type '{}'. (Skipping).", PlaceableEdibleType.MISSING_KEY.location());
             ci.cancel();
         }
     }

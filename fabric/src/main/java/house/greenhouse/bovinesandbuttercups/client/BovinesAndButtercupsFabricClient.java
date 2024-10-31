@@ -32,8 +32,8 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomHugeMush
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomMushroomItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.NectarBowlItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.bovinestate.BovineBlockstateTypes;
-import house.greenhouse.bovinesandbuttercups.client.util.BovineStateModelUtil;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
+import house.greenhouse.bovinesandbuttercups.client.util.BovineModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
@@ -60,7 +60,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         BovinesAndButtercupsClient.init(new BovinesClientHelperFabric());
         BovinesAccessoriesIntegrationClient.init();
-        BovineBlockstateTypes.init();
+        BovinesModelSetTypes.init();
 
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
@@ -81,9 +81,9 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
             }
         });
 
-        PreparableModelLoadingPlugin.register(BovineStateModelUtil::getModels, (data, context) -> {
+        PreparableModelLoadingPlugin.register(BovineModelSetUtil::getModels, (data, context) -> {
             context.addModels(data);
-            context.resolveModel().register((ctx) -> BovineStateModelUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));
+            context.resolveModel().register((ctx) -> BovineModelSetUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));
         });
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(FlowerCrownItemRenderer.BASE));
 

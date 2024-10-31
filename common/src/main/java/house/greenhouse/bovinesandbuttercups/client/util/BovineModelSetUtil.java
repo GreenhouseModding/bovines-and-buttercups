@@ -1,0 +1,104 @@
+package house.greenhouse.bovinesandbuttercups.client.util;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetType;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.function.Function;
+
+// TODO: Remove as soon as data driven blocks are introduced.
+public class BovineModelSetUtil {
+    private static final Map<ResourceLocation, ResourceLocation> MODEL_TO_TYPE_MAP = new HashMap<>();
+
+    public static CompletableFuture<List<ResourceLocation>> getModels(ResourceManager manager, Executor executor) {
+        BovinesModelSetRegistry.clear();
+        return CompletableFuture.supplyAsync(() -> manager.listResources("bovinesandbuttercups", fileName -> fileName.getPath().endsWith(".json")), executor).thenCompose(blocks -> {
+            ArrayList<CompletableFuture<List<ResourceLocation>>> models = new ArrayList<>();
+
+            for (Map.Entry<ResourceLocation, Resource> resourceEntry : blocks.entrySet()) {
+                models.add(CompletableFuture.supplyAsync(() -> {
+                    ResourceLocation resourceId = resourceEntry.getKey().withPath(s -> s.substring(21, s.length() - 5));
+
+                    try {
+                        Reader reader = resourceEntry.getValue().openAsReader();
+                        JsonElement json = JsonParser.parseReader(reader);
+                        reader.close();
+                        if (json instanceof JsonObject jsonObject) {
+                            if (!jsonObject.has("type")) {
+                                BovinesAndButtercups.LOG.error("Could not find 'type' field in Bovines and Buttercups model set json: {}.", resourceId);
+                                return List.of();
+                            }
+
+                            if (!jsonObject.get("type").isJsonPrimitive() || !jsonObject.getAsJsonPrimitive("type").isString()) {
+                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a string in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                return List.of();
+                            }
+
+                            ResourceLocation typeLocation = ResourceLocation.tryParse(jsonObject.getAsJsonPrimitive("type").getAsString());
+
+                            if (typeLocation == null) {
+                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a resource location in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                return List.of();
+                            }
+
+                            BovinesModelSetType modelsType = BovinesModelSetRegistry.getType(typeLocation);
+                            if (modelsType == null) {
+                                BovinesAndButtercups.LOG.error("Bovines Model Set Type with id \"{}\" does not exist, was referenced in bovines model set file at \"{}\"", typeLocation, resourceId);
+                                return List.of();
+                            }
+
+                            var modelSet = modelsType.createReference(resourceId, jsonObject);
+                            BovinesModelSetRegistry.register(resourceId, modelSet);
+                            modelSet.resolvedModelPaths().forEach(path ->
+                                    MODEL_TO_TYPE_MAP.put(path, typeLocation));
+                            return modelSet.resolvedModelPaths();
+                        }
+                    } catch (Exception ex) {
+                        BovinesAndButtercups.LOG.error("Unexpected error in Bovines and Buttercups model set \"{}\". {}", resourceEntry.getKey(), ex);
+                        return List.of();
+                    }
+                    BovinesAndButtercups.LOG.error("Unexpected error in Bovines and Buttercups model set registry: {}.", resourceEntry.getKey());
+                    return List.of();
+                }, executor));
+            }
+            return Util.sequenceFailFast(models).thenApply(m -> m.stream().flatMap(Collection::stream).filter(Objects::nonNull).toList());
+        });
+    }
+
+    public static UnbakedModel getUnbakedModel(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemFunction) {
+        if (modelId == null)
+            return null;
+
+        if (MODEL_TO_TYPE_MAP.containsKey(modelId)) {
+            ResourceLocation typeKey = MODEL_TO_TYPE_MAP.get(modelId);
+            MODEL_TO_TYPE_MAP.remove(modelId);
+
+            BovinesModelSetType modelsType = BovinesModelSetRegistry.getType(typeKey);
+            if (modelsType == null)
+                return BovinesModelUtil.EMPTY_MODEL;
+
+            return modelsType.createUnbaked(modelId, itemFunction);
+        }
+        return null;
+    }
+}

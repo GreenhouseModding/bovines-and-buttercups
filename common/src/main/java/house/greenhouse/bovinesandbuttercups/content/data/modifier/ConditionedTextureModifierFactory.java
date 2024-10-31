@@ -83,6 +83,8 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
 
     @Override
     public void init(Entity entity) {
+        if (entity.level().isClientSide)
+            return;
         LootParams.Builder params = new LootParams.Builder((ServerLevel) entity.level());
         params.withParameter(LootContextParams.THIS_ENTITY, entity);
         params.withParameter(LootContextParams.ORIGIN, entity.position());

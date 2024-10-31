@@ -1,4 +1,4 @@
 {
   "type": "bovinesandbuttercups:item",
-  "inventory": "bovinesandbuttercups:hyacinth_nectar_bowl"
+  "item_model": "bovinesandbuttercups:hyacinth_nectar_bowl"
 }

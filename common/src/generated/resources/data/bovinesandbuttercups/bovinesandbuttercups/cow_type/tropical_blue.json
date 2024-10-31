@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:bovinesandbuttercups/tropical_blue_bud"
+    "model_location": "bovinesandbuttercups:tropical_blue_bud"
   },
   "flower": {
     "block_state": {

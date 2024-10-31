@@ -1,14 +1,9 @@
 {
   "name": "Fire Flower",
-  "flower_model": "test:fire_flower",
   "stew_effect": [
     {
       "id": "minecraft:fire_resistance",
       "duration": 80
     }
-  ],
-  "dye_craft_result": {
-    "id": "minecraft:blaze_powder",
-    "Count": 1
-  }
+  ]
 }

@@ -1,6 +1,5 @@
 {
   "type": "bovinesandbuttercups:mushroom_block",
-  "linked_block_type": "test:blue_truffle",
   "multipart": [
     {
       "apply": {
@@ -119,5 +118,5 @@
       }
     }
   ],
-  "inventory": "test:truffle/blue_truffle_block"
+  "item_model": "test:truffle/blue_truffle_block"
 }

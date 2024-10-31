@@ -1,8 +1,4 @@
 {
   "type": "bovinesandbuttercups:generic",
-  "variants": {
-    "": {
-      "model": "bovinesandbuttercups:block/tropical_blue_bud"
-    }
-  }
+  "model": "bovinesandbuttercups:block/tropical_blue_bud"
 }

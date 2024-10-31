@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "${mod_id}",
+  "id": "${mod_id}_datagen",
   "version": "${version}+${minecraft_version}",
   "name": "${mod_name}",
   "description": "${mod_description}",
@@ -23,11 +23,6 @@
       "house.greenhouse.bovinesandbuttercups.datagen.BovinesDataGenerator"
     ]
   },
-  "mixins": [
-    "${mod_id}.mixins.json",
-    "${mod_id}.fabric.mixins.json"
-  ],
-  "accessWidener": "${mod_id}.accesswidener",
   "depends": {
     "fabricloader": "${fabric_loader_range}",
     "fabric-api": "*",

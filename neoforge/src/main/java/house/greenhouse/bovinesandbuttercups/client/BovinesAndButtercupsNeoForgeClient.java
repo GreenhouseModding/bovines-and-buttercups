@@ -14,11 +14,11 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomHugeMus
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomPotBlockRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
-import house.greenhouse.bovinesandbuttercups.client.bovinestate.BovineBlockstateTypes;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.util.BovineStateModelUtil;
+import house.greenhouse.bovinesandbuttercups.client.util.BovineModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
@@ -71,7 +71,7 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             BovinesAccessoriesIntegrationClient.init();
-            BovineBlockstateTypes.init();
+            BovinesModelSetTypes.init();
         }
 
         public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
@@ -91,9 +91,9 @@ public class BovinesAndButtercupsNeoForgeClient {
 
         @SubscribeEvent
         public static void bakeModels(ModelEvent.ModifyBakingResult event) {
-            List<ResourceLocation> models = BovineStateModelUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
+            List<ResourceLocation> models = BovineModelSetUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
             for (ResourceLocation entry : models) {
-                UnbakedModel unbaked = BovineStateModelUtil.getUnbakedModel(entry, ((ModelBakeryAccessor)event.getModelBakery())::bovinesandbuttercups$getModel);
+                UnbakedModel unbaked = BovineModelSetUtil.getUnbakedModel(entry, ((ModelBakeryAccessor)event.getModelBakery())::bovinesandbuttercups$getModel);
                 if (unbaked != null) {
                     unbaked.resolveParents(location -> ((ModelBakeryAccessor)event.getModelBakery()).bovinesandbuttercups$getModel(location));
                     ModelResourceLocation modelResource = ModelResourceLocation.standalone(entry);

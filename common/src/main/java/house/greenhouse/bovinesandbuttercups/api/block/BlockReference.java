@@ -9,8 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public record BlockReference<T>(Optional<BlockState> blockState,
-                             Optional<ResourceLocation> modelLocation,
-                             Optional<T> customType) {
+                                Optional<ResourceLocation> modelLocation,
+                                Optional<T> customType) {
 
     public static <T> Codec<BlockReference<T>> createCodec(Codec<T> customCodec, String customTypeKey) {
         return RecordCodecBuilder.create(builder -> builder.group(

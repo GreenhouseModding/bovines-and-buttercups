@@ -1,8 +1,4 @@
 {
   "type": "bovinesandbuttercups:generic",
-  "variants": {
-    "": {
-      "model": "bovinesandbuttercups:block/hyacinth_bud"
-    }
-  }
+  "model": "bovinesandbuttercups:block/hyacinth_bud"
 }

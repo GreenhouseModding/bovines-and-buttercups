@@ -9,7 +9,6 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.block.CandleCupcakeBlock;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.goal.MoveToMoobloomGoal;
@@ -297,12 +296,6 @@ public class BovinesAndButtercupsNeoForge {
                 }
             }
         }
-
-        @SubscribeEvent(priority = EventPriority.HIGH) // High to make sure that this allows ppl to modify before and after it.
-        public static void onToolModification(BlockEvent.BlockToolModificationEvent event) {
-            if (event.getItemAbility() == ItemAbilities.FIRESTARTER_LIGHT && CandleCupcakeBlock.canLight(event.getFinalState()))
-                event.setFinalState(event.getFinalState().setValue(BlockStateProperties.LIT, true));
-        }
     }
 
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -356,6 +349,7 @@ public class BovinesAndButtercupsNeoForge {
             } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
                 CreativeTabHelper.getNectarBowlsForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.MILK_BUCKET), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 event.insertAfter(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(BovinesItems.RICH_HONEY_BOTTLE), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                /*
                 insertAfter(event.getParentEntries(), Items.CAKE, List.of(
                         BovinesItems.FREESIA_CUPCAKE,
                         BovinesItems.BIRD_OF_PARADISE_CUPCAKE,
@@ -368,6 +362,7 @@ public class BovinesAndButtercupsNeoForge {
                         BovinesItems.PINK_DAISY_CUPCAKE,
                         BovinesItems.SNOWDROP_CUPCAKE
                 ), event::insertAfter);
+                 */
             } else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
                 event.accept(BovinesItems.MOOBLOOM_SPAWN_EGG);
             } else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {

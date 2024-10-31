@@ -1,8 +1,4 @@
 {
   "type": "bovinesandbuttercups:generic",
-  "variants": {
-    "": {
-      "model": "bovinesandbuttercups:block/lingholm_bud"
-    }
-  }
+  "model": "bovinesandbuttercups:block/lingholm_bud"
 }

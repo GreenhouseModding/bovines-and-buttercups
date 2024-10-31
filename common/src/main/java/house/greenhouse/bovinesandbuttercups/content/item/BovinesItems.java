@@ -33,17 +33,6 @@ public class BovinesItems {
     public static final BlockItem FREESIA = new BlockItem(BovinesBlocks.FREESIA, new Item.Properties());
     public static final BlockItem LINGHOLM = new BlockItem(BovinesBlocks.LINGHOLM, new Item.Properties());
 
-    public static final BlockItem BUTTERCUP_CUPCAKE = new BlockItem(BovinesBlocks.BUTTERCUP_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem PINK_DAISY_CUPCAKE = new BlockItem(BovinesBlocks.PINK_DAISY_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem LIMELIGHT_CUPCAKE = new BlockItem(BovinesBlocks.LIMELIGHT_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem BIRD_OF_PARADISE_CUPCAKE = new BlockItem(BovinesBlocks.BIRD_OF_PARADISE_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem CHARGELILY_CUPCAKE = new BlockItem(BovinesBlocks.CHARGELILY_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem HYACINTH_CUPCAKE = new BlockItem(BovinesBlocks.HYACINTH_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem SNOWDROP_CUPCAKE = new BlockItem(BovinesBlocks.SNOWDROP_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem TROPICAL_BLUE_CUPCAKE = new BlockItem(BovinesBlocks.TROPICAL_BLUE_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem FREESIA_CUPCAKE = new BlockItem(BovinesBlocks.FREESIA_CUPCAKE, new Item.Properties().stacksTo(16));
-    public static final BlockItem LINGHOLM_CUPCAKE = new BlockItem(BovinesBlocks.LINGHOLM_CUPCAKE, new Item.Properties().stacksTo(16));
-
     public static final CustomFlowerItem CUSTOM_FLOWER = new CustomFlowerItem(BovinesBlocks.CUSTOM_FLOWER, new Item.Properties());
     public static final CustomMushroomItem CUSTOM_MUSHROOM = new CustomMushroomItem(BovinesBlocks.CUSTOM_MUSHROOM, new Item.Properties());
     public static final CustomHugeMushroomItem CUSTOM_MUSHROOM_BLOCK = new CustomHugeMushroomItem(BovinesBlocks.CUSTOM_MUSHROOM_BLOCK, new Item.Properties());
@@ -68,17 +57,6 @@ public class BovinesItems {
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("tropical_blue"), TROPICAL_BLUE);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("freesia"), FREESIA);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("lingholm"), LINGHOLM);
-
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("buttercup_cupcake"), BUTTERCUP_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("pink_daisy_cupcake"), PINK_DAISY_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("limelight_cupcake"), LIMELIGHT_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("bird_of_paradise_cupcake"), BIRD_OF_PARADISE_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("chargelily_cupcake"), CHARGELILY_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("hyacinth_cupcake"), HYACINTH_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("snowdrop_cupcake"), SNOWDROP_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("tropical_blue_cupcake"), TROPICAL_BLUE_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("freesia_cupcake"), FREESIA_CUPCAKE);
-        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("lingholm_cupcake"), LINGHOLM_CUPCAKE);
 
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("custom_flower"), CUSTOM_FLOWER);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("custom_mushroom"), CUSTOM_MUSHROOM);

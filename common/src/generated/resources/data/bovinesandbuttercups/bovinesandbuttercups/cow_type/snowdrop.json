@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:bovinesandbuttercups/snowdrop_bud"
+    "model_location": "bovinesandbuttercups:snowdrop_bud"
   },
   "flower": {
     "block_state": {

@@ -1,6 +1,5 @@
 {
   "type": "bovinesandbuttercups:mushroom_block",
-  "linked_block_type": "bovinesandbuttercups:missing_mushroom",
   "multipart": [
     {
       "apply": {
@@ -119,5 +118,5 @@
       }
     }
   ],
-  "inventory": "bovinesandbuttercups:missing_mushroom_block"
+  "item_model": "bovinesandbuttercups:missing_mushroom_block"
 }

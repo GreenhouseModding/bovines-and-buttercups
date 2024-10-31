@@ -1,10 +1,9 @@
 {
   "type": "bovinesandbuttercups:mushroom",
-  "linked_block_type": "test:red_truffle",
   "variants": {
     "": {
       "model": "test:block/truffle/red_truffle"
     }
   },
-  "inventory": "test:truffle/red_truffle"
+  "item_model": "test:truffle/red_truffle"
 }

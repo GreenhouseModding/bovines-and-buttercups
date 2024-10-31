@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:bovinesandbuttercups/chargelily_bud"
+    "model_location": "bovinesandbuttercups:chargelily_bud"
   },
   "flower": {
     "block_state": {

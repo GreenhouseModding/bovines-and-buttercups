@@ -1,10 +1,9 @@
 {
   "type": "bovinesandbuttercups:mushroom",
-  "linked_block_type": "bovinesandbuttercups:missing_mushroom",
   "variants": {
     "": {
       "model": "bovinesandbuttercups:block/missing_mushroom"
     }
   },
-  "inventory": "bovinesandbuttercups:missing_mushroom"
+  "item_model": "bovinesandbuttercups:missing_mushroom"
 }

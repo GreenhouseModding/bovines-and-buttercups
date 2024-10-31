@@ -1,8 +1,4 @@
 {
   "type": "bovinesandbuttercups:generic",
-  "variants": {
-    "": {
-      "model": "bovinesandbuttercups:block/chargelily_bud"
-    }
-  }
+  "model": "bovinesandbuttercups:block/chargelily_bud"
 }

@@ -4,6 +4,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
+import house.greenhouse.bovinesandbuttercups.api.block.PlaceableEdibleType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BovinesCriteriaTriggers;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -88,6 +89,7 @@ public class BovinesRegistryEvents {
         event.dataPackRegistry(BovinesRegistryKeys.COW_TYPE, CowType.DIRECT_CODEC, CowType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, CustomFlowerType.DIRECT_CODEC, CustomFlowerType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, CustomMushroomType.DIRECT_CODEC, CustomMushroomType.DIRECT_CODEC);
+        event.dataPackRegistry(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, PlaceableEdibleType.DIRECT_CODEC, PlaceableEdibleType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.NECTAR, Nectar.DIRECT_CODEC, Nectar.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, FlowerCrownMaterial.DIRECT_CODEC, FlowerCrownMaterial.DIRECT_CODEC);
     }

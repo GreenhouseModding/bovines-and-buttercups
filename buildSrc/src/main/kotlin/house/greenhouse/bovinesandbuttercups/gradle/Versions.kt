@@ -10,14 +10,14 @@ object Versions {
     const val PARCHMENT = "2024.07.28"
 
     // Fabric
-    const val FABRIC_API = "0.103.0+1.21.1"
-    const val FABRIC_LOADER = "0.16.4"
-    const val MOD_MENU = "11.0.1"
+    const val FABRIC_API = "0.106.0+1.21.1"
+    const val FABRIC_LOADER = "0.16.9"
+    const val MOD_MENU = "11.0.3"
     const val FABRIC_LOADER_RANGE = ">=0.16"
     const val FABRIC_MINECRAFT_RANGE = ">=1.21-"
 
     // NeoForge
-    const val NEOFORGE = "21.1.45"
+    const val NEOFORGE = "21.1.73"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
     const val NEOFORGE_MINECRAFT_RANGE = "[1.21,)"
 
@@ -29,7 +29,7 @@ object Versions {
     // Integrations (Common)
     const val ACCESSORIES = "1.0.0-beta.33+1.21"
     const val JEI = "19.17.0.193"
-    const val EMI = "1.1.13+1.21.1"
+    const val EMI = "1.1.16+1.21.1"
 
     // Integrations (Fabric)
     const val TRINKETS = "3.10.0"
