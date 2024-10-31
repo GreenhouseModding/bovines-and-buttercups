@@ -19,20 +19,8 @@
   "icon": "${mod_id}.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "house.greenhouse.bovinesandbuttercups.BovinesAndButtercupsFabric"
-    ],
-    "preLaunch": [
-      "house.greenhouse.bovinesandbuttercups.BovinesAndButtercupsFabricPre"
-    ],
-    "client": [
-      "house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsFabricClient"
-    ],
-    "jei_mod_plugin": [
-      "house.greenhouse.bovinesandbuttercups.integration.jei.BovinesJeiPlugin"
-    ],
-    "emi": [
-      "house.greenhouse.bovinesandbuttercups.integration.emi.BovinesEmiPlugin"
+    "fabric-datagen": [
+      "house.greenhouse.bovinesandbuttercups.datagen.BovinesDataGenerator"
     ]
   },
   "mixins": [
