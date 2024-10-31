@@ -96,10 +96,6 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
-            if (!(entity instanceof LivingEntity living))
-                return;
-            if (entity.hasAttached(BovinesAttachments.LOCKDOWN))
-                LockdownAttachment.sync(living);
             CowTypeAttachment attachment = entity.getAttached(BovinesAttachments.COW_TYPE);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment == null) {
@@ -112,10 +108,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                     }
                 }
                 ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
-                CowTypeAttachment.sync(living);
             }
-            if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
-                MooshroomExtrasAttachment.sync(living);
         });
         UseEntityCallback.EVENT.register((player, world, hand, target, hitResult) -> {
             if (player.isSpectator())

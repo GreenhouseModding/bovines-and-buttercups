@@ -105,9 +105,6 @@ public class Moobloom extends Cow {
     public Moobloom(EntityType<? extends Moobloom> entityType, Level level) {
         super(entityType, level);
         bee = null;
-        if (getCowType() == null) {
-            setCowType((Holder)level().registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).orElseThrow());
-        }
     }
 
     @Override
@@ -500,9 +497,10 @@ public class Moobloom extends Cow {
     }
 
     public Holder<CowType<MoobloomConfiguration>> getCowType() {
-        return CowTypeAttachment.getCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE);
+        return Optional.ofNullable(CowTypeAttachment.getCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).getHolderOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM));
     }
-    
+
+    @Nullable
     public Holder<CowType<MoobloomConfiguration>> getPreviousCowType() {
         return CowTypeAttachment.getPreviousCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE);
     }

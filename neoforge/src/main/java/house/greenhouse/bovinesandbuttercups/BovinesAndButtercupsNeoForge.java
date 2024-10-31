@@ -127,9 +127,6 @@ public class BovinesAndButtercupsNeoForge {
             if (!(entity instanceof LivingEntity living) || level.isClientSide)
                 return;
 
-            if (entity.hasData(BovinesAttachments.LOCKDOWN))
-                LockdownAttachment.sync(living);
-
             Optional<CowTypeAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_TYPE);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment.isEmpty()) {
@@ -142,11 +139,7 @@ public class BovinesAndButtercupsNeoForge {
                     }
                 }
                 ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
-                CowTypeAttachment.sync(living);
             }
-
-            if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
-                MooshroomExtrasAttachment.sync(living);
         }
 
         @SubscribeEvent
