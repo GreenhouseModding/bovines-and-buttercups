@@ -5,7 +5,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesEffects;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

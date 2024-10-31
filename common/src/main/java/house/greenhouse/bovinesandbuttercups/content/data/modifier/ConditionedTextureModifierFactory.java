@@ -9,7 +9,7 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.NoOpTextureMod
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesLootContextParamSets;
+import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;

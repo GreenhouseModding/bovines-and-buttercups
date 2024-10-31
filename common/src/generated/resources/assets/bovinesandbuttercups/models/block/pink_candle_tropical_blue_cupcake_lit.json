@@ -1,7 +1,0 @@
-{
-  "parent": "bovinesandbuttercups:block/template_candle_cupcake",
-  "textures": {
-    "all": "bovinesandbuttercups:block/tropical_blue_cupcake",
-    "candle": "minecraft:block/pink_candle_lit"
-  }
-}

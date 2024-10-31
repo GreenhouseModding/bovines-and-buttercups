@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.codec.BovinesCodecs;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesLootContextParams;
+import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParams;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.core.BlockPos;

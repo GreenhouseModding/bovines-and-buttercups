@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.content.item;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

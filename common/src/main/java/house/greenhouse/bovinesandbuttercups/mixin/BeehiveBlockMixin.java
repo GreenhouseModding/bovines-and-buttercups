@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;

@@ -9,13 +9,10 @@ import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroo
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesFlowerCrownMaterials;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesNectars;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -25,8 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class CreativeTabHelper {
     public static List<ItemStack> getCustomFlowersForCreativeTab(HolderLookup.Provider lookup) {

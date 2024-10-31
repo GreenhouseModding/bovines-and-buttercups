@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;

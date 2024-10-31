@@ -2,14 +2,12 @@ package house.greenhouse.bovinesandbuttercups.content.block;
 
 import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomPotBlockEntity;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlockEntityTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;

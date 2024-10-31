@@ -38,11 +38,11 @@ import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReload
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlockEntityTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesEntityTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesParticleTypes;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.RenderType;

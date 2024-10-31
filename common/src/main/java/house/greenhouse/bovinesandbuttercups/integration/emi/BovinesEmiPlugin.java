@@ -8,7 +8,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.integration.emi.recipe.FlowerCrownEmiRecipe;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.client.Minecraft;
 
 @EmiEntrypoint

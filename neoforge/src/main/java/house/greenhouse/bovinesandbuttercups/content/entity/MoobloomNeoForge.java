@@ -1,9 +1,9 @@
 package house.greenhouse.bovinesandbuttercups.content.entity;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesSoundEvents;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

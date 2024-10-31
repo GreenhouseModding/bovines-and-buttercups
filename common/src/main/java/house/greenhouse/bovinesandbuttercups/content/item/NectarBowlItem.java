@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.content.item;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesEffects;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

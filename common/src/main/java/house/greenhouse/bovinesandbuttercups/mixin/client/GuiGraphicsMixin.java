@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesEffects;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

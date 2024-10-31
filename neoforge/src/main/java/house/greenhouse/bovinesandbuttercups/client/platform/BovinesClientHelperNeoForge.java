@@ -1,6 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.client.platform;
 
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.EquipmentChecking;
 import net.minecraft.client.Minecraft;

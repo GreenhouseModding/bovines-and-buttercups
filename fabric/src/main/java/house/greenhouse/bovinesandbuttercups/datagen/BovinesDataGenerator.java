@@ -4,23 +4,21 @@ import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.api.BovinesConventionalTags;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
-import house.greenhouse.bovinesandbuttercups.content.advancements.criterion.BreedCowWithTypeTrigger;
-import house.greenhouse.bovinesandbuttercups.content.advancements.criterion.LockEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.advancements.criterion.PreventEffectTrigger;
+import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
+import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
+import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.CandleCupcakeBlock;
-import house.greenhouse.bovinesandbuttercups.content.block.CupcakeBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesNectars;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.data.nectar.BovinesNectars;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -29,11 +27,11 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.recipe.FlowerCrownRecipe;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesFlowerCrownMaterials;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesLootTables;
+import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.BovinesFlowerCrownMaterials;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootTables;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.advancements.Advancement;
@@ -51,17 +49,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.models.BlockModelGenerators;
-import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.data.models.blockstates.PropertyDispatch;
-import net.minecraft.data.models.blockstates.Variant;
-import net.minecraft.data.models.blockstates.VariantProperties;
-import net.minecraft.data.models.model.ModelTemplate;
-import net.minecraft.data.models.model.TextureMapping;
-import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -121,7 +109,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(FlowerCrownMaterialTagProvider::new);
         pack.addProvider(ItemTagProvider::new);
         pack.addProvider(NectarTagProvider::new);
-        pack.addProvider(ModelProvider::new);
     }
 
     @Override
@@ -129,159 +116,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.add(BovinesRegistryKeys.NECTAR, BovinesNectars::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.COW_TYPE, BovinesCowTypes::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesFlowerCrownMaterials::bootstrap);
-    }
-
-    private static class ModelProvider extends FabricModelProvider {
-
-        public ModelProvider(FabricDataOutput output) {
-            super(output);
-        }
-
-        @Override
-        public void generateBlockStateModels(BlockModelGenerators generators) {
-            createCupcake(BovinesBlocks.BUTTERCUP_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.PINK_DAISY_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.LIMELIGHT_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.BIRD_OF_PARADISE_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.CHARGELILY_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.HYACINTH_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.SNOWDROP_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.TROPICAL_BLUE_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.FREESIA_CUPCAKE, generators);
-            createCupcake(BovinesBlocks.LINGHOLM_CUPCAKE, generators);
-
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.BUTTERCUP_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.PINK_DAISY_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.LIMELIGHT_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.BIRD_OF_PARADISE_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.CHARGELILY_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.HYACINTH_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.SNOWDROP_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.TROPICAL_BLUE_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.FREESIA_CUPCAKE, block -> createCandleCupcake(block, generators));
-            CandleCupcakeBlock.forEachCandleVariant(BovinesBlocks.LINGHOLM_CUPCAKE, block -> createCandleCupcake(block, generators));
-        }
-
-        private void createCupcake(CupcakeBlock block, BlockModelGenerators generators) {
-            generators.skipAutoItemBlock(block);
-            var mapping = new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(block));
-
-            var oneTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake")), Optional.empty(), TextureSlot.ALL);
-            var one = oneTemplate.create(block, mapping, generators.modelOutput);
-
-            var plural = BuiltInRegistries.BLOCK.getKey(block).getPath() + "s";
-
-            var twoTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes")), Optional.empty(), TextureSlot.ALL);
-            var two = twoTemplate.create(BovinesAndButtercups.asResource("block/two_" + plural), mapping, generators.modelOutput);
-
-            var threeTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes")), Optional.empty(), TextureSlot.ALL);
-            var three = threeTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural), mapping, generators.modelOutput);
-
-            var fourTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes")), Optional.empty(), TextureSlot.ALL);
-            var four = fourTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural), mapping, generators.modelOutput);
-
-            var generator = MultiVariantGenerator.multiVariant(block)
-                    .with(PropertyDispatch.property(CupcakeBlock.COUNT)
-                            .select(1, Variant.variant().with(VariantProperties.MODEL, one))
-                            .select(2, Variant.variant().with(VariantProperties.MODEL, two))
-                            .select(3, Variant.variant().with(VariantProperties.MODEL, three))
-                            .select(4, Variant.variant().with(VariantProperties.MODEL, four)));
-            generators.blockStateOutput.accept(generator);
-        }
-
-        private void createCandleCupcake(CandleCupcakeBlock block, BlockModelGenerators generators) {
-            generators.skipAutoItemBlock(block);
-            var unlitMapping = new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(block.base())).put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(block.candle()));
-            var litMapping = new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(block.base())).put(TextureSlot.CANDLE, TextureMapping.getBlockTexture(block.candle(), "_lit"));
-
-            var path = BuiltInRegistries.BLOCK.getKey(block.base()).getPath();
-            var candleKey = BuiltInRegistries.BLOCK.getKey(block.candle());
-            var candleLocation = candleKey.getNamespace().equals("minecraft") ? candleKey.getPath() : candleKey.getNamespace() + "_" + candleKey.getPath();
-
-            var oneTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_candle_cupcake")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var oneUnlit = oneTemplate.create(BovinesAndButtercups.asResource("block/" + candleLocation + "_" + path), unlitMapping, generators.modelOutput);
-            var oneLit = oneTemplate.create(BovinesAndButtercups.asResource("block/" + candleLocation + "_" + path + "_lit"), litMapping, generators.modelOutput);
-
-            var plural = path + "s";
-            var candlePlural = candleLocation + "s";
-
-            var twoOneCandleTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes_one_candle")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var twoOneCandleUnlit = twoOneCandleTemplate.create(BovinesAndButtercups.asResource("block/two_" + plural + "_one_" + candleLocation), unlitMapping, generators.modelOutput);
-            var twoOneCandleLit = twoOneCandleTemplate.create(BovinesAndButtercups.asResource("block/two_" + plural + "_one_" + candleLocation + "_lit"), litMapping, generators.modelOutput);
-
-            var twoTwoCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes_two_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var twoTwoCandlesUnlit = twoTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/two_" + plural + "_two_" + candlePlural), unlitMapping, generators.modelOutput);
-            var twoTwoCandlesLit = twoTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/two_" + plural + "_two_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var threeOneCandleTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes_one_candle")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var threeOneCandleUnlit = threeOneCandleTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_one_" + candleLocation), unlitMapping, generators.modelOutput);
-            var threeOneCandleLit = threeOneCandleTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_one_" + candleLocation +"_lit"), litMapping, generators.modelOutput);
-
-            var threeTwoCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes_two_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var threeTwoCandlesUnlit = threeTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_two_" + candlePlural), unlitMapping, generators.modelOutput);
-            var threeTwoCandlesLit = threeTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_two_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var threeThreeCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes_three_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var threeThreeCandlesUnlit = threeThreeCandlesTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_three_" + candlePlural), unlitMapping, generators.modelOutput);
-            var threeThreeCandlesLit = threeThreeCandlesTemplate.create(BovinesAndButtercups.asResource("block/three_" + plural + "_three_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var fourOneCandleTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes_one_candle")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var fourOneCandleUnlit = fourOneCandleTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_one_" + candleLocation), unlitMapping, generators.modelOutput);
-            var fourOneCandleLit = fourOneCandleTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_one_" + candleLocation + "_lit"), litMapping, generators.modelOutput);
-
-            var fourTwoCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes_two_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var fourTwoCandlesUnlit = fourTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_two_" + candlePlural), unlitMapping, generators.modelOutput);
-            var fourTwoCandlesLit = fourTwoCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_two_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var fourThreeCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes_three_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var fourThreeCandlesUnlit = fourThreeCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_three_" + candlePlural), unlitMapping, generators.modelOutput);
-            var fourThreeCandlesLit = fourThreeCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_three_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var fourFourCandlesTemplate = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes_four_candles")), Optional.empty(), TextureSlot.ALL, TextureSlot.CANDLE);
-            var fourFourCandlesUnlit = fourFourCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_four_" + candlePlural), unlitMapping, generators.modelOutput);
-            var fourFourCandlesLit = fourFourCandlesTemplate.create(BovinesAndButtercups.asResource("block/four_" + plural + "_four_" + candlePlural + "_lit"), litMapping, generators.modelOutput);
-
-            var generator = MultiVariantGenerator.multiVariant(block)
-                    .with(PropertyDispatch.properties(CandleCupcakeBlock.COUNT, CandleCupcakeBlock.CANDLES, CandleCupcakeBlock.LIT)
-                            .select(1, 1, false, Variant.variant().with(VariantProperties.MODEL, oneUnlit))
-                            .select(1, 1, true, Variant.variant().with(VariantProperties.MODEL, oneLit))
-                            .select(1, 2, false, Variant.variant().with(VariantProperties.MODEL, oneUnlit))
-                            .select(1, 2, true, Variant.variant().with(VariantProperties.MODEL, oneLit))
-                            .select(1, 3, false, Variant.variant().with(VariantProperties.MODEL, oneUnlit))
-                            .select(1, 3, true, Variant.variant().with(VariantProperties.MODEL, oneLit))
-                            .select(1, 4, false, Variant.variant().with(VariantProperties.MODEL, oneUnlit))
-                            .select(1, 4, true, Variant.variant().with(VariantProperties.MODEL, oneLit))
-                            .select(2, 1, false, Variant.variant().with(VariantProperties.MODEL, twoOneCandleUnlit))
-                            .select(2, 1, true, Variant.variant().with(VariantProperties.MODEL, twoOneCandleLit))
-                            .select(2, 2, false, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesUnlit))
-                            .select(2, 2, true, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesLit))
-                            .select(2, 3, false, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesUnlit))
-                            .select(2, 3, true, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesLit))
-                            .select(2, 4, false, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesUnlit))
-                            .select(2, 4, true, Variant.variant().with(VariantProperties.MODEL, twoTwoCandlesLit))
-                            .select(3, 1, false, Variant.variant().with(VariantProperties.MODEL, threeOneCandleUnlit))
-                            .select(3, 1, true, Variant.variant().with(VariantProperties.MODEL, threeOneCandleLit))
-                            .select(3, 2, false, Variant.variant().with(VariantProperties.MODEL, threeTwoCandlesUnlit))
-                            .select(3, 2, true, Variant.variant().with(VariantProperties.MODEL, threeTwoCandlesLit))
-                            .select(3, 3, false, Variant.variant().with(VariantProperties.MODEL, threeThreeCandlesUnlit))
-                            .select(3, 3, true, Variant.variant().with(VariantProperties.MODEL, threeThreeCandlesLit))
-                            .select(3, 4, false, Variant.variant().with(VariantProperties.MODEL, threeThreeCandlesUnlit))
-                            .select(3, 4, true, Variant.variant().with(VariantProperties.MODEL, threeThreeCandlesLit))
-                            .select(4, 1, false, Variant.variant().with(VariantProperties.MODEL, fourOneCandleUnlit))
-                            .select(4, 1, true, Variant.variant().with(VariantProperties.MODEL, fourOneCandleLit))
-                            .select(4, 2, false, Variant.variant().with(VariantProperties.MODEL, fourTwoCandlesUnlit))
-                            .select(4, 2, true, Variant.variant().with(VariantProperties.MODEL, fourTwoCandlesLit))
-                            .select(4, 3, false, Variant.variant().with(VariantProperties.MODEL, fourThreeCandlesUnlit))
-                            .select(4, 3, true, Variant.variant().with(VariantProperties.MODEL, fourThreeCandlesLit))
-                            .select(4, 4, false, Variant.variant().with(VariantProperties.MODEL, fourFourCandlesUnlit))
-                            .select(4, 4, true, Variant.variant().with(VariantProperties.MODEL, fourFourCandlesLit)));
-            generators.blockStateOutput.accept(generator);
-        }
-
-        @Override
-        public void generateItemModels(ItemModelGenerators generators) {
-
-        }
     }
 
     private static class DynamicRegistryProvider extends FabricDynamicRegistryProvider {

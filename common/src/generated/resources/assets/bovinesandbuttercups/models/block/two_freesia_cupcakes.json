@@ -1,6 +1,0 @@
-{
-  "parent": "bovinesandbuttercups:block/template_two_cupcakes",
-  "textures": {
-    "all": "bovinesandbuttercups:block/freesia_cupcake"
-  }
-}

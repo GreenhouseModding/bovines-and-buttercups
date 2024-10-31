@@ -8,7 +8,7 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttac
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomNeoForge;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.util.PottedBlockMapUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;

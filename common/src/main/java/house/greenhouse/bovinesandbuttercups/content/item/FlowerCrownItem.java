@@ -2,13 +2,9 @@ package house.greenhouse.bovinesandbuttercups.content.item;
 
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesArmorMaterials;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesFlowerCrownMaterials;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.BovinesFlowerCrownMaterials;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ArmorItem;

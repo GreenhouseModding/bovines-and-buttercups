@@ -4,8 +4,8 @@ import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerPo
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomPotBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomFlowerItem;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomMushroomItem;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;

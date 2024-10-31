@@ -2,8 +2,7 @@ package house.greenhouse.bovinesandbuttercups.content.block.entity;
 
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlockEntityTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;

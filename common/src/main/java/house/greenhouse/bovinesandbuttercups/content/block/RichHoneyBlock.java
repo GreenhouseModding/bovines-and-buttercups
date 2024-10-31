@@ -2,7 +2,6 @@ package house.greenhouse.bovinesandbuttercups.content.block;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.mixin.HoneyBlockAccessor;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;

@@ -1,6 +1,0 @@
-{
-  "parent": "bovinesandbuttercups:block/template_cupcake",
-  "textures": {
-    "all": "bovinesandbuttercups:block/snowdrop_cupcake"
-  }
-}
