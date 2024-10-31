@@ -7,7 +7,7 @@ import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroo
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
 import house.greenhouse.bovinesandbuttercups.mixin.EntitySuperMixin;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;

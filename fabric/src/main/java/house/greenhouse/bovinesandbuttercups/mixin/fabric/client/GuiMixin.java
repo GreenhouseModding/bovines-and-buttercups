@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

@@ -5,6 +5,7 @@ import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BovinesCriteriaTriggers;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
@@ -21,6 +22,7 @@ import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubP
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesLootItemConditionTypes;
 import house.greenhouse.bovinesandbuttercups.content.recipe.BovinesRecipeSerializers;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
+import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesBiomeModifierSerializers;
 import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesStructureTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;

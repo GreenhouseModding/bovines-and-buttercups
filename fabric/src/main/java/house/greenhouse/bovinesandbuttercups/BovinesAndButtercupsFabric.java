@@ -30,7 +30,7 @@ import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditioned
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesArmorMaterials;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;

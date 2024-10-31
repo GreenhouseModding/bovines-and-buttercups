@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;

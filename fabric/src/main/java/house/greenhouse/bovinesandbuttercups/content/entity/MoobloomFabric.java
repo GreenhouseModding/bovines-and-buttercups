@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.entity;
+package house.greenhouse.bovinesandbuttercups.content.entity;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;

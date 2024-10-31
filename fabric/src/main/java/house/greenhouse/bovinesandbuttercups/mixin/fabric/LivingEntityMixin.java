@@ -6,7 +6,7 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttac
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.util.WeatherUtil;
 import net.minecraft.Util;

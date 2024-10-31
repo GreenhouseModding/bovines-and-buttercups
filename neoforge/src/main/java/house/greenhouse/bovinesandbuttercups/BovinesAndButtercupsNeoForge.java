@@ -23,7 +23,7 @@ import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEff
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.platform.BovinesPlatformHelperNeoForge;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;

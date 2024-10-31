@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.content.modifier;
+package house.greenhouse.bovinesandbuttercups.content.worldgen;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
