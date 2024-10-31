@@ -2,6 +2,8 @@ package house.greenhouse.bovinesandbuttercups.network.clientbound;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -32,6 +34,9 @@ public record SyncCowTypeClientboundPacket(int entityId, CowTypeAttachment attac
             if (!(entity instanceof LivingEntity living))
                 return;
             BovinesAndButtercups.getHelper().setCowTypeAttachment(living, attachment);
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowTypeAttachment(living).cowType().value().configuration().layers())
+                for (TextureModifierFactory<?> modifier : layer.textureModifiers())
+                    modifier.init(living);
         });
     }
 

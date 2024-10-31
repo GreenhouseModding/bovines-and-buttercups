@@ -85,11 +85,11 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                 if (entity.hasAttached(BovinesAttachments.LOCKDOWN))
                     LockdownAttachment.syncToPlayer(living, player);
                 if (entity.hasAttached(BovinesAttachments.COW_TYPE)) {
-                    CowTypeAttachment.syncToPlayer(living, player);
                     CowTypeAttachment attachment = living.getAttached(BovinesAttachments.COW_TYPE);
                     for (CowModelLayer layer : attachment.cowType().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
+                    CowTypeAttachment.syncToPlayer(living, player);
                 }
                 if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
                     MooshroomExtrasAttachment.syncToPlayer(living, player);
