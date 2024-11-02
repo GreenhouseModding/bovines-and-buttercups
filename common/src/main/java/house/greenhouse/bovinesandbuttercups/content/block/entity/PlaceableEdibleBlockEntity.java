@@ -13,7 +13,7 @@ import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataCompon
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -27,7 +27,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -114,12 +113,13 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
         stack.consume(1, player);
 
-        setChanged();
-        level.sendBlockUpdated(getBlockPos(), level.getBlockState(getBlockPos()), getBlockState(), Block.UPDATE_ALL);
+        level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+
         return ItemInteractionResult.SUCCESS;
     }
 
-    public ItemInteractionResult removeAttachmentItem() {
+    public ItemInteractionResult removeAttachmentItem(ItemStack stack) {
         if (level.isClientSide)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
@@ -130,7 +130,10 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         if (!attachments.containsKey(item.getKey()) || attachments.get(item.getKey()).items.isEmpty())
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        ItemStack stack = attachments.get(item.getKey()).items().getLast();
+        if (items.stream().anyMatch(entry -> entry != item && entry.getValue().activations().stream().anyMatch(e -> e.ingredient().test(stack))))
+            return ItemInteractionResult.CONSUME;
+
+        ItemStack last = attachments.get(item.getKey()).items().getLast();
 
         if (attachments.get(item.getKey()).items().size() == 1)
             attachments.remove(item.getKey());
@@ -143,11 +146,21 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
             });
         }
 
-        Block.popResource(level, getBlockPos(), stack);
+        Block.popResource(level, getBlockPos(), last);
 
-        setChanged();
-        level.sendBlockUpdated(getBlockPos(), level.getBlockState(getBlockPos()), getBlockState(), Block.UPDATE_ALL);
+        level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+
         return ItemInteractionResult.SUCCESS;
+    }
+
+
+    public int getLightValue() {
+        return Math.min(getAttachments().values().stream().flatMap(attachmentState -> !attachmentState.active() ? Stream.of(0) : getEdibleType().holder().value().attachable().values().stream().flatMap(attachmentEntry -> attachmentEntry.lightLevel().entrySet().stream().map(lightValue -> {
+            if (lightValue.getKey().test(this))
+                return lightValue.getValue();
+            return 0;
+        }))).reduce(0, Integer::sum), 15);
     }
 
     public ItemInteractionResult activate(ItemStack stack, Player player, InteractionHand hand, BlockHitResult hitResult) {
@@ -193,9 +206,9 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         else
             player.getItemInHand(hand).shrink(1);
 
-        setChanged();
-        level.sendBlockUpdated(getBlockPos(), level.getBlockState(getBlockPos()), getBlockState(), Block.UPDATE_ALL);
-        CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer)player, getBlockPos(), stack);
+        level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+
         return ItemInteractionResult.SUCCESS;
     }
 
@@ -211,7 +224,6 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         attachments.clear();
         if (tag.contains("attachments"))
             attachments.putAll(ATTACHMENTS_CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("attachments")).getOrThrow().getFirst());
-
         resetParticles();
     }
 

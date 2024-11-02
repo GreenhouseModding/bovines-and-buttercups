@@ -1,11 +1,11 @@
 package house.greenhouse.bovinesandbuttercups.content.block;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -45,7 +45,7 @@ public class BovinesBlocks {
     public static final CustomHugeMushroomBlock CUSTOM_MUSHROOM_BLOCK = new CustomHugeMushroomBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WOOD));
     public static final CustomMushroomPotBlock POTTED_CUSTOM_MUSHROOM = new CustomMushroomPotBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion());
 
-    public static final PlaceableEdibleBlock PLACEABLE_EDIBLE = new PlaceableEdibleBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).dynamicShape().isViewBlocking((state, level, pos) -> false));
+    public static final PlaceableEdibleBlock PLACEABLE_EDIBLE = new PlaceableEdibleBlock(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).dynamicShape().lightLevel(value -> value.getValue(PlaceableEdibleBlock.LIGHT)));
 
     public static void registerAll(RegistrationCallback<Block> callback) {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("buttercup"), BUTTERCUP);

@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -59,6 +60,8 @@ public interface BovinesPlatformHelper {
     void sendClientboundPacket(ServerPlayer player, CustomPacketPayload... payloads);
 
     void sendTrackingClientboundPacket(Entity entity, CustomPacketPayload... payloads);
+
+    void sendTrackingClientboundPacket(BlockEntity entity, CustomPacketPayload... payloads);
 
     boolean producesRichHoney(BeehiveBlockEntity blockEntity);
 

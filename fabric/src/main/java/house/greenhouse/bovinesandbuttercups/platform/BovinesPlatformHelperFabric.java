@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
@@ -109,6 +110,13 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
         if (entity instanceof ServerPlayer player)
             for (CustomPacketPayload pl : payloads)
                 ServerPlayNetworking.send(player, pl);
+    }
+
+    @Override
+    public void sendTrackingClientboundPacket(BlockEntity entity, CustomPacketPayload... payloads) {
+        for (ServerPlayer other : PlayerLookup.tracking(entity))
+            for (CustomPacketPayload pl : payloads)
+                ServerPlayNetworking.send(other, pl);
     }
 
     @Override

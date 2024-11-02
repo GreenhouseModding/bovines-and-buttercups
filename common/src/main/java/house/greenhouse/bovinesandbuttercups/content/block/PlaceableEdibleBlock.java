@@ -41,10 +41,11 @@ import java.util.Map;
 public class PlaceableEdibleBlock extends BaseEntityBlock {
     public static final MapCodec<PlaceableEdibleBlock> CODEC = simpleCodec(PlaceableEdibleBlock::new);
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 1, 16);
+    public static final IntegerProperty LIGHT = IntegerProperty.create("light", 0, 15);
 
     public PlaceableEdibleBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(BITES, 1));
+        registerDefaultState(getStateDefinition().any().setValue(BITES, 1).setValue(LIGHT, 0));
     }
 
     @Override
@@ -100,7 +101,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         if (addAttachmentResult.consumesAction())
             return addAttachmentResult;
 
-        var removeAttachmentResult = be.removeAttachmentItem();
+        var removeAttachmentResult = be.removeAttachmentItem(stack);
         if (removeAttachmentResult.consumesAction())
             return removeAttachmentResult;
 
@@ -171,6 +172,11 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.empty();
+    }
+
+    @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return facing == Direction.DOWN && !state.canSurvive(level, currentPos)
                 ? Blocks.AIR.defaultBlockState()
@@ -185,6 +191,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BITES);
+        builder.add(LIGHT);
     }
 
     @Override

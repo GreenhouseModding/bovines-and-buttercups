@@ -55,7 +55,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// TODO: VoxelShapes field.
 public record EdibleBlockType(
         int bites,
         int maxStackSize,
@@ -71,6 +70,10 @@ public record EdibleBlockType(
             BlockValuesEntry.CODEC.fieldOf("comparable").forGetter(Pair::getFirst),
             BlockUtil.VOXEL_SHAPE_CODEC.fieldOf("shape").forGetter(Pair::getSecond)
     ).apply(inst, Pair::of));
+    private static final Codec<Pair<BlockValuesEntry, Integer>> LIGHT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            BlockValuesEntry.CODEC.fieldOf("comparable").forGetter(Pair::getFirst),
+            Codec.intRange(0, 15).fieldOf("level").forGetter(Pair::getSecond)
+    ).apply(inst, Pair::of));
     public static final Codec<EdibleBlockType> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.intRange(1, 16).fieldOf("bites").forGetter(EdibleBlockType::bites),
             Codec.intRange(1, 99).fieldOf("stack_size").forGetter(EdibleBlockType::maxStackSize),
@@ -85,10 +88,14 @@ public record EdibleBlockType(
 
     public static EdibleBlockType cupcake(BootstrapContext<EdibleBlockType> context) {
         ImmutableMap.Builder<HolderSet<Item>, AttachmentEntry> builder = ImmutableMap.builder();
-        builder.put(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), new AttachmentEntry(4, List.of(
+        builder.put(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), new AttachmentEntry(4, Map.of(BlockValuesEntry.builder()
+                .addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(1).active(true)).build(), 3,
+                BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(2).active(true)).build(), 3,
+                BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(3).active(true)).build(), 3,
+                BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(4).active(true)).build(), 3), List.of(
                 new ActivationEntry(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/igniter"))), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FLINTANDSTEEL_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
                 new ActivationEntry(Ingredient.of(Items.FIRE_CHARGE), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FIRECHARGE_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
-                new ActivationEntry(Ingredient.EMPTY, false, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FIRECHARGE_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), createEmptyActivationParticles(context), List.of())
+                new ActivationEntry(Ingredient.EMPTY, false, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_EXTINGUISH.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), createEmptyActivationParticles(context), List.of())
         ), Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CAKE_ADD_CANDLE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F)))));
         return new EdibleBlockType(4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
     }
@@ -568,9 +575,10 @@ public record EdibleBlockType(
         }
     }
 
-    public record AttachmentEntry(int maxCount, List<ActivationEntry> activations, Optional<SoundSettings> sound) {
+    public record AttachmentEntry(int maxCount, Map<BlockValuesEntry, Integer> lightLevel, List<ActivationEntry> activations, Optional<SoundSettings> sound) {
         public static final Codec<AttachmentEntry> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 Codec.intRange(1, 16).fieldOf("max_count").forGetter(AttachmentEntry::maxCount),
+                LIGHT_CODEC.listOf().xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).optionalFieldOf("light", Map.of()).forGetter(AttachmentEntry::lightLevel),
                 ActivationEntry.CODEC.listOf().fieldOf("activations").forGetter(AttachmentEntry::activations),
                 SoundSettings.CODEC.optionalFieldOf("sound").forGetter(AttachmentEntry::sound)
         ).apply(inst, AttachmentEntry::new));

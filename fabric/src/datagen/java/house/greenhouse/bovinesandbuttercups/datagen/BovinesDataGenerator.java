@@ -1,7 +1,5 @@
 package house.greenhouse.bovinesandbuttercups.datagen;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Lifecycle;
@@ -59,12 +57,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.blockstates.BlockStateGenerator;
-import net.minecraft.data.models.model.DelegatedModel;
-import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
@@ -81,14 +75,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -108,9 +100,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -612,8 +602,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
-                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_TART)
-                    .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_TART);
+                    .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_TART)
+                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_TART);
         }
     }
 

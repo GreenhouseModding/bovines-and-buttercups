@@ -1,4 +1,4 @@
-## 2.0.0!
+## 2.0.0 - Sweet and Savory
 2.0.0 is a total rewrite of the mod, both content-wise and datapacking-wise.
 
 ## Main Features
@@ -17,6 +17,7 @@
   - Balanced Diet. Added consuming Rich Honey Bottles to the requirements.
   - Sticky Situation. Allowed Rich Honey Blocks to trigger the advancement.
   - Two by Two. Added breeding Mooblooms to the requirements.
+- Added Cupcakes and Mushroom Tarts, new decorative blocks that can be crafted.
 - Added new advancements.
   - Full Bloom - Breed every Moobloom that can be bred for.
   - Moo-tiful - Obtain a Flower Crown.
@@ -45,7 +46,7 @@
 - Nectar Bowls no longer store the effects and the Moobloom it was obtained from, instead storing a nectar object containing the effects and model.
 - Prefixed certain subtitle lang entries with mod id.
 
-## Datapacking Changes
+## Data Packing Changes
 - Bovines and Buttercups now utilises datapack/dynamic registries.
   - A side effect of this means that you can no longer reload the registry through `/reload`.
   - This change was made to better implement Bovines with vanilla systems.
@@ -71,10 +72,11 @@
 - Removed `dye_craft_result` field from Custom Flowers. This has been replaced with using your loader's `components` custom ingredient type and a regular recipe.
   - This change has also been applied to Suspicious Stew recipes, in preparation for future Minecraft versions.
     - For the above, you may also use the result field's `components` field.
-- Custom Mushroom Types now use template pools for `huge_structures` field.
+- Custom Mushroom Types now use template pools for the `huge_structures` field.
 - Removed `bovinesandbuttercups:mutation` trigger and replaced it with `bovinesandbuttercups:breed_cow_with_type`
   - Added `player` field, a predicate for the player breeding the animals.
   - Added `different_from_parents`, which determines whether breeding conditions were in play to create a different cow type.
+- Modified the `bovinesandbuttercups` subfolder's format in resource packs.
 
 #### Example Custom Recipes
 For crossplatforming these, use both unique fields within the same ingredient.
