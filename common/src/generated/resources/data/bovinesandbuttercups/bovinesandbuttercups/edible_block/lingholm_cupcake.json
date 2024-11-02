@@ -564,12 +564,16 @@
         "attachments": {
           "#minecraft:candles": {
             "active": true,
+            "count": {
+              "max": 1,
+              "min": 1
+            },
             "item": []
           }
         },
         "bite_count": {
-          "max": 1,
-          "min": 1
+          "max": 2,
+          "min": 2
         }
       },
       "particles": [
@@ -578,8 +582,8 @@
             "type": "minecraft:flame"
           },
           "position": [
-            0.5,
-            0.7875,
+            0.75,
+            0.6875,
             0.5
           ],
           "speed": [
@@ -594,8 +598,8 @@
             "type": "minecraft:smoke"
           },
           "position": [
-            0.5,
-            0.7875,
+            0.75,
+            0.6875,
             0.5
           ],
           "sound": {
@@ -624,15 +628,14 @@
           "#minecraft:candles": {
             "active": true,
             "count": {
-              "max": 2,
-              "min": 2
+              "max": 1,
+              "min": 1
             },
             "item": []
           }
         },
         "bite_count": {
-          "max": 3,
-          "min": 3
+          "min": 4
         }
       },
       "particles": [
@@ -642,7 +645,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "speed": [
@@ -658,50 +661,7 @@
           },
           "position": [
             0.75,
-            0.7875,
-            0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.25,
-            0.725,
-            0.25
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.25,
-            0.725,
+            0.6875,
             0.25
           ],
           "sound": {
@@ -747,7 +707,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "speed": [
@@ -763,7 +723,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "sound": {
@@ -790,7 +750,7 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
             0.25
           ],
           "speed": [
@@ -806,7 +766,7 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
             0.25
           ],
           "sound": {
@@ -833,7 +793,7 @@
           },
           "position": [
             0.75,
-            0.85,
+            0.75,
             0.75
           ],
           "speed": [
@@ -849,133 +809,8 @@
           },
           "position": [
             0.75,
-            0.85,
+            0.75,
             0.75
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "min": 4
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.7875,
-            0.25
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.7875,
-            0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 2,
-          "min": 2
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.7875,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.7875,
-            0.5
           ],
           "sound": {
             "chance": 0.17,
@@ -1010,7 +845,8 @@
           }
         },
         "bite_count": {
-          "min": 4
+          "max": 3,
+          "min": 3
         }
       },
       "particles": [
@@ -1020,7 +856,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "speed": [
@@ -1036,7 +872,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "sound": {
@@ -1063,7 +899,7 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
             0.25
           ],
           "speed": [
@@ -1079,7 +915,129 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 1,
+          "min": 1
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.5,
+            0.6875,
+            0.5
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.5,
+            0.6875,
+            0.5
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "max": 1,
+              "min": 1
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
             0.25
           ],
           "sound": {
@@ -1108,13 +1066,14 @@
           "#minecraft:candles": {
             "active": true,
             "count": {
-              "min": 4
+              "min": 2
             },
             "item": []
           }
         },
         "bite_count": {
-          "min": 4
+          "max": 2,
+          "min": 2
         }
       },
       "particles": [
@@ -1124,8 +1083,8 @@
           },
           "position": [
             0.75,
-            0.7875,
-            0.25
+            0.6875,
+            0.5
           ],
           "speed": [
             0.0,
@@ -1140,8 +1099,8 @@
           },
           "position": [
             0.75,
-            0.7875,
-            0.25
+            0.6875,
+            0.5
           ],
           "sound": {
             "chance": 0.17,
@@ -1167,8 +1126,8 @@
           },
           "position": [
             0.25,
-            0.725,
-            0.25
+            0.625,
+            0.5
           ],
           "speed": [
             0.0,
@@ -1183,94 +1142,8 @@
           },
           "position": [
             0.25,
-            0.725,
-            0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.85,
-            0.75
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.85,
-            0.75
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.25,
-            0.7875,
-            0.75
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.25,
-            0.7875,
-            0.75
+            0.625,
+            0.5
           ],
           "sound": {
             "chance": 0.17,
@@ -1315,7 +1188,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "speed": [
@@ -1331,7 +1204,7 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "sound": {
@@ -1358,7 +1231,7 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
             0.25
           ],
           "speed": [
@@ -1374,7 +1247,7 @@
           },
           "position": [
             0.25,
-            0.725,
+            0.625,
             0.25
           ],
           "sound": {
@@ -1401,7 +1274,7 @@
           },
           "position": [
             0.5,
-            0.85,
+            0.75,
             0.75
           ],
           "speed": [
@@ -1417,7 +1290,7 @@
           },
           "position": [
             0.5,
-            0.85,
+            0.75,
             0.75
           ],
           "sound": {
@@ -1446,14 +1319,204 @@
           "#minecraft:candles": {
             "active": true,
             "count": {
+              "min": 4
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "min": 4
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.25,
+            0.625,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.25,
+            0.625,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.75,
+            0.75
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.75,
+            0.75
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.25,
+            0.6875,
+            0.75
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.25,
+            0.6875,
+            0.75
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "max": 2,
               "min": 2
             },
             "item": []
           }
         },
         "bite_count": {
-          "max": 2,
-          "min": 2
+          "min": 4
         }
       },
       "particles": [
@@ -1463,113 +1526,7 @@
           },
           "position": [
             0.75,
-            0.7875,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.7875,
-            0.5
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.25,
-            0.725,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.25,
-            0.725,
-            0.5
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 3,
-          "min": 3
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.7875,
+            0.6875,
             0.25
           ],
           "speed": [
@@ -1585,7 +1542,50 @@
           },
           "position": [
             0.75,
-            0.7875,
+            0.6875,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.25,
+            0.625,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.25,
+            0.625,
             0.25
           ],
           "sound": {

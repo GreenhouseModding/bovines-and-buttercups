@@ -97,6 +97,10 @@ public record EdibleBlockType(
         return new EdibleBlockType(4, 16, createMushroomTartShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
     }
 
+    private static Map<BlockValuesEntry, VoxelShape> createMushroomTartShapeMap(BootstrapContext<EdibleBlockType> context) {
+        return Map.of();
+    }
+
     private static Map<BlockValuesEntry, VoxelShape> createCupcakeShapeMap(BootstrapContext<EdibleBlockType> context) {
         Object2ObjectOpenHashMap<BlockValuesEntry, VoxelShape> map = new Object2ObjectOpenHashMap<>();
 
@@ -192,16 +196,6 @@ public record EdibleBlockType(
         return ImmutableMap.copyOf(map);
     }
 
-    // TODO: This.
-    private static Map<BlockValuesEntry, VoxelShape> createMushroomTartShapeMap(BootstrapContext<EdibleBlockType> context) {
-        return Map.of();
-    }
-
-    @ApiStatus.Internal
-    public static EdibleBlockType missingEdible(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().build(), Shapes.block()), Map.of(), Map.of(), List.of());
-    }
-
     private static Map<BlockValuesEntry, List<ParticleEntry>> createParticlePositionMap(BootstrapContext<EdibleBlockType> context) {
         Holder.Reference<SoundEvent> candleAmbient = context.lookup(Registries.SOUND_EVENT).getOrThrow(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_AMBIENT.getLocation()));
         Object2ObjectOpenHashMap<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectOpenHashMap<>();
@@ -212,8 +206,8 @@ public record EdibleBlockType(
         oneEntry.exactBiteCount(1);
         oneEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(1).active(true));
         var one = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.5, 0.7875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.5, 0.7875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.5, 0.6875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.5, 0.6875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         map.put(oneEntry.build(), one);
@@ -222,18 +216,18 @@ public record EdibleBlockType(
         twoOneCandleEntry.exactBiteCount(2);
         twoOneCandleEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(1).active(true));
         var twoOneCandle = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         var twoTwoCandlesEntry = BlockValuesEntry.builder();
         twoTwoCandlesEntry.exactBiteCount(2);
         twoTwoCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(2).active(true));
         var twoTwoCandles  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))) ,
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))) ,
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.5), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.5), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         map.put(twoOneCandleEntry.build(), twoOneCandle);
@@ -243,18 +237,18 @@ public record EdibleBlockType(
         threeOneCandleEntry.exactBiteCount(3);
         threeOneCandleEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(1).active(true));
         var threeOneCandle  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         var threeTwoCandlesEntry = BlockValuesEntry.builder();
         threeTwoCandlesEntry.exactBiteCount(3);
         threeTwoCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(2).active(true));
         var threeTwoCandles  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
 
@@ -262,12 +256,12 @@ public record EdibleBlockType(
         threeThreeCandlesEntry.exactBiteCount(3);
         threeThreeCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(3).active(true));
         var threeThreeCandles = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.5, 0.85, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.5, 0.85, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.5, 0.75, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.5, 0.75, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         map.put(threeOneCandleEntry.build(), threeOneCandle);
@@ -278,44 +272,44 @@ public record EdibleBlockType(
         fourOneCandleEntry.lowerBoundBiteCount(4);
         fourOneCandleEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(1).active(true));
         var fourOneCandle  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         var fourTwoCandlesEntry = BlockValuesEntry.builder();
         fourTwoCandlesEntry.lowerBoundBiteCount(4);
         fourTwoCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(2).active(true));
         var fourTwoCandles  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         var fourThreeCandlesEntry = BlockValuesEntry.builder();
         fourThreeCandlesEntry.lowerBoundBiteCount(4);
         fourThreeCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().exactCount(3).active(true));
         var fourThreeCandles  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.85, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.85, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.75, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.75, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         var fourFourCandlesEntry = BlockValuesEntry.builder();
         fourFourCandlesEntry.lowerBoundBiteCount(4);
         fourFourCandlesEntry.addAttachment(candles, BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(4).active(true));
         var fourFourCandles  = ImmutableList.of(
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.7875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.725, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.85, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.85, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
-                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.7875, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
-                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.7875, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.6875, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.625, 0.25), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.75, 0.75, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.75, 0.75, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F)))),
+                new ParticleEntry(ParticleTypes.FLAME, new Vec3(0.25, 0.6875, 0.75), Vec3.ZERO, 1.0F, Optional.empty()),
+                new ParticleEntry(ParticleTypes.SMOKE, new Vec3(0.25, 0.6875, 0.75), Vec3.ZERO, 0.3F, Optional.of(new SoundSettings(candleAmbient, 0.17F, FloatRange.range(1.0F, 1.1F), FloatRange.range(0.3F, 1.0F))))
         );
 
         map.put(fourOneCandleEntry.build(), fourOneCandle);
@@ -428,6 +422,11 @@ public record EdibleBlockType(
         map.put(fourFourCandlesEntry.build(), fourFourCandles);
 
         return ImmutableMap.copyOf(map);
+    }
+
+    @ApiStatus.Internal
+    public static EdibleBlockType missingEdible(BootstrapContext<EdibleBlockType> context) {
+        return new EdibleBlockType(1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().build(), Shapes.block()), Map.of(), Map.of(), List.of());
     }
 
     public record ActivationEntry(Ingredient ingredient, boolean setTo, Optional<SoundSettings> sound, Map<BlockValuesEntry, List<ParticleEntry>> particles, List<LootItemCondition> condition) {
