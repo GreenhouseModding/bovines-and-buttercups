@@ -9,6 +9,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType {
     public static final EdibleBlockBovinesModelSetType INSTANCE = new EdibleBlockBovinesModelSetType();
@@ -54,7 +56,7 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
             if (first.isPresent())
                 return modelSet.getModel(first.get());
         }
-        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(acceptedProperties(blockEntity)));
+        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), () -> "Could not get edible block bovines model set for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
     }
 
     @Override
@@ -78,6 +80,15 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
                     lookup.put(selector, filePath);
                     LOADED.put(resolvedPath, definition);
                 }
+            } else if (!definition.getVariants().isEmpty()) {
+                Map<ResourceLocation, ResourceLocation> locations = definition.getVariants().keySet().stream().map(multiVariant -> {
+                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + multiVariant);
+                    ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
+                    return Pair.of(fileId, resolvedPath);
+                }).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
+
+                modelIds.putAll(locations);
+                locations.values().forEach(rl -> LOADED.put(rl, definition));
             }
         }
 
@@ -108,7 +119,8 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
     }
 
     private static String acceptedProperties(PlaceableEdibleBlockEntity blockEntity) {
-        return "bites." + blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES) + "-attachments." + getAttachmentAsProperties(blockEntity.attachmentsToString());
+        String attachments = getAttachmentAsProperties(blockEntity.attachmentsToString());
+        return "bites." + blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES) + (attachments.isEmpty() ? "" : "-attachments." + getAttachmentAsProperties(blockEntity.attachmentsToString()));
     }
 
     private static String getAttachmentAsProperties(String attachments) {

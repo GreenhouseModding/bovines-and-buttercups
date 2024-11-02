@@ -37,7 +37,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
         if (modelSet == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(state);
+        return modelSet.getModel(state, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
 
         for (BlockState state : context.getDefinition().getPossibleStates()) {
             ResourceLocation stateResource = fileId.withPath(s ->
-                    s + "/" + acceptedStateProperties(BlockModelShaper.statePropertiesToString(state.getValues()))
+                    s + "/" + acceptedProperties(BlockModelShaper.statePropertiesToString(state.getValues()))
             );
             ResourceLocation resolvedResource = stateResource.withPath(s -> "bovinesandbuttercups/" + s);
             modelIds.put(stateResource, resolvedResource);
@@ -87,7 +87,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
         return definition.getVariants().get("");
     }
 
-    private static String acceptedStateProperties(String stateProperties) {
+    private static String acceptedProperties(String stateProperties) {
         return stateProperties.replaceAll("=", ".").replaceAll(",", "-");
     }
 
