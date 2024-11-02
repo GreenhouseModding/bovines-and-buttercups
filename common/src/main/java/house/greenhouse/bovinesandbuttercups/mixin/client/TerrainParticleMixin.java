@@ -3,11 +3,13 @@ package house.greenhouse.bovinesandbuttercups.mixin.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.EdibleBlockBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomHugeMushroomBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomBlockEntity;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -34,6 +36,10 @@ public class TerrainParticleMixin {
             @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(customMushroomBlock.getMushroomType().holder().unwrapKey().get().location().withPath(s -> s + "_block"));
             if (modelSet != null)
                 return StateDefinitionBovinesModelSetType.getBlockModel(modelSet, BovinesBlocks.CUSTOM_MUSHROOM_BLOCK.defaultBlockState()).getParticleIcon();
+        } else if (level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity edibleBlock && edibleBlock.getEdibleType() != null) {
+            @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(edibleBlock.getEdibleType().holder().unwrapKey().get().location());
+            if (modelSet != null)
+                return EdibleBlockBovinesModelSetType.getBlockModel(modelSet, edibleBlock).getParticleIcon();
         }
         return original;
     }
