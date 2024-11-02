@@ -32,6 +32,10 @@
   ],
   "result": {
     "count": 2,
-    "id": "minecraft:air"
+    "id": "bovinesandbuttercups:placeable_edible",
+    "components": {
+      "bovinesandbuttercups:edible_type": "bovinesandbuttercups:limelight_cupcake",
+      "minecraft:max_stack_size": 16
+    }
   }
 }
