@@ -5,11 +5,13 @@ import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class BovinesBlocks {
     public static final FlowerBlock BUTTERCUP = new FlowerBlock(MobEffects.POISON, 12, BlockBehaviour.Properties.of().noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
@@ -43,6 +45,8 @@ public class BovinesBlocks {
     public static final CustomHugeMushroomBlock CUSTOM_MUSHROOM_BLOCK = new CustomHugeMushroomBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WOOD));
     public static final CustomMushroomPotBlock POTTED_CUSTOM_MUSHROOM = new CustomMushroomPotBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion());
 
+    public static final PlaceableEdibleBlock PLACEABLE_EDIBLE = new PlaceableEdibleBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).dynamicShape().isViewBlocking((state, level, pos) -> false));
+
     public static void registerAll(RegistrationCallback<Block> callback) {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("buttercup"), BUTTERCUP);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("pink_daisy"), PINK_DAISY);
@@ -73,5 +77,7 @@ public class BovinesBlocks {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("custom_mushroom"), CUSTOM_MUSHROOM);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("custom_mushroom_block"), CUSTOM_MUSHROOM_BLOCK);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_custom_mushroom"), POTTED_CUSTOM_MUSHROOM);
+
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("placeable_edible"), PLACEABLE_EDIBLE);
     }
 }

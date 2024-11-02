@@ -1,18 +1,22 @@
 package house.greenhouse.bovinesandbuttercups.content.block.entity;
 
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.content.block.CustomHugeMushroomBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Nameable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class CustomHugeMushroomBlockEntity extends BlockEntity {
+public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameable {
     @Nullable
     private ItemCustomMushroom customMushroom;
 
@@ -95,5 +99,12 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity {
             newState = newState.setValue(CustomHugeMushroomBlock.SOUTH, Boolean.FALSE);
 
         level.setBlock(pos, newState, 3);
+    }
+
+    @Override
+    public Component getName() {
+        if (customMushroom.holder().isBound())
+            return BlockUtil.getOrCreateBlockNameTranslationKey(customMushroom.holder().unwrapKey().orElseThrow().location().withPath(s -> s + "_block"));
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom_block"));
     }
 }

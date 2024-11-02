@@ -9,7 +9,9 @@ import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -39,9 +41,6 @@ public record MooshroomConfiguration(Settings settings,
         this.vanillaType = vanillaType;
         this.offspringConditions = offspringConditions;
     }
-
-    public static final MooshroomConfiguration DEFAULT = new MooshroomConfiguration(new Settings(Optional.of(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/missing_mooshroom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.empty()), new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(Holder.direct(CustomMushroomType.MISSING))), List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/mooshroom/mooshroom_mycelium_layer"), List.of())), Optional.of(false), Optional.empty(), OffspringConditions.EMPTY);
-
     public static final MapCodec<MooshroomConfiguration> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Settings.CODEC.forGetter(MooshroomConfiguration::settings),
             BlockReference.createCodec(CustomMushroomType.CODEC, "custom_mushroom").fieldOf("mushroom").forGetter(MooshroomConfiguration::mushroom),
@@ -53,5 +52,9 @@ public record MooshroomConfiguration(Settings settings,
 
     public void tick(Entity entity) {
         layers.forEach(cowModelLayer -> cowModelLayer.tickTextureModifiers(entity));
+    }
+
+    public static MooshroomConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {
+        return new MooshroomConfiguration(new Settings(Optional.of(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/missing_mooshroom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.empty()), new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).orElseThrow().getter().getOrThrow(CustomMushroomType.MISSING_KEY))), List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/mooshroom/mooshroom_mycelium_layer"), List.of())), Optional.of(false), Optional.empty(), OffspringConditions.EMPTY);
     }
 }

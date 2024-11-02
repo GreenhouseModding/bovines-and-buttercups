@@ -1,5 +1,8 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
+import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.PlaceableEdibleItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
@@ -33,7 +36,6 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomMushroom
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.NectarBowlItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
-import house.greenhouse.bovinesandbuttercups.client.util.BovineModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
@@ -81,9 +83,9 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
             }
         });
 
-        PreparableModelLoadingPlugin.register(BovineModelSetUtil::getModels, (data, context) -> {
+        PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
             context.addModels(data);
-            context.resolveModel().register((ctx) -> BovineModelSetUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));
+            context.resolveModel().register((ctx) -> BovinesModelSetUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));
         });
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(FlowerCrownItemRenderer.BASE));
 
@@ -105,6 +107,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockEntityRenderers.register(BovinesBlockEntityTypes.POTTED_CUSTOM_FLOWER, CustomFlowerPotBlockRenderer::new);
         BlockEntityRenderers.register(BovinesBlockEntityTypes.POTTED_CUSTOM_MUSHROOM, CustomMushroomPotBlockRenderer::new);
         BlockEntityRenderers.register(BovinesBlockEntityTypes.CUSTOM_MUSHROOM_BLOCK, CustomHugeMushroomBlockRenderer::new);
+        BlockEntityRenderers.register(BovinesBlockEntityTypes.PLACEABLE_EDIBLE, PlaceableEdibleBlockRenderer::new);
     }
 
     public static void registerItemRenderers() {
@@ -113,6 +116,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.CUSTOM_MUSHROOM_BLOCK, CustomHugeMushroomItemRenderer::render);
         BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.NECTAR_BOWL, NectarBowlItemRenderer::render);
         BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.FLOWER_CROWN, FlowerCrownItemRenderer::render);
+        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.PLACEABLE_EDIBLE, PlaceableEdibleItemRenderer::render);
     }
 
     public static void registerParticleFactories() {
@@ -147,6 +151,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_CUSTOM_FLOWER, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CUSTOM_MUSHROOM, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_CUSTOM_MUSHROOM, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.PLACEABLE_EDIBLE, RenderType.cutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.RICH_HONEY_BLOCK, RenderType.translucent());
     }

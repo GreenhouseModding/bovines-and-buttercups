@@ -33,6 +33,8 @@ public record ItemNectar(Holder<Nectar> nectar) implements TooltipProvider {
 
     @Override
     public boolean equals(Object other) {
+        if (other == this)
+            return true;
         if (!(other instanceof ItemNectar nectar))
             return false;
         return nectar.nectar.equals(nectar);

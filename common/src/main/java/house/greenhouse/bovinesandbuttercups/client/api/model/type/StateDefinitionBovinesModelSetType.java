@@ -1,9 +1,12 @@
 package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
+import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.client.resources.model.BakedModel;
@@ -18,7 +21,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSetType {
-    private static final Map<ResourceLocation, JsonElement> LOADED_JSON = new HashMap<>();
+    private static final Map<ResourceLocation, BlockModelDefinition> LOADED = new HashMap<>();
     private final BlockModelDefinition.Context context = new BlockModelDefinition.Context();
 
     public StateDefinitionBovinesModelSetType(StateDefinition<Block, BlockState> definition) {
@@ -26,31 +29,39 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
     }
 
     public static BakedModel getItemModel(BovinesModelSet modelSet) {
+        if (modelSet == null)
+            return Minecraft.getInstance().getModelManager().getMissingModel();
         return modelSet.getModel(modelSet.id().withPath(s -> s + "/inventory"));
     }
 
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
-        return modelSet.getModel(modelSet.id().withPath(s -> s + "/" + acceptedStateProperties(BlockModelShaper.statePropertiesToString(state.getValues()))));
+        if (modelSet == null)
+            return Minecraft.getInstance().getModelManager().getMissingModel();
+        return modelSet.getModel(state);
     }
 
     @Override
     public BovinesModelSet createReference(ResourceLocation fileId, JsonObject json) {
         Map<ResourceLocation, ResourceLocation> modelIds = new HashMap<>();
+        Map<Object, ResourceLocation> lookup = new HashMap<>();
 
         if (json.has("item_model")) {
             ResourceLocation itemModelLocation = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, json.get("item_model")).getOrThrow().getFirst();
             modelIds.put(fileId.withPath(s -> s + "/inventory"), itemModelLocation.withPath(s -> "bovinesandbuttercups/item/" + s + "/inventory"));
         }
 
+        BlockModelDefinition definition = BlockModelDefinition.fromJsonElement(context, json);
+
         for (BlockState state : context.getDefinition().getPossibleStates()) {
             ResourceLocation stateResource = fileId.withPath(s ->
                     s + "/" + acceptedStateProperties(BlockModelShaper.statePropertiesToString(state.getValues()))
             );
             ResourceLocation resolvedResource = stateResource.withPath(s -> "bovinesandbuttercups/" + s);
-            LOADED_JSON.put(resolvedResource, json);
             modelIds.put(stateResource, resolvedResource);
+            lookup.put(state, stateResource);
+            LOADED.put(resolvedResource, definition);
         }
-        return new BovinesModelSet(fileId, this, modelIds);
+        return new BovinesModelSet(fileId, this, modelIds, lookup);
     }
 
     @Override
@@ -58,10 +69,13 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
         if (modelId.getPath().endsWith("/inventory"))
             return super.createUnbaked(modelId, itemModelLoader);
 
-        JsonElement json = LOADED_JSON.get(modelId);
-        LOADED_JSON.remove(modelId);
+        BlockModelDefinition definition = LOADED.get(modelId);
+        LOADED.remove(modelId);
 
-        BlockModelDefinition definition = BlockModelDefinition.fromJsonElement(context, json);
+        if (definition == null) {
+            BovinesAndButtercups.LOG.warn("Failed to load model {} defaulting to missing model.", modelId);
+            return ((ModelBakeryAccessor) BovinesAndButtercupsClient.getModelBakery()).bovinesandbuttercups$getMissingModel();
+        }
 
         if (definition.isMultiPart())
             return definition.getMultiPart();

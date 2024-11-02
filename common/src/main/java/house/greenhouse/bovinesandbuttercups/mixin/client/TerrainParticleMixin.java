@@ -1,30 +1,22 @@
 package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
-import house.greenhouse.bovinesandbuttercups.client.util.BovineModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomHugeMushroomBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomBlockEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.TerrainParticle;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-
-import java.util.Optional;
 
 @Mixin(TerrainParticle.class)
 public class TerrainParticleMixin {

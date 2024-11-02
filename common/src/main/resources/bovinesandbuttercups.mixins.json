@@ -29,7 +29,9 @@
     "RegistryDataLoaderMixin",
     "ServerAdvancementManagerMixin",
     "ServerLevelAccessor",
-    "SimpleJsonResourceReloadListenerMixin"
+    "ShapesMixin",
+    "SimpleJsonResourceReloadListenerMixin",
+    "VoxelShapeMixin"
   ],
   "client": [
     "client.AtlasSetMixin",
@@ -37,7 +39,7 @@
     "client.GuiGraphicsMixin",
     "client.LivingEntityRendererMixin",
     "client.ModelBakeryAccessor",
-    "client.ModelManagerMixin",
+    "client.ModelBakeryMixin",
     "client.MushroomCowMushroomLayerMixin",
     "client.SimpleTextureMixin",
     "client.SimpleTextureTextureImageAccessor",

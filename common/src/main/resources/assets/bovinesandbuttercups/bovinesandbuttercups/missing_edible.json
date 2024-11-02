@@ -1,0 +1,40 @@
+{
+  "type": "bovinesandbuttercups:edible",
+  "multipart": [
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/template_cupcake"
+      },
+      "when": {
+        "bites": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/template_two_cupcakes"
+      },
+      "when": {
+        "bites": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/template_three_cupcakes"
+      },
+      "when": {
+        "bites": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/template_four_cupcakes"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        }
+      }
+    }
+  ],
+  "item_model": "bovinesandbuttercups:missing_edible"
+}

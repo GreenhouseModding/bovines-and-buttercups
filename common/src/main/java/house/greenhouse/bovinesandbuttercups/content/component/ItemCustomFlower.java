@@ -15,6 +15,8 @@ public record ItemCustomFlower(Holder<CustomFlowerType> holder) {
 
     @Override
     public boolean equals(Object other) {
+        if (other == this)
+            return true;
         if (!(other instanceof ItemCustomFlower otherMushroom))
             return false;
         return otherMushroom.holder.equals(holder);

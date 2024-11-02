@@ -6,6 +6,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
@@ -18,7 +19,7 @@ public record CustomFlowerType(SuspiciousStewEffects stewEffectInstances) {
             ExtraCodecs.catchDecoderException(SuspiciousStewEffects.CODEC).optionalFieldOf("stew_effect", SuspiciousStewEffects.EMPTY).forGetter(CustomFlowerType::stewEffectInstances)
     ).apply(builder, CustomFlowerType::new));
 
-    public static final Codec<Holder<CustomFlowerType>> CODEC = RegistryFileCodec.create(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, DIRECT_CODEC);
+    public static final Codec<Holder<CustomFlowerType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE);
     public static final ResourceKey<CustomFlowerType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, BovinesAndButtercups.asResource("missing_flower"));
     public static final CustomFlowerType MISSING = new CustomFlowerType(SuspiciousStewEffects.EMPTY);
 

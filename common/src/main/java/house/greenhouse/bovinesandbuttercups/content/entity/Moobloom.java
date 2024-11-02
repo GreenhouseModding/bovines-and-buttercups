@@ -623,7 +623,7 @@ public class Moobloom extends Cow {
             int largestWeight = 0;
             Holder<CowType<?>> finalCowType = level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).get();
 
-            for (Holder<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != MoobloomConfiguration.DEFAULT).toList()) {
+            for (Holder<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
                 if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
@@ -640,7 +640,7 @@ public class Moobloom extends Cow {
             List<Holder<CowType<MoobloomConfiguration>>> moobloomList = new ArrayList<>();
             int totalWeight = 0;
 
-            for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != MoobloomConfiguration.DEFAULT).toList()) {
+            for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
                 if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();

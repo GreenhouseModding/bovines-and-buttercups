@@ -5,6 +5,7 @@ import house.greenhouse.bovinesandbuttercups.client.particle.BloomParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ModelLocationParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ShroomParticle;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelperNeoForge;
+import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.FlowerCrownLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MooshroomDatapackMushroomLayer;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
@@ -18,7 +19,7 @@ import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelS
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.util.BovineModelSetUtil;
+import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
@@ -87,13 +88,14 @@ public class BovinesAndButtercupsNeoForgeClient {
             event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.CUSTOM_MUSHROOM_BLOCK);
             event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.FLOWER_CROWN);
             event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.NECTAR_BOWL);
+            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.PLACEABLE_EDIBLE);
         }
 
         @SubscribeEvent
         public static void bakeModels(ModelEvent.ModifyBakingResult event) {
-            List<ResourceLocation> models = BovineModelSetUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
+            List<ResourceLocation> models = BovinesModelSetUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
             for (ResourceLocation entry : models) {
-                UnbakedModel unbaked = BovineModelSetUtil.getUnbakedModel(entry, ((ModelBakeryAccessor)event.getModelBakery())::bovinesandbuttercups$getModel);
+                UnbakedModel unbaked = BovinesModelSetUtil.getUnbakedModel(entry, ((ModelBakeryAccessor)event.getModelBakery())::bovinesandbuttercups$getModel);
                 if (unbaked != null) {
                     unbaked.resolveParents(location -> ((ModelBakeryAccessor)event.getModelBakery()).bovinesandbuttercups$getModel(location));
                     ModelResourceLocation modelResource = ModelResourceLocation.standalone(entry);
@@ -127,6 +129,7 @@ public class BovinesAndButtercupsNeoForgeClient {
             event.registerBlockEntityRenderer(BovinesBlockEntityTypes.POTTED_CUSTOM_FLOWER, CustomFlowerPotBlockRenderer::new);
             event.registerBlockEntityRenderer(BovinesBlockEntityTypes.POTTED_CUSTOM_MUSHROOM, CustomMushroomPotBlockRenderer::new);
             event.registerBlockEntityRenderer(BovinesBlockEntityTypes.CUSTOM_MUSHROOM_BLOCK, CustomHugeMushroomBlockRenderer::new);
+            event.registerBlockEntityRenderer(BovinesBlockEntityTypes.PLACEABLE_EDIBLE, PlaceableEdibleBlockRenderer::new);
         }
 
         @SubscribeEvent

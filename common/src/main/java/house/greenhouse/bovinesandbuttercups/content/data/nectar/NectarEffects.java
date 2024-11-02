@@ -38,6 +38,8 @@ public record NectarEffects(List<NectarEffects.Entry> effects) {
 
     @Override
     public boolean equals(Object other) {
+        if (other == this)
+            return true;
         if (!(other instanceof NectarEffects otherEffects))
             return false;
         return otherEffects.effects.equals(effects);
@@ -64,6 +66,8 @@ public record NectarEffects(List<NectarEffects.Entry> effects) {
 
         @Override
         public boolean equals(Object other) {
+            if (other == this)
+                return true;
             if (!(other instanceof Entry otherEntry))
                 return false;
             return otherEntry.effect.equals(effect) && otherEntry.duration == duration;

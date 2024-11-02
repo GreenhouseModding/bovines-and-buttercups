@@ -3,10 +3,12 @@ package house.greenhouse.bovinesandbuttercups.util;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
@@ -17,11 +19,20 @@ import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class CreativeTabHelper {
     public static List<ItemStack> getCustomFlowersForCreativeTab(HolderLookup.Provider lookup) {
@@ -79,5 +90,47 @@ public class CreativeTabHelper {
         }).toList());
 
         return stacks;
+    }
+
+    public static void addEdibleBlocksToCreativeTabs(HolderLookup.Provider lookup, ResourceKey<CreativeModeTab> tab, Consumer<ItemStack> addFunction, BiConsumer<ItemStack, ItemStack> addAfterFunction) {
+        HolderLookup.RegistryLookup<EdibleBlockType> registry = lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE);
+        Optional<HolderSet.Named<EdibleBlockType>> creativeModeTabOrder = registry.get(BovinesTags.EdibleBlockTypeTags.CREATIVE_MENU_ORDER);
+        if (creativeModeTabOrder.isEmpty())
+            return;
+
+        Map<ItemStack, ItemStack> prependedItem = new HashMap<>();
+
+        for (var type : registry.listElements().filter(ref -> ref.isBound() && ref.value().creativeModeTabs().stream().anyMatch(creativeModeTabEntry -> {
+            if (creativeModeTabEntry.tab() == tab) {
+                var actualTab = lookup.lookup(Registries.CREATIVE_MODE_TAB).orElseThrow().get(tab);
+                return actualTab.isPresent() && (creativeModeTabEntry.after().isEmpty() || actualTab.get().value().getDisplayItems().stream().anyMatch(stack1 -> ItemStack.isSameItemSameComponents(stack1, creativeModeTabEntry.after().get())));
+            }
+            return false;
+        })).sorted(Comparator.comparingInt(value -> {
+            int i = creativeModeTabOrder.get().stream().toList().indexOf(value);
+            if (i == -1)
+                return Integer.MAX_VALUE;
+            return i;
+        })).toList()) {
+            ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
+            ItemEdibleType.apply(stack, type);
+            var firstItem = type.value().creativeModeTabs().stream().map(creativeModeTabEntry -> {
+                if (creativeModeTabEntry.tab() == tab) {
+                    var actualTab = lookup.lookup(Registries.CREATIVE_MODE_TAB).orElseThrow().get(tab);
+                    if (actualTab.isPresent() && creativeModeTabEntry.after().isPresent())
+                        return actualTab.get().value().getDisplayItems().stream().filter(stack1 -> ItemStack.isSameItemSameComponents(stack1, creativeModeTabEntry.after().get())).findFirst().orElse(null);
+                }
+                return null;
+            }).filter(Objects::nonNull).findFirst();
+
+            if (firstItem.isPresent()) {
+                if (!prependedItem.containsKey(firstItem.get()))
+                    addAfterFunction.accept(firstItem.get(), stack);
+                else
+                    addAfterFunction.accept(prependedItem.get(firstItem.get()), stack);
+                prependedItem.put(firstItem.get(), stack);
+            } else
+                addFunction.accept(stack);
+        }
     }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "bovinesandbuttercups:block/template_cupcake_candle",
+  "render_type": "cutout",
+  "textures": {
+    "all": "minecraft:block/pink_candle"
+  }
+}

@@ -13,7 +13,7 @@ public class BovinesModelSetTypes {
     public static final BovinesModelSetType POTTED_FLOWER = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("potted_flower"), new StateDefinitionBovinesModelSetType(BovinesBlocks.POTTED_CUSTOM_FLOWER.getStateDefinition()));
     public static final BovinesModelSetType POTTED_MUSHROOM = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("potted_mushroom"), new StateDefinitionBovinesModelSetType(BovinesBlocks.POTTED_CUSTOM_MUSHROOM.getStateDefinition()));
     public static final BovinesModelSetType MUSHROOM_BLOCK = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("mushroom_block"), new StateDefinitionBovinesModelSetType(BovinesBlocks.CUSTOM_MUSHROOM_BLOCK.getStateDefinition()));
-    // public static final BovinesModelSetType CUPCAKE = BovinesModelStateTypeRegistry.register(BovinesAndButtercups.asResource("placeable_edible"), BovinesBlocks.CUSTOM_MUSHROOM_BLOCK.getStateDefinition()); // TODO
+    public static final BovinesModelSetType EDIBLE = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("edible"), EdibleBlockBovinesModelSetType.INSTANCE);
 
     public static void init() {
 

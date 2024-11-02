@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.api;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
@@ -41,6 +42,13 @@ public class BovinesTags {
         public static final TagKey<ConfiguredFeature<?, ?>> RANCH_ALLOWED = TagKey.create(Registries.CONFIGURED_FEATURE, BovinesAndButtercups.asResource("ranch_allowed"));
     }
 
+    public static class EdibleBlockTypeTags {
+        /**
+         * The order in which the flower crowns with each individual material in the creative menu will appear.
+         */
+        public static final TagKey<EdibleBlockType> CREATIVE_MENU_ORDER = TagKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("creative_menu_order"));
+    }
+
     public static class EntityTypeTags {
         /**
          *  Mobs that will equip Flower Crowns by either picking one up or by using a dispenser.
@@ -56,7 +64,6 @@ public class BovinesTags {
     }
 
     public static class ItemTags {
-        public static final TagKey<Item> CUPCAKE_LIGHTERS = TagKey.create(Registries.ITEM, BovinesAndButtercups.asResource("cupcake_lighters"));
         public static final TagKey<Item> MOOBLOOM_FLOWERS = TagKey.create(Registries.ITEM, BovinesAndButtercups.asResource("moobloom_flowers"));
     }
 

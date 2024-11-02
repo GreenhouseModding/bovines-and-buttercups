@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v2 named
 accessible method net/minecraft/advancements/CriteriaTriggers register (Ljava/lang/String;Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
 accessible class net/minecraft/client/renderer/texture/SimpleTexture$TextureImage
 accessible class net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl
@@ -10,3 +10,5 @@ accessible field net/minecraft/world/level/block/FlowerPotBlock POTTED_BY_CONTEN
 accessible method net/minecraft/world/level/block/HoneyBlock maybeDoSlideEffects (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
 extendable method net/minecraft/world/level/block/HoneyBlock maybeDoSlideEffects (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
 extendable class net/minecraft/world/level/levelgen/structure/structures/JigsawStructure
+accessible method net/minecraft/data/models/ModelProvider saveCollection (Lnet/minecraft/data/CachedOutput;Ljava/util/Map;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;
+extendable method net/minecraft/data/models/ModelProvider saveCollection (Lnet/minecraft/data/CachedOutput;Ljava/util/Map;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;

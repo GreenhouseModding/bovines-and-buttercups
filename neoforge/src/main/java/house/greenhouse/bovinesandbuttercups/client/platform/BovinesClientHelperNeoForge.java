@@ -1,5 +1,8 @@
 package house.greenhouse.bovinesandbuttercups.client.platform;
 
+import com.mojang.datafixers.util.Pair;
+import house.greenhouse.bovinesandbuttercups.client.api.model.condition.PlaceableEdibleSelector;
+import house.greenhouse.bovinesandbuttercups.client.model.PlaceableEdibleMultiPartBakedModel;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.EquipmentChecking;
@@ -12,6 +15,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.List;
 
 public class BovinesClientHelperNeoForge implements BovinesClientHelper {
     @Override
@@ -46,5 +51,10 @@ public class BovinesClientHelperNeoForge implements BovinesClientHelper {
             return entity.getItemBySlot(EquipmentSlot.HEAD);
 
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public BakedModel createPlaceableEdibleModel(List<Pair<PlaceableEdibleSelector, BakedModel>> selectors) {
+        return new PlaceableEdibleMultiPartBakedModel(selectors);
     }
 }

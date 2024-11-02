@@ -19,6 +19,7 @@ public class BovinesBlockEntityTypes {
     public static final BlockEntityType<CustomFlowerPotBlockEntity> POTTED_CUSTOM_FLOWER = BlockEntityType.Builder.of(CustomFlowerPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_FLOWER).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_flower").toString())));
     public static final BlockEntityType<CustomMushroomPotBlockEntity> POTTED_CUSTOM_MUSHROOM = BlockEntityType.Builder.of(CustomMushroomPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_MUSHROOM).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_mushroom").toString())));
     public static final BlockEntityType<CustomHugeMushroomBlockEntity> CUSTOM_MUSHROOM_BLOCK = BlockEntityType.Builder.of(CustomHugeMushroomBlockEntity::new, BovinesBlocks.CUSTOM_MUSHROOM_BLOCK).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_mushroom_block").toString())));
+    public static final BlockEntityType<PlaceableEdibleBlockEntity> PLACEABLE_EDIBLE = BlockEntityType.Builder.of(PlaceableEdibleBlockEntity::new, BovinesBlocks.PLACEABLE_EDIBLE).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("placeable_edible").toString())));
 
     @Nullable
     private static Type<?> getType(Supplier<Type<?>> type) {
@@ -28,8 +29,9 @@ public class BovinesBlockEntityTypes {
     public static void registerAll(RegistrationCallback<BlockEntityType<?>> callback) {
         callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_flower"), CUSTOM_FLOWER);
         callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_mushroom"), CUSTOM_MUSHROOM);
+        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_mushroom_block"), CUSTOM_MUSHROOM_BLOCK);
         callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("potted_custom_flower"), POTTED_CUSTOM_FLOWER);
         callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("potted_custom_mushroom"), POTTED_CUSTOM_MUSHROOM);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_mushroom_block"), CUSTOM_MUSHROOM_BLOCK);
+        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("placeable_edible"), PLACEABLE_EDIBLE);
     }
 }

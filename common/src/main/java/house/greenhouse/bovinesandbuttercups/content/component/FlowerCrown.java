@@ -67,6 +67,8 @@ public record FlowerCrown(Holder<FlowerCrownMaterial> topLeft, Holder<FlowerCrow
 
     @Override
     public boolean equals(Object other) {
+        if (other == this)
+            return true;
         if (!(other instanceof FlowerCrown flowerCrown))
             return false;
         return flowerCrown.topLeft.equals(topLeft) && flowerCrown.top.equals(top) && flowerCrown.topRight.equals(topRight)

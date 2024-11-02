@@ -41,7 +41,7 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
                                 .orElseGet(() -> DataResult.success(lootCondition));
                     }
             ).listOf().fieldOf("condition").forGetter(f -> f.condition),
-            Codec.intRange(1, Integer.MAX_VALUE).optionalFieldOf("tick_rate", 1).forGetter(f -> f.tickRate)
+            Codec.intRange(1, 16).optionalFieldOf("tick_rate", 1).forGetter(f -> f.tickRate)
     ).apply(inst, ConditionedTextureModifierFactory::new));
     private static final WeakHashMap<UUID, Map<ResourceLocation, Boolean>> CONDITION_VALUES = new WeakHashMap<>();
 

@@ -52,6 +52,7 @@ import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -219,6 +220,8 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                 entries.addAfter(Items.SADDLE, CreativeTabHelper.getFlowerCrownsForCreativeTab(entries.getContext().holders())));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(entries ->
                 entries.addAfter(Items.HONEY_BLOCK, BovinesItems.RICH_HONEY_BLOCK));
+        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) ->
+                CreativeTabHelper.addEdibleBlocksToCreativeTabs(entries.getContext().holders(), BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(group).orElseThrow(), entries::accept, entries::addAfter));
     }
 
     public static void setBiomeRegistries(@Nullable RegistryAccess registries) {

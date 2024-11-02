@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups.content.item;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -18,12 +19,8 @@ public class CustomHugeMushroomItem extends BlockItem {
         if (stack.has(BovinesDataComponents.CUSTOM_MUSHROOM)) {
             ItemCustomMushroom mushroom = stack.get(BovinesDataComponents.CUSTOM_MUSHROOM);
             if (mushroom.holder().isBound())
-                return getOrCreateNameTranslationKey(mushroom.holder().unwrapKey().orElseThrow().location());
+                return BlockUtil.getOrCreateBlockNameTranslationKey(mushroom.holder().unwrapKey().orElseThrow().location());
         }
         return super.getName(stack);
-    }
-
-    private static Component getOrCreateNameTranslationKey(ResourceLocation location) {
-        return Component.translatable("block." + location.getNamespace() + "." + location.getPath() + "_block");
     }
 }

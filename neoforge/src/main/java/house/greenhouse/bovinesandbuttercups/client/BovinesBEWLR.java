@@ -6,11 +6,13 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomHugeMush
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomMushroomItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.NectarBowlItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.PlaceableEdibleItemRenderer;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomFlowerItem;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomHugeMushroomItem;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomMushroomItem;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.item.NectarBowlItem;
+import house.greenhouse.bovinesandbuttercups.content.item.PlaceableEdibleItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -45,6 +47,8 @@ public class BovinesBEWLR extends BlockEntityWithoutLevelRenderer {
                     NectarBowlItemRenderer.render(stack, context, poseStack, bufferSource, light, overlay);
             case FlowerCrownItem flowerCrownItem ->
                     FlowerCrownItemRenderer.render(stack, context, poseStack, bufferSource, light, overlay);
+            case PlaceableEdibleItem placeableEdibleItem ->
+                    PlaceableEdibleItemRenderer.render(stack, context, poseStack, bufferSource, light, overlay);
             default -> {
             }
         }

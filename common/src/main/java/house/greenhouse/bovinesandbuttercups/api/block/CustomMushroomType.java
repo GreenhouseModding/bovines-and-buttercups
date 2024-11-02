@@ -8,6 +8,7 @@ import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.RegistryFileCodec;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
@@ -23,7 +24,7 @@ public record CustomMushroomType(Optional<SimpleWeightedRandomList<ResourceKey<S
             Codec.BOOL.optionalFieldOf("randomly_rotate_huge_structure", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
     ).apply(builder, CustomMushroomType::new));
 
-    public static final Codec<Holder<CustomMushroomType>> CODEC = RegistryFileCodec.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, DIRECT_CODEC);
+    public static final Codec<Holder<CustomMushroomType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE);
     public static final ResourceKey<CustomMushroomType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, BovinesAndButtercups.asResource("missing_mushroom"));
     public static final CustomMushroomType MISSING = new CustomMushroomType(Optional.empty(), false);
 

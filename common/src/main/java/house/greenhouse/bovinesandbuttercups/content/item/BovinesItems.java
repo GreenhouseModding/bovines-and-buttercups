@@ -38,6 +38,7 @@ public class BovinesItems {
     public static final CustomHugeMushroomItem CUSTOM_MUSHROOM_BLOCK = new CustomHugeMushroomItem(BovinesBlocks.CUSTOM_MUSHROOM_BLOCK, new Item.Properties());
 
     public static final Item FLOWER_CROWN = new FlowerCrownItem(new Item.Properties().stacksTo(1).component(DataComponents.ATTRIBUTE_MODIFIERS, new ItemAttributeModifiers(List.of(), false)));
+    public static final PlaceableEdibleItem PLACEABLE_EDIBLE = new PlaceableEdibleItem(BovinesBlocks.PLACEABLE_EDIBLE, new Item.Properties());
 
     public static final HoneyBottleItem RICH_HONEY_BOTTLE = new HoneyBottleItem(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE).food(BovinesFoods.RICH_HONEY_BOTTLE).stacksTo(16));
     public static final BlockItem RICH_HONEY_BLOCK = new BlockItem(BovinesBlocks.RICH_HONEY_BLOCK, new Item.Properties());
@@ -63,6 +64,7 @@ public class BovinesItems {
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("custom_mushroom_block"), CUSTOM_MUSHROOM_BLOCK);
 
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("flower_crown"), FLOWER_CROWN);
+        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("placeable_edible"), PLACEABLE_EDIBLE);
 
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("rich_honey_bottle"), RICH_HONEY_BOTTLE);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("rich_honey_block"), RICH_HONEY_BLOCK);

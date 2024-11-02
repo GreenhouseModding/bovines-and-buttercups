@@ -59,7 +59,7 @@ public class MooshroomSpawnUtil {
         List<Holder<CowType<MooshroomConfiguration>>> moobloomList = new ArrayList<>();
         int totalWeight = 0;
 
-        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MooshroomConfiguration && cowType.value().configuration() != MooshroomConfiguration.DEFAULT).toList()) {
+        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MooshroomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
             if (!(cowType.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();

@@ -349,20 +349,6 @@ public class BovinesAndButtercupsNeoForge {
             } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
                 CreativeTabHelper.getNectarBowlsForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.MILK_BUCKET), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 event.insertAfter(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(BovinesItems.RICH_HONEY_BOTTLE), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                /*
-                insertAfter(event.getParentEntries(), Items.CAKE, List.of(
-                        BovinesItems.FREESIA_CUPCAKE,
-                        BovinesItems.BIRD_OF_PARADISE_CUPCAKE,
-                        BovinesItems.BUTTERCUP_CUPCAKE,
-                        BovinesItems.LIMELIGHT_CUPCAKE,
-                        BovinesItems.LINGHOLM_CUPCAKE,
-                        BovinesItems.CHARGELILY_CUPCAKE,
-                        BovinesItems.TROPICAL_BLUE_CUPCAKE,
-                        BovinesItems.HYACINTH_CUPCAKE,
-                        BovinesItems.PINK_DAISY_CUPCAKE,
-                        BovinesItems.SNOWDROP_CUPCAKE
-                ), event::insertAfter);
-                 */
             } else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
                 event.accept(BovinesItems.MOOBLOOM_SPAWN_EGG);
             } else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
@@ -370,6 +356,7 @@ public class BovinesAndButtercupsNeoForge {
             } else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 event.insertAfter(new ItemStack(Items.HONEY_BLOCK), new ItemStack(BovinesItems.RICH_HONEY_BLOCK), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
+            CreativeTabHelper.addEdibleBlocksToCreativeTabs(event.getParameters().holders(), event.getTabKey(), event::accept, (firstStack, stack) -> event.insertAfter(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
         }
     }
 

@@ -19,7 +19,7 @@ public class InventoryBovinesModelSetType implements BovinesModelSetType {
     @Override
     public BovinesModelSet createReference(ResourceLocation fileId, JsonObject json) {
         ResourceLocation itemModelLocation = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, json.get("item_model")).getOrThrow().getFirst();
-        return new BovinesModelSet(fileId, this, Map.of(fileId, itemModelLocation.withPath(s -> "bovinesandbuttercups/item/" + s + "/inventory")));
+        return new BovinesModelSet(fileId, this, Map.of(fileId, itemModelLocation.withPath(s -> "bovinesandbuttercups/item/" + s + "/inventory")), Map.of());
     }
 
     @Override

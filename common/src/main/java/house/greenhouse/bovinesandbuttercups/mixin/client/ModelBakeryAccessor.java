@@ -15,6 +15,9 @@ public interface ModelBakeryAccessor {
         throw new RuntimeException("");
     }
 
+    @Accessor("missingModel")
+    UnbakedModel bovinesandbuttercups$getMissingModel();
+
     @Invoker("getModel")
     UnbakedModel bovinesandbuttercups$getModel(ResourceLocation location);
 }

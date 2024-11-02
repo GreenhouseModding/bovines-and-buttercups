@@ -1,12 +1,10 @@
 package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -20,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 public class GenericBovinesModelSetType implements BovinesModelSetType {
@@ -38,15 +35,13 @@ public class GenericBovinesModelSetType implements BovinesModelSetType {
 
         LOADED_JSON.put(modelIds.get(fileId), json);
 
-        return new BovinesModelSet(fileId, this, modelIds);
+        return new BovinesModelSet(fileId, this, modelIds, Map.of());
     }
 
     @Override
     public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
         JsonObject json = LOADED_JSON.get(modelId);
         LOADED_JSON.remove(modelId);
-
-        remapToBlockStateJson(json);
 
         var blockStateJson = remapToBlockStateJson(json);
         if (blockStateJson == null)
@@ -62,6 +57,9 @@ public class GenericBovinesModelSetType implements BovinesModelSetType {
 
     @Nullable
     private static JsonObject remapToBlockStateJson(JsonObject json) {
+        if (json == null)
+            return null;
+
         if (!json.has("model")) {
             BovinesAndButtercups.LOG.warn("\"bovinesandbuttercups:generic\" bovines model set does not have a \"model\" field. This field must be either a model's location or a multipart with \"state_type\" set to 'multipart'.");
             return null;

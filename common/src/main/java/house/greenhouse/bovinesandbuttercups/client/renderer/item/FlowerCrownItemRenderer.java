@@ -127,6 +127,8 @@ public class FlowerCrownItemRenderer {
 
         @Override
         public boolean equals(Object other) {
+            if (other == this)
+                return true;
             if (!(other instanceof TextureMap textureMap))
                 return false;
             return textureMap.topLeft.equals(topLeft) && textureMap.top.equals(top) && textureMap.topRight.equals(topRight)

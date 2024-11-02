@@ -1,0 +1,7 @@
+{
+  "parent": "bovinesandbuttercups:block/template_two_cupcake_candles_index_two",
+  "render_type": "cutout",
+  "textures": {
+    "all": "minecraft:block/cyan_candle"
+  }
+}

@@ -1,7 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.component;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.block.PlaceableEdibleType;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,9 +18,9 @@ public class BovinesDataComponents {
             .persistent(ItemCustomMushroom.CODEC)
             .networkSynchronized(ItemCustomMushroom.STREAM_CODEC)
             .build();
-    public static final DataComponentType<ItemPlaceableEdible> PLACEABLE_EDIBLE = DataComponentType.<ItemPlaceableEdible>builder()
-            .persistent(ItemPlaceableEdible.CODEC)
-            .networkSynchronized(ItemPlaceableEdible.STREAM_CODEC)
+    public static final DataComponentType<ItemEdibleType> EDIBLE_TYPE = DataComponentType.<ItemEdibleType>builder()
+            .persistent(ItemEdibleType.CODEC)
+            .networkSynchronized(ItemEdibleType.STREAM_CODEC)
             .build();
     public static final DataComponentType<FlowerCrown> FLOWER_CROWN = DataComponentType.<FlowerCrown>builder()
             .persistent(FlowerCrown.CODEC)
@@ -31,7 +30,7 @@ public class BovinesDataComponents {
     public static void registerAll(RegistrationCallback<DataComponentType<?>> callback) {
         callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("custom_flower"), CUSTOM_FLOWER);
         callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("custom_mushroom"), CUSTOM_MUSHROOM);
-        callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("placeable_edible"), PLACEABLE_EDIBLE);
+        callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("edible_type"), EDIBLE_TYPE);
         callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("nectar"), NECTAR);;
         callback.register(BuiltInRegistries.DATA_COMPONENT_TYPE, BovinesAndButtercups.asResource("flower_crown"), FLOWER_CROWN);
     }

@@ -1,13 +1,19 @@
 package house.greenhouse.bovinesandbuttercups.datagen;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.api.BovinesConventionalTags;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
+import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
@@ -18,6 +24,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -48,7 +55,19 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.BlockModelGenerators;
+import net.minecraft.data.models.ItemModelGenerators;
+import net.minecraft.data.models.blockstates.BlockStateGenerator;
+import net.minecraft.data.models.model.DelegatedModel;
+import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -62,12 +81,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -84,12 +105,17 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class BovinesDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -104,10 +130,13 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(BiomeTagProvider::new);
         pack.addProvider(BlockTagProvider::new);
         pack.addProvider(ConfiguredFeatureTagProvider::new);
+        pack.addProvider(EdibleBlockTypeTagProvider::new);
         pack.addProvider(EntityTypeTagProvider::new);
         pack.addProvider(FlowerCrownMaterialTagProvider::new);
         pack.addProvider(ItemTagProvider::new);
         pack.addProvider(NectarTagProvider::new);
+
+        pack.addProvider(ModelProvider::new);
     }
 
     @Override
@@ -120,6 +149,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.add(BovinesRegistryKeys.NECTAR, BovinesNectars::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.COW_TYPE, BovinesCowTypes::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesFlowerCrownMaterials::bootstrap);
+        registryBuilder.add(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesEdibleBlockTypes::bootstrap);
     }
 
     private static class DynamicRegistryProvider extends FabricDynamicRegistryProvider {
@@ -133,6 +163,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             BovinesNectars.bootstrap(createContext(registries, entries));
             BovinesCowTypes.bootstrap(createContext(registries, entries));
             BovinesFlowerCrownMaterials.bootstrap(createContext(registries, entries));
+            BovinesEdibleBlockTypes.bootstrap(createContext(registries, entries));
         }
 
         private static <T> BootstrapContext<T> createContext(HolderLookup.Provider registries, Entries entries) {
@@ -563,6 +594,29 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
+    private static class EdibleBlockTypeTagProvider extends FabricTagProvider<EdibleBlockType> {
+        public EdibleBlockTypeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
+            super(output, BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, lookup);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider lookup) {
+            tag(BovinesTags.EdibleBlockTypeTags.CREATIVE_MENU_ORDER)
+                    .add(BovinesEdibleBlockTypes.FREESIA_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.BIRD_OF_PARADISE_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.BUTTERCUP_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.LIMELIGHT_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.LINGHOLM_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_TART)
+                    .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_TART);
+        }
+    }
+
     private static class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvider {
         public EntityTypeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
             super(output, lookup);
@@ -646,6 +700,116 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesNectars.HYACINTH)
                     .add(BovinesNectars.PINK_DAISY)
                     .add(BovinesNectars.SNOWDROP);
+        }
+    }
+
+    private static class ModelProvider extends FabricModelProvider {
+        public ModelProvider(FabricDataOutput output) {
+            super(output);
+        }
+
+        @Override
+        public void generateBlockStateModels(BlockModelGenerators generators) {
+            createCupcakes(BovinesEdibleBlockTypes.BIRD_OF_PARADISE_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.BUTTERCUP_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.FREESIA_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.LIMELIGHT_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.LINGHOLM_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE, generators);
+
+            createCandles(Blocks.CANDLE, generators);
+            createCandles(Blocks.WHITE_CANDLE, generators);
+            createCandles(Blocks.ORANGE_CANDLE, generators);
+            createCandles(Blocks.MAGENTA_CANDLE, generators);
+            createCandles(Blocks.LIGHT_BLUE_CANDLE, generators);
+            createCandles(Blocks.YELLOW_CANDLE, generators);
+            createCandles(Blocks.LIME_CANDLE, generators);
+            createCandles(Blocks.PINK_CANDLE, generators);
+            createCandles(Blocks.GRAY_CANDLE, generators);
+            createCandles(Blocks.LIGHT_GRAY_CANDLE, generators);
+            createCandles(Blocks.CYAN_CANDLE, generators);
+            createCandles(Blocks.PURPLE_CANDLE, generators);
+            createCandles(Blocks.BLUE_CANDLE, generators);
+            createCandles(Blocks.BROWN_CANDLE, generators);
+            createCandles(Blocks.GREEN_CANDLE, generators);
+            createCandles(Blocks.RED_CANDLE, generators);
+            createCandles(Blocks.BLACK_CANDLE, generators);
+        }
+
+        private static final ModelTemplate CUPCAKE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes")), Optional.empty(), TextureSlot.ALL);
+
+        public static void createCupcakes(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
+            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
+
+            CUPCAKE.create(type.location().withPath(s -> "block/" + s), mapping, generators.modelOutput);
+            TWO_CUPCAKES.create(type.location().withPath(s -> "block/two_" + s + "s"), mapping, generators.modelOutput);
+            THREE_CUPCAKES.create(type.location().withPath(s -> "block/three_" + s + "s"), mapping, generators.modelOutput);
+            FOUR_CUPCAKES.create(type.location().withPath(s -> "block/four_" + s + "s"), mapping, generators.modelOutput);
+        }
+
+        public static void createCandles(Block candleBlock, BlockModelGenerators generators) {
+            createCandlesInner(candleBlock, "", generators);
+            createCandlesInner(candleBlock, "_lit", generators);
+        }
+
+        private static final ModelTemplate CUPCAKE_CANDLE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake_candle")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_FOUR = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_four")), Optional.empty(), TextureSlot.ALL);
+
+        private static void createCandlesInner(Block candleBlock, String suffix, BlockModelGenerators generators) {
+            var mapping = new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(candleBlock, suffix));
+            CUPCAKE_CANDLE.create(modelLocation(candleBlock, "cupcake_", suffix), mapping, generators.modelOutput);
+
+            TWO_CUPCAKE_CANDLES_INDEX_ONE.create(modelLocation(candleBlock, "two_cupcake_", "s_index_one" + suffix), mapping, generators.modelOutput);
+            TWO_CUPCAKE_CANDLES_INDEX_TWO.create(modelLocation(candleBlock, "two_cupcake_", "s_index_two" + suffix), mapping, generators.modelOutput);
+
+            THREE_CUPCAKE_CANDLES_INDEX_ONE.create(modelLocation(candleBlock, "three_cupcake_", "s_index_one" + suffix), mapping, generators.modelOutput);
+            THREE_CUPCAKE_CANDLES_INDEX_TWO.create(modelLocation(candleBlock, "three_cupcake_", "s_index_two" + suffix), mapping, generators.modelOutput);
+            THREE_CUPCAKE_CANDLES_INDEX_THREE.create(modelLocation(candleBlock, "three_cupcake_", "s_index_three" + suffix), mapping, generators.modelOutput);
+
+            FOUR_CUPCAKE_CANDLES_INDEX_ONE.create(modelLocation(candleBlock, "four_cupcake_", "s_index_one" + suffix), mapping, generators.modelOutput);
+            FOUR_CUPCAKE_CANDLES_INDEX_TWO.create(modelLocation(candleBlock, "four_cupcake_", "s_index_two" + suffix), mapping, generators.modelOutput);
+            FOUR_CUPCAKE_CANDLES_INDEX_THREE.create(modelLocation(candleBlock, "four_cupcake_", "s_index_three" + suffix), mapping, generators.modelOutput);
+            FOUR_CUPCAKE_CANDLES_INDEX_FOUR.create(modelLocation(candleBlock, "four_cupcake_", "s_index_four" + suffix), mapping, generators.modelOutput);
+        }
+
+        private static ResourceLocation modelLocation(Block block, String prefix, String suffix) {
+            ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(block);
+            if (blockKey.getNamespace().equals(ResourceLocation.DEFAULT_NAMESPACE))
+                blockKey = BovinesAndButtercups.asResource(blockKey.getPath());
+            return blockKey.withPath(s -> "block/" + prefix + s + suffix);
+        }
+
+        @Override
+        public void generateItemModels(ItemModelGenerators generators) {
+            // No-op
+        }
+
+        @Override
+        public <T> CompletableFuture<?> saveCollection(CachedOutput output, Map<T, ? extends Supplier<JsonElement>> objectToJsonMap, Function<T, Path> resolveObjectPath) {
+            return CompletableFuture.allOf(objectToJsonMap.entrySet().stream().map((entry) -> {
+                Path path = resolveObjectPath.apply(entry.getKey());
+                JsonElement jsonElement = (JsonElement)((Supplier)entry.getValue()).get();
+                if (jsonElement.isJsonObject()) {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    jsonObject.addProperty("render_type", "cutout");
+                }
+                return DataProvider.saveStable(output, jsonElement, path);
+            }).toArray(CompletableFuture[]::new));
         }
     }
 }

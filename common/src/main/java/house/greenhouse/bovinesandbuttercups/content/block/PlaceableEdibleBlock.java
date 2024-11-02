@@ -1,12 +1,15 @@
 package house.greenhouse.bovinesandbuttercups.content.block;
 
 import com.mojang.serialization.MapCodec;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -27,26 +30,21 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public class PlaceableEdibleBlock extends BaseEntityBlock {
     public static final MapCodec<PlaceableEdibleBlock> CODEC = simpleCodec(PlaceableEdibleBlock::new);
-    public static final int MIN_CUPCAKES = 1;
-    public static final int MAX_CUPCAKES = 4;
-    public static final IntegerProperty COUNT = IntegerProperty.create("count", MIN_CUPCAKES, MAX_CUPCAKES);
-    protected static final VoxelShape[] SHAPE_BY_COUNT = new VoxelShape[] {
-            Block.box(0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 5.0, 11.0),
-            Block.box(1.0, 0.0, 5.0, 15.0, 5.0, 11.0),
-            Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0),
-            Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0)
-    };
+    public static final IntegerProperty BITES = IntegerProperty.create("bites", 1, 16);
 
     public PlaceableEdibleBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(COUNT, 1));
+        registerDefaultState(getStateDefinition().any().setValue(BITES, 1));
     }
 
     @Override
@@ -56,56 +54,114 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE_BY_COUNT[state.getValue(COUNT)];
+        if (level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity blockEntity) {
+            ItemEdibleType edible = blockEntity.getEdibleType();
+            if (edible != null && edible.holder().isBound()) {
+                var shape = edible.holder().value().shapes().entrySet().stream().filter(entry -> entry.getKey().test(blockEntity)).findFirst();
+                return shape.map(Map.Entry::getValue).orElse(Shapes.block());
+            }
+        }
+        return Shapes.block();
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            if (eat(level, pos, state, player).consumesAction())
-                return InteractionResult.SUCCESS;
-
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())
-                return InteractionResult.CONSUME;
-        }
+        if (level.isClientSide)
+            return InteractionResult.CONSUME;
 
         return eat(level, pos, state, player);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide)
+            return ItemInteractionResult.CONSUME;
+
         Item item = stack.getItem();
-        int i = state.getValue(COUNT);
-        if (stack.is(asItem())) {
-            if (i > 3)
+        if (!(level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity be) || be.getEdibleType() == null || !be.getEdibleType().holder().isBound())
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        int i = state.getValue(BITES);
+        if (ItemStack.isSameItemSameComponents(stack, getCloneItemStack(level, pos, state))) {
+            if (i >= be.getEdibleType().holder().value().bites())
                 return ItemInteractionResult.CONSUME;
             stack.consume(1, player);
-            level.setBlock(pos, state.setValue(COUNT, i + 1), 3);
+            level.setBlock(pos, state.setValue(BITES, i + 1), Block.UPDATE_ALL);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+            level.playSound(null, pos, getSoundType(state).getPlaceSound(), SoundSource.BLOCKS);
             player.awardStat(Stats.ITEM_USED.get(item));
             return ItemInteractionResult.SUCCESS;
         }
-        // TODO: Modify me!
-        if (stack.is(ItemTags.CANDLES)) {
-            stack.consume(1, player);
-            level.playSound(null, pos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.blockEntityChanged(pos);
-            player.awardStat(Stats.ITEM_USED.get(item));
-            return ItemInteractionResult.SUCCESS;
-        }
+
+        var activateResult = be.activate(stack, player, hand, hitResult);
+        if (activateResult.consumesAction())
+            return activateResult;
+
+        var addAttachmentResult = be.addAttachmentItem(stack, player);
+        if (addAttachmentResult.consumesAction())
+            return addAttachmentResult;
+
+        var removeAttachmentResult = be.removeAttachmentItem();
+        if (removeAttachmentResult.consumesAction())
+            return removeAttachmentResult;
+
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos blockPos, BlockState blockState) {
+        ItemStack itemStack = new ItemStack(this);
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        if (blockEntity instanceof PlaceableEdibleBlockEntity pebe)
+            if (pebe.getEdibleType() != null)
+                ItemEdibleType.apply(itemStack, pebe.getEdibleType().holder());
+
+        return itemStack;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof PlaceableEdibleBlockEntity edibleBlockEntity) || edibleBlockEntity.getParticles() == null)
+            return;
+        edibleBlockEntity.getParticles()
+                    .forEach(particleEntry -> addParticlesAndSound(
+                                    particleEntry, level, particleEntry.position().add(pos.getX(), pos.getY(), pos.getZ()), random
+                            )
+                    );
+    }
+
+    private static void addParticlesAndSound(EdibleBlockType.ParticleEntry particleEntry, Level level, Vec3 offset, RandomSource random) {
+        float f = random.nextFloat();
+        if (f < particleEntry.chance()) {
+            level.addParticle(particleEntry.particle(), offset.x, offset.y, offset.z, particleEntry.speed().x, particleEntry.speed().y, particleEntry.speed().z);
+            if (particleEntry.sound().isPresent()) {
+                EdibleBlockType.SoundSettings soundSettings = particleEntry.sound().get();
+                if (f < soundSettings.chance()) {
+                    level.playLocalSound(
+                            offset.x + 0.5,
+                            offset.y + 0.5,
+                            offset.z + 0.5,
+                            soundSettings.sound().value(),
+                            SoundSource.BLOCKS,
+                            soundSettings.volume().randomise(level.random),
+                            soundSettings.pitch().randomise(level.random),
+                            false
+                    );
+                }
+            }
+        }
     }
 
     public static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
         if (!player.canEat(false))
-            return InteractionResult.PASS;
+            return InteractionResult.CONSUME;
 
         player.awardStat(Stats.EAT_CAKE_SLICE);
         player.getFoodData().eat(2, 0.1F);
-        int i = state.getValue(COUNT);
+        int i = state.getValue(BITES);
         level.gameEvent(player, GameEvent.EAT, pos);
-        if (i > MIN_CUPCAKES)
-            level.setBlock(pos, state.setValue(COUNT, i - 1), 3);
+        if (i > 1)
+            level.setBlock(pos, state.setValue(BITES, i - 1), Block.UPDATE_ALL);
         else {
             level.removeBlock(pos, false);
             level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
@@ -128,12 +184,15 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(COUNT);
+        builder.add(BITES);
     }
 
     @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return Math.min(MAX_CUPCAKES - blockState.getValue(COUNT) * 4, 15);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof PlaceableEdibleBlockEntity be) || be.getEdibleType() == null || !be.getEdibleType().holder().isBound())
+            return 0;
+        return (int) Math.min(((float)(blockState.getValue(BITES) / be.getEdibleType().holder().value().bites())) * 15, 15);
     }
 
     @Override
@@ -148,6 +207,6 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return BovinesBlockEntityTypes.PLACEABLE_EDIBLE.create(pos, state);
     }
 }
