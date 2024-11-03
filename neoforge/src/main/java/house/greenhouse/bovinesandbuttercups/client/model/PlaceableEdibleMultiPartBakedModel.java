@@ -37,7 +37,7 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
     protected final ItemOverrides overrides;
     private final Map<PlaceableEdibleBlockEntity.EdibleBlockEntityValues, BitSet> selectorCache = new Reference2ObjectOpenHashMap<>();
 
-    private final ModelProperty<BitSet> bitSetProperty = new ModelProperty<>();
+    private static final ModelProperty<BitSet> BIT_SET_PROPERTY = new ModelProperty<>();
 
     public PlaceableEdibleMultiPartBakedModel(List<Pair<PlaceableEdibleSelector, BakedModel>> selectors) {
         this.selectors = selectors;
@@ -52,24 +52,21 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
 
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, RandomSource random, ModelData data, @Nullable RenderType renderType) {
-        if (state == null) {
+        if (state == null)
             return Collections.emptyList();
-        } else {
+        List<BakedQuad> list = Lists.newArrayList();
+        long k = random.nextLong();
 
-            List<BakedQuad> list = Lists.newArrayList();
-            long k = random.nextLong();
+        if (!data.has(BIT_SET_PROPERTY))
+            return Collections.emptyList();
 
-            if (!data.has(bitSetProperty))
-                return Collections.emptyList();
-
-            for (int j = 0; j < data.get(bitSetProperty).length(); j++) {
-                if (data.get(bitSetProperty).get(j)) {
-                    list.addAll(this.selectors.get(j).getSecond().getQuads(state, direction, RandomSource.create(k), data, renderType));
-                }
+        for (int j = 0; j < data.get(BIT_SET_PROPERTY).length(); j++) {
+            if (data.get(BIT_SET_PROPERTY).get(j)) {
+                list.addAll(this.selectors.get(j).getSecond().getQuads(state, direction, RandomSource.create(k), data, renderType));
             }
-
-            return list;
         }
+
+        return list;
     }
 
     @Override
@@ -90,7 +87,7 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
 
                 this.selectorCache.put(values, bitset);
             }
-            return ModelData.of(bitSetProperty, bitset);
+            return modelData.derive().with(BIT_SET_PROPERTY, bitset).build();
         }
         return modelData;
     }
@@ -121,8 +118,14 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
     }
 
     @Override
+    public TextureAtlasSprite getParticleIcon(ModelData data) {
+        return particleIcon;
+    }
+
+    @Override
+    @Deprecated
     public TextureAtlasSprite getParticleIcon() {
-        return this.particleIcon;
+        return null;
     }
 
     @Override

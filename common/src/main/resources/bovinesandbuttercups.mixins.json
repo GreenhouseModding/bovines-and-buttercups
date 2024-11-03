@@ -42,8 +42,7 @@
     "client.ModelBakeryMixin",
     "client.MushroomCowMushroomLayerMixin",
     "client.SimpleTextureMixin",
-    "client.SimpleTextureTextureImageAccessor",
-    "client.TerrainParticleMixin"
+    "client.SimpleTextureTextureImageAccessor"
   ],
   "server": [
   ],

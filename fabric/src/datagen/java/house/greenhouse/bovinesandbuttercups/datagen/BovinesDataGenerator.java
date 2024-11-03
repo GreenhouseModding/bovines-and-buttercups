@@ -410,6 +410,14 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                                     .when(ExplosionCondition.survivesExplosion())
                             )
             );
+            add(BovinesBlocks.POTTED_CUSTOM_MUSHROOM,
+                    LootTable.lootTable()
+                            .withPool(LootPool.lootPool()
+                                    .setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(Items.FLOWER_POT))
+                                    .when(ExplosionCondition.survivesExplosion())
+                            )
+            );
         }
 
     }

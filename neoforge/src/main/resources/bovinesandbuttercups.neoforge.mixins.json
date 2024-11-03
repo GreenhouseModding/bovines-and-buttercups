@@ -7,8 +7,9 @@
     "MushroomCowMixin"
   ],
   "client": [
-    "client.EntityRenderersEventAddLayersAccessor",
+    "client.BlockModelShaperMixin",
     "client.EffectRenderingInventoryScreenMixin",
+    "client.EntityRenderersEventAddLayersAccessor",
     "client.GuiMixin"
   ],
   "server": [

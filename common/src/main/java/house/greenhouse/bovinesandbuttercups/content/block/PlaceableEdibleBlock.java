@@ -7,6 +7,8 @@ import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibl
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -29,6 +31,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,7 +43,10 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PlaceableEdibleBlock extends BaseEntityBlock {
     public static final MapCodec<PlaceableEdibleBlock> CODEC = simpleCodec(PlaceableEdibleBlock::new);
@@ -169,6 +179,14 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        LootParams lootParams = params.withParameter(LootContextParams.BLOCK_STATE, state).create(LootContextParamSets.BLOCK);
+        BlockEntity blockEntity = lootParams.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+        if (!(blockEntity instanceof PlaceableEdibleBlockEntity placeableEdibleBlockEntity))
+            return Collections.emptyList();
+        return placeableEdibleBlockEntity.getAttachments().values().stream().flatMap(attachmentState -> attachmentState.items().stream()).toList();
     }
 
     @Override

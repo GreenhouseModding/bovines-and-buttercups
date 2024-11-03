@@ -17,7 +17,8 @@
     "client.GuiMixin",
     "client.LivingEntityRendererMixin",
     "client.MushroomCowRendererMixin",
-    "client.PlayerRendererMixin"
+    "client.PlayerRendererMixin",
+    "client.TerrainParticleMixin"
   ],
   "server": [
   ],

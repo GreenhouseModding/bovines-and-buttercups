@@ -2,12 +2,14 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.EdibleBlockBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomHugeMushroomBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -39,6 +41,6 @@ public class PlaceableEdibleBlockRenderer implements BlockEntityRenderer<Placeab
                     bakedModel = newModel;
             }
         }
-        blockRenderDispatcher.getModelRenderer().tesselateBlock(blockEntity.getLevel(), bakedModel, blockEntity.getBlockState(), blockEntity.getBlockPos(), poseStack, bufferSource.getBuffer(RenderType.cutout()), false, RandomSource.create(), blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY);
+        BovinesAndButtercupsClient.getHelper().tesselateBlock(blockRenderDispatcher, blockEntity.getLevel(), bakedModel, blockEntity.getBlockState(), blockEntity.getBlockPos(), poseStack, bufferSource, RenderType.cutout(), false, RandomSource.create(), blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY);
     }
 }

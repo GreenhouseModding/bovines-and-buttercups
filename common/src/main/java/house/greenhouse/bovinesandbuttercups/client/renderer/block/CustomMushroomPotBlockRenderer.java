@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
@@ -37,6 +38,6 @@ public class CustomMushroomPotBlockRenderer implements BlockEntityRenderer<Custo
                     bakedModel = newModel;
             }
         }
-        blockRenderDispatcher.getModelRenderer().tesselateBlock(blockEntity.getLevel(), bakedModel, blockEntity.getBlockState(), blockEntity.getBlockPos(), poseStack, bufferSource.getBuffer(RenderType.cutout()), false, RandomSource.create(), blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY);
+        BovinesAndButtercupsClient.getHelper().tesselateBlock(blockRenderDispatcher, blockEntity.getLevel(), bakedModel, blockEntity.getBlockState(), blockEntity.getBlockPos(), poseStack, bufferSource, RenderType.cutout(), false, RandomSource.create(), blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY);
     }
 }
