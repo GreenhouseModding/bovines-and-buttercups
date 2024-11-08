@@ -22,34 +22,34 @@ public class BovinesNectars {
 
     public static void bootstrap(BootstrapContext<Nectar> context) {
         context.register(BIRD_OF_PARADISE,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/bird_of_paradise_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/bird_of_paradise_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.SLOW_FALLING, 7200)))));
         context.register(BUTTERCUP,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/buttercup_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/buttercup_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.POISON, 2400)))));
         context.register(CHARGELILY,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/chargelily_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/chargelily_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SPEED, 1200)))));
         context.register(FREESIA,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/freesia_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/freesia_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.WATER_BREATHING, 9600)))));
         context.register(HYACINTH,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/hyacinth_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/hyacinth_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.WITHER, 2400)))));
         context.register(LIMELIGHT,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/limelight_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/limelight_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.REGENERATION, 2400)))));
         context.register(LINGHOLM,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/lingholm_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/lingholm_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.MOVEMENT_SPEED, 2400)))));
         context.register(PINK_DAISY,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/pink_daisy_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/pink_daisy_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DAMAGE_BOOST, 2400)))));
         context.register(SNOWDROP,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/snowdrop_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/snowdrop_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SLOWDOWN, 7200)))));
         context.register(TROPICAL_BLUE,
-                new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/tropical_blue_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/tropical_blue_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.FIRE_RESISTANCE, 9600)))));
     }
 }

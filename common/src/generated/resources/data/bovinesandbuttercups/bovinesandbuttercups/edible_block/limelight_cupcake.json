@@ -55,41 +55,6 @@
                   "#minecraft:candles": {
                     "active": true,
                     "count": {
-                      "max": 1,
-                      "min": 1
-                    },
-                    "item": []
-                  }
-                },
-                "bite_count": {
-                  "max": 3,
-                  "min": 3
-                }
-              },
-              "particles": [
-                {
-                  "particle": {
-                    "type": "minecraft:smoke"
-                  },
-                  "position": [
-                    0.75,
-                    0.6875,
-                    0.25
-                  ],
-                  "speed": [
-                    0.0,
-                    0.10000000149011612,
-                    0.0
-                  ]
-                }
-              ]
-            },
-            {
-              "comparable": {
-                "attachments": {
-                  "#minecraft:candles": {
-                    "active": true,
-                    "count": {
                       "min": 4
                     },
                     "item": []
@@ -167,12 +132,16 @@
                 "attachments": {
                   "#minecraft:candles": {
                     "active": true,
+                    "count": {
+                      "max": 1,
+                      "min": 1
+                    },
                     "item": []
                   }
                 },
                 "bite_count": {
-                  "max": 1,
-                  "min": 1
+                  "max": 3,
+                  "min": 3
                 }
               },
               "particles": [
@@ -181,9 +150,108 @@
                     "type": "minecraft:smoke"
                   },
                   "position": [
-                    0.5,
+                    0.75,
+                    0.6875,
+                    0.25
+                  ],
+                  "speed": [
+                    0.0,
+                    0.10000000149011612,
+                    0.0
+                  ]
+                }
+              ]
+            },
+            {
+              "comparable": {
+                "attachments": {
+                  "#minecraft:candles": {
+                    "active": true,
+                    "count": {
+                      "min": 2
+                    },
+                    "item": []
+                  }
+                },
+                "bite_count": {
+                  "max": 2,
+                  "min": 2
+                }
+              },
+              "particles": [
+                {
+                  "particle": {
+                    "type": "minecraft:smoke"
+                  },
+                  "position": [
+                    0.75,
                     0.6875,
                     0.5
+                  ],
+                  "speed": [
+                    0.0,
+                    0.10000000149011612,
+                    0.0
+                  ]
+                },
+                {
+                  "particle": {
+                    "type": "minecraft:smoke"
+                  },
+                  "position": [
+                    0.25,
+                    0.625,
+                    0.5
+                  ],
+                  "speed": [
+                    0.0,
+                    0.10000000149011612,
+                    0.0
+                  ]
+                }
+              ]
+            },
+            {
+              "comparable": {
+                "attachments": {
+                  "#minecraft:candles": {
+                    "active": true,
+                    "count": {
+                      "max": 2,
+                      "min": 2
+                    },
+                    "item": []
+                  }
+                },
+                "bite_count": {
+                  "max": 3,
+                  "min": 3
+                }
+              },
+              "particles": [
+                {
+                  "particle": {
+                    "type": "minecraft:smoke"
+                  },
+                  "position": [
+                    0.75,
+                    0.6875,
+                    0.25
+                  ],
+                  "speed": [
+                    0.0,
+                    0.10000000149011612,
+                    0.0
+                  ]
+                },
+                {
+                  "particle": {
+                    "type": "minecraft:smoke"
+                  },
+                  "position": [
+                    0.25,
+                    0.625,
+                    0.25
                   ],
                   "speed": [
                     0.0,
@@ -263,8 +331,8 @@
                   "#minecraft:candles": {
                     "active": true,
                     "count": {
-                      "max": 2,
-                      "min": 2
+                      "max": 1,
+                      "min": 1
                     },
                     "item": []
                   }
@@ -281,21 +349,6 @@
                   "position": [
                     0.75,
                     0.6875,
-                    0.25
-                  ],
-                  "speed": [
-                    0.0,
-                    0.10000000149011612,
-                    0.0
-                  ]
-                },
-                {
-                  "particle": {
-                    "type": "minecraft:smoke"
-                  },
-                  "position": [
-                    0.25,
-                    0.625,
                     0.25
                   ],
                   "speed": [
@@ -411,8 +464,8 @@
                   "#minecraft:candles": {
                     "active": true,
                     "count": {
-                      "max": 1,
-                      "min": 1
+                      "max": 2,
+                      "min": 2
                     },
                     "item": []
                   }
@@ -436,41 +489,6 @@
                     0.10000000149011612,
                     0.0
                   ]
-                }
-              ]
-            },
-            {
-              "comparable": {
-                "attachments": {
-                  "#minecraft:candles": {
-                    "active": true,
-                    "count": {
-                      "max": 2,
-                      "min": 2
-                    },
-                    "item": []
-                  }
-                },
-                "bite_count": {
-                  "max": 3,
-                  "min": 3
-                }
-              },
-              "particles": [
-                {
-                  "particle": {
-                    "type": "minecraft:smoke"
-                  },
-                  "position": [
-                    0.75,
-                    0.6875,
-                    0.25
-                  ],
-                  "speed": [
-                    0.0,
-                    0.10000000149011612,
-                    0.0
-                  ]
                 },
                 {
                   "particle": {
@@ -494,15 +512,12 @@
                 "attachments": {
                   "#minecraft:candles": {
                     "active": true,
-                    "count": {
-                      "min": 2
-                    },
                     "item": []
                   }
                 },
                 "bite_count": {
-                  "max": 2,
-                  "min": 2
+                  "max": 1,
+                  "min": 1
                 }
               },
               "particles": [
@@ -511,23 +526,8 @@
                     "type": "minecraft:smoke"
                   },
                   "position": [
-                    0.75,
+                    0.5,
                     0.6875,
-                    0.5
-                  ],
-                  "speed": [
-                    0.0,
-                    0.10000000149011612,
-                    0.0
-                  ]
-                },
-                {
-                  "particle": {
-                    "type": "minecraft:smoke"
-                  },
-                  "position": [
-                    0.25,
-                    0.625,
                     0.5
                   ],
                   "speed": [
@@ -552,6 +552,20 @@
               "#minecraft:candles": {
                 "active": true,
                 "count": {
+                  "min": 3
+                },
+                "item": []
+              }
+            }
+          },
+          "level": 3
+        },
+        {
+          "comparable": {
+            "attachments": {
+              "#minecraft:candles": {
+                "active": true,
+                "count": {
                   "min": 4
                 },
                 "item": []
@@ -584,20 +598,6 @@
             }
           },
           "level": 3
-        },
-        {
-          "comparable": {
-            "attachments": {
-              "#minecraft:candles": {
-                "active": true,
-                "count": {
-                  "min": 3
-                },
-                "item": []
-              }
-            }
-          },
-          "level": 3
         }
       ],
       "max_count": 4,
@@ -614,6 +614,131 @@
     }
   ],
   "particles": [
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "max": 1,
+              "min": 1
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "min": 4
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "max": 1,
+              "min": 1
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 2,
+          "min": 2
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.5
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.5
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
     {
       "comparable": {
         "attachments": {
@@ -768,176 +893,8 @@
           "#minecraft:candles": {
             "active": true,
             "count": {
+              "max": 2,
               "min": 2
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 2,
-          "min": 2
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.5
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.25,
-            0.625,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.25,
-            0.625,
-            0.5
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 2,
-          "min": 2
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.5
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
             },
             "item": []
           }
@@ -989,132 +946,6 @@
             0.0,
             0.0
           ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 1,
-              "min": 1
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 3,
-          "min": 3
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.25
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "count": {
-              "max": 2,
-              "min": 2
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 3,
-          "min": 3
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.25
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.75,
-            0.6875,
-            0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
         },
         {
           "particle": {
@@ -1140,65 +971,6 @@
             0.25,
             0.625,
             0.25
-          ],
-          "sound": {
-            "chance": 0.17,
-            "pitch": {
-              "max": 1.0,
-              "min": 0.3
-            },
-            "sound": "minecraft:block.candle.ambient",
-            "volume": {
-              "max": 1.1,
-              "min": 1.0
-            }
-          },
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      ]
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "active": true,
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 1,
-          "min": 1
-        }
-      },
-      "particles": [
-        {
-          "particle": {
-            "type": "minecraft:flame"
-          },
-          "position": [
-            0.5,
-            0.6875,
-            0.5
-          ],
-          "speed": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        {
-          "chance": 0.3,
-          "particle": {
-            "type": "minecraft:smoke"
-          },
-          "position": [
-            0.5,
-            0.6875,
-            0.5
           ],
           "sound": {
             "chance": 0.17,
@@ -1374,14 +1146,15 @@
           "#minecraft:candles": {
             "active": true,
             "count": {
-              "max": 2,
-              "min": 2
+              "max": 1,
+              "min": 1
             },
             "item": []
           }
         },
         "bite_count": {
-          "min": 4
+          "max": 3,
+          "min": 3
         }
       },
       "particles": [
@@ -1427,6 +1200,68 @@
             0.0,
             0.0
           ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "min": 2
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 2,
+          "min": 2
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.5
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.5
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
         },
         {
           "particle": {
@@ -1435,7 +1270,7 @@
           "position": [
             0.25,
             0.625,
-            0.25
+            0.5
           ],
           "speed": [
             0.0,
@@ -1451,7 +1286,66 @@
           "position": [
             0.25,
             0.625,
-            0.25
+            0.5
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 1,
+          "min": 1
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.5,
+            0.6875,
+            0.5
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.5,
+            0.6875,
+            0.5
           ],
           "sound": {
             "chance": 0.17,
@@ -1662,9 +1556,183 @@
           ]
         }
       ]
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "active": true,
+            "count": {
+              "max": 2,
+              "min": 2
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "particles": [
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.75,
+            0.6875,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "particle": {
+            "type": "minecraft:flame"
+          },
+          "position": [
+            0.25,
+            0.625,
+            0.25
+          ],
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "chance": 0.3,
+          "particle": {
+            "type": "minecraft:smoke"
+          },
+          "position": [
+            0.25,
+            0.625,
+            0.25
+          ],
+          "sound": {
+            "chance": 0.17,
+            "pitch": {
+              "max": 1.0,
+              "min": 0.3
+            },
+            "sound": "minecraft:block.candle.ambient",
+            "volume": {
+              "max": 1.1,
+              "min": 1.0
+            }
+          },
+          "speed": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
     }
   ],
   "shapes": [
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "count": {
+              "min": 3
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "shape": {
+        "shapes": [
+          {
+            "max": [
+              0.9375,
+              0.3125,
+              0.9375
+            ],
+            "min": [
+              0.0625,
+              0.0,
+              0.0625
+            ]
+          },
+          {
+            "max": [
+              0.3125,
+              0.5,
+              0.3125
+            ],
+            "min": [
+              0.1875,
+              0.3125,
+              0.1875
+            ]
+          },
+          {
+            "max": [
+              0.5625,
+              0.625,
+              0.8125
+            ],
+            "min": [
+              0.4375,
+              0.3125,
+              0.6875
+            ]
+          },
+          {
+            "max": [
+              0.8125,
+              0.5625,
+              0.3125
+            ],
+            "min": [
+              0.6875,
+              0.3125,
+              0.1875
+            ]
+          }
+        ]
+      }
+    },
     {
       "comparable": {
         "attachments": {
@@ -1693,6 +1761,63 @@
               0.0625,
               0.0,
               0.0625
+            ]
+          },
+          {
+            "max": [
+              0.8125,
+              0.5625,
+              0.3125
+            ],
+            "min": [
+              0.6875,
+              0.3125,
+              0.1875
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "count": {
+              "max": 2,
+              "min": 2
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "shape": {
+        "shapes": [
+          {
+            "max": [
+              0.9375,
+              0.3125,
+              0.9375
+            ],
+            "min": [
+              0.0625,
+              0.0,
+              0.0625
+            ]
+          },
+          {
+            "max": [
+              0.3125,
+              0.5,
+              0.3125
+            ],
+            "min": [
+              0.1875,
+              0.3125,
+              0.1875
             ]
           },
           {
@@ -1782,8 +1907,37 @@
         "attachments": {
           "#minecraft:candles": {
             "count": {
-              "max": 2,
-              "min": 2
+              "max": 0,
+              "min": 0
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "shape": {
+        "max": [
+          0.9375,
+          0.3125,
+          0.9375
+        ],
+        "min": [
+          0.0625,
+          0.0,
+          0.0625
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "count": {
+              "max": 3,
+              "min": 3
             },
             "item": []
           }
@@ -1828,6 +1982,18 @@
               0.6875,
               0.3125,
               0.1875
+            ]
+          },
+          {
+            "max": [
+              0.8125,
+              0.625,
+              0.8125
+            ],
+            "min": [
+              0.6875,
+              0.3125,
+              0.6875
             ]
           }
         ]
@@ -1867,71 +2033,14 @@
         "attachments": {
           "#minecraft:candles": {
             "count": {
-              "max": 0,
-              "min": 0
+              "min": 2
             },
             "item": []
           }
         },
         "bite_count": {
-          "max": 3,
-          "min": 3
-        }
-      },
-      "shape": {
-        "max": [
-          0.9375,
-          0.3125,
-          0.9375
-        ],
-        "min": [
-          0.0625,
-          0.0,
-          0.0625
-        ]
-      }
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "count": {
-              "max": 0,
-              "min": 0
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "min": 4
-        }
-      },
-      "shape": {
-        "max": [
-          0.9375,
-          0.3125,
-          0.9375
-        ],
-        "min": [
-          0.0625,
-          0.0,
-          0.0625
-        ]
-      }
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "count": {
-              "max": 3,
-              "min": 3
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "min": 4
+          "max": 2,
+          "min": 2
         }
       },
       "shape": {
@@ -1940,48 +2049,36 @@
             "max": [
               0.9375,
               0.3125,
-              0.9375
+              0.6875
             ],
             "min": [
               0.0625,
               0.0,
-              0.0625
+              0.3125
             ]
           },
           {
             "max": [
               0.3125,
               0.5,
-              0.3125
+              0.5625
             ],
             "min": [
               0.1875,
               0.3125,
-              0.1875
+              0.4375
             ]
           },
           {
             "max": [
               0.8125,
               0.5625,
-              0.3125
+              0.5625
             ],
             "min": [
               0.6875,
               0.3125,
-              0.1875
-            ]
-          },
-          {
-            "max": [
-              0.8125,
-              0.625,
-              0.8125
-            ],
-            "min": [
-              0.6875,
-              0.3125,
-              0.6875
+              0.4375
             ]
           }
         ]
@@ -2036,123 +2133,26 @@
         "attachments": {
           "#minecraft:candles": {
             "count": {
-              "max": 2,
-              "min": 2
+              "max": 0,
+              "min": 0
             },
             "item": []
           }
         },
         "bite_count": {
-          "max": 3,
-          "min": 3
+          "min": 4
         }
       },
       "shape": {
-        "shapes": [
-          {
-            "max": [
-              0.9375,
-              0.3125,
-              0.9375
-            ],
-            "min": [
-              0.0625,
-              0.0,
-              0.0625
-            ]
-          },
-          {
-            "max": [
-              0.3125,
-              0.5,
-              0.3125
-            ],
-            "min": [
-              0.1875,
-              0.3125,
-              0.1875
-            ]
-          },
-          {
-            "max": [
-              0.8125,
-              0.5625,
-              0.3125
-            ],
-            "min": [
-              0.6875,
-              0.3125,
-              0.1875
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "count": {
-              "min": 3
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 3,
-          "min": 3
-        }
-      },
-      "shape": {
-        "shapes": [
-          {
-            "max": [
-              0.9375,
-              0.3125,
-              0.9375
-            ],
-            "min": [
-              0.0625,
-              0.0,
-              0.0625
-            ]
-          },
-          {
-            "max": [
-              0.3125,
-              0.5,
-              0.3125
-            ],
-            "min": [
-              0.1875,
-              0.3125,
-              0.1875
-            ]
-          },
-          {
-            "max": [
-              0.5625,
-              0.625,
-              0.8125
-            ],
-            "min": [
-              0.4375,
-              0.3125,
-              0.6875
-            ]
-          },
-          {
-            "max": [
-              0.8125,
-              0.5625,
-              0.3125
-            ],
-            "min": [
-              0.6875,
-              0.3125,
-              0.1875
-            ]
-          }
+        "max": [
+          0.9375,
+          0.3125,
+          0.9375
+        ],
+        "min": [
+          0.0625,
+          0.0,
+          0.0625
         ]
       }
     },
@@ -2198,35 +2198,6 @@
               0.4375
             ]
           }
-        ]
-      }
-    },
-    {
-      "comparable": {
-        "attachments": {
-          "#minecraft:candles": {
-            "count": {
-              "max": 0,
-              "min": 0
-            },
-            "item": []
-          }
-        },
-        "bite_count": {
-          "max": 2,
-          "min": 2
-        }
-      },
-      "shape": {
-        "max": [
-          0.9375,
-          0.3125,
-          0.6875
-        ],
-        "min": [
-          0.0625,
-          0.0,
-          0.3125
         ]
       }
     },
@@ -2276,7 +2247,64 @@
         "attachments": {
           "#minecraft:candles": {
             "count": {
+              "max": 2,
               "min": 2
+            },
+            "item": []
+          }
+        },
+        "bite_count": {
+          "min": 4
+        }
+      },
+      "shape": {
+        "shapes": [
+          {
+            "max": [
+              0.9375,
+              0.3125,
+              0.9375
+            ],
+            "min": [
+              0.0625,
+              0.0,
+              0.0625
+            ]
+          },
+          {
+            "max": [
+              0.3125,
+              0.5,
+              0.3125
+            ],
+            "min": [
+              0.1875,
+              0.3125,
+              0.1875
+            ]
+          },
+          {
+            "max": [
+              0.8125,
+              0.5625,
+              0.3125
+            ],
+            "min": [
+              0.6875,
+              0.3125,
+              0.1875
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "attachments": {
+          "#minecraft:candles": {
+            "count": {
+              "max": 0,
+              "min": 0
             },
             "item": []
           }
@@ -2287,43 +2315,15 @@
         }
       },
       "shape": {
-        "shapes": [
-          {
-            "max": [
-              0.9375,
-              0.3125,
-              0.6875
-            ],
-            "min": [
-              0.0625,
-              0.0,
-              0.3125
-            ]
-          },
-          {
-            "max": [
-              0.3125,
-              0.5,
-              0.5625
-            ],
-            "min": [
-              0.1875,
-              0.3125,
-              0.4375
-            ]
-          },
-          {
-            "max": [
-              0.8125,
-              0.5625,
-              0.5625
-            ],
-            "min": [
-              0.6875,
-              0.3125,
-              0.4375
-            ]
-          }
+        "max": [
+          0.9375,
+          0.3125,
+          0.6875
+        ],
+        "min": [
+          0.0625,
+          0.0,
+          0.3125
         ]
       }
     }

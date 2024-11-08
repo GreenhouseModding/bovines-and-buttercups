@@ -610,8 +610,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
-                    .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_TART)
-                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_TART);
+                    .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY)
+                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY);
         }
     }
 
@@ -706,8 +706,32 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             super(output);
         }
 
+        private static final ModelTemplate CUPCAKE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes")), Optional.empty(), TextureSlot.ALL);
+
+        private static final ModelTemplate PUFF_PASTRY = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_puff_pastry")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_PUFF_PASTRIES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_puff_pastries")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_PUFF_PASTRIES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_puff_pastries")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_PUFF_PASTRIES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_puff_pastries")), Optional.empty(), TextureSlot.ALL);
+
+        private static final ModelTemplate CUPCAKE_CANDLE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake_candle")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
+        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_FOUR = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_four")), Optional.empty(), TextureSlot.ALL);
+
         @Override
         public void generateBlockStateModels(BlockModelGenerators generators) {
+            var missingMapping = new TextureMapping().put(TextureSlot.ALL, EdibleBlockType.MISSING_KEY.location().withPath(s -> "block/" + s));
+            PUFF_PASTRY.create(EdibleBlockType.MISSING_KEY.location().withPath(s -> "block/" + s), missingMapping, generators.modelOutput);
+
             createCupcakes(BovinesEdibleBlockTypes.BIRD_OF_PARADISE_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.BUTTERCUP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE, generators);
@@ -718,6 +742,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             createCupcakes(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE, generators);
+            createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators);
+            createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators);
 
             createCandles(Blocks.CANDLE, generators);
             createCandles(Blocks.WHITE_CANDLE, generators);
@@ -738,11 +764,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             createCandles(Blocks.BLACK_CANDLE, generators);
         }
 
-        private static final ModelTemplate CUPCAKE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate TWO_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcakes")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate THREE_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcakes")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate FOUR_CUPCAKES = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcakes")), Optional.empty(), TextureSlot.ALL);
-
         public static void createCupcakes(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
             var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
 
@@ -751,22 +772,21 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             THREE_CUPCAKES.create(type.location().withPath(s -> "block/three_" + s + "s"), mapping, generators.modelOutput);
             FOUR_CUPCAKES.create(type.location().withPath(s -> "block/four_" + s + "s"), mapping, generators.modelOutput);
         }
+        public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
+            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
+
+            String plural = type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
+
+            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + s), mapping, generators.modelOutput);
+            TWO_PUFF_PASTRIES.create(type.location().withPath("block/two_" + plural), mapping, generators.modelOutput);
+            THREE_PUFF_PASTRIES.create(type.location().withPath("block/three_" + plural), mapping, generators.modelOutput);
+            FOUR_PUFF_PASTRIES.create(type.location().withPath("block/four_" + plural), mapping, generators.modelOutput);
+        }
 
         public static void createCandles(Block candleBlock, BlockModelGenerators generators) {
             createCandlesInner(candleBlock, "", generators);
             createCandlesInner(candleBlock, "_lit", generators);
         }
-
-        private static final ModelTemplate CUPCAKE_CANDLE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_cupcake_candle")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate TWO_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_two_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate THREE_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_three_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_ONE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_one")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_TWO = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_two")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_THREE = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_three")), Optional.empty(), TextureSlot.ALL);
-        private static final ModelTemplate FOUR_CUPCAKE_CANDLES_INDEX_FOUR = new ModelTemplate(Optional.of(BovinesAndButtercups.asResource("block/template_four_cupcake_candles_index_four")), Optional.empty(), TextureSlot.ALL);
 
         private static void createCandlesInner(Block candleBlock, String suffix, BlockModelGenerators generators) {
             var mapping = new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(candleBlock, suffix));

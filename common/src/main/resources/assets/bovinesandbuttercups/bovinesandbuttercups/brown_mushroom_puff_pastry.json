@@ -1,0 +1,18 @@
+{
+  "type": "bovinesandbuttercups:edible",
+  "variants": {
+    "bites=1": {
+      "model": "bovinesandbuttercups:block/brown_mushroom_puff_pastry"
+    },
+    "bites=2": {
+      "model": "bovinesandbuttercups:block/two_brown_mushroom_puff_pastries"
+    },
+    "bites=3": {
+      "model": "bovinesandbuttercups:block/three_brown_mushroom_puff_pastries"
+    },
+    "bites=4": {
+      "model": "bovinesandbuttercups:block/four_brown_mushroom_puff_pastries"
+    }
+  },
+  "item_model": "bovinesandbuttercups:brown_mushroom_puff_pastry"
+}

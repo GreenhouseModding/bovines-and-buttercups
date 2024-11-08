@@ -353,7 +353,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_four"
       },
       "when": {
         "bites": {
@@ -707,7 +707,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_four"
       },
       "when": {
         "bites": {
@@ -1061,7 +1061,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_four"
       },
       "when": {
         "bites": {
@@ -1415,7 +1415,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_four"
       },
       "when": {
         "bites": {
@@ -1769,7 +1769,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_four"
       },
       "when": {
         "bites": {
@@ -2123,7 +2123,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_four"
       },
       "when": {
         "bites": {
@@ -2477,7 +2477,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_four"
       },
       "when": {
         "bites": {
@@ -2831,7 +2831,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_four"
       },
       "when": {
         "bites": {
@@ -3185,7 +3185,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_four"
       },
       "when": {
         "bites": {
@@ -3539,7 +3539,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_four"
       },
       "when": {
         "bites": {
@@ -3893,7 +3893,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_four"
       },
       "when": {
         "bites": {
@@ -4247,7 +4247,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_four"
       },
       "when": {
         "bites": {
@@ -4601,7 +4601,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_four"
       },
       "when": {
         "bites": {
@@ -4955,7 +4955,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_four"
       },
       "when": {
         "bites": {
@@ -5309,7 +5309,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_four"
       },
       "when": {
         "bites": {
@@ -5663,7 +5663,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_four"
       },
       "when": {
         "bites": {
@@ -6017,7 +6017,7 @@
     },
     {
       "apply": {
-        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_four_lit"
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_four"
       },
       "when": {
         "bites": {

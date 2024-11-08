@@ -10,6 +10,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Objects;
+
 public record Nectar(ResourceLocation modelLocation,
                      NectarEffects effects) {
     public static final Codec<Nectar> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -23,4 +25,16 @@ public record Nectar(ResourceLocation modelLocation,
     );
     public static final Codec<Holder<Nectar>> CODEC = RegistryFileCodec.create(BovinesRegistryKeys.NECTAR, Nectar.DIRECT_CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Nectar>> STREAM_CODEC = ByteBufCodecs.holder(BovinesRegistryKeys.NECTAR, DIRECT_STREAM_CODEC);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Nectar nectar))
+            return false;
+        return nectar.modelLocation.equals(modelLocation) && nectar.effects == effects;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(modelLocation, effects);
+    }
 }

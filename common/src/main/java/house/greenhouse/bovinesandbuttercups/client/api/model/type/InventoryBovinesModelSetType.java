@@ -2,7 +2,9 @@ package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 
@@ -26,7 +28,12 @@ public class InventoryBovinesModelSetType implements BovinesModelSetType {
     public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
         ResourceLocation itemModelId = modelId.withPath(s ->
                 s.substring(21, s.length() - 10));
-        return itemModelLoader.apply(itemModelId);
+        UnbakedModel model = itemModelLoader.apply(itemModelId);
+        if (model == null) {
+            BovinesAndButtercups.LOG.warn("Failed to load item model {} defaulting to missing model.", itemModelId);
+            return BovinesModelUtil.MISSING_MODEL;
+        }
+        return model;
     }
 
 }

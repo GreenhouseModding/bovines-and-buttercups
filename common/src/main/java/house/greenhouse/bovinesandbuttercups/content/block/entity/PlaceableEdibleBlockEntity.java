@@ -11,9 +11,9 @@ import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -65,6 +65,10 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
     }
 
     public ItemEdibleType getEdibleType() {
+        if (type == null) {
+            type = new ItemEdibleType(level.registryAccess().lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(EdibleBlockType.MISSING_KEY));
+            resetParticles();
+        }
         return type;
     }
 
@@ -130,10 +134,10 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         if (!attachments.containsKey(item.getKey()) || attachments.get(item.getKey()).items.isEmpty())
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        if (items.stream().anyMatch(entry -> entry != item && entry.getValue().activations().stream().anyMatch(e -> e.ingredient().test(stack))))
-            return ItemInteractionResult.CONSUME;
-
         ItemStack last = attachments.get(item.getKey()).items().getLast();
+
+        if (item.getValue().activations().stream().noneMatch(activationEntry -> !activationEntry.setTo() && activationEntry.ingredient().test(stack)))
+            return ItemInteractionResult.CONSUME;
 
         if (attachments.get(item.getKey()).items().size() == 1)
             attachments.remove(item.getKey());
@@ -147,6 +151,9 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         }
 
         Block.popResource(level, getBlockPos(), last);
+
+        if (item.getValue().sound().isPresent() && level.random.nextFloat() < item.getValue().sound().get().chance())
+            level.playSound(null, getBlockPos(), item.getValue().sound().get().sound().value(), SoundSource.BLOCKS, item.getValue().sound().get().volume().randomise(level.random), item.getValue().sound().get().pitch().randomise(level.random));
 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
@@ -291,6 +298,11 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
                 ItemStack.STRICT_SINGLE_ITEM_CODEC.listOf(1, 16).fieldOf("items").forGetter(AttachmentState::items),
                 Codec.BOOL.fieldOf("active").forGetter(AttachmentState::active)
         ).apply(inst, AttachmentState::new));
+
+        @Override
+        public String toString() {
+            return String.join(",", items.stream().map(stack -> stack.getItemHolder().unwrapKey().get().location() + "=" + stack.getCount()).toList()) + ",active." + active;
+        }
     }
 
     public record EdibleBlockEntityValues(ItemEdibleType placeableEdible, int bites, Map<HolderSet<Item>, PlaceableEdibleBlockEntity.AttachmentState> state) {

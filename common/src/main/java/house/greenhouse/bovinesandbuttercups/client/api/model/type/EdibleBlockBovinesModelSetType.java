@@ -14,6 +14,7 @@ import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import house.greenhouse.bovinesandbuttercups.client.api.model.condition.PlaceableEdibleSelector;
 import house.greenhouse.bovinesandbuttercups.client.model.PlaceableEdibleMultiPart;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
@@ -49,14 +50,14 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
     }
 
     public static BakedModel getBlockModel(BovinesModelSet modelSet, PlaceableEdibleBlockEntity blockEntity) {
-        if (modelSet == null)
+        if (modelSet == null || blockEntity.getEdibleType() == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
         if (!modelSet.lookupKeys().isEmpty() && modelSet.lookupKeys().getFirst() instanceof PlaceableEdibleSelector) {
             Optional<PlaceableEdibleSelector> first = modelSet.lookupKeys().stream().map(object -> (PlaceableEdibleSelector)object).filter(placeableEdibleSelector -> placeableEdibleSelector.test(blockEntity)).findFirst();
             if (first.isPresent())
                 return modelSet.getModel(first.get());
         }
-        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), () -> "Could not get edible block bovines model set for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
+        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/"), () -> "Could not get edible block bovines model set for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
     }
 
     @Override
@@ -70,7 +71,6 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
         }
 
         BlockModelDefinition definition = Deserializer.GSON.fromJson(json, BlockModelDefinition.class);
-
         if (definition != null) {
             if (definition.isMultiPart() && definition.getMultiPart() instanceof PlaceableEdibleMultiPart multiPart) {
                 for (PlaceableEdibleSelector selector : multiPart.getEdibleSelectors()) {
@@ -82,9 +82,9 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
                 }
             } else if (!definition.getVariants().isEmpty()) {
                 Map<ResourceLocation, ResourceLocation> locations = definition.getVariants().keySet().stream().map(multiVariant -> {
-                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + multiVariant);
+                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + mapVariant(multiVariant));
                     ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
-                    return Pair.of(fileId, resolvedPath);
+                    return Pair.of(filePath, resolvedPath);
                 }).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
 
                 modelIds.putAll(locations);
@@ -105,30 +105,41 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
 
         if (definition == null) {
             BovinesAndButtercups.LOG.warn("Failed to load model {} defaulting to missing model.", modelId);
-            return ((ModelBakeryAccessor)BovinesAndButtercupsClient.getModelBakery()).bovinesandbuttercups$getMissingModel();
+            return BovinesModelUtil.MISSING_MODEL;
         }
 
         if (definition.isMultiPart())
             return definition.getMultiPart();
 
         String variant = getVariant(modelId);
-        if (definition.getVariants().containsKey(variant))
-            return definition.getVariants().get(variant);
+        MultiVariant multiVariant;
+        if (definition.hasVariant(variant))
+            multiVariant = definition.getVariants().get(variant);
+        else
+            multiVariant = definition.getVariants().get("");
 
-        return definition.getVariants().get("");
+        if (multiVariant == null) {
+            BovinesAndButtercups.LOG.warn("Failed to load model {} with variant {} defaulting to missing model.", modelId.withPath(s -> s.replace("/" + mapVariant(variant), "")), variant);
+            return BovinesModelUtil.MISSING_MODEL;
+        }
+
+        return multiVariant;
     }
 
     private static String acceptedProperties(PlaceableEdibleBlockEntity blockEntity) {
-        String attachments = getAttachmentAsProperties(blockEntity.attachmentsToString());
-        return "bites." + blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES) + (attachments.isEmpty() ? "" : "-attachments." + getAttachmentAsProperties(blockEntity.attachmentsToString()));
+        String attachments = mapVariant(blockEntity.attachmentsToString());
+        return "bites." + blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES) + (attachments.isEmpty() ? "" : "-attachments." + mapVariant(blockEntity.attachmentsToString()));
     }
 
-    private static String getAttachmentAsProperties(String attachments) {
-        return attachments.replaceAll("=", ".").replaceAll(",", "-").replaceAll("#", "tag.");
+    private static String mapVariant(String variant) {
+        return variant.replaceAll("#", "tag.").replace(":", ".separator.").replaceAll("=", ".").replaceAll(",", "-");
     }
 
     private static String getVariant(ResourceLocation modelId) {
-        return modelId.toString().replaceAll("\\.", ".").replaceAll("-", ",").replaceAll("tag.", "#");
+        String path = modelId.getPath();
+        if (path.lastIndexOf("/") == path.length() - 1)
+            return "";
+        return path.substring(path.lastIndexOf("/") + 1).replaceAll("tag.", "#").replace(".separator.", ":").replaceAll("\\.", "=").replaceAll("-", ",");
     }
 
     public static class Deserializer implements JsonDeserializer<BlockModelDefinition> {

@@ -45,7 +45,7 @@ public class GenericBovinesModelSetType implements BovinesModelSetType {
 
         var blockStateJson = remapToBlockStateJson(json);
         if (blockStateJson == null)
-            return BovinesModelUtil.EMPTY_MODEL;
+            return BovinesModelUtil.MISSING_MODEL;
 
         BlockModelDefinition definition = BlockModelDefinition.fromJsonElement(CONTEXT, blockStateJson);
 

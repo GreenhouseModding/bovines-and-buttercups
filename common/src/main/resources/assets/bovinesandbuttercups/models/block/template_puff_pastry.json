@@ -1,0 +1,36 @@
+{
+	"textures": {
+		"particle": "#all"
+	},
+	"elements": [
+		{
+			"from": [5.5, 0, 5.5],
+			"to": [10.5, 2, 10.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1, 8]},
+			"faces": {
+				"north": {"uv": [5, 0, 10, 2], "texture": "#all"},
+				"east": {"uv": [5, 2, 10, 4], "texture": "#all"},
+				"south": {"uv": [5, 4, 10, 6], "texture": "#all"},
+				"west": {"uv": [5, 6, 10, 8], "texture": "#all"},
+				"up": {"uv": [5, 5, 0, 0], "texture": "#all"},
+				"down": {"uv": [5, 5, 0, 10], "texture": "#all"}
+			}
+		},
+		{
+			"from": [6.3, 1.8, 6.3],
+			"to": [9.7, 2.2, 9.7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1, 8]},
+			"faces": {
+				"up": {"uv": [8, 11, 5, 8], "texture": "#all"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "pastry1",
+			"origin": [4.5, 1, 11.5],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

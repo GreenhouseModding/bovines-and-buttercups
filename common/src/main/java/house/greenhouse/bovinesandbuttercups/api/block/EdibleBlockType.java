@@ -100,12 +100,34 @@ public record EdibleBlockType(
         return new EdibleBlockType(4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
     }
 
-    public static EdibleBlockType mushroomTart(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(4, 16, createMushroomTartShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
+    public static EdibleBlockType puffPastry(BootstrapContext<EdibleBlockType> context) {
+        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
     }
 
-    private static Map<BlockValuesEntry, VoxelShape> createMushroomTartShapeMap(BootstrapContext<EdibleBlockType> context) {
-        return Map.of();
+    private static Map<BlockValuesEntry, VoxelShape> createPuffPastryShapeMap(BootstrapContext<EdibleBlockType> context) {
+        Object2ObjectOpenHashMap<BlockValuesEntry, VoxelShape> map = new Object2ObjectOpenHashMap<>();
+
+        var oneEntry = BlockValuesEntry.builder();
+        oneEntry.exactBiteCount(1);
+        var one = Block.box(5.5, 0.0, 5.5, 10.5, 2.0, 10.5);
+        map.put(oneEntry.build(), one);
+
+        var twoEntry = BlockValuesEntry.builder();
+        twoEntry.exactBiteCount(2);
+        var two = Block.box(3.0, 0.0, 2.5, 9.5, 2.0, 13.3);
+        map.put(twoEntry.build(), two);
+
+        var threeEntry = BlockValuesEntry.builder();
+        threeEntry.exactBiteCount(3);
+        var three = Block.box(3.0, 0.0, 2.5, 13.5, 2.0, 13.3);
+        map.put(threeEntry.build(), three);
+
+        var fourEntry = BlockValuesEntry.builder();
+        fourEntry.lowerBoundBiteCount(4);
+        var four = Block.box(3.0, 0.0, 2.5, 13.5, 4.0, 13.3);
+        map.put(fourEntry.build(), four);
+
+        return ImmutableMap.copyOf(map);
     }
 
     private static Map<BlockValuesEntry, VoxelShape> createCupcakeShapeMap(BootstrapContext<EdibleBlockType> context) {
@@ -433,7 +455,7 @@ public record EdibleBlockType(
 
     @ApiStatus.Internal
     public static EdibleBlockType missingEdible(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().build(), Shapes.block()), Map.of(), Map.of(), List.of());
+        return new EdibleBlockType(1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().lowerBoundBiteCount(1).build(), Block.box(5.5, 0.0, 5.5, 10.5, 2.0, 10.5)), Map.of(), Map.of(), List.of());
     }
 
     public record ActivationEntry(Ingredient ingredient, boolean setTo, Optional<SoundSettings> sound, Map<BlockValuesEntry, List<ParticleEntry>> particles, List<LootItemCondition> condition) {

@@ -197,21 +197,6 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(entries -> {
             entries.addAfter(Items.MILK_BUCKET, CreativeTabHelper.getNectarBowlsForCreativeTab(entries.getContext().holders()));
             entries.addAfter(Items.HONEY_BOTTLE, BovinesItems.RICH_HONEY_BOTTLE);
-            // TODO: Creative
-            /*
-            entries.addAfter(Items.CAKE, Stream.of(
-                    BovinesItems.FREESIA_CUPCAKE,
-                    BovinesItems.BIRD_OF_PARADISE_CUPCAKE,
-                    BovinesItems.BUTTERCUP_CUPCAKE,
-                    BovinesItems.LIMELIGHT_CUPCAKE,
-                    BovinesItems.LINGHOLM_CUPCAKE,
-                    BovinesItems.CHARGELILY_CUPCAKE,
-                    BovinesItems.TROPICAL_BLUE_CUPCAKE,
-                    BovinesItems.HYACINTH_CUPCAKE,
-                    BovinesItems.PINK_DAISY_CUPCAKE,
-                    BovinesItems.SNOWDROP_CUPCAKE
-            ).map(ItemStack::new).toList());
-             */
         });
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(entries -> {
             entries.accept(BovinesItems.MOOBLOOM_SPAWN_EGG);

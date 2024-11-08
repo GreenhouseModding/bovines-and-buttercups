@@ -66,7 +66,7 @@ public class CreativeTabHelper {
             stack.set(BovinesDataComponents.NECTAR, new ItemNectar(((MoobloomConfiguration) cowType.value().configuration()).nectar().get()));
             return stack;
         }).sorted(Comparator.comparingInt(value -> {
-            int i = creativeModeTabOrder.stream().toList().indexOf(value.get(BovinesDataComponents.NECTAR).nectar());
+            int i = creativeModeTabOrder.stream().toList().indexOf(value.get(BovinesDataComponents.NECTAR).holder());
             if (i == -1)
                 return Integer.MAX_VALUE;
             return i;

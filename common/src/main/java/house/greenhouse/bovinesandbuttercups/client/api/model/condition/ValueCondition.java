@@ -57,7 +57,7 @@ public record ValueCondition(Optional<IntRange> bites, Map<Either<TagKey<Item>, 
         if (!attachments.isEmpty()) {
             strings.add("attachments." + String.join("-", attachments.entrySet().stream().map(entry -> {
                 List<String> str = Lists.newArrayList();
-                str.add(entry.getKey().map(tagKey -> "tag." + tagKey.location().toString().replace(":", "."), key -> "items." + String.join("-", key.stream().map(key1 -> key1.location().toString().replace(":", ".")).toList())));
+                str.add(entry.getKey().map(tagKey -> "tag." + tagKey.location().toString().replace(":", ".separator."), key -> "items." + String.join("-", key.stream().map(key1 -> key1.location().toString().replace(":", ".separator.")).toList())));
                 str.add("stackid." + entry.getValue().getListId(this));
                 if (entry.getValue().index.isPresent()) {
                     if (entry.getValue().index.get().min().isPresent())

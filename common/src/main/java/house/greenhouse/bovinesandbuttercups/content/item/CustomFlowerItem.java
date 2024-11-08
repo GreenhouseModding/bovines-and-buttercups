@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.item;
 
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
@@ -22,7 +23,7 @@ public class CustomFlowerItem extends BlockItem {
             if (flower.holder().isBound())
                 return BlockUtil.getOrCreateBlockNameTranslationKey(flower.holder().unwrapKey().orElseThrow().location());
         }
-        return super.getName(stack);
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_flower"));
     }
 
 

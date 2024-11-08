@@ -1,12 +1,9 @@
 package house.greenhouse.bovinesandbuttercups.client.api.model;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
+import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
+import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
 import net.minecraft.client.resources.model.UnbakedModel;
 
-import java.util.List;
-import java.util.Map;
-
 public class BovinesModelUtil {
-    public static final UnbakedModel EMPTY_MODEL = new BlockModel(null, List.of(), Map.of(), null, null, ItemTransforms.NO_TRANSFORMS, List.of());
+    public static final UnbakedModel MISSING_MODEL = ((ModelBakeryAccessor) BovinesAndButtercupsClient.getModelBakery()).bovinesandbuttercups$getMissingModel();
 }

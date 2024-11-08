@@ -25,10 +25,18 @@ public abstract class TextureModifierFactory<T extends TextureModifier> {
         return provider;
     }
 
+    /**
+     * Initialises this texture modifier factory. Called on both the server and the client.
+     * @param entity    The cow that this texture modifier has been attached to.
+     */
     public void init(Entity entity) {}
 
     public void tick(Entity entity) {}
 
+    /**
+     * Whether this texture modifier should display on the client.
+     * @param entity    The cow that this texture modifier has been attached to.
+     */
     public boolean canDisplay(Entity entity) {
         return true;
     }

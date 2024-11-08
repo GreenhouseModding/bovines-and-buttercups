@@ -6,6 +6,7 @@ import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelS
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -32,22 +33,28 @@ public class BovinesModelSet {
     }
 
     public BakedModel getModel(Object lookupObj) {
-        return getModel(lookupObj, () -> "Bovines Model Set \"" + id + "\" could not find model from object: " + lookupObj);
+        return getModel(lookupObj, null, () -> "Bovines Model Set \"" + id + "\" could not find model from object: " + lookupObj);
     }
 
     public BakedModel getModel(ResourceLocation modelId) {
-        return getModel(modelId, () -> "Bovines Model Set \"" + id + "\" does not contain model with path \"" + modelId + "\"");
+        return getModel(modelId, null, () -> "Bovines Model Set \"" + id + "\" does not contain model with path \"" + modelId + "\"");
     }
 
-    public BakedModel getModel(Object lookupObj, Supplier<String> errorMessage) {
-        return getModel(lookup.get(lookupObj), errorMessage);
+    public BakedModel getModel(Object lookupObj, @Nullable ResourceLocation fallback, Supplier<String> errorMessage) {
+        return getModel(lookup.get(lookupObj), fallback, errorMessage);
     }
 
-    public BakedModel getModel(ResourceLocation modelId, Supplier<String> errorMessage) {
+    public BakedModel getModel(ResourceLocation modelId, @Nullable ResourceLocation fallback, @Nullable Supplier<String> errorMessage) {
         if (!modelMap.containsKey(modelId)) {
-            if (!warnedKeys.contains(modelId))
+            if (fallback != null) {
+                BakedModel fallbackModel = getModel(fallback, null, null);
+                if (fallbackModel != null)
+                    return fallbackModel;
+            }
+            if (!warnedKeys.contains(modelId) && errorMessage != null) {
                 BovinesAndButtercups.LOG.warn(errorMessage.get());
-            warnedKeys.add(modelId);
+                warnedKeys.add(modelId);
+            }
             return Minecraft.getInstance().getModelManager().getMissingModel();
         }
         return BovinesAndButtercupsClient.getHelper().getModel(modelMap.get(modelId));

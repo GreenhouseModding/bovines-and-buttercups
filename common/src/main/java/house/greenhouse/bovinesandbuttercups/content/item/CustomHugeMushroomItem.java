@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.item;
 
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
@@ -21,6 +22,6 @@ public class CustomHugeMushroomItem extends BlockItem {
             if (mushroom.holder().isBound())
                 return BlockUtil.getOrCreateBlockNameTranslationKey(mushroom.holder().unwrapKey().orElseThrow().location());
         }
-        return super.getName(stack);
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom_block"));
     }
 }

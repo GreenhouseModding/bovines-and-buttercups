@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.item;
 
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
@@ -21,10 +22,6 @@ public class PlaceableEdibleItem extends BlockItem {
             if (type.holder().isBound())
                 return BlockUtil.getOrCreateBlockNameTranslationKey(type.holder().unwrapKey().orElseThrow().location());
         }
-        return super.getName(stack);
-    }
-
-    private static Component getOrCreateNameTranslationKey(ResourceLocation location) {
-        return Component.translatable("block." + location.getNamespace() + "." + location.getPath());
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_edible"));
     }
 }

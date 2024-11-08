@@ -18,8 +18,8 @@ public class BovinesEdibleBlockTypes {
     public static final ResourceKey<EdibleBlockType> SNOWDROP_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("snowdrop_cupcake"));
     public static final ResourceKey<EdibleBlockType> TROPICAL_BLUE_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("tropical_blue_cupcake"));
 
-    public static final ResourceKey<EdibleBlockType> RED_MUSHROOM_TART = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("red_mushroom_tart"));
-    public static final ResourceKey<EdibleBlockType> BROWN_MUSHROOM_TART = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("brown_mushroom_tart"));
+    public static final ResourceKey<EdibleBlockType> RED_MUSHROOM_PUFF_PASTRY = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("red_mushroom_puff_pastry"));
+    public static final ResourceKey<EdibleBlockType> BROWN_MUSHROOM_PUFF_PASTRY = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("brown_mushroom_puff_pastry"));
 
     public static void bootstrap(BootstrapContext<EdibleBlockType> context) {
         context.register(BIRD_OF_PARADISE_CUPCAKE, EdibleBlockType.cupcake(context));
@@ -33,7 +33,7 @@ public class BovinesEdibleBlockTypes {
         context.register(SNOWDROP_CUPCAKE, EdibleBlockType.cupcake(context));
         context.register(TROPICAL_BLUE_CUPCAKE, EdibleBlockType.cupcake(context));
 
-        context.register(RED_MUSHROOM_TART, EdibleBlockType.mushroomTart(context));
-        context.register(BROWN_MUSHROOM_TART, EdibleBlockType.mushroomTart(context));
+        context.register(BROWN_MUSHROOM_PUFF_PASTRY, EdibleBlockType.puffPastry(context));
+        context.register(RED_MUSHROOM_PUFF_PASTRY, EdibleBlockType.puffPastry(context));
     }
 }

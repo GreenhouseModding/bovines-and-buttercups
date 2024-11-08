@@ -1,0 +1,91 @@
+{
+  "bites": 4,
+  "creative_mode_tabs": [
+    {
+      "after": "minecraft:cake",
+      "tab": "minecraft:food_and_drinks"
+    }
+  ],
+  "shapes": [
+    {
+      "comparable": {
+        "bite_count": {
+          "max": 1,
+          "min": 1
+        }
+      },
+      "shape": {
+        "max": [
+          0.65625,
+          0.125,
+          0.65625
+        ],
+        "min": [
+          0.34375,
+          0.0,
+          0.34375
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "bite_count": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "shape": {
+        "max": [
+          0.84375,
+          0.125,
+          0.83125
+        ],
+        "min": [
+          0.1875,
+          0.0,
+          0.15625
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "bite_count": {
+          "min": 4
+        }
+      },
+      "shape": {
+        "max": [
+          0.84375,
+          0.25,
+          0.83125
+        ],
+        "min": [
+          0.1875,
+          0.0,
+          0.15625
+        ]
+      }
+    },
+    {
+      "comparable": {
+        "bite_count": {
+          "max": 2,
+          "min": 2
+        }
+      },
+      "shape": {
+        "max": [
+          0.59375,
+          0.125,
+          0.83125
+        ],
+        "min": [
+          0.1875,
+          0.0,
+          0.15625
+        ]
+      }
+    }
+  ],
+  "stack_size": 16
+}

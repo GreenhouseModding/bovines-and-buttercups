@@ -1,14 +1,16 @@
 package house.greenhouse.bovinesandbuttercups.content.block;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -31,9 +33,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -43,10 +43,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PlaceableEdibleBlock extends BaseEntityBlock {
     public static final MapCodec<PlaceableEdibleBlock> CODEC = simpleCodec(PlaceableEdibleBlock::new);
@@ -92,7 +90,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         if (!(level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity be) || be.getEdibleType() == null || !be.getEdibleType().holder().isBound())
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         int i = state.getValue(BITES);
-        if (ItemStack.isSameItemSameComponents(stack, getCloneItemStack(level, pos, state))) {
+        if (stack.is(BovinesItems.PLACEABLE_EDIBLE) && be.getEdibleType().equals(stack.getOrDefault(BovinesDataComponents.EDIBLE_TYPE, new ItemEdibleType(level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY))))) {
             if (i >= be.getEdibleType().holder().value().bites())
                 return ItemInteractionResult.CONSUME;
             stack.consume(1, player);
@@ -185,8 +183,11 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         LootParams lootParams = params.withParameter(LootContextParams.BLOCK_STATE, state).create(LootContextParamSets.BLOCK);
         BlockEntity blockEntity = lootParams.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if (!(blockEntity instanceof PlaceableEdibleBlockEntity placeableEdibleBlockEntity))
-            return Collections.emptyList();
-        return placeableEdibleBlockEntity.getAttachments().values().stream().flatMap(attachmentState -> attachmentState.items().stream()).toList();
+            return super.getDrops(state, params);
+        ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
+        builder.addAll(super.getDrops(state, params));
+        builder.addAll(placeableEdibleBlockEntity.getAttachments().values().stream().flatMap(attachmentState -> attachmentState.items().stream()).toList());
+        return builder.build();
     }
 
     @Override

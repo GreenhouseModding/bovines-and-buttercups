@@ -38,7 +38,7 @@ public class NectarBowlItem extends Item {
             itemStack.shrink(1);
 
         ItemNectar effects = itemStack.getOrDefault(BovinesDataComponents.NECTAR, ItemNectar.EMPTY);
-        effects.nectar().value().effects().applyEffectInstance(livingEntity);
+        effects.holder().value().effects().applyEffectInstance(livingEntity);
         if (player != null) {
             player.awardStat(Stats.ITEM_USED.get(this));
             if (!player.getAbilities().instabuild) {

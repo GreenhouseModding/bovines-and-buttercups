@@ -1,8 +1,8 @@
 {
   "type": "bovinesandbuttercups:edible",
-  "variant": {
-    "bites.1": {
-      "model": "bovinesandbuttercups:block/template_cupcake"
+  "variants": {
+    "": {
+      "model": "bovinesandbuttercups:block/missing_edible"
     }
   },
   "item_model": "bovinesandbuttercups:missing_edible"

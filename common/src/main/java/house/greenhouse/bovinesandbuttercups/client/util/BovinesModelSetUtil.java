@@ -10,8 +10,6 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
-import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
-import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Holder;
@@ -110,7 +108,7 @@ public class BovinesModelSetUtil {
 
             BovinesModelSetType modelsType = BovinesModelSetRegistry.getType(typeKey);
             if (modelsType == null)
-                return BovinesModelUtil.EMPTY_MODEL;
+                return BovinesModelUtil.MISSING_MODEL;
 
             return modelsType.createUnbaked(modelId, itemFunction);
         }

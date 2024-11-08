@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,15 +16,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class NectarBowlItemRenderer {
     public static void render(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay) {
-        BakedModel bakedModel = StateDefinitionBovinesModelSetType.getItemModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_mushroom")));
+        BakedModel bakedModel = BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("item/buttercup_nectar_bowl")).getModel();
         Level level = Minecraft.getInstance().level;
         if (level == null) return;
 
-        if (stack.has(BovinesDataComponents.CUSTOM_MUSHROOM)) {
-            @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(stack.get(BovinesDataComponents.NECTAR).nectar().value().modelLocation());
+        if (stack.has(BovinesDataComponents.NECTAR)) {
+            @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(stack.get(BovinesDataComponents.NECTAR).holder().value().modelLocation());
 
             if (modelSet != null) {
-                var newModel = StateDefinitionBovinesModelSetType.getItemModel(modelSet);
+                var newModel = modelSet.getModel();
                 if (newModel != null)
                     bakedModel = newModel;
             }

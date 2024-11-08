@@ -17,15 +17,15 @@ import net.minecraft.world.item.component.TooltipProvider;
 
 import java.util.function.Consumer;
 
-public record ItemNectar(Holder<Nectar> nectar) implements TooltipProvider {
+public record ItemNectar(Holder<Nectar> holder) implements TooltipProvider {
     public static final ItemNectar EMPTY = new ItemNectar(Holder.direct(new Nectar(BovinesAndButtercups.asResource("bovinesandbuttercups/item/buttercup_nectar_bowl"), NectarEffects.EMPTY)));
-    public static final Codec<ItemNectar> CODEC = Nectar.CODEC.xmap(ItemNectar::new, ItemNectar::nectar);
+    public static final Codec<ItemNectar> CODEC = Nectar.CODEC.xmap(ItemNectar::new, ItemNectar::holder);
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ItemNectar> STREAM_CODEC = Nectar.STREAM_CODEC.map(ItemNectar::new, ItemNectar::nectar);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemNectar> STREAM_CODEC = Nectar.STREAM_CODEC.map(ItemNectar::new, ItemNectar::holder);
 
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> component, TooltipFlag flag) {
-        for (NectarEffects.Entry entry : nectar.value().effects().effects()) {
+        for (NectarEffects.Entry entry : holder.value().effects().effects()) {
             MobEffectInstance instance = new MobEffectInstance(entry.effect(), entry.duration());
             component.accept(Component.translatable("bovinesandbuttercups.nectarBowl.effect", Component.translatable(instance.getDescriptionId()), MobEffectUtil.formatDuration(instance, 1.0F, context.tickRate())).withStyle(ChatFormatting.BLUE));
         }
@@ -37,11 +37,11 @@ public record ItemNectar(Holder<Nectar> nectar) implements TooltipProvider {
             return true;
         if (!(other instanceof ItemNectar nectar))
             return false;
-        return nectar.nectar.equals(nectar);
+        return nectar.holder.equals(holder);
     }
 
     @Override
     public int hashCode() {
-        return nectar.hashCode();
+        return holder.hashCode();
     }
 }

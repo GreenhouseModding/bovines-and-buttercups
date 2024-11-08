@@ -5,6 +5,7 @@ import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
+import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -37,7 +38,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
         if (modelSet == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(state, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
+        return modelSet.getModel(state, null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
     }
 
     @Override
@@ -74,7 +75,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
 
         if (definition == null) {
             BovinesAndButtercups.LOG.warn("Failed to load model {} defaulting to missing model.", modelId);
-            return ((ModelBakeryAccessor) BovinesAndButtercupsClient.getModelBakery()).bovinesandbuttercups$getMissingModel();
+            return BovinesModelUtil.MISSING_MODEL;
         }
 
         if (definition.isMultiPart())
