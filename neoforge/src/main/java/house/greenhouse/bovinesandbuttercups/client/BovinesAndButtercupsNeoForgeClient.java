@@ -44,7 +44,11 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -57,7 +61,9 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 
+import javax.swing.plaf.PanelUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +81,7 @@ public class BovinesAndButtercupsNeoForgeClient {
             BovinesModelSetTypes.init();
         }
 
+        @SubscribeEvent
         public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
             event.registerReloadListener(new ClearTextureCacheReloadListener());
         }

@@ -34,7 +34,11 @@ import house.greenhouse.bovinesandbuttercups.util.WeatherUtil;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
@@ -62,6 +66,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -377,6 +382,29 @@ public class BovinesAndButtercupsNeoForge {
     @FunctionalInterface
     private interface AddAfterOperation {
         void insertAfter(ItemStack startItem, ItemStack afterItem, CreativeModeTab.TabVisibility visibility);
+    }
+
+    @SubscribeEvent
+    public static void addPackFinders(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            event.addPackFinders(BovinesAndButtercups.asResource("resourcepacks/mojang"), PackType.CLIENT_RESOURCES, Component.translatable("resourcePack.bovinesandbuttercups.mojang.name"), createSource(false), false, Pack.Position.TOP);
+            event.addPackFinders(BovinesAndButtercups.asResource("resourcepacks/no_buds"), PackType.CLIENT_RESOURCES, Component.translatable("resourcePack.bovinesandbuttercups.noBuds.name"), createSource(false), false, Pack.Position.TOP);
+            event.addPackFinders(BovinesAndButtercups.asResource("resourcepacks/no_grass"), PackType.CLIENT_RESOURCES, Component.translatable("resourcePack.bovinesandbuttercups.noGrass.name"), createSource(false), false, Pack.Position.TOP);
+        }
+    }
+
+    private static PackSource createSource(boolean enabledByDefault) {
+        return new PackSource() {
+            @Override
+            public Component decorate(Component component) {
+                return Component.translatable("pack.bovinesandbuttercups.builtin", component);
+            }
+
+            @Override
+            public boolean shouldAddAutomatically() {
+                return enabledByDefault;
+            }
+        };
     }
 
 }

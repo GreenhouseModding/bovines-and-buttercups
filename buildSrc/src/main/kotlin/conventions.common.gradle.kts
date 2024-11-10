@@ -95,14 +95,15 @@ tasks {
         "java_version" to Versions.JAVA,
         "sources" to Properties.GITHUB_REPO,
         "curseforge_page" to Properties.CURSEFORGE_PAGE,
-        "modrinth_page" to Properties.MODRINTH_PAGE
+        "modrinth_page" to Properties.MODRINTH_PAGE,
+        "resource_pack_format" to Versions.RESOURCE_PACK_FORMAT
     )
 
     val processResourcesTasks = listOf("processResources", "processTestResources", "processDatagenResources")
 
     withType<ProcessResources>().matching { processResourcesTasks.contains(it.name) }.configureEach {
         inputs.properties(expandProps)
-        filesMatching(setOf("fabric.mod.json", "META-INF/neoforge.mods.toml", "*.mixins.json")) {
+        filesMatching(setOf("fabric.mod.json", "META-INF/neoforge.mods.toml", "resourcepacks/*/pack.mcmeta", "*.mixins.json")) {
             expand(expandProps)
         }
         exclude("\\.cache")

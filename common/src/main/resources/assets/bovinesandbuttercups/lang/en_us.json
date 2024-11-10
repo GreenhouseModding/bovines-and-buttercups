@@ -89,12 +89,13 @@
   "tag.item.c.foods.honey": "Honeys",
   "cow_type.bovinesandbuttercups.missing_moobloom.name": "Unknown",
 
-  "resourcePack.bovinesandbuttercups.mojang.name": "Mojang Textures",
+  "resourcePack.bovinesandbuttercups.mojang.name": "Mojang Styled Textures",
   "resourcePack.bovinesandbuttercups.mojang.description": "Returns mooblooms to have black eyes.",
   "resourcePack.bovinesandbuttercups.noGrass.name": "No Grass Back",
   "resourcePack.bovinesandbuttercups.noGrass.description": "Removes grass and mycelium from cow backs.",
   "resourcePack.bovinesandbuttercups.noBuds.name": "No Buds",
   "resourcePack.bovinesandbuttercups.noBuds.description": "Sets all baby moobloom buds to flowers.",
+  "pack.bovinesandbuttercups.builtin": "%s (built-in: Bovines and Buttercups)",
 
   "text.bovinesandbuttercups.tip.beef": "You can't possibly be in a beef with a Moobloom, but you can eat beef!",
   "text.bovinesandbuttercups.tip.breed_moobloom": "The moo-st efficient way of getting new Mooblooms is by experimenting with building blocks near them! Using specific natural blocks might trick them into thinking they are in entirely different environment!",

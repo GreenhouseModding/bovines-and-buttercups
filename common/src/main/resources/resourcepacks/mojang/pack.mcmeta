@@ -1,6 +1,6 @@
 {
   "pack": {
-    "pack_format": 22,
+    "pack_format": ${resource_pack_format},
     "description": {
       "translate": "resourcePack.bovinesandbuttercups.mojang.description"
     }

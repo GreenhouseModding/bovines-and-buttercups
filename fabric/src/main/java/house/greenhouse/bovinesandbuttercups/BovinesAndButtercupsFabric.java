@@ -49,10 +49,14 @@ import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesStructureTy
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModificationFactories;
 import house.greenhouse.bovinesandbuttercups.util.CreativeTabHelper;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -80,6 +84,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         registerCreativeTabEntries();
         registerCompostables();
         registerBiomeModifications();
+        registerResourcePacks();
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
             if (entity instanceof LivingEntity living) {
@@ -225,5 +230,13 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     private static void createBiomeModifications(ResourceLocation location, Predicate<BiomeSelectionContext> predicate, EntityType<?> entityType, int weight, int min, int max) {
         BiomeModifications.create(location).add(ModificationPhase.POST_PROCESSING, predicate, context -> context.getSpawnSettings().addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(entityType, weight, min, max)));
+    }
+
+    public static void registerResourcePacks() {
+        FabricLoader.getInstance().getModContainer(BovinesAndButtercups.MOD_ID).ifPresent(modContainer -> {
+            ResourceManagerHelper.registerBuiltinResourcePack(BovinesAndButtercups.asResource("mojang"), modContainer, Component.translatable("resourcePack.bovinesandbuttercups.mojang.name"), ResourcePackActivationType.NORMAL);
+            ResourceManagerHelper.registerBuiltinResourcePack(BovinesAndButtercups.asResource("no_buds"), modContainer, Component.translatable("resourcePack.bovinesandbuttercups.noBuds.name"), ResourcePackActivationType.NORMAL);
+            ResourceManagerHelper.registerBuiltinResourcePack(BovinesAndButtercups.asResource("no_grass"), modContainer, Component.translatable("resourcePack.bovinesandbuttercups.noGrass.name"), ResourcePackActivationType.NORMAL);
+        });
     }
 }

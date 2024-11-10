@@ -9,6 +9,9 @@ object Versions {
     const val NEOFORM = "$MINECRAFT-20240808.144430"
     const val PARCHMENT = "2024.07.28"
 
+    // Resource Packs
+    const val RESOURCE_PACK_FORMAT = 34
+
     // Fabric
     const val FABRIC_API = "0.106.0+1.21.1"
     const val FABRIC_LOADER = "0.16.9"
