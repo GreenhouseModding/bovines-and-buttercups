@@ -28,12 +28,12 @@ public class InventoryBovinesModelSetType implements BovinesModelSetType {
     public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
         ResourceLocation itemModelId = modelId.withPath(s ->
                 s.substring(21, s.length() - 10));
-        UnbakedModel model = itemModelLoader.apply(itemModelId);
-        if (model == null) {
-            BovinesAndButtercups.LOG.warn("Failed to load item model {} defaulting to missing model.", itemModelId);
+        try {
+            return itemModelLoader.apply(itemModelId);
+        } catch (Exception ex) {
+            BovinesAndButtercups.LOG.warn("Failed to load item model \"{}\". Defaulting to missing model.", itemModelId, ex);
             return BovinesModelUtil.MISSING_MODEL;
         }
-        return model;
     }
 
 }

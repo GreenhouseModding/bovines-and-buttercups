@@ -2,11 +2,13 @@ package house.greenhouse.bovinesandbuttercups.content.block;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
+import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.BlockPos;
@@ -17,6 +19,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,6 +47,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.windows.MONITORINFOEX;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +70,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity blockEntity) {
-            ItemEdibleType edible = blockEntity.getEdibleType();
+            ItemEdible edible = blockEntity.getEdibleType();
             if (edible != null && edible.holder().isBound()) {
                 var shape = edible.holder().value().shapes().entrySet().stream().filter(entry -> entry.getKey().test(blockEntity)).findFirst();
                 return shape.map(Map.Entry::getValue).orElse(Shapes.block());
@@ -90,7 +96,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         if (!(level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity be) || be.getEdibleType() == null || !be.getEdibleType().holder().isBound())
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         int i = state.getValue(BITES);
-        if (stack.is(BovinesItems.PLACEABLE_EDIBLE) && be.getEdibleType().equals(stack.getOrDefault(BovinesDataComponents.EDIBLE_TYPE, new ItemEdibleType(level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY))))) {
+        if (stack.is(BovinesItems.PLACEABLE_EDIBLE) && be.getEdibleType().equals(stack.getOrDefault(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY), List.of())))) {
             if (i >= be.getEdibleType().holder().value().bites())
                 return ItemInteractionResult.CONSUME;
             stack.consume(1, player);
@@ -122,7 +128,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         if (blockEntity instanceof PlaceableEdibleBlockEntity pebe)
             if (pebe.getEdibleType() != null)
-                ItemEdibleType.apply(itemStack, pebe.getEdibleType().holder());
+                ItemEdible.apply(itemStack, pebe.getEdibleType());
 
         return itemStack;
     }
@@ -167,6 +173,15 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
 
         player.awardStat(Stats.EAT_CAKE_SLICE);
         player.getFoodData().eat(2, 0.1F);
+        if (level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity blockEntity) {
+            blockEntity.getEdibleType().effects().forEach(mobEffectEntry -> {
+                int originalDuration = player.hasEffect(mobEffectEntry.effect().getEffect()) ? player.getEffect(mobEffectEntry.effect().getEffect()).getDuration() : 0;
+                MobEffectInstance newEffect = new MobEffectInstance(mobEffectEntry.effect().getEffect(), Math.min(originalDuration + mobEffectEntry.effect().getDuration(), mobEffectEntry.maxDuration()), mobEffectEntry.effect().getAmplifier(), mobEffectEntry.effect().isAmbient(), mobEffectEntry.effect().isVisible(), mobEffectEntry.effect().showIcon());
+                if (mobEffectEntry.effect().is(BovinesEffects.LOCKDOWN))
+                    ((MobEffectInstanceLockdownDataAccess) newEffect).bovinesandbuttercups$setLockdownData(((MobEffectInstanceLockdownDataAccess) mobEffectEntry.effect()).bovinesandbuttercups$getLockdownData());
+                player.addEffect(newEffect);
+            });
+        }
         int i = state.getValue(BITES);
         level.gameEvent(player, GameEvent.EAT, pos);
         if (i > 1)

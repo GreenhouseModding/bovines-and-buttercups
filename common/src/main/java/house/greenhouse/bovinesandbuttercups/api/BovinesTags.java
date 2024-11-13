@@ -44,9 +44,10 @@ public class BovinesTags {
 
     public static class EdibleBlockTypeTags {
         /**
-         * The order in which the flower crowns with each individual material in the creative menu will appear.
+         * The order in which the flower crowns with each edible block will appear in the creative menu.
          */
         public static final TagKey<EdibleBlockType> CREATIVE_MENU_ORDER = TagKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("creative_menu_order"));
+        public static final TagKey<EdibleBlockType> IS_SUSPICIOUS = TagKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("is_suspicious"));
     }
 
     public static class EntityTypeTags {

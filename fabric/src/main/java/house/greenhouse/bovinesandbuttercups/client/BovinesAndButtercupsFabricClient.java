@@ -92,16 +92,19 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         });
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(FlowerCrownItemRenderer.BASE));
 
+        registerNetwork();
+        registerBlockLayers();
+        registerBlockRenderers();
+        registerItemRenderers();
+        registerParticleFactories();
+    }
+
+    public static void registerNetwork() {
         ClientPlayNetworking.registerGlobalReceiver(SyncConditionedTextureModifier.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncCowTypeClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncLockdownEffectsClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMoobloomSnowLayerClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMooshroomExtrasClientboundPacket.TYPE, (packet, context) -> packet.handle());
-
-        registerBlockLayers();
-        registerBlockRenderers();
-        registerItemRenderers();
-        registerParticleFactories();
     }
 
     public static void registerBlockRenderers() {

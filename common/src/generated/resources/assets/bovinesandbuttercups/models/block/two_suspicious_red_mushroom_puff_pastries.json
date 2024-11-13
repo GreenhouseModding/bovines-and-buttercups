@@ -1,0 +1,7 @@
+{
+  "parent": "bovinesandbuttercups:block/template_two_puff_pastries",
+  "render_type": "cutout",
+  "textures": {
+    "all": "bovinesandbuttercups:block/suspicious_red_mushroom_puff_pastry"
+  }
+}

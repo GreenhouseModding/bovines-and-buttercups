@@ -8,7 +8,7 @@ import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
@@ -21,8 +21,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.SuspiciousEffectHolder;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -92,18 +96,19 @@ public class CreativeTabHelper {
         return stacks;
     }
 
-    public static void addEdibleBlocksToCreativeTabs(HolderLookup.Provider lookup, ResourceKey<CreativeModeTab> tab, Consumer<ItemStack> addFunction, BiConsumer<ItemStack, ItemStack> addAfterFunction) {
+    public static void addEdibleBlocksToCreativeTabs(HolderLookup.Provider lookup, List<ItemStack> displayStacks, ResourceKey<CreativeModeTab> tab, Consumer<ItemStack> addFunction, Consumer<ItemStack> prependFunction, BiConsumer<ItemStack, ItemStack> addBeforeFunction, BiConsumer<ItemStack, ItemStack> addAfterFunction) {
         HolderLookup.RegistryLookup<EdibleBlockType> registry = lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE);
         Optional<HolderSet.Named<EdibleBlockType>> creativeModeTabOrder = registry.get(BovinesTags.EdibleBlockTypeTags.CREATIVE_MENU_ORDER);
         if (creativeModeTabOrder.isEmpty())
             return;
 
         Map<ItemStack, ItemStack> prependedItem = new HashMap<>();
+        Map<ItemStack, ItemStack> appendedItem = new HashMap<>();
 
         for (var type : registry.listElements().filter(ref -> ref.isBound() && ref.value().creativeModeTabs().stream().anyMatch(creativeModeTabEntry -> {
             if (creativeModeTabEntry.tab() == tab) {
                 var actualTab = lookup.lookup(Registries.CREATIVE_MODE_TAB).orElseThrow().get(tab);
-                return actualTab.isPresent() && (creativeModeTabEntry.after().isEmpty() || actualTab.get().value().getDisplayItems().stream().anyMatch(stack1 -> ItemStack.isSameItemSameComponents(stack1, creativeModeTabEntry.after().get())));
+                return actualTab.isPresent() && (creativeModeTabEntry.placement().stack().isEmpty() || displayStacks.stream().anyMatch(stack1 -> creativeModeTabEntry.placement().stack().get().map(stack2 -> ItemStack.isSameItemSameComponents(stack2, stack1), item -> stack1.getItem() == item)));
             }
             return false;
         })).sorted(Comparator.comparingInt(value -> {
@@ -112,25 +117,72 @@ public class CreativeTabHelper {
                 return Integer.MAX_VALUE;
             return i;
         })).toList()) {
-            ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
-            ItemEdibleType.apply(stack, type);
-            var firstItem = type.value().creativeModeTabs().stream().map(creativeModeTabEntry -> {
-                if (creativeModeTabEntry.tab() == tab) {
-                    var actualTab = lookup.lookup(Registries.CREATIVE_MODE_TAB).orElseThrow().get(tab);
-                    if (actualTab.isPresent() && creativeModeTabEntry.after().isPresent())
-                        return actualTab.get().value().getDisplayItems().stream().filter(stack1 -> ItemStack.isSameItemSameComponents(stack1, creativeModeTabEntry.after().get())).findFirst().orElse(null);
-                }
-                return null;
-            }).filter(Objects::nonNull).findFirst();
+            var creativeModeTab = type.value().creativeModeTabs().stream().filter(creativeModeTabEntry -> creativeModeTabEntry.tab() == tab).findFirst();
 
-            if (firstItem.isPresent()) {
-                if (!prependedItem.containsKey(firstItem.get()))
-                    addAfterFunction.accept(firstItem.get(), stack);
-                else
-                    addAfterFunction.accept(prependedItem.get(firstItem.get()), stack);
-                prependedItem.put(firstItem.get(), stack);
-            } else
-                addFunction.accept(stack);
+            var list = creativeModeTab.stream().flatMap(creativeModeTabEntry -> {
+                    var actualTab = lookup.lookup(Registries.CREATIVE_MODE_TAB).orElseThrow().get(tab);
+                    if (actualTab.isPresent() && creativeModeTabEntry.placement().stack().isPresent())
+                        return displayStacks.stream().filter(stack1 -> creativeModeTabEntry.placement().stack().get().map(stack2 -> ItemStack.isSameItemSameComponents(stack2, stack1), item -> stack1.getItem() == item));
+                return null;
+            }).filter(Objects::nonNull).toList();
+
+            List<ItemStack> items = creativeModeTab.orElseThrow().componentsToAdd().stream().map(components -> {
+                ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
+                stack.applyComponents(components.map());
+                ItemEdible.apply(stack, new ItemEdible(type, components.effects()));
+                return stack;
+            }).toList();
+
+            if (items.isEmpty()) {
+                if (type.is(BovinesTags.EdibleBlockTypeTags.IS_SUSPICIOUS)) {
+                    items = SuspiciousEffectHolder.getAllEffectHolders().stream().map(suspiciousEffectHolder -> {
+                        ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
+                        List<ItemEdible.MobEffectEntry> entries = suspiciousEffectHolder.getSuspiciousEffects().effects().stream().map(entry ->
+                                new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float)entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
+                        ItemEdible.apply(stack, new ItemEdible(type, entries));
+                        return stack;
+                    }).toList();
+                } else {
+                    ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
+                    ItemEdible.apply(stack, new ItemEdible(type, List.of()));
+                    items = List.of(stack);
+                }
+            }
+
+            List<ItemStack> deduplicated = new ArrayList<>();
+            for (ItemStack stack : items) {
+                if (deduplicated.stream().anyMatch(stack1 -> ItemStack.isSameItemSameComponents(stack, stack1)))
+                    continue;
+
+                deduplicated.add(stack);
+            }
+
+            if (!list.isEmpty()) {
+                if (creativeModeTab.get().placement().ordering() == CreativeModeTabEntry.Ordering.AFTER) {
+                    for (ItemStack stackToAdd : deduplicated) {
+                        if (!prependedItem.containsKey(list.getLast()))
+                            addAfterFunction.accept(list.getLast(), stackToAdd);
+                        else
+                            addAfterFunction.accept(prependedItem.get(list.getLast()), stackToAdd);
+                        prependedItem.put(list.getLast(), stackToAdd);
+                    }
+                } else {
+                    for (ItemStack stackToAdd : deduplicated) {
+                        if (!appendedItem.containsKey(list.getFirst()))
+                            addBeforeFunction.accept(list.getFirst(), stackToAdd);
+                        else
+                            addAfterFunction.accept(appendedItem.get(list.getFirst()), stackToAdd);
+                        appendedItem.put(list.getFirst(), stackToAdd);
+                    }
+                }
+            } else if (creativeModeTab.get().placement().ordering() == CreativeModeTabEntry.Ordering.BEFORE)
+                for (ItemStack stackToAdd : deduplicated) {
+                    addFunction.accept(stackToAdd);
+                }
+            else
+                for (ItemStack stackToAdd : deduplicated.reversed()) {
+                    addFunction.accept(stackToAdd);
+                }
         }
     }
 }

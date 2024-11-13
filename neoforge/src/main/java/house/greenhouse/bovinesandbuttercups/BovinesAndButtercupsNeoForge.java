@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.BeeGoalAccess;
+import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
@@ -27,6 +28,7 @@ import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.util.CreativeTabHelper;
+import house.greenhouse.bovinesandbuttercups.util.LockdownData;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
@@ -217,8 +219,12 @@ public class BovinesAndButtercupsNeoForge {
 
             LockdownAttachment attachment = entity.getData(BovinesAttachments.LOCKDOWN);
             MobEffectInstance effect = event.getEffectInstance();
-            if (!entity.level().isClientSide && effect.getEffect() instanceof LockdownEffect && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
-                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && holder.value().isEnabled(entity.level().enabledFeatures())).toList(), entity.level().getRandom());
+            if (!entity.level().isClientSide() && !((MobEffectInstanceLockdownDataAccess)effect).bovinesandbuttercups$getLockdownData().isEmpty()) {
+                for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())
+                    attachment.addLockdownMobEffect(data.linkedEffect(), data.duration().orElse(effect.getDuration()));
+                LockdownAttachment.sync(entity);
+            } else if (!entity.level().isClientSide && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
+                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(entity.level().enabledFeatures())).toList(), entity.level().getRandom());
                 randomEffect.ifPresent(entry -> {
                     attachment.addLockdownMobEffect(entry, effect.getDuration());
                     LockdownAttachment.sync(entity);
@@ -358,7 +364,7 @@ public class BovinesAndButtercupsNeoForge {
             } else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 event.insertAfter(new ItemStack(Items.HONEY_BLOCK), new ItemStack(BovinesItems.RICH_HONEY_BLOCK), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
-            CreativeTabHelper.addEdibleBlocksToCreativeTabs(event.getParameters().holders(), event.getTabKey(), event::accept, (firstStack, stack) -> event.insertAfter(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
+            CreativeTabHelper.addEdibleBlocksToCreativeTabs(event.getParameters().holders(), event.getParentEntries().stream().toList(), event.getTabKey(), event::accept, stack -> event.insertFirst(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS), (firstStack, stack) -> event.insertBefore(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS), (firstStack, stack) -> event.insertAfter(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
         }
     }
 

@@ -75,7 +75,7 @@
     "subtitles.entity.bovinesandbuttercups.moobloom.milk": "Traite d'une Moobloom",
   
     "effect.bovinesandbuttercups.lockdown": "Verrouillage",
-    "bovinesandbuttercups.nectarBowl.effect": "Verrouillage (%s) (%s)",
+    "potion.bovinesandbuttercups.lockdown": "Verrouillage (%s) (%s)",
   
     "commands.bovinesandbuttercups.lockdown.success.single": "Verouille l'effet %s pour %s",
     "commands.bovinesandbuttercups.lockdown.success.multiple": "Verouille l'effet %s pour %s joueurs",

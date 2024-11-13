@@ -1,0 +1,21 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "bovinesandbuttercups:item/missing_edible"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.3, 0.3, 0.3]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.3, 0.3, 0.3]
+		},
+		"ground": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"head": {
+			"scale": [0.3, 0.3, 0.3]
+		}
+	}
+}

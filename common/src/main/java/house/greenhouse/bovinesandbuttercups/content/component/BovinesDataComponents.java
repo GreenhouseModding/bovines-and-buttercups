@@ -18,9 +18,9 @@ public class BovinesDataComponents {
             .persistent(ItemCustomMushroom.CODEC)
             .networkSynchronized(ItemCustomMushroom.STREAM_CODEC)
             .build();
-    public static final DataComponentType<ItemEdibleType> EDIBLE_TYPE = DataComponentType.<ItemEdibleType>builder()
-            .persistent(ItemEdibleType.CODEC)
-            .networkSynchronized(ItemEdibleType.STREAM_CODEC)
+    public static final DataComponentType<ItemEdible> EDIBLE_TYPE = DataComponentType.<ItemEdible>builder()
+            .persistent(ItemEdible.CODEC)
+            .networkSynchronized(ItemEdible.STREAM_CODEC)
             .build();
     public static final DataComponentType<FlowerCrown> FLOWER_CROWN = DataComponentType.<FlowerCrown>builder()
             .persistent(FlowerCrown.CODEC)

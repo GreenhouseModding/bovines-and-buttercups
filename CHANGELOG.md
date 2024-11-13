@@ -17,7 +17,9 @@
   - Balanced Diet. Added consuming Rich Honey Bottles to the requirements.
   - Sticky Situation. Allowed Rich Honey Blocks to trigger the advancement.
   - Two by Two. Added breeding Mooblooms to the requirements.
-- Added Cupcakes and Mushroom Tarts, new decorative blocks that can be crafted.
+- Added Cupcakes Mushroom Puff Pastries, new decorative blocks that can be crafted.
+  - Cupcakes will grant a quarter of the duration of the lockdown from the nectar used to craft it when eaten.
+  - Mushroom Puff Pastries additionally have a Suspicious variant that will grant a quarter of the suspicious stew used to craft it when eaten.
 - Added new advancements.
   - Full Bloom - Breed every Moobloom that can be bred for.
   - Moo-tiful - Obtain a Flower Crown.

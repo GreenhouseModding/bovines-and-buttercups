@@ -31,10 +31,26 @@
     " P "
   ],
   "result": {
-    "count": 2,
+    "count": 4,
     "id": "bovinesandbuttercups:placeable_edible",
     "components": {
-      "bovinesandbuttercups:edible_type": "bovinesandbuttercups:tropical_blue_cupcake",
+      "bovinesandbuttercups:edible_type": {
+        "type": "bovinesandbuttercups:tropical_blue_cupcake",
+        "effects": [
+          {
+            "effect": {
+              "id": "bovinesandbuttercups:lockdown",
+              "duration": 2400,
+              "bovinesandbuttercups:lockdown_data": [
+                {
+                  "linked_effect": "minecraft:fire_resistance"
+                }
+              ]
+            },
+            "max_duration": 9600
+          }
+        ]
+      },
       "minecraft:max_stack_size": 16
     }
   }

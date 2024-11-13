@@ -26,6 +26,7 @@
     "MushroomCowMixin",
     "PistonMovingBlockEntityMixin",
     "PlacedFeatureMixin",
+    "PotionContentsMixin",
     "RegistryDataLoaderMixin",
     "ServerAdvancementManagerMixin",
     "ServerLevelAccessor",

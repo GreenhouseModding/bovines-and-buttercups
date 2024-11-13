@@ -10,8 +10,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemEdibleType;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import net.minecraft.core.BlockPos;
@@ -56,7 +55,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
     private static final Codec<Map<HolderSet<Item>, AttachmentState>> ATTACHMENTS_CODEC = Codec.simpleMap(RegistryCodecs.homogeneousList(Registries.ITEM), AttachmentState.CODEC, Keyable.forStrings(() -> Stream.of("items", "state"))).codec();
 
     @Nullable
-    private ItemEdibleType type;
+    private ItemEdible type;
     private final Map<HolderSet<Item>, AttachmentState> attachments = new LinkedHashMap<>();
     private List<EdibleBlockType.ParticleEntry> particles;
 
@@ -64,15 +63,15 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         super(BovinesBlockEntityTypes.PLACEABLE_EDIBLE, worldPosition, blockState);
     }
 
-    public ItemEdibleType getEdibleType() {
+    public ItemEdible getEdibleType() {
         if (type == null) {
-            type = new ItemEdibleType(level.registryAccess().lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(EdibleBlockType.MISSING_KEY));
+            type = new ItemEdible(level.registryAccess().lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(EdibleBlockType.MISSING_KEY), List.of());
             resetParticles();
         }
         return type;
     }
 
-    public void setEdibleType(ItemEdibleType value) {
+    public void setEdibleType(ItemEdible value) {
         type = value;
         resetParticles();
     }
@@ -225,8 +224,8 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        if (tag.contains("type"))
-            setEdibleType(new ItemEdibleType(EdibleBlockType.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("type")).getOrThrow().getFirst()));
+        if (tag.contains("data"))
+            setEdibleType(ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("data")).getOrThrow().getFirst());
 
         attachments.clear();
         if (tag.contains("attachments"))
@@ -237,7 +236,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         if (getEdibleType() != null)
-            tag.put("type", EdibleBlockType.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), getEdibleType().holder()).getOrThrow());
+            tag.put("data", ItemEdible.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), getEdibleType()).getOrThrow());
 
         if (!attachments.isEmpty())
             tag.put("attachments", ATTACHMENTS_CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), attachments).getOrThrow());
@@ -305,9 +304,9 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         }
     }
 
-    public record EdibleBlockEntityValues(ItemEdibleType placeableEdible, int bites, Map<HolderSet<Item>, PlaceableEdibleBlockEntity.AttachmentState> state) {
+    public record EdibleBlockEntityValues(ItemEdible placeableEdible, int bites, Map<HolderSet<Item>, PlaceableEdibleBlockEntity.AttachmentState> state) {
         public static EdibleBlockEntityValues fromBlockEntity(PlaceableEdibleBlockEntity blockEntity) {
-            return new EdibleBlockEntityValues(Optional.of(blockEntity.getEdibleType()).orElseGet(() -> new ItemEdibleType(blockEntity.level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY))), blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES), blockEntity.getAttachments());
+            return new EdibleBlockEntityValues(Optional.of(blockEntity.getEdibleType()).orElseGet(() -> new ItemEdible(blockEntity.level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY), List.of())), blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES), blockEntity.getAttachments());
         }
     }
 }

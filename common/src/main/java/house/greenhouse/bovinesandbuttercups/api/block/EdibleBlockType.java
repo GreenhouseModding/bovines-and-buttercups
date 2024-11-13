@@ -2,18 +2,25 @@ package house.greenhouse.bovinesandbuttercups.api.block;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
+import house.greenhouse.bovinesandbuttercups.content.data.nectar.NectarEffects;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import house.greenhouse.bovinesandbuttercups.util.CreativeModeTabEntry;
 import house.greenhouse.bovinesandbuttercups.util.FloatRange;
 import house.greenhouse.bovinesandbuttercups.util.IntRange;
+import house.greenhouse.bovinesandbuttercups.util.LockdownData;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.advancements.critereon.FluidPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -21,6 +28,7 @@ import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -33,6 +41,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -86,7 +95,7 @@ public record EdibleBlockType(
     public static final Codec<Holder<EdibleBlockType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE);
     public static final ResourceKey<EdibleBlockType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("missing_edible"));
 
-    public static EdibleBlockType cupcake(BootstrapContext<EdibleBlockType> context) {
+    public static EdibleBlockType cupcake(BootstrapContext<EdibleBlockType> context, NectarEffects nectarEffects) {
         ImmutableMap.Builder<HolderSet<Item>, AttachmentEntry> builder = ImmutableMap.builder();
         builder.put(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), new AttachmentEntry(4, Map.of(BlockValuesEntry.builder()
                 .addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(1).active(true)).build(), 3,
@@ -97,11 +106,22 @@ public record EdibleBlockType(
                 new ActivationEntry(Ingredient.of(Items.FIRE_CHARGE), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FIRECHARGE_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
                 new ActivationEntry(Ingredient.EMPTY, false, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_EXTINGUISH.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), createEmptyActivationParticles(context), List.of())
         ), Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CAKE_ADD_CANDLE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F)))));
-        return new EdibleBlockType(4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
+
+        List<CreativeModeTabEntry.ComponentsEntry> effects = nectarEffects.effects().stream().map(entry -> {
+            MobEffectInstance inst = new MobEffectInstance(BovinesEffects.LOCKDOWN, entry.duration() / 4);
+            ((MobEffectInstanceLockdownDataAccess)inst).bovinesandbuttercups$setLockdownData(List.of(new LockdownData(entry.effect(), Optional.empty())));
+            return new CreativeModeTabEntry.ComponentsEntry(DataComponentMap.EMPTY, List.of(new ItemEdible.MobEffectEntry(inst, entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.ALWAYS)));
+        }).toList();
+
+        return new EdibleBlockType(4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), effects, new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
     }
 
     public static EdibleBlockType puffPastry(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), Optional.of(Items.CAKE.getDefaultInstance()))));
+        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
+    }
+
+    public static EdibleBlockType suspiciousPuffPastry(BootstrapContext<EdibleBlockType> context) {
+        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
     }
 
     private static Map<BlockValuesEntry, VoxelShape> createPuffPastryShapeMap(BootstrapContext<EdibleBlockType> context) {
@@ -349,6 +369,19 @@ public record EdibleBlockType(
         return Map.copyOf(map);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof EdibleBlockType edibleBlockType))
+            return false;
+        return edibleBlockType.creativeModeTabs.equals(creativeModeTabs) && edibleBlockType.particlePositions.equals(particlePositions) && edibleBlockType.attachable.equals(attachable) && edibleBlockType.shapes.equals(shapes) && edibleBlockType.maxStackSize == maxStackSize && edibleBlockType.bites == bites;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bites, maxStackSize, shapes, attachable, particlePositions, creativeModeTabs);
+    }
 
     private static Map<BlockValuesEntry, List<ParticleEntry>> createEmptyActivationParticles(BootstrapContext<EdibleBlockType> context) {
         Map<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectOpenHashMap<>();
@@ -466,6 +499,22 @@ public record EdibleBlockType(
                 PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).collect(Collectors.toList())).forGetter(ActivationEntry::particles),
                 LootItemCondition.DIRECT_CODEC.listOf().optionalFieldOf("condition", List.of()).forGetter(ActivationEntry::condition)
         ).apply(inst, ActivationEntry::new));
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this)
+                return true;
+
+            if (!(obj instanceof ActivationEntry entry))
+                return false;
+
+            return entry.condition.equals(condition) && entry.particles.equals(particles) && entry.sound.equals(sound) && entry.setTo == setTo && entry.ingredient == ingredient;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(ingredient, setTo, sound, particles, condition);
+        }
     }
 
     public record BlockValuesEntry(Optional<IntRange> biteCount, Map<HolderSet<Item>, AttachmentValueEntry> attachments) {
@@ -493,10 +542,6 @@ public record EdibleBlockType(
             }));
         }
 
-        public static Builder builder() {
-            return new Builder();
-        }
-
         @Override
         public boolean equals(Object obj) {
             if (!(obj instanceof BlockValuesEntry entry))
@@ -510,12 +555,32 @@ public record EdibleBlockType(
             return Objects.hash(attachments, biteCount);
         }
 
+        public static Builder builder() {
+            return new Builder();
+        }
+
         public record AttachmentValueEntry(List<ItemPredicate> item, IntRange count, Optional<Boolean> active) {
             public static final Codec<AttachmentValueEntry> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                     ItemPredicate.CODEC.listOf().fieldOf("item").forGetter(AttachmentValueEntry::item),
                     IntRange.codec(0, 16).optionalFieldOf("count", IntRange.lowerBound(1)).forGetter(AttachmentValueEntry::count),
                     Codec.BOOL.optionalFieldOf("active").forGetter(AttachmentValueEntry::active)
             ).apply(inst, AttachmentValueEntry::new));
+
+            @Override
+            public boolean equals(Object obj) {
+                if (obj == this)
+                    return true;
+
+                if (!(obj instanceof AttachmentValueEntry entry))
+                    return false;
+
+                return entry.active.equals(active) && entry.count.equals(count) && entry.item.equals(item);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(item, count, active);
+            }
 
             public static Builder builder() {
                 return new Builder();
@@ -623,5 +688,21 @@ public record EdibleBlockType(
                 FloatRange.codec(0.0F, 2.0F).optionalFieldOf("volume", FloatRange.exact(1.0F)).forGetter(SoundSettings::volume),
                 FloatRange.codec(0.0F, 2.0F).optionalFieldOf("pitch", FloatRange.exact(1.0F)).forGetter(SoundSettings::pitch)
         ).apply(inst, SoundSettings::new));
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this)
+                return true;
+
+            if (!(obj instanceof SoundSettings entry))
+                return false;
+
+            return entry.pitch.equals(pitch) && entry.volume.equals(volume) && entry.sound == sound;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(sound, chance, volume, pitch);
+        }
     }
 }

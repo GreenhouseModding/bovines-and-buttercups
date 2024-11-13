@@ -40,8 +40,10 @@
   "block.bovinesandbuttercups.tropical_blue_cupcake": "Tropical Blue Cupcake",
   "block.bovinesandbuttercups.freesia_cupcake": "Freesia Cupcake",
   "block.bovinesandbuttercups.lingholm_cupcake": "Lingholm Cupcake",
-  "block.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
   "block.bovinesandbuttercups.brown_mushroom_puff_pastry": "Brown Mushroom Puff Pastry",
+  "block.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
+  "block.bovinesandbuttercups.suspicious_brown_mushroom_puff_pastry": "Suspicious Brown Mushroom Puff Pastry",
+  "block.bovinesandbuttercups.suspicious_red_mushroom_puff_pastry": "Suspicious Red Mushroom Puff Pastry",
 
   "block.bovinesandbuttercups.missing_flower": "Unknown Flower",
   "block.bovinesandbuttercups.missing_mushroom": "Unknown Mushroom",
@@ -75,7 +77,7 @@
   "subtitles.entity.bovinesandbuttercups.moobloom.milk": "Moobloom gets milked",
 
   "effect.bovinesandbuttercups.lockdown": "Lockdown",
-  "bovinesandbuttercups.nectarBowl.effect": "Lockdown (%s) (%s)",
+  "potion.bovinesandbuttercups.lockdown": "Lockdown (%s) (%s)",
 
   "commands.bovinesandbuttercups.lockdown.success.single": "Applied Lockdown effect for %s to %s",
   "commands.bovinesandbuttercups.lockdown.success.multiple": "Applied Lockdown effect for %s to %s targets",

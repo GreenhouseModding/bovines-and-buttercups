@@ -8,8 +8,10 @@ import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 
 public class BovinesRecipeSerializers {
     public static final RecipeSerializer<FlowerCrownRecipe> FLOWER_CROWN = new SimpleCraftingRecipeSerializer<>(FlowerCrownRecipe::new);
+    public static final RecipeSerializer<SuspiciousEdibleRecipe> SUSPICIOUS_EDIBLE = new SuspiciousEdibleRecipe.Serializer();
 
     public static void registerAll(RegistrationCallback<RecipeSerializer<?>> callback) {
         callback.register(BuiltInRegistries.RECIPE_SERIALIZER, BovinesAndButtercups.asResource("crafting_special_flowercrown"), FLOWER_CROWN);
+        callback.register(BuiltInRegistries.RECIPE_SERIALIZER, BovinesAndButtercups.asResource("crafting_special_suspicious_edible"), SUSPICIOUS_EDIBLE);
     }
 }

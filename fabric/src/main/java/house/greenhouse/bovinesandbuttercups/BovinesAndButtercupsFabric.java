@@ -211,7 +211,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(entries ->
                 entries.addAfter(Items.HONEY_BLOCK, BovinesItems.RICH_HONEY_BLOCK));
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) ->
-                CreativeTabHelper.addEdibleBlocksToCreativeTabs(entries.getContext().holders(), BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(group).orElseThrow(), entries::accept, entries::addAfter));
+                CreativeTabHelper.addEdibleBlocksToCreativeTabs(entries.getContext().holders(), entries.getDisplayStacks(), BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(group).orElseThrow(), entries::accept, entries::prepend, entries::addBefore, entries::addAfter));
     }
 
     public static void setBiomeRegistries(@Nullable RegistryAccess registries) {

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.NectarEffects;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -27,7 +28,7 @@ public record ItemNectar(Holder<Nectar> holder) implements TooltipProvider {
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> component, TooltipFlag flag) {
         for (NectarEffects.Entry entry : holder.value().effects().effects()) {
             MobEffectInstance instance = new MobEffectInstance(entry.effect(), entry.duration());
-            component.accept(Component.translatable("bovinesandbuttercups.nectarBowl.effect", Component.translatable(instance.getDescriptionId()), MobEffectUtil.formatDuration(instance, 1.0F, context.tickRate())).withStyle(ChatFormatting.BLUE));
+            component.accept(Component.translatable("potion.bovinesandbuttercups.lockdown", Component.translatable(instance.getDescriptionId()), MobEffectUtil.formatDuration(instance, 1.0F, context.tickRate())).withStyle(BovinesEffects.LOCKDOWN.value().getCategory().getTooltipFormatting()));
         }
     }
 

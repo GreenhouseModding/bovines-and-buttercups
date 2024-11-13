@@ -2,7 +2,9 @@
   "bites": 4,
   "creative_mode_tabs": [
     {
-      "after": "minecraft:cake",
+      "placement": {
+        "stack": "minecraft:cake"
+      },
       "tab": "minecraft:food_and_drinks"
     }
   ],

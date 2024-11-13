@@ -10,12 +10,14 @@ import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.BovinesNectars;
+import house.greenhouse.bovinesandbuttercups.content.recipe.SuspiciousEdibleRecipe;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -41,12 +43,14 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -62,8 +66,10 @@ import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -75,8 +81,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
@@ -100,6 +112,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -291,12 +304,17 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class RecipeProvider extends FabricRecipeProvider {
+        private final CompletableFuture<HolderLookup.Provider> registries;
+
         public RecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
             super(output, lookup);
+            this.registries = lookup;
         }
 
         @Override
         public void buildRecipes(RecipeOutput output) {
+            HolderLookup.Provider lookup = registries.join();
+
             oneToOneConversionRecipe(output, Items.ORANGE_DYE, BovinesBlocks.BIRD_OF_PARADISE, "orange_dye");
             oneToOneConversionRecipe(output, Items.YELLOW_DYE, BovinesBlocks.BUTTERCUP, "yellow_dye");
             oneToOneConversionRecipe(output, Items.LIGHT_BLUE_DYE, BovinesBlocks.CHARGELILY, "light_blue_dye");
@@ -321,6 +339,28 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             twoByTwoPacker(output, RecipeCategory.REDSTONE, BovinesBlocks.RICH_HONEY_BLOCK, BovinesItems.RICH_HONEY_BOTTLE);
 
             SpecialRecipeBuilder.special(FlowerCrownRecipe::new).save(output, BovinesAndButtercups.asResource("flower_crown"));
+
+            createPuffPastryRecipe(output, Items.BROWN_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY));
+            createPuffPastryRecipe(output, Items.RED_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY));
+            createSuspiciousPuffPastryRecipe(output, Items.BROWN_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY));
+            createSuspiciousPuffPastryRecipe(output, Items.RED_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY));
+        }
+
+        private static void createPuffPastryRecipe(RecipeOutput output, Item mushroom, Holder<EdibleBlockType> edibleType) {
+            ResourceLocation id = edibleType.unwrapKey().orElseThrow().location();
+            Advancement.Builder builder = output.advancement()
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("has_" + BuiltInRegistries.ITEM.getKey(mushroom).getPath(), has(mushroom));
+
+            ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
+            stack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, List.of()));
+
+            ShapedRecipe shapedRecipe = new ShapedRecipe("", RecipeBuilder.determineBookCategory(RecipeCategory.FOOD), ShapedRecipePattern.of(Map.of('M', Ingredient.of(mushroom), 'S', Ingredient.of(Items.MUSHROOM_STEW), 'W', Ingredient.of(Items.WHEAT)), " M ", "WSW"), stack, true);
+            output.accept(id, shapedRecipe, builder.build(id.withPrefix("recipes/" + RecipeCategory.FOOD.getFolderName() + "/")));
+        }
+
+        private static void createSuspiciousPuffPastryRecipe(RecipeOutput output, Item mushroom, Holder<EdibleBlockType> edibleType) {
+            output.accept(edibleType.unwrapKey().orElseThrow().location(), new SuspiciousEdibleRecipe(CraftingBookCategory.MISC, ShapedRecipePattern.of(Map.of('M', Ingredient.of(mushroom), 'S', Ingredient.of(Items.SUSPICIOUS_STEW), 'W', Ingredient.of(Items.WHEAT)), " M ", "WSW"), edibleType, ""), null);
         }
     }
 
@@ -611,7 +651,13 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY)
-                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY);
+                    .add(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY)
+                    .add(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY)
+                    .add(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY);
+
+            tag(BovinesTags.EdibleBlockTypeTags.IS_SUSPICIOUS)
+                    .add(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY)
+                    .add(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY);
         }
     }
 
@@ -744,6 +790,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             createCupcakes(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE, generators);
             createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators);
             createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators);
+            createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
+            createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
 
             createCandles(Blocks.CANDLE, generators);
             createCandles(Blocks.WHITE_CANDLE, generators);
@@ -772,12 +820,17 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             THREE_CUPCAKES.create(type.location().withPath(s -> "block/three_" + s + "s"), mapping, generators.modelOutput);
             FOUR_CUPCAKES.create(type.location().withPath(s -> "block/four_" + s + "s"), mapping, generators.modelOutput);
         }
+
         public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
-            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
+            createPuffPastries(type, generators, "");
+        }
 
-            String plural = type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
+        public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators, String prefix) {
+            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + prefix + s));
 
-            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + s), mapping, generators.modelOutput);
+            String plural = prefix + type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
+
+            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + prefix + s), mapping, generators.modelOutput);
             TWO_PUFF_PASTRIES.create(type.location().withPath("block/two_" + plural), mapping, generators.modelOutput);
             THREE_PUFF_PASTRIES.create(type.location().withPath("block/three_" + plural), mapping, generators.modelOutput);
             FOUR_PUFF_PASTRIES.create(type.location().withPath("block/four_" + plural), mapping, generators.modelOutput);

@@ -26,6 +26,8 @@ public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
     }
 
     public void addLockdownMobEffect(Holder<MobEffect> effect, int duration) {
+        if (effects.containsKey(effect) && effects.get(effect) > duration)
+            return;
         effects.put(effect, duration);
     }
 

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "minecraft:brown_mushroom"
+    },
+    "S": {
+      "item": "minecraft:mushroom_stew"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    " M ",
+    "WSW"
+  ],
+  "result": {
+    "components": {
+      "bovinesandbuttercups:edible_type": "bovinesandbuttercups:brown_mushroom_puff_pastry"
+    },
+    "count": 1,
+    "id": "bovinesandbuttercups:placeable_edible"
+  }
+}

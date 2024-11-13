@@ -1,0 +1,22 @@
+{
+  "type": "bovinesandbuttercups:crafting_special_suspicious_edible",
+  "group": "",
+  "pattern": {
+    "key": {
+      "M": {
+        "item": "minecraft:red_mushroom"
+      },
+      "S": {
+        "item": "minecraft:suspicious_stew"
+      },
+      "W": {
+        "item": "minecraft:wheat"
+      }
+    },
+    "pattern": [
+      " M ",
+      "WSW"
+    ]
+  },
+  "result": "bovinesandbuttercups:suspicious_red_mushroom_puff_pastry"
+}
