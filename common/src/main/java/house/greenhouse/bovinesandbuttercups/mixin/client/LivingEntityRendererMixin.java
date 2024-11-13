@@ -16,7 +16,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     @ModifyVariable(method = "getRenderType", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/resources/ResourceLocation;"))
     private ResourceLocation bovinesandbuttercups$modifyTextureLocation(ResourceLocation value, T living) {
         CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowTypeAttachment(living);
-        if (attachment != null)
+        if (attachment != null && attachment.cowType().isBound() && attachment.cowType().value().type().isApplicable(living))
             return BovinesAndButtercupsClient.getCachedTextures(attachment.cowType(), value);
         return value;
     }

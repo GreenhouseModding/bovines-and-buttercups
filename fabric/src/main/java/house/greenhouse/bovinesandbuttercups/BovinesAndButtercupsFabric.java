@@ -89,16 +89,16 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
             if (entity instanceof LivingEntity living) {
                 if (entity.hasAttached(BovinesAttachments.LOCKDOWN))
-                    LockdownAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (entity.hasAttached(BovinesAttachments.COW_TYPE)) {
                     CowTypeAttachment attachment = living.getAttached(BovinesAttachments.COW_TYPE);
                     for (CowModelLayer layer : attachment.cowType().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
-                    CowTypeAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living), true));
                 }
                 if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    MooshroomExtrasAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
@@ -163,6 +163,8 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         BovinesSoundEvents.registerAll(Registry::register);
         BovinesStructureTypes.registerAll(Registry::register);
         BovinesTextureModificationFactories.registerAll(Registry::register);
+
+        BovinesAttachments.init();
     }
 
     private static void registerCompostables() {

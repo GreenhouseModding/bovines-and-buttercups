@@ -86,12 +86,12 @@ public record CowTypeAttachment(Holder<CowType<?>> cowType, Optional<Holder<CowT
     public static void sync(LivingEntity entity) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(entity)));
+        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(entity), false));
     }
 
     public static void syncToPlayer(LivingEntity entity, ServerPlayer player) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(entity)));
+        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(entity), false));
     }
 }

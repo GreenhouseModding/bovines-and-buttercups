@@ -13,7 +13,7 @@ object Versions {
     const val RESOURCE_PACK_FORMAT = 34
 
     // Fabric
-    const val FABRIC_API = "0.106.0+1.21.1"
+    const val FABRIC_API = "0.108.0+1.21.1"
     const val FABRIC_LOADER = "0.16.9"
     const val MOD_MENU = "11.0.3"
     const val FABRIC_LOADER_RANGE = ">=0.16"

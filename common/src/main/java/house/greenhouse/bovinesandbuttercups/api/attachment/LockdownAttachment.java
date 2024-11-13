@@ -43,12 +43,12 @@ public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
     public static void sync(LivingEntity entity) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(entity)));
+        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(entity), false));
     }
 
     public static void syncToPlayer(LivingEntity entity, ServerPlayer player) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(entity)));
+        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(entity), false));
     }
 }

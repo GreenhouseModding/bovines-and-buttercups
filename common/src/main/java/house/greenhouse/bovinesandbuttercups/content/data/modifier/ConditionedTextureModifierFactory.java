@@ -93,7 +93,7 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
         setConditionValue(entity, conditionValue);
         if (entity instanceof LivingEntity living && BovinesAndButtercups.getHelper().getCowTypeAttachment(living) != null)
             // This guarantees that the cow type will be synced to the client before running this modifier's sync code.
-            BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living)), new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
+            BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living), false), new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
         else
             BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
     }

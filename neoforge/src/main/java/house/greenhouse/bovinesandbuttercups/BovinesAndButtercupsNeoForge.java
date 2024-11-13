@@ -103,16 +103,16 @@ public class BovinesAndButtercupsNeoForge {
             ServerPlayer player = (ServerPlayer)event.getEntity();
             if (event.getTarget() instanceof LivingEntity living) {
                 if (living.hasData(BovinesAttachments.LOCKDOWN))
-                    LockdownAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (living.hasData(BovinesAttachments.COW_TYPE)) {
                     CowTypeAttachment attachment = living.getData(BovinesAttachments.COW_TYPE);
                     for (CowModelLayer layer : attachment.cowType().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
-                    CowTypeAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowTypeClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living), true));
                 }
                 if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    MooshroomExtrasAttachment.syncToPlayer(living, player);
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
             }
         }
 

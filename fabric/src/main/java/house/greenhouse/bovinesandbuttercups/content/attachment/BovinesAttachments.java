@@ -37,4 +37,6 @@ public class BovinesAttachments {
             .persistent(UUIDUtil.CODEC)
             .buildAndRegister(BovinesAndButtercups.asResource("pollinating_moobloom"));
     public static final AttachmentType<Map<Holder<CowType<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentRegistry.createDefaulted(BovinesAndButtercups.asResource("baby_particle_positions"), HashMap::new);
+
+    public static void init() {}
 }
