@@ -44,7 +44,7 @@ Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.c
   - This was done for slightly more cohesion with these structures.
   - You can still figure out that the breeding blocks are a thing, just look for the particles.
 - Limelight Moobloom are now bred with Cave Vines (Glow Berry Vines) instead of Moss and Moss Carpets.
-- Limelight Ranches will now spawn between y 20 and y 40 rather than y 0.
+- Limelight Ranches will now spawn between y 20 and y 50 rather than y 0.
 - Pink Daisy Moobloom now have Pink Petals and Cherry Wood as respective options for breeding.
 - Nectar Bowls will now return bowls when used in crafting.
 - Nectar Bowls no longer store the effects and the Moobloom it was obtained from, instead storing a nectar object containing the effects and model.
