@@ -27,7 +27,6 @@ Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.c
   - Moo-tiful - Obtain a Flower Crown.
 
 ## Bugfixes
-- Fixed offspring particles having an incorrect origin point.
 - Fixed data driven cow types always selecting the first type upon being struck by lightning when it should be randomised.
 - Fixed an escape path within the Buttercup Ranch.
 - Fixed Limelight Ranches only not being found when they generate in water.
