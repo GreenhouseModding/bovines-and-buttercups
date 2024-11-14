@@ -54,7 +54,9 @@ Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.c
 
 ## Lang Changes
 - Added French language support ([#2](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/2) - TathanDev).
+  - This translation may be slightly out of date for specific bits of content as it was made before this update was finished.
 - Added Dutch language support ([#3](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/3) - ferriarnus).
+  - This translation may be slightly out of date for specific bits of content as it was made before this update was finished.
 
 ## Data Packing Changes
 - Bovines and Buttercups now utilises datapack/dynamic registries.
