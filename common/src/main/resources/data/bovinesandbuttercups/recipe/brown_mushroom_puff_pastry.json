@@ -6,7 +6,14 @@
       "item": "minecraft:brown_mushroom"
     },
     "S": {
-      "item": "minecraft:mushroom_stew"
+      "fabric:type": "bovinesandbuttercups:remainder",
+      "type": "bovinesandbuttercups:remainder",
+      "base": {
+        "item": "minecraft:mushroom_stew"
+      },
+      "remainder": {
+        "id": "minecraft:bowl"
+      }
     },
     "W": {
       "item": "minecraft:wheat"

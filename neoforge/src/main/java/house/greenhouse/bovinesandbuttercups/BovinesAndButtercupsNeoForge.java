@@ -364,7 +364,7 @@ public class BovinesAndButtercupsNeoForge {
             } else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 event.insertAfter(new ItemStack(Items.HONEY_BLOCK), new ItemStack(BovinesItems.RICH_HONEY_BLOCK), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
-            CreativeTabHelper.addEdibleBlocksToCreativeTabs(event.getParameters().holders(), event.getParentEntries().stream().toList(), event.getTabKey(), event::accept, stack -> event.insertFirst(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS), (firstStack, stack) -> event.insertBefore(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS), (firstStack, stack) -> event.insertAfter(firstStack, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
+            CreativeTabHelper.addEdibleBlocksToCreativeTabs(event.getParameters().holders(), event.getParentEntries().stream().toList(), event.getSearchEntries().stream().toList(), event.getTabKey(), event::accept, event::insertFirst, event::insertBefore, event::insertAfter);
         }
     }
 

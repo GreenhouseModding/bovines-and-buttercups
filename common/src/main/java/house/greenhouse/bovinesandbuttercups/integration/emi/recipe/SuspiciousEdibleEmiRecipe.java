@@ -58,10 +58,10 @@ public class SuspiciousEdibleEmiRecipe extends EmiPatternCraftingRecipe {
             return new GeneratedSlotWidget(random -> {
                 ItemStack stack = new ItemStack(Items.SUSPICIOUS_STEW);
                 stack.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, getEffectHolder(random).getSuspiciousEffects());
-                return EmiStack.of(stack);
+                return EmiStack.of(stack).setRemainder(EmiStack.of(Items.BOWL));
             }, unique, x, y);
-        
-        return new GeneratedSlotWidget(random -> EmiIngredient.of(recipe.getPattern().ingredients().get(slot)), unique, x, y);
+
+        return new SlotWidget(EmiIngredient.of(recipe.getPattern().ingredients().get(slot)), x, y);
     }
 
     @Override

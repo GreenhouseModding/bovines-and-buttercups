@@ -5,6 +5,7 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -84,4 +86,7 @@ public interface BovinesPlatformHelper {
     Moobloom createMoobloom(EntityType<Moobloom> entityType, Level level);
 
     boolean canStickToRichHoney(BlockState richHoneyState, BlockState otherState);
+
+    @Nullable
+    RemainderIngredient getRemainderIngredient(Ingredient ingredient);
 }

@@ -22,6 +22,7 @@ import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTyp
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesLootItemConditionTypes;
 import house.greenhouse.bovinesandbuttercups.content.recipe.BovinesRecipeSerializers;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesBiomeModifierSerializers;
 import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesStructureTypes;
@@ -49,6 +50,7 @@ public class BovinesRegistryEvents {
         register(event, BovinesDataComponents::registerAll);
         register(event, BovinesEntitySubPredicateTypes::registerAll);
         register(event, BovinesEntityTypes::registerAll);
+        register(event, BovinesIngredients::registerAll);
         register(event, BovinesLootItemConditionTypes::registerAll);
         register(event, BovinesParticleTypes::registerAll);
         register(event, BovinesRecipeSerializers::registerAll);

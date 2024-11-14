@@ -1,9 +1,12 @@
 package house.greenhouse.bovinesandbuttercups;
 
+import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
 import house.greenhouse.bovinesandbuttercups.integration.trinkets.BovinesTrinketsEvents;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
@@ -21,6 +24,9 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.FabricIngredient;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
@@ -56,7 +62,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -71,6 +79,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.pathfinder.PathType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -165,6 +174,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         BovinesTextureModificationFactories.registerAll(Registry::register);
 
         BovinesAttachments.init();
+        BovinesIngredients.init();
     }
 
     private static void registerCompostables() {
@@ -213,7 +223,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(entries ->
                 entries.addAfter(Items.HONEY_BLOCK, BovinesItems.RICH_HONEY_BLOCK));
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) ->
-                CreativeTabHelper.addEdibleBlocksToCreativeTabs(entries.getContext().holders(), entries.getDisplayStacks(), BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(group).orElseThrow(), entries::accept, entries::prepend, entries::addBefore, entries::addAfter));
+                CreativeTabHelper.addEdibleBlocksToCreativeTabs(entries.getContext().holders(), entries.getDisplayStacks(), entries.getSearchTabStacks(), BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(group).orElseThrow(), entries::accept, entries::prepend, (existingStack, newStack, visibility) -> entries.addBefore(existingStack, List.of(newStack), visibility), (existingStack, newStack, visibility) -> entries.addAfter(existingStack, List.of(newStack), visibility)));
     }
 
     public static void setBiomeRegistries(@Nullable RegistryAccess registries) {

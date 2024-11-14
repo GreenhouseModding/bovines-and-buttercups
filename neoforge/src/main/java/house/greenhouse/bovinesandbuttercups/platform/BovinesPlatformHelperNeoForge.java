@@ -9,6 +9,7 @@ import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomNeoForge;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import house.greenhouse.bovinesandbuttercups.util.PottedBlockMapUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.jetbrains.annotations.Nullable;
@@ -187,5 +190,13 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
         if (richHoneyState.is(BovinesBlocks.RICH_HONEY_BLOCK) && !otherState.is(BovinesTags.BlockTags.DOES_NOT_STICK_RICH_HONEY_BLOCK))
             return false;
         return Blocks.HONEY_BLOCK.defaultBlockState().canStickTo(otherState);
+    }
+
+    @Override
+    public @Nullable RemainderIngredient getRemainderIngredient(Ingredient ingredient) {
+        ICustomIngredient customIngredient = ingredient.getCustomIngredient();
+        if (customIngredient instanceof RemainderIngredient remainderIngredient)
+            return remainderIngredient;
+        return null;
     }
 }

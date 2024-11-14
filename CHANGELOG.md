@@ -17,7 +17,7 @@
   - Balanced Diet. Added consuming Rich Honey Bottles to the requirements.
   - Sticky Situation. Allowed Rich Honey Blocks to trigger the advancement.
   - Two by Two. Added breeding Mooblooms to the requirements.
-- Added Cupcakes Mushroom Puff Pastries, new decorative blocks that can be crafted.
+- Added Cupcakes and Mushroom Puff Pastries, new decorative blocks that can be crafted.
   - Cupcakes will grant a quarter of the duration of the lockdown from the nectar used to craft it when eaten.
   - Mushroom Puff Pastries additionally have a Suspicious variant that will grant a quarter of the suspicious stew used to craft it when eaten.
 - Added new advancements.
@@ -79,6 +79,7 @@
   - Added `player` field, a predicate for the player breeding the animals.
   - Added `different_from_parents`, which determines whether breeding conditions were in play to create a different cow type.
 - Modified the `bovinesandbuttercups` subfolder's format in resource packs.
+- Added `bovinesandbuttercups:remainder` ingredient type. Which will return a `remainder` stack from a `base` ingredient.
 
 #### Example Custom Recipes
 For crossplatforming these, use both unique fields within the same ingredient.

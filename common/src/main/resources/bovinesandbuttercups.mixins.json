@@ -27,6 +27,7 @@
     "PistonMovingBlockEntityMixin",
     "PlacedFeatureMixin",
     "PotionContentsMixin",
+    "RecipeMixin",
     "RegistryDataLoaderMixin",
     "ServerAdvancementManagerMixin",
     "ServerLevelAccessor",

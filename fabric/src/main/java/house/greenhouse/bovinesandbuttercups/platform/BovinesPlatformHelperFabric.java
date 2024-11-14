@@ -4,9 +4,12 @@ import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomFabric;
+import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.loader.api.FabricLoader;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
@@ -20,6 +23,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -186,4 +190,11 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
         throw new NotImplementedException("BovinesPlatformHelper#canStickToRichHoney is only supposed to be implemented on NeoForge.");
     }
 
+    @Override
+    public @Nullable RemainderIngredient getRemainderIngredient(Ingredient ingredient) {
+        CustomIngredient customIngredient = ingredient.getCustomIngredient();
+        if (customIngredient instanceof RemainderIngredient remainderIngredient)
+            return remainderIngredient;
+        return null;
+    }
 }

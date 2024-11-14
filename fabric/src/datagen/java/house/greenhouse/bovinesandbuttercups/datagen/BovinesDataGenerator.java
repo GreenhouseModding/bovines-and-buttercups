@@ -69,7 +69,6 @@ import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -88,7 +87,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
@@ -112,7 +110,6 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -339,28 +336,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             twoByTwoPacker(output, RecipeCategory.REDSTONE, BovinesBlocks.RICH_HONEY_BLOCK, BovinesItems.RICH_HONEY_BOTTLE);
 
             SpecialRecipeBuilder.special(FlowerCrownRecipe::new).save(output, BovinesAndButtercups.asResource("flower_crown"));
-
-            createPuffPastryRecipe(output, Items.BROWN_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY));
-            createPuffPastryRecipe(output, Items.RED_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY));
-            createSuspiciousPuffPastryRecipe(output, Items.BROWN_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY));
-            createSuspiciousPuffPastryRecipe(output, Items.RED_MUSHROOM, lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY));
-        }
-
-        private static void createPuffPastryRecipe(RecipeOutput output, Item mushroom, Holder<EdibleBlockType> edibleType) {
-            ResourceLocation id = edibleType.unwrapKey().orElseThrow().location();
-            Advancement.Builder builder = output.advancement()
-                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR)
-                    .addCriterion("has_" + BuiltInRegistries.ITEM.getKey(mushroom).getPath(), has(mushroom));
-
-            ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
-            stack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, List.of()));
-
-            ShapedRecipe shapedRecipe = new ShapedRecipe("", RecipeBuilder.determineBookCategory(RecipeCategory.FOOD), ShapedRecipePattern.of(Map.of('M', Ingredient.of(mushroom), 'S', Ingredient.of(Items.MUSHROOM_STEW), 'W', Ingredient.of(Items.WHEAT)), " M ", "WSW"), stack, true);
-            output.accept(id, shapedRecipe, builder.build(id.withPrefix("recipes/" + RecipeCategory.FOOD.getFolderName() + "/")));
-        }
-
-        private static void createSuspiciousPuffPastryRecipe(RecipeOutput output, Item mushroom, Holder<EdibleBlockType> edibleType) {
-            output.accept(edibleType.unwrapKey().orElseThrow().location(), new SuspiciousEdibleRecipe(CraftingBookCategory.MISC, ShapedRecipePattern.of(Map.of('M', Ingredient.of(mushroom), 'S', Ingredient.of(Items.SUSPICIOUS_STEW), 'W', Ingredient.of(Items.WHEAT)), " M ", "WSW"), edibleType, ""), null);
         }
     }
 

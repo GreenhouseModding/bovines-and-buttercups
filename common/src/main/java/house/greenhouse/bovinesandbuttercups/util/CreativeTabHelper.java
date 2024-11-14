@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.util;
 
+import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
@@ -22,11 +23,12 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.SuspiciousEffectHolder;
+import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,8 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class CreativeTabHelper {
     public static List<ItemStack> getCustomFlowersForCreativeTab(HolderLookup.Provider lookup) {
@@ -96,14 +96,16 @@ public class CreativeTabHelper {
         return stacks;
     }
 
-    public static void addEdibleBlocksToCreativeTabs(HolderLookup.Provider lookup, List<ItemStack> displayStacks, ResourceKey<CreativeModeTab> tab, Consumer<ItemStack> addFunction, Consumer<ItemStack> prependFunction, BiConsumer<ItemStack, ItemStack> addBeforeFunction, BiConsumer<ItemStack, ItemStack> addAfterFunction) {
+    public static void addEdibleBlocksToCreativeTabs(HolderLookup.Provider lookup, List<ItemStack> displayStacks, List<ItemStack> searchStacks, ResourceKey<CreativeModeTab> tab, AddFunction addFunction, AddFunction prependFunction, AppendFunction addBeforeFunction, AppendFunction addAfterFunction) {
         HolderLookup.RegistryLookup<EdibleBlockType> registry = lookup.lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE);
         Optional<HolderSet.Named<EdibleBlockType>> creativeModeTabOrder = registry.get(BovinesTags.EdibleBlockTypeTags.CREATIVE_MENU_ORDER);
         if (creativeModeTabOrder.isEmpty())
             return;
 
         Map<ItemStack, ItemStack> prependedItem = new HashMap<>();
+        Map<ItemStack, ItemStack> prependedSearchItem = new HashMap<>();
         Map<ItemStack, ItemStack> appendedItem = new HashMap<>();
+        Map<ItemStack, ItemStack> appendedSearchItem = new HashMap<>();
 
         for (var type : registry.listElements().filter(ref -> ref.isBound() && ref.value().creativeModeTabs().stream().anyMatch(creativeModeTabEntry -> {
             if (creativeModeTabEntry.tab() == tab) {
@@ -126,12 +128,14 @@ public class CreativeTabHelper {
                 return null;
             }).filter(Objects::nonNull).toList();
 
-            List<ItemStack> items = creativeModeTab.orElseThrow().componentsToAdd().stream().map(components -> {
+            MutableObject<Unit> hasAddedOne = new MutableObject<>();
+            List<Pair<ItemStack, CreativeModeTab.TabVisibility>> items = creativeModeTab.orElseThrow().componentsToAdd().stream().map(components -> {
                 ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
                 stack.applyComponents(components.map());
                 ItemEdible.apply(stack, new ItemEdible(type, components.effects()));
-                return stack;
+                return Pair.of(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }).toList();
+            hasAddedOne.setValue(null);
 
             if (items.isEmpty()) {
                 if (type.is(BovinesTags.EdibleBlockTypeTags.IS_SUSPICIOUS)) {
@@ -140,18 +144,20 @@ public class CreativeTabHelper {
                         List<ItemEdible.MobEffectEntry> entries = suspiciousEffectHolder.getSuspiciousEffects().effects().stream().map(entry ->
                                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float)entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
                         ItemEdible.apply(stack, new ItemEdible(type, entries));
-                        return stack;
+                        CreativeModeTab.TabVisibility visibility = hasAddedOne.getValue() != null ? CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY : CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
+                        hasAddedOne.setValue(Unit.INSTANCE);
+                        return Pair.of(stack, visibility);
                     }).toList();
                 } else {
                     ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
                     ItemEdible.apply(stack, new ItemEdible(type, List.of()));
-                    items = List.of(stack);
+                    items = List.of(Pair.of(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 }
             }
 
-            List<ItemStack> deduplicated = new ArrayList<>();
-            for (ItemStack stack : items) {
-                if (deduplicated.stream().anyMatch(stack1 -> ItemStack.isSameItemSameComponents(stack, stack1)))
+            List<Pair<ItemStack, CreativeModeTab.TabVisibility>> deduplicated = new ArrayList<>();
+            for (Pair<ItemStack, CreativeModeTab.TabVisibility> stack : items) {
+                if (deduplicated.stream().anyMatch(stack1 -> ItemStack.isSameItemSameComponents(stack.getFirst(), stack1.getFirst())))
                     continue;
 
                 deduplicated.add(stack);
@@ -159,30 +165,46 @@ public class CreativeTabHelper {
 
             if (!list.isEmpty()) {
                 if (creativeModeTab.get().placement().ordering() == CreativeModeTabEntry.Ordering.AFTER) {
-                    for (ItemStack stackToAdd : deduplicated) {
-                        if (!prependedItem.containsKey(list.getLast()))
-                            addAfterFunction.accept(list.getLast(), stackToAdd);
+                    for (Pair<ItemStack, CreativeModeTab.TabVisibility> stackToAdd : deduplicated) {
+                        Map<ItemStack, ItemStack> map = stackToAdd.getSecond() == CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY ? prependedSearchItem : prependedItem;
+                        if (!map.containsKey(list.getLast()))
+                            addAfterFunction.accept(list.getLast(), stackToAdd.getFirst(), stackToAdd.getSecond());
                         else
-                            addAfterFunction.accept(prependedItem.get(list.getLast()), stackToAdd);
-                        prependedItem.put(list.getLast(), stackToAdd);
+                            addAfterFunction.accept(map.get(list.getLast()), stackToAdd.getFirst(), stackToAdd.getSecond());
+                        map.put(list.getLast(), stackToAdd.getFirst());
+                        if (stackToAdd.getSecond() == CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS && searchStacks.contains(list.getLast()))
+                            prependedSearchItem.put(list.getLast(), stackToAdd.getFirst());
                     }
                 } else {
-                    for (ItemStack stackToAdd : deduplicated) {
-                        if (!appendedItem.containsKey(list.getFirst()))
-                            addBeforeFunction.accept(list.getFirst(), stackToAdd);
+                    for (Pair<ItemStack, CreativeModeTab.TabVisibility> stackToAdd : deduplicated) {
+                        Map<ItemStack, ItemStack> map = stackToAdd.getSecond() == CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY ? appendedSearchItem : appendedItem;
+                        if (!map.containsKey(list.getFirst()))
+                            addBeforeFunction.accept(list.getFirst(), stackToAdd.getFirst(), stackToAdd.getSecond());
                         else
-                            addAfterFunction.accept(appendedItem.get(list.getFirst()), stackToAdd);
-                        appendedItem.put(list.getFirst(), stackToAdd);
+                            addAfterFunction.accept(map.get(list.getFirst()), stackToAdd.getFirst(), stackToAdd.getSecond());
+                        map.put(list.getFirst(), stackToAdd.getFirst());
+                        if (stackToAdd.getSecond() == CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS && searchStacks.contains(list.getFirst()))
+                            appendedSearchItem.put(list.getFirst(), stackToAdd.getFirst());
                     }
                 }
             } else if (creativeModeTab.get().placement().ordering() == CreativeModeTabEntry.Ordering.BEFORE)
-                for (ItemStack stackToAdd : deduplicated) {
-                    addFunction.accept(stackToAdd);
+                for (Pair<ItemStack, CreativeModeTab.TabVisibility> stackToAdd : deduplicated) {
+                    addFunction.accept(stackToAdd.getFirst(), stackToAdd.getSecond());
                 }
             else
-                for (ItemStack stackToAdd : deduplicated.reversed()) {
-                    addFunction.accept(stackToAdd);
+                for (Pair<ItemStack, CreativeModeTab.TabVisibility> stackToAdd : deduplicated.reversed()) {
+                    addFunction.accept(stackToAdd.getFirst(), stackToAdd.getSecond());
                 }
         }
+    }
+
+    @FunctionalInterface
+    public interface AddFunction {
+        void accept(ItemStack newStack, CreativeModeTab.TabVisibility visibility);
+    }
+
+    @FunctionalInterface
+    public interface AppendFunction {
+        void accept(ItemStack existingStack, ItemStack newStack, CreativeModeTab.TabVisibility visibility);
     }
 }
