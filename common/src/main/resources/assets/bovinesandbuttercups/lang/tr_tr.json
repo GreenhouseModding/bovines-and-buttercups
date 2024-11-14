@@ -46,7 +46,6 @@
   
     "commands.bovinesandbuttercups.lockdown.give.success.single": "%s için Kitli etkisi %s hedefine eklendi",
     "commands.bovinesandbuttercups.lockdown.give.success.multiple": "%s için Kitli etkisi %s hedeflerine eklendi",
-    "commands.bovinesandbuttercups.lockdown.give.failed": "Kitli etkisi için Kitli etkisi uygulanamıyor",
   
     "tag.bovinesandbuttercups.moobloom_flowers": "Moobloom Çiçekleri",
     "cow_type.bovinesandbuttercups.missing_moobloom.name": "Bilinmeyen",

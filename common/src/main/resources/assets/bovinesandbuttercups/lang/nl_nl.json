@@ -77,9 +77,8 @@
   "effect.bovinesandbuttercups.lockdown": "Lockdown",
   "bovinesandbuttercups.nectarBowl.effect": "Lockdown (%s) (%s)",
 
-  "commands.bovinesandbuttercups.lockdown.success.single": "Lockdown effect voor %s toegevoegd aan %s",
-  "commands.bovinesandbuttercups.lockdown.success.multiple": "Lockdown effect voor %s toegevoegd aan %s doelwitten",
-  "commands.bovinesandbuttercups.lockdown.failed": "Lockdown effect toevoegen voor %s is mislukt",
+  "commands.bovinesandbuttercups.lockdown.give.success.single": "Lockdown effect voor %s toegevoegd aan %s",
+  "commands.bovinesandbuttercups.lockdown.give.success.multiple": "Lockdown effect voor %s toegevoegd aan %s doelwitten",
 
   "tag.block.bovinesandbuttercups.moobloom_flowers": "Moebloem Bloemen",
   "tag.item.bovinesandbuttercups.moobloom_flowers": "Moebloem Bloemen",

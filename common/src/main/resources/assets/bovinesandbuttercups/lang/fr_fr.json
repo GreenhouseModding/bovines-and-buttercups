@@ -79,7 +79,6 @@
   
     "commands.bovinesandbuttercups.lockdown.give.success.single": "Verouille l'effet %s pour %s",
     "commands.bovinesandbuttercups.lockdown.give.success.multiple": "Verouille l'effet %s pour %s joueurs",
-    "commands.bovinesandbuttercups.lockdown.give.failed": "Impossible de verouillé l'effet pour %s",
   
     "tag.block.bovinesandbuttercups.moobloom_flowers": "Fleurs de Moobloom",
     "tag.item.bovinesandbuttercups.moobloom_flowers": "Fleurs de Moobloom",

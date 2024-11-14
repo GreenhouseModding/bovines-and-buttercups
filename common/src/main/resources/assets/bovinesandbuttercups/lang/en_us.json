@@ -81,13 +81,13 @@
 
   "commands.bovinesandbuttercups.lockdown.give.success.single": "Applied lockdown to effect for %s to %s",
   "commands.bovinesandbuttercups.lockdown.give.success.multiple": "Applied lockdown to effect for %s to %s targets",
+  "commands.bovinesandbuttercups.lockdown.give.failed.lockdown": "Unable to lock down lockdown",
   "commands.bovinesandbuttercups.lockdown.clear.everything.failed": "Target has no locked down effects to remove",
   "commands.bovinesandbuttercups.lockdown.clear.specific.success.multiple": "Removed lockdown effect %s from %s targets",
   "commands.bovinesandbuttercups.lockdown.clear.specific.success.single": "Removed lockdown effect %s from %s",
   "commands.bovinesandbuttercups.lockdown.clear.everything.success.multiple": "Removed every lockdown effect from %s targets",
   "commands.bovinesandbuttercups.lockdown.clear.everything.success.single": "Removed every lockdown effect from %s",
   "commands.bovinesandbuttercups.lockdown.clear.specific.failed": "Target doesn't have the requested effect on lockdown",
-  "commands.bovinesandbuttercups.lockdown.give.failed.lockdown": "Unable to lock down lockdown",
 
   "tag.block.bovinesandbuttercups.moobloom_flowers": "Moobloom Flowers",
   "tag.item.bovinesandbuttercups.moobloom_flowers": "Moobloom Flowers",

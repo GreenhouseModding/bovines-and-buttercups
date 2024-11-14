@@ -46,7 +46,6 @@
 
   "commands.bovinesandbuttercups.lockdown.give.success.single": "將封鎖效果給予 %s 的 %s",
   "commands.bovinesandbuttercups.lockdown.give.success.multiple": "將封鎖效果給予 %s 的 %s 目標",
-  "commands.bovinesandbuttercups.lockdown.give.failed": "無法為其使用封鎖",
 
   "tag.bovinesandbuttercups.moobloom_flowers": "哞花之花",
   "cow_type.bovinesandbuttercups.missing_moobloom.name": "未知",
