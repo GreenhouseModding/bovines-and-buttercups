@@ -28,7 +28,7 @@ public class GuiMixin {
             return original;
 
         LockdownAttachment attachment = minecraft.player.getExistingData(BovinesAttachments.LOCKDOWN).orElse(null);
-        if (!(effect.value() instanceof LockdownEffect) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect)))
+        if (!(effect.is(BovinesEffects.LOCKDOWN)) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect)))
             return BovinesAndButtercups.asResource("hud/effect_background_lockdown");
         return original;
     }

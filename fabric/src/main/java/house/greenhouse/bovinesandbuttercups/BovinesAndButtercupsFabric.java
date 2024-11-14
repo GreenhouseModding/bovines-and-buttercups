@@ -1,12 +1,10 @@
 package house.greenhouse.bovinesandbuttercups;
 
-import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
-import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
-import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
 import house.greenhouse.bovinesandbuttercups.integration.trinkets.BovinesTrinketsEvents;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
@@ -18,19 +16,16 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.FabricIngredient;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
@@ -62,9 +57,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -175,6 +168,10 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
         BovinesAttachments.init();
         BovinesIngredients.init();
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            BovinesCommands.register(dispatcher, registryAccess);
+        });
     }
 
     private static void registerCompostables() {

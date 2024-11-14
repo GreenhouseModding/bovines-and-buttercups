@@ -42,14 +42,14 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
             return original;
 
         LockdownAttachment attachment = minecraft.player.getAttached(BovinesAttachments.LOCKDOWN);
-        if (!(effect.getEffect().value() instanceof LockdownEffect) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect.getEffect())))
+        if (!(effect.getEffect().is(BovinesEffects.LOCKDOWN)) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect.getEffect())))
             return BovinesAndButtercups.asResource("container/inventory/effect_background_lockdown");
         return original;
     }
 
     @Inject(method = "renderIcons", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(IIIIILnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void bovinesandbuttercups$drawOverridenEffectSprite(GuiGraphics guiGraphics, int x, int y, Iterable<MobEffectInstance> iterable, boolean large, CallbackInfo ci, MobEffectTextureManager mobEffectTextureManager, int k, Iterator var8, MobEffectInstance mobEffectInstance, Holder<MobEffect> holder, TextureAtlasSprite textureAtlasSprite) {
-        if (!holder.isBound() || !(holder.value() instanceof LockdownEffect)) return;
+        if (!holder.isBound() || !(holder.is(BovinesEffects.LOCKDOWN))) return;
 
         List<Holder<MobEffect>> statusEffectList = BovinesAndButtercups.getHelper().getLockdownAttachment(minecraft.player).effects().keySet().stream().toList();
 

@@ -25,14 +25,18 @@ public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
         this.effects = new HashMap<>(effects);
     }
 
-    public void addLockdownMobEffect(Holder<MobEffect> effect, int duration) {
-        if (effects.containsKey(effect) && effects.get(effect) > duration)
-            return;
+    public boolean addLockdownMobEffect(Holder<MobEffect> effect, int duration) {
+        if (effects.containsKey(effect) && (duration != -1 && effects.getOrDefault(effect, -1) > duration))
+            return false;
         effects.put(effect, duration);
+        return true;
     }
 
-    public void removeLockdownMobEffect(Holder<MobEffect> effect) {
+    public boolean removeLockdownMobEffect(Holder<MobEffect> effect) {
+        if (!effects.containsKey(effect))
+            return false;
         effects.remove(effect);
+        return true;
     }
 
     public void setLockdownMobEffects(Map<Holder<MobEffect>, Integer> map) {

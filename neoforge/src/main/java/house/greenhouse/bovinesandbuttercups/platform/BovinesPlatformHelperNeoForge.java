@@ -113,7 +113,7 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     public void sendTrackingClientboundPacket(Entity entity, CustomPacketPayload... payloads) {
         List<CustomPacketPayload> extraPayloads = new ArrayList<>(Arrays.asList(payloads));
         extraPayloads.removeFirst();
-        PacketDistributor.sendToPlayersTrackingEntity(entity, payloads[0], extraPayloads.toArray(CustomPacketPayload[]::new));
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, payloads[0], extraPayloads.toArray(CustomPacketPayload[]::new));
     }
 
     @Override

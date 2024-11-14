@@ -30,7 +30,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
             return original;
 
         LockdownAttachment attachment = minecraft.player.getExistingData(BovinesAttachments.LOCKDOWN).orElse(null);
-        if (!(effect.getEffect().value() instanceof LockdownEffect) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect.getEffect())))
+        if (!(effect.getEffect().is(BovinesEffects.LOCKDOWN)) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect.getEffect())))
             return BovinesAndButtercups.asResource("container/inventory/effect_background_lockdown");
         return original;
     }

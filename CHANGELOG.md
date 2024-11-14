@@ -47,6 +47,8 @@
 - Nectar Bowls will now return bowls when used in crafting.
 - Nectar Bowls no longer store the effects and the Moobloom it was obtained from, instead storing a nectar object containing the effects and model.
 - Prefixed certain subtitle lang entries with mod id.
+- Updated /effect lockdown command to instead be found at /bovinesandbuttercups lockdown give/clear.
+- Updated lockdown command related lang.
 
 ## Data Packing Changes
 - Bovines and Buttercups now utilises datapack/dynamic registries.

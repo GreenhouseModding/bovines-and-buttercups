@@ -3,7 +3,6 @@ package house.greenhouse.bovinesandbuttercups.client;
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.PlaceableEdibleItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
-import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;

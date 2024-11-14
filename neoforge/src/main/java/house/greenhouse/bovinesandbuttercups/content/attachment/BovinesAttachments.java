@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public class BovinesAttachments {
     public static final AttachmentType<LockdownAttachment> LOCKDOWN = AttachmentType
-            .builder(() -> new LockdownAttachment(Map.of()))
+            .builder(() -> new LockdownAttachment(new HashMap<>()))
             .serialize(LockdownAttachment.CODEC)
             .build();
 

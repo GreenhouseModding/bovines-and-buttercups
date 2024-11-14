@@ -3,10 +3,8 @@ package house.greenhouse.bovinesandbuttercups.network.clientbound;
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
-import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
-import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 public record SyncLockdownEffectsClientboundPacket(int entityId, LockdownAttachment attachment, boolean onTracking) implements CustomPacketPayload {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("sync_lockdown_effects");

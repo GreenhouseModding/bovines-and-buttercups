@@ -10,6 +10,7 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
+import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.goal.MoveToMoobloomGoal;
@@ -70,6 +71,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
@@ -98,6 +100,11 @@ public class BovinesAndButtercupsNeoForge {
 
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
     public static class GameEvents {
+        @SubscribeEvent
+        public static void registerCommands(RegisterCommandsEvent event) {
+            BovinesCommands.register(event.getDispatcher(), event.getBuildContext());
+        }
+
         @SubscribeEvent
         public static void onStartTracking(PlayerEvent.StartTracking event) {
             ServerPlayer player = (ServerPlayer)event.getEntity();
@@ -217,30 +224,32 @@ public class BovinesAndButtercupsNeoForge {
         public static void onMobEffectAdded(MobEffectEvent.Added event) {
             LivingEntity entity = event.getEntity();
 
-            LockdownAttachment attachment = entity.getData(BovinesAttachments.LOCKDOWN);
             MobEffectInstance effect = event.getEffectInstance();
+            if (!effect.is(BovinesEffects.LOCKDOWN))
+                return;
+
+            LockdownAttachment attachment = entity.getData(BovinesAttachments.LOCKDOWN);
             if (!entity.level().isClientSide() && !((MobEffectInstanceLockdownDataAccess)effect).bovinesandbuttercups$getLockdownData().isEmpty()) {
                 for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())
                     attachment.addLockdownMobEffect(data.linkedEffect(), data.duration().orElse(effect.getDuration()));
-                LockdownAttachment.sync(entity);
-            } else if (!entity.level().isClientSide && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
+            } else if (!entity.level().isClientSide() && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
                 Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(entity.level().enabledFeatures())).toList(), entity.level().getRandom());
                 randomEffect.ifPresent(entry -> {
                     attachment.addLockdownMobEffect(entry, effect.getDuration());
-                    LockdownAttachment.sync(entity);
                 });
             }
-            if (!entity.level().isClientSide && entity instanceof ServerPlayer serverPlayer && effect.getEffect() instanceof LockdownEffect && !attachment.effects().isEmpty()) {
+            if (!entity.level().isClientSide() && entity instanceof ServerPlayer serverPlayer && effect.getEffect().is(BovinesEffects.LOCKDOWN) && !attachment.effects().isEmpty()) {
                 attachment.effects().forEach((effect1, duration) -> {
                     if (!entity.hasEffect(effect1)) return;
                     LockEffectTrigger.INSTANCE.trigger(serverPlayer, effect1);
                 });
             }
+            LockdownAttachment.sync(entity);
         }
 
         @SubscribeEvent
         public static void onMobEffectRemoved(MobEffectEvent.Remove event) {
-            if (event.getEffectInstance() == null || !(event.getEffectInstance().getEffect() instanceof LockdownEffect)) return;
+            if (event.getEffectInstance() == null || !(event.getEffectInstance().getEffect().is(BovinesEffects.LOCKDOWN))) return;
             Optional<LockdownAttachment> attachment = event.getEntity().getExistingData(BovinesAttachments.LOCKDOWN);
             if (attachment.isPresent()) {
                 attachment.get().effects().clear();
@@ -250,7 +259,7 @@ public class BovinesAndButtercupsNeoForge {
 
         @SubscribeEvent
         public static void onMobEffectExpired(MobEffectEvent.Expired event) {
-            if (event.getEffectInstance() == null || !(event.getEffectInstance().getEffect() instanceof LockdownEffect)) return;
+            if (event.getEffectInstance() == null || !(event.getEffectInstance().getEffect().is(BovinesEffects.LOCKDOWN))) return;
             Optional<LockdownAttachment> attachment = event.getEntity().getExistingData(BovinesAttachments.LOCKDOWN);
             if (attachment.isPresent()) {
                 attachment.get().effects().clear();

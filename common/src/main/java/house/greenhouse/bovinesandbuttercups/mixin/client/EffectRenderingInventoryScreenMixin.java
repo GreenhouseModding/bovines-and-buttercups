@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -35,11 +36,11 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
     private void bovinesandbuttercups$overlayLockdownBorder(GuiGraphics guiGraphics, int x, int height, Iterable<MobEffectInstance> iterable, boolean wide, CallbackInfo ci, @Local(ordinal = 2) int i, @Local MobEffectInstance mobEffectInstance) {
         if (this.minecraft == null || this.minecraft.player == null) return;
 
-        List<MobEffectInstance> lockdownEffectInstance = this.minecraft.player.getActiveEffects().stream().filter(instance -> instance.getEffect() instanceof LockdownEffect).toList();
+        List<MobEffectInstance> lockdownEffectInstance = this.minecraft.player.getActiveEffects().stream().filter(instance -> instance.getEffect().is(BovinesEffects.LOCKDOWN)).toList();
 
         if (lockdownEffectInstance.isEmpty()) return;
 
-        if (!(mobEffectInstance.getEffect() instanceof LockdownEffect) && BovinesAndButtercups.getHelper().getLockdownAttachment(this.minecraft.player).effects().entrySet().stream().anyMatch(instance -> instance.getKey() == mobEffectInstance.getEffect())) {
+        if (!(mobEffectInstance.getEffect().is(BovinesEffects.LOCKDOWN)) && BovinesAndButtercups.getHelper().getLockdownAttachment(this.minecraft.player).effects().entrySet().stream().anyMatch(instance -> instance.getKey() == mobEffectInstance.getEffect())) {
             guiGraphics.blitSprite(BovinesAndButtercups.asResource("container/inventory/lockdown_frame"), x, i, 32, 32);
         }
     }
@@ -53,7 +54,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
             int l = this.topPos;
             MobEffectInstance mobEffectInstance = null;
             for (MobEffectInstance mobEffectInstance2 : iterable) {
-                if (mouseY >= l && mouseY <= l + j && mobEffectInstance2.getEffect() instanceof LockdownEffect) {
+                if (mouseY >= l && mouseY <= l + j && mobEffectInstance2.getEffect().is(BovinesEffects.LOCKDOWN)) {
                     mobEffectInstance = mobEffectInstance2;
                 }
                 l += j;

@@ -38,14 +38,14 @@ public class GuiMixin {
             return original;
 
         LockdownAttachment attachment = minecraft.player.getAttached(BovinesAttachments.LOCKDOWN);
-        if (!(effect.value() instanceof LockdownEffect) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect)))
+        if (!(effect.is(BovinesEffects.LOCKDOWN)) && attachment != null && attachment.effects().keySet().stream().anyMatch(instance -> instance.is(effect)))
             return BovinesAndButtercups.asResource("hud/effect_background_lockdown");
         return original;
     }
 
     @Inject(method = "renderEffects", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
     private void bovinesandbuttercups$renderLockdownStatusEffectOverlay(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo ci, @Local MobEffectTextureManager mobEffectTextureManager, @Local List<Runnable> list, @Local MobEffectInstance mobEffectInstance, @Local Holder<MobEffect> holder, @Local(ordinal = 0) float g, @Local(ordinal = 4) int n, @Local(ordinal = 5) int o) {
-        if (!holder.isBound() || !(holder.value() instanceof LockdownEffect)) return;
+        if (!holder.isBound() || !(holder.is(BovinesEffects.LOCKDOWN))) return;
 
         LockdownAttachment attachment = minecraft.player.getAttached(BovinesAttachments.LOCKDOWN);
 

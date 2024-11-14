@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
@@ -40,8 +41,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow
     public abstract boolean hasEffect(Holder<MobEffect> mobEffect);
 
-    @Shadow public abstract boolean equipmentHasChanged(ItemStack oldItem, ItemStack newItem);
-
     public LivingEntityMixin(EntityType<?> type, Level level) {
         super(type, level);
     }
@@ -81,47 +80,48 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "onEffectAdded", at = @At("TAIL"))
-    private void bovinesandbuttercups$addRandomLockdown(MobEffectInstance effect, Entity entity, CallbackInfo ci) {
-        if (effect.getEffect().isBound() && effect.getEffect().value() instanceof LockdownEffect) {
+    @ModifyReturnValue(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("RETURN"))
+    private boolean bovinesandbuttercups$syncLockdownOnAdd(boolean original, MobEffectInstance effect, Entity entity) {
+        if (original && effect.getEffect().isBound() && effect.getEffect().is(BovinesEffects.LOCKDOWN)) {
             LockdownAttachment attachment = this.getAttachedOrCreate(BovinesAttachments.LOCKDOWN);
             if (!level().isClientSide() && !((MobEffectInstanceLockdownDataAccess)effect).bovinesandbuttercups$getLockdownData().isEmpty()) {
                 for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())
                     attachment.addLockdownMobEffect(data.linkedEffect(), data.duration().orElse(effect.getDuration()));
-                LockdownAttachment.sync((LivingEntity) (Object) this);
-            } else if (!level().isClientSide && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
+            } else if (!level().isClientSide() && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
                 Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(level().enabledFeatures())).toList(), level().getRandom());
                 randomEffect.ifPresent(entry -> {
                     attachment.addLockdownMobEffect(entry, effect.getDuration());
-                    LockdownAttachment.sync((LivingEntity)(Object)this);
                 });
             }
 
-            if (!level().isClientSide && (LivingEntity) (Object) this instanceof ServerPlayer serverPlayer && !attachment.effects().isEmpty()) {
+            if (!level().isClientSide() && (LivingEntity) (Object) this instanceof ServerPlayer serverPlayer && !attachment.effects().isEmpty()) {
                 attachment.effects().forEach((effect1, duration) -> {
                     if (!this.hasEffect(effect1)) return;
                     LockEffectTrigger.INSTANCE.trigger(serverPlayer, effect1);
                 });
             }
+            if (!level().isClientSide())
+                LockdownAttachment.sync((LivingEntity)(Object)this);
         }
+        return original;
     }
 
     @Inject(method = "onEffectRemoved", at = @At("TAIL"))
     private void bovinesandbuttercups$removeAllLockdownEffects(MobEffectInstance effect, CallbackInfo ci) {
         LockdownAttachment attachment = this.getAttached(BovinesAttachments.LOCKDOWN);
-        if (level().isClientSide || attachment == null || !((Entity)(Object)this instanceof LivingEntity living) || !effect.getEffect().isBound() || !(effect.getEffect().value() instanceof LockdownEffect)) return;
+        if (level().isClientSide || attachment == null || !((Entity)(Object)this instanceof LivingEntity living) || !effect.getEffect().isBound() || !(effect.getEffect().is(BovinesEffects.LOCKDOWN))) return;
         attachment.effects().clear();
         LockdownAttachment.sync(living);
     }
 
-    @Inject(method = "canBeAffected", at = @At(value = "RETURN"), cancellable = true)
-    private void bovinesandbuttercups$cancelStatusEffectIfLocked(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+    @ModifyReturnValue(method = "canBeAffected", at = @At(value = "RETURN"))
+    private boolean bovinesandbuttercups$cancelStatusEffectIfLocked(boolean original, MobEffectInstance effect) {
         LockdownAttachment attachment = this.getAttached(BovinesAttachments.LOCKDOWN);
         if (hasEffect(BovinesEffects.LOCKDOWN) && attachment != null && attachment.effects().containsKey(effect.getEffect())) {
             if (!level().isClientSide && (LivingEntity)(Object)this instanceof ServerPlayer serverPlayer)
                 PreventEffectTrigger.INSTANCE.trigger(serverPlayer, effect.getEffect());
-
-            cir.setReturnValue(false);
+            return false;
         }
+        return original;
     }
 }
