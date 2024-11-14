@@ -24,10 +24,13 @@
     "WSW"
   ],
   "result": {
+    "count": 4,
+    "id": "bovinesandbuttercups:placeable_edible",
     "components": {
-      "bovinesandbuttercups:edible_type": "bovinesandbuttercups:brown_mushroom_puff_pastry"
-    },
-    "count": 1,
-    "id": "bovinesandbuttercups:placeable_edible"
+      "bovinesandbuttercups:edible_type": {
+        "type": "bovinesandbuttercups:brown_mushroom_puff_pastry"
+      },
+      "minecraft:max_stack_size": 16
+    }
   }
 }

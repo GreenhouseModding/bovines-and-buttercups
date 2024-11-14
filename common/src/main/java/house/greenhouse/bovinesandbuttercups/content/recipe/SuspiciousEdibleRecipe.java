@@ -74,7 +74,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
         List<ItemEdible.MobEffectEntry> entries = suspiciousStew.getOrDefault(DataComponents.SUSPICIOUS_STEW_EFFECTS, SuspiciousStewEffects.EMPTY).effects().stream().map(entry ->
                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float) entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
 
-        returnStack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, entries));
+        ItemEdible.apply(returnStack, new ItemEdible(edibleType, entries));
         return returnStack;
     }
 

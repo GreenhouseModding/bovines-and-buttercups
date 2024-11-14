@@ -8,6 +8,7 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.Comparison;
 import dev.emi.emi.api.stack.EmiStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.recipe.SuspiciousEdibleRecipe;
@@ -28,9 +29,12 @@ public class BovinesEmiPlugin implements EmiPlugin {
         registry.setDefaultComparison(EmiStack.of(BovinesItems.CUSTOM_FLOWER), Comparison.compareComponents());
         registry.setDefaultComparison(EmiStack.of(BovinesItems.CUSTOM_MUSHROOM), Comparison.compareComponents());
         registry.setDefaultComparison(EmiStack.of(BovinesItems.CUSTOM_MUSHROOM_BLOCK), Comparison.compareComponents());
-        registry.setDefaultComparison(EmiStack.of(BovinesItems.PLACEABLE_EDIBLE), Comparison.compareComponents());
-
-        registry.setDefaultComparison(EmiStack.of(BovinesItems.NECTAR_BOWL), Comparison.compareData(emiStack -> emiStack.getItemStack().get(BovinesDataComponents.EDIBLE_TYPE)));
+        registry.setDefaultComparison(EmiStack.of(BovinesItems.PLACEABLE_EDIBLE), Comparison.compareData(emiStack -> {
+            if (emiStack.getItemStack().get(BovinesDataComponents.EDIBLE_TYPE) == null)
+                return EdibleBlockType.MISSING_KEY;
+            return emiStack.getItemStack().get(BovinesDataComponents.EDIBLE_TYPE).holder().unwrapKey().orElse(EdibleBlockType.MISSING_KEY);
+        }));
+        registry.setDefaultComparison(EmiStack.of(BovinesItems.NECTAR_BOWL), Comparison.compareComponents());
 
         EmiStack flowerCrown = EmiStack.of(FlowerCrownItem.createRainbowCrown(Minecraft.getInstance().level.registryAccess())).comparison(Comparison.compareComponents());
         registry.removeEmiStacks(emiStack -> emiStack.getItemStack().is(BovinesItems.FLOWER_CROWN) && !emiStack.isEqual(flowerCrown));
