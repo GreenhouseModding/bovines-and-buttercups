@@ -29,7 +29,7 @@ Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.c
 ## Bugfixes
 - Fixed data driven cow types always selecting the first type upon being struck by lightning when it should be randomised.
 - Fixed an escape path within the Buttercup Ranch.
-- Fixed Limelight Ranches only not being found when they generate in water.
+- Fixed Limelight Ranches only not being found by /locate and similar when they generate in water.
 
 ## Miscellaneous Changes
 - Removed REI compat.
