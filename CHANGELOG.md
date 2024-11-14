@@ -1,6 +1,8 @@
 ## 2.0.0 - Sweet and Savory
 2.0.0 is a total rewrite of the mod, both content-wise and datapacking-wise.
 
+Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.com/TathanDev) and [ferriarnus](https://github.com/ferriarnus) for helping with this update by submitting PRs!
+
 ## Main Features
 - Added a new Moobloom, the Lingholm Moobloom, a cyan flower themed after non-snowy Taiga biomes.
 - Added a new cosmetic item, the Flower Crown. This is an item you may wear on your head and can craft from any combination of Moobloom flowers.
@@ -49,6 +51,10 @@
 - Prefixed certain subtitle lang entries with mod id.
 - Updated /effect lockdown command to instead be found at /bovinesandbuttercups lockdown give/clear.
 - Updated lockdown command related lang.
+
+## Lang Changes
+- Added French language support ([#2](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/2) - TathanDev).
+- Added Dutch language support ([#3](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/3) - ferriarnus).
 
 ## Data Packing Changes
 - Bovines and Buttercups now utilises datapack/dynamic registries.
