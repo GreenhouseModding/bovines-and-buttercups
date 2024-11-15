@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public record CowSubPredicate(Optional<Holder<CowType<?>>> type, Optional<Boolean> hasSnow) implements EntitySubPredicate {
     public static final MapCodec<CowSubPredicate> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            RegistryFixedCodec.create(BovinesRegistryKeys.COW_TYPE).optionalFieldOf("type").forGetter(CowSubPredicate::type),
+            RegistryFixedCodec.create(BovinesRegistryKeys.COW_TYPE).optionalFieldOf("cow_type").forGetter(CowSubPredicate::type),
             Codec.BOOL.optionalFieldOf("has_snow").forGetter(CowSubPredicate::hasSnow)
     ).apply(inst, CowSubPredicate::new));
 
