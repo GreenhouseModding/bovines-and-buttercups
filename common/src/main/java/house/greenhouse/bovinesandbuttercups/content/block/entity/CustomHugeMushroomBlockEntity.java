@@ -80,6 +80,9 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameab
         BlockPos pos = this.getBlockPos();
         BlockState newState = this.getBlockState();
 
+        if (level == null)
+            return;
+
         if (level.getBlockState(pos.above()).is(BovinesBlocks.CUSTOM_MUSHROOM_BLOCK) && level.getBlockEntity(pos.above()) instanceof CustomHugeMushroomBlockEntity hugeMushroomBlock && Objects.equals(hugeMushroomBlock.getMushroomType(), this.getMushroomType()))
             newState = newState.setValue(CustomHugeMushroomBlock.UP, Boolean.FALSE);
 

@@ -1,7 +1,4 @@
 {
-  "huge_structures": [
-    "test:blue_truffle_small",
-    "test:blue_truffle_medium",
-    "test:blue_truffle_large"
-  ]
+  "huge_structures": "test:blue_truffle",
+  "randomly_rotate_huge_structure": true
 }

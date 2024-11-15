@@ -16,11 +16,11 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import java.util.Objects;
 import java.util.Optional;
 
-public record CustomMushroomType(Optional<SimpleWeightedRandomList<ResourceKey<StructureTemplatePool>>> hugeMushroomStructurePool,
+public record CustomMushroomType(Optional<ResourceKey<StructureTemplatePool>> hugeMushroomStructurePool,
                                  boolean randomlyRotateHugeStructure) {
 
     public static final Codec<CustomMushroomType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
-            BovinesCodecs.weightedEntryCodec(ResourceKey.codec(Registries.TEMPLATE_POOL), "template_pool").optionalFieldOf("huge_structures").forGetter(CustomMushroomType::hugeMushroomStructurePool),
+            ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_structures").forGetter(CustomMushroomType::hugeMushroomStructurePool),
             Codec.BOOL.optionalFieldOf("randomly_rotate_huge_structure", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
     ).apply(builder, CustomMushroomType::new));
 

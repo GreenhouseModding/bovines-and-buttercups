@@ -1,8 +1,3 @@
 {
-  "name": "Green Truffle",
-  "huge_structures": [
-    "test:green_truffle_small",
-    "test:green_truffle_medium",
-    "test:green_truffle_large"
-  ]
+  "huge_structures": "test:green_truffle"
 }

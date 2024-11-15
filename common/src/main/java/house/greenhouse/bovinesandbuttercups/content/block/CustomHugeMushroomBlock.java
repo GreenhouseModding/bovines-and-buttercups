@@ -48,7 +48,7 @@ public class CustomHugeMushroomBlock extends BaseEntityBlock {
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CustomMushroomPotBlockEntity cmpbe)
+        if (blockEntity instanceof CustomHugeMushroomBlockEntity cmpbe)
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, cmpbe.getMushroomType());
         return stack;
     }

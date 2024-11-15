@@ -58,7 +58,7 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CustomMushroomPotBlockEntity cmpbe)
+        if (blockEntity instanceof CustomMushroomBlockEntity cmpbe)
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, cmpbe.getMushroomType());
         return stack;
     }
@@ -133,14 +133,16 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
 
             Holder<CustomMushroomType> customMushroom = mushroomBlockEntity.getMushroomType().holder();
             if (customMushroom.isBound() && customMushroom.value().hugeMushroomStructurePool().isPresent()) {
-                Optional<StructurePoolElement> structurePoolElement = customMushroom.value().hugeMushroomStructurePool().get().getRandomValue(randomSource).filter(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).containsKey(key)).map(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).getHolderOrThrow(key).value().getRandomTemplate(randomSource));
+                Optional<StructurePoolElement> structurePoolElement = customMushroom.value().hugeMushroomStructurePool().filter(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).containsKey(key)).map(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).getHolderOrThrow(key).value().getRandomTemplate(randomSource));
 
                 if (structurePoolElement.isEmpty())
                     return;
 
                 level.removeBlock(pos, false);
                 Rotation rotation = customMushroom.value().randomlyRotateHugeStructure() ? Rotation.getRandom(level.random) : Rotation.NONE;
-                BlockPos centeredPos = pos.offset(structurePoolElement.get().getSize(structureTemplateManager, rotation).getX() / 2, 0, structurePoolElement.get().getSize(structureTemplateManager, rotation).getZ() / 2);
+                int xRotationMultiplier = rotation == Rotation.CLOCKWISE_180 || rotation == Rotation.CLOCKWISE_90 ? -1 : 1;
+                int zRotationMultiplier = rotation == Rotation.CLOCKWISE_180 || rotation == Rotation.COUNTERCLOCKWISE_90 ? -1 : 1;
+                BlockPos centeredPos = pos.offset(xRotationMultiplier * -structurePoolElement.get().getSize(structureTemplateManager, rotation).getX() / 2, 0, zRotationMultiplier * -structurePoolElement.get().getSize(structureTemplateManager, rotation).getZ() / 2);
                 if (ChunkPos.rangeClosed(new ChunkPos(centeredPos), new ChunkPos(centeredPos.offset(structurePoolElement.get().getSize(structureTemplateManager, rotation)))).allMatch((chunkPos) -> level.isLoaded(chunkPos.getWorldPosition()))) {
                     BoundingBox structureBox = structurePoolElement.get().getBoundingBox(structureTemplateManager, centeredPos, rotation);
                     if (BlockPos.betweenClosedStream(AABB.of(structureBox)).allMatch(p -> pos.equals(p) || level.getBlockState(p).isAir() || level.getBlockState(p).is(BlockTags.LEAVES))) {

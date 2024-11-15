@@ -20,7 +20,7 @@ public class CustomHugeMushroomItem extends BlockItem {
         if (stack.has(BovinesDataComponents.CUSTOM_MUSHROOM)) {
             ItemCustomMushroom mushroom = stack.get(BovinesDataComponents.CUSTOM_MUSHROOM);
             if (mushroom.holder().isBound())
-                return BlockUtil.getOrCreateBlockNameTranslationKey(mushroom.holder().unwrapKey().orElseThrow().location());
+                return BlockUtil.getOrCreateBlockNameTranslationKey(mushroom.holder().unwrapKey().orElseThrow().location().withPath(s -> s + "_block"));
         }
         return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom_block"));
     }
