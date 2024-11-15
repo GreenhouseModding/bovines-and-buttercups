@@ -4,7 +4,6 @@ import house.greenhouse.bovinesandbuttercups.access.SimpleTextureExceptionAccess
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelper;
-import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.Holder;
@@ -60,7 +59,7 @@ public class BovinesAndButtercupsClient {
     }
 
     private static ResourceLocation getTextureFromCowType(CowTypeConfiguration configuration, String fallbackTexturePath, ResourceLocation originalLocation) {
-        return configuration.settings().cowTexture().map(texture -> ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), "textures/entity/" + texture.getPath() + ".png")).orElseGet(() -> originalLocation.withPath(str -> "textures/entity/" + fallbackTexturePath.replace("%s", str) + ".png"));
+        return configuration.settings().cowTexture().map(texture -> texture.withPath(s -> "textures/entity/" + s + ".png")).orElseGet(() -> originalLocation.withPath(str -> "textures/entity/" + fallbackTexturePath.replace("%s", str) + ".png"));
     }
 
     public static BovinesClientHelper getHelper() {

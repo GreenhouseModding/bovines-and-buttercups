@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public class CowLayersLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
@@ -27,14 +28,15 @@ public class CowLayersLayer<T extends LivingEntity, M extends EntityModel<T>> ex
             return;
 
         loop: for (CowModelLayer cowLayer : attachment.cowType().value().configuration().layers()) {
-            RenderType renderType = RenderType.entityTranslucent(cowLayer.textureLocation().withPath(string -> "textures/entity/" + string + ".png"));
+            ResourceLocation mappedTextureLocation = cowLayer.textureLocation().withPath(string -> "textures/entity/" + string + ".png");
+            RenderType renderType = RenderType.entityTranslucent(mappedTextureLocation);
             int color = 0xFFFFFFFF;
             for (TextureModifierFactory<?> factory : cowLayer.textureModifiers()) {
                 if (!factory.canDisplay(entity))
                     continue loop;
                 TextureModifier provider = factory.getOrCreateProvider();
                 color = provider.color(entity, color);
-                renderType = provider.renderType(cowLayer.textureLocation(), renderType);
+                renderType = provider.renderType(mappedTextureLocation, renderType);
             }
 
             this.getParentModel().renderToBuffer(poseStack, buffer.getBuffer(renderType), light, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), color);

@@ -440,8 +440,8 @@ public class Moobloom extends Cow {
             params.withParameter(BovinesLootContextParams.PARTNER, this);
             LootContext otherContext = new LootContext.Builder(params.create(BovinesLootContextParamSets.BREEDING)).create(Optional.empty());
 
-            if (conditions.thisConditions().stream().allMatch(condition -> condition.test(thisContext))
-                    && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext))
+            if ((conditions.thisConditions().stream().allMatch(condition -> condition.test(thisContext))
+                    && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext)))
                     || (conditions.thisConditions().stream().allMatch(condition -> condition.test(otherContext))
                     && conditions.otherConditions().stream().allMatch(condition -> condition.test(thisContext))))
                 eligibleCowTypes.add(moobloomType);
@@ -481,9 +481,9 @@ public class Moobloom extends Cow {
 
         if (particlePositions.isEmpty() && !level().isClientSide())
             ((ServerLevel)level()).sendParticles(type.value().configuration().settings().particle().get(), getX(), getY(0.5), getZ(), 6, 0.05, 0.05, 0.05, 0.01);
-
-        for (Vec3 pos : particlePositions.get(type))
-            createParticleTrail(pos, parentPos, type.value().configuration().settings().particle().get());
+        else
+            for (Vec3 pos : particlePositions.get(type))
+                createParticleTrail(pos, parentPos, type.value().configuration().settings().particle().get());
 
         particlePositions.clear();
     }
