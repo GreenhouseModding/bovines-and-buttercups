@@ -42,7 +42,7 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends Rende
         Holder<CowType<MooshroomConfiguration>> cowType = CowTypeAttachment.getCowTypeHolderFromEntity(entity, BovinesCowTypeTypes.MOOSHROOM_TYPE);
         if (cowType == null || entity.isInvisible() && !bl
                 || entity.isBaby()
-                || cowType.value().configuration().mushroom().blockState().isPresent() && cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState()))
+                || cowType.value().configuration().mushroom().blockState().isPresent() && cowType.value().configuration().vanillaType().isPresent() && cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState()))
             return;
 
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
