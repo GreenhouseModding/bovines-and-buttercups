@@ -9,10 +9,10 @@ import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -66,7 +66,7 @@ public interface CowTypeConfiguration {
                     Optional<ParticleOptions> particle) {
         public static final MapCodec<Settings> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResourceLocation.CODEC.optionalFieldOf("texture_location").forGetter(Settings::cowTexture),
-                BovinesCodecs.weightedEntryCodec(HolderSetCodec.create(Registries.BIOME, Biome.CODEC, false), "biomes").optionalFieldOf("natural_spawns", SimpleWeightedRandomList.empty()).forGetter(Settings::biomes),
+                BovinesCodecs.weightedEntryCodec(RegistryCodecs.homogeneousList(Registries.BIOME), "biomes").optionalFieldOf("natural_spawns", SimpleWeightedRandomList.empty()).forGetter(Settings::biomes),
                 BovinesCodecs.weightedEntryCodec(RegistryFixedCodec.create(BovinesRegistryKeys.COW_TYPE), "type").optionalFieldOf("thunder_conversion_types", SimpleWeightedRandomList.empty()).forGetter(Settings::thunderConverts),
                 ParticleTypes.CODEC.optionalFieldOf("particle").forGetter(Settings::particle)
         ).apply(instance, Settings::new));
