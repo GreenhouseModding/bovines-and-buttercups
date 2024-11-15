@@ -85,6 +85,7 @@ Additionally, a huge thank you to [Omniv](https://bsky.app/profile/omniv.bsky.so
 - Removed `dye_craft_result` field from Custom Flowers. This has been replaced with using your loader's `components` custom ingredient type and a regular recipe.
   - This change has also been applied to Suspicious Stew recipes, in preparation for future Minecraft versions.
     - For the above, you may also use the result field's `components` field.
+- Custom Flower Types' `stew_effect` field has been renamed to `stew_effects`
 - Custom Mushroom Types now use template pools for the `huge_structures` field.
 - Removed `bovinesandbuttercups:mutation` trigger and replaced it with `bovinesandbuttercups:breed_cow_with_type`
   - Added `player` field, a predicate for the player breeding the animals.

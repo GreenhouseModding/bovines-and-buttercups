@@ -21,7 +21,7 @@ public class NectarBowlItemRenderer {
         if (level == null) return;
 
         if (stack.has(BovinesDataComponents.NECTAR)) {
-            @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(stack.get(BovinesDataComponents.NECTAR).holder().value().modelLocation());
+            @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(stack.get(BovinesDataComponents.NECTAR).holder().value().modelSet());
 
             if (modelSet != null) {
                 var newModel = modelSet.getModel();

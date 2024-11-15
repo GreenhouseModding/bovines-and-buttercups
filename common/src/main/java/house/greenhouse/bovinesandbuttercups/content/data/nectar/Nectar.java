@@ -12,14 +12,14 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
 
-public record Nectar(ResourceLocation modelLocation,
+public record Nectar(ResourceLocation modelSet,
                      NectarEffects effects) {
     public static final Codec<Nectar> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            ResourceLocation.CODEC.fieldOf("model_location").forGetter(Nectar::modelLocation),
+            ResourceLocation.CODEC.fieldOf("model_set").forGetter(Nectar::modelSet),
             NectarEffects.CODEC.optionalFieldOf("effects", NectarEffects.EMPTY).forGetter(Nectar::effects)
     ).apply(inst, Nectar::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, Nectar> DIRECT_STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC, Nectar::modelLocation,
+            ResourceLocation.STREAM_CODEC, Nectar::modelSet,
             NectarEffects.STREAM_CODEC, Nectar::effects,
             Nectar::new
     );
@@ -30,11 +30,11 @@ public record Nectar(ResourceLocation modelLocation,
     public boolean equals(Object obj) {
         if (!(obj instanceof Nectar nectar))
             return false;
-        return nectar.modelLocation.equals(modelLocation) && nectar.effects == effects;
+        return nectar.modelSet.equals(modelSet) && nectar.effects == effects;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(modelLocation, effects);
+        return Objects.hash(modelSet, effects);
     }
 }
