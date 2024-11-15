@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:pink_daisy_bud"
+    "model_set": "bovinesandbuttercups:pink_daisy_bud"
   },
   "flower": {
     "block_state": {

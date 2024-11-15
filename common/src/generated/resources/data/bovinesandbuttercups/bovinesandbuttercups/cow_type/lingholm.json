@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:lingholm_bud"
+    "model_set": "bovinesandbuttercups:lingholm_bud"
   },
   "flower": {
     "block_state": {

@@ -9,13 +9,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 public record BlockReference<T>(Optional<BlockState> blockState,
-                                Optional<ResourceLocation> modelLocation,
+                                Optional<ResourceLocation> modelSet,
                                 Optional<T> customType) {
 
     public static <T> Codec<BlockReference<T>> createCodec(Codec<T> customCodec, String customTypeKey) {
         return RecordCodecBuilder.create(builder -> builder.group(
                 BlockState.CODEC.optionalFieldOf("block_state").forGetter(BlockReference::blockState),
-                ResourceLocation.CODEC.optionalFieldOf("model_location").forGetter(BlockReference::modelLocation),
+                ResourceLocation.CODEC.optionalFieldOf("model_set").forGetter(BlockReference::modelSet),
                 customCodec.optionalFieldOf(customTypeKey).forGetter(BlockReference::customType)
         ).apply(builder, BlockReference::new));
     }
@@ -28,12 +28,12 @@ public record BlockReference<T>(Optional<BlockState> blockState,
         if (!(obj instanceof BlockReference<?> other))
             return false;
 
-        return other.blockState.equals(this.blockState) && other.modelLocation.equals(this.modelLocation) && other.customType.equals(this.customType);
+        return other.blockState.equals(blockState) && other.modelSet.equals(modelSet) && other.customType.equals(customType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.blockState, this.modelLocation, this.customType);
+        return Objects.hash(blockState, modelSet, customType);
     }
 
 

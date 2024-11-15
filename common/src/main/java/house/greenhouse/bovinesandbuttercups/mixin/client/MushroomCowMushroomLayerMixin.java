@@ -23,7 +23,7 @@ public class MushroomCowMushroomLayerMixin<T extends MushroomCow> {
             return;
         if (
                 cowType.value().configuration().vanillaType().isEmpty()
-                        || cowType.value().configuration().mushroom().modelLocation().isPresent()
+                        || cowType.value().configuration().mushroom().modelSet().isPresent()
                         || cowType.value().configuration().mushroom().customType().isPresent()
                         || cowType.value().configuration().mushroom().blockState().isEmpty() || !cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState())
         )

@@ -50,8 +50,8 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         BakedModel model = null;
 
         if (entity.isBaby()) {
-            if (configuration.bud().modelLocation().isPresent()) {
-                var modelSet = BovinesModelSetRegistry.get(configuration.bud().modelLocation().get());
+            if (configuration.bud().modelSet().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.bud().modelSet().get());
                 if (modelSet != null) {
                     model = modelSet.getModel();
                     if (model == null)
@@ -70,8 +70,8 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
             blockState = configuration.bud().blockState();
             handleMoobudRender(poseStack, buffer, packedLight, bl, m, blockState, model);
         } else {
-            if (configuration.flower().modelLocation().isPresent()) {
-                var modelSet = BovinesModelSetRegistry.get(configuration.flower().modelLocation().get());
+            if (configuration.flower().modelSet().isPresent()) {
+                var modelSet = BovinesModelSetRegistry.get(configuration.flower().modelSet().get());
                 if (modelSet != null) {
                     model = modelSet.getModel();
                     if (model == null)

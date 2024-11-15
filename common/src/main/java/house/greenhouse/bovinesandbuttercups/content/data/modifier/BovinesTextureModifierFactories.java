@@ -6,7 +6,7 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifie
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 
-public class BovinesTextureModificationFactories {
+public class BovinesTextureModifierFactories {
 
     public static void registerAll(RegistrationCallback<MapCodec<? extends TextureModifierFactory<?>>> callback) {
         callback.register(BovinesRegistries.TEXTURE_MODIFIER, BovinesAndButtercups.asResource("conditioned"), ConditionedTextureModifierFactory.CODEC);

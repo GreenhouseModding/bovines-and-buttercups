@@ -12,7 +12,7 @@ import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEn
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
-import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModificationFactories;
+import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModifierFactories;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
@@ -56,7 +56,7 @@ public class BovinesRegistryEvents {
         register(event, BovinesRecipeSerializers::registerAll);
         register(event, BovinesSoundEvents::registerAll);
         register(event, BovinesStructureTypes::registerAll);
-        register(event, BovinesTextureModificationFactories::registerAll);
+        register(event, BovinesTextureModifierFactories::registerAll);
 
         if (event.getRegistryKey() == Registries.ARMOR_MATERIAL) {
             registerHolders(BovinesSoundEvents::registerHolders);

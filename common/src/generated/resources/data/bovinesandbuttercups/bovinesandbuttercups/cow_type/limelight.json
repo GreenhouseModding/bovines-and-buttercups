@@ -1,7 +1,7 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_location": "bovinesandbuttercups:limelight_bud"
+    "model_set": "bovinesandbuttercups:limelight_bud"
   },
   "flower": {
     "block_state": {

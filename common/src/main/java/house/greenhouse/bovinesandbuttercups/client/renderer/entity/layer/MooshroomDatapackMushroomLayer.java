@@ -48,8 +48,8 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends Rende
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
 
         BakedModel model = null;
-        if (cowType.value().configuration().mushroom().modelLocation().isPresent()) {
-            var modelSet = BovinesModelSetRegistry.get(cowType.value().configuration().mushroom().modelLocation().get());
+        if (cowType.value().configuration().mushroom().modelSet().isPresent()) {
+            var modelSet = BovinesModelSetRegistry.get(cowType.value().configuration().mushroom().modelSet().get());
             if (modelSet != null) {
                 model = modelSet.getModel();
                 if (model == null)

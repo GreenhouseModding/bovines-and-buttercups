@@ -47,7 +47,7 @@ import house.greenhouse.bovinesandbuttercups.content.recipe.BovinesRecipeSeriali
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesStructureTypes;
-import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModificationFactories;
+import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModifierFactories;
 import house.greenhouse.bovinesandbuttercups.util.CreativeTabHelper;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -164,7 +164,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         BovinesRecipeSerializers.registerAll(Registry::register);
         BovinesSoundEvents.registerAll(Registry::register);
         BovinesStructureTypes.registerAll(Registry::register);
-        BovinesTextureModificationFactories.registerAll(Registry::register);
+        BovinesTextureModifierFactories.registerAll(Registry::register);
 
         BovinesAttachments.init();
         BovinesIngredients.init();
