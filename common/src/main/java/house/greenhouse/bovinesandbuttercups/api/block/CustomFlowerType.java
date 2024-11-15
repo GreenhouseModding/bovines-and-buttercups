@@ -16,7 +16,7 @@ import java.util.Objects;
 public record CustomFlowerType(SuspiciousStewEffects stewEffectInstances) {
 
     public static final Codec<CustomFlowerType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
-            ExtraCodecs.catchDecoderException(SuspiciousStewEffects.CODEC).optionalFieldOf("stew_effect", SuspiciousStewEffects.EMPTY).forGetter(CustomFlowerType::stewEffectInstances)
+            ExtraCodecs.catchDecoderException(SuspiciousStewEffects.CODEC).optionalFieldOf("stew_effects", SuspiciousStewEffects.EMPTY).forGetter(CustomFlowerType::stewEffectInstances)
     ).apply(builder, CustomFlowerType::new));
 
     public static final Codec<Holder<CustomFlowerType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE);

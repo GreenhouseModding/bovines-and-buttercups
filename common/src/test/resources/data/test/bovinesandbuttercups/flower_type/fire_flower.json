@@ -1,6 +1,6 @@
 {
   "name": "Fire Flower",
-  "stew_effect": [
+  "stew_effects": [
     {
       "id": "minecraft:fire_resistance",
       "duration": 80
