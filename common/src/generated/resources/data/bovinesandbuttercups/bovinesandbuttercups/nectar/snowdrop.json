@@ -5,5 +5,5 @@
       "id": "minecraft:mining_fatigue"
     }
   ],
-  "model_location": "bovinesandbuttercups:item/snowdrop_nectar_bowl"
+  "model_set": "bovinesandbuttercups:item/snowdrop_nectar_bowl"
 }

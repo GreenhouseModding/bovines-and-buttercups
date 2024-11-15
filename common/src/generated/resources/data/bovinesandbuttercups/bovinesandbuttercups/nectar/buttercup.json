@@ -5,5 +5,5 @@
       "id": "minecraft:poison"
     }
   ],
-  "model_location": "bovinesandbuttercups:item/buttercup_nectar_bowl"
+  "model_set": "bovinesandbuttercups:item/buttercup_nectar_bowl"
 }

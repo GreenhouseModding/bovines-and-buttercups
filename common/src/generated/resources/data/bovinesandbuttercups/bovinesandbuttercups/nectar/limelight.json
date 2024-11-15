@@ -5,5 +5,5 @@
       "id": "minecraft:regeneration"
     }
   ],
-  "model_location": "bovinesandbuttercups:item/limelight_nectar_bowl"
+  "model_set": "bovinesandbuttercups:item/limelight_nectar_bowl"
 }
