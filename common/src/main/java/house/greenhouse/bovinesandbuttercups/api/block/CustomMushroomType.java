@@ -20,8 +20,8 @@ public record CustomMushroomType(Optional<ResourceKey<StructureTemplatePool>> hu
                                  boolean randomlyRotateHugeStructure) {
 
     public static final Codec<CustomMushroomType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
-            ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_structures").forGetter(CustomMushroomType::hugeMushroomStructurePool),
-            Codec.BOOL.optionalFieldOf("randomly_rotate_huge_structure", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
+            ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_mushroom_template_pool").forGetter(CustomMushroomType::hugeMushroomStructurePool),
+            Codec.BOOL.optionalFieldOf("randomly_rotate_huge_mushroom", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
     ).apply(builder, CustomMushroomType::new));
 
     public static final Codec<Holder<CustomMushroomType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE);
