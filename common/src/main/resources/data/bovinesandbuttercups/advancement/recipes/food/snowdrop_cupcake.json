@@ -1,19 +1,22 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_red_mushroom": {
+    "has_nectar": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:red_mushroom"
+            "items": "bovinesandbuttercups:nectar_bowl"
           }
-        ]
+        ],
+        "components": {
+          "bovinesandbuttercups:nectar": "bovinesandbuttercups:snowdrop"
+        }
       },
       "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bovinesandbuttercups:red_mushroom_puff_pastry"
+        "recipe": "bovinesandbuttercups:snowdrop_cupcake"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +24,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_red_mushroom"
+      "has_nectar"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bovinesandbuttercups:red_mushroom_puff_pastry"
+      "bovinesandbuttercups:snowdrop_cupcake"
     ]
   }
 }

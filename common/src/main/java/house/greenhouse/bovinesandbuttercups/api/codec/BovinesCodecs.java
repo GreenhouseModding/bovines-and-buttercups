@@ -7,15 +7,12 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class BovinesCodecs {
     public static final Codec<AABB> AABB = RecordCodecBuilder.create(inst -> inst.group(
-            Codec.DOUBLE.optionalFieldOf("min_x", 0.0).forGetter(aabb -> aabb.minX),
-            Codec.DOUBLE.optionalFieldOf("min_y", 0.0).forGetter(aabb -> aabb.minY),
-            Codec.DOUBLE.optionalFieldOf("min_z", 0.0).forGetter(aabb -> aabb.minZ),
-            Codec.DOUBLE.optionalFieldOf("max_x", 0.0).forGetter(aabb -> aabb.maxX),
-            Codec.DOUBLE.optionalFieldOf("max_y", 0.0).forGetter(aabb -> aabb.maxY),
-            Codec.DOUBLE.optionalFieldOf("max_z", 0.0).forGetter(aabb -> aabb.maxZ)
+            Vec3.CODEC.fieldOf("min").forGetter(aabb -> new Vec3(aabb.minX, aabb.minY, aabb.minZ)),
+            Vec3.CODEC.fieldOf("max").forGetter(aabb -> new Vec3(aabb.maxX, aabb.maxY, aabb.maxZ))
     ).apply(inst, AABB::new));
 
     public static <T> Codec<SimpleWeightedRandomList<T>> weightedEntryCodec(Codec<T> codec, String fieldName) {

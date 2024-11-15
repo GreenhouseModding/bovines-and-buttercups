@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nectar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bovinesandbuttercups:nectar_bowl"
+          }
+        ],
+        "components": {
+          "bovinesandbuttercups:nectar": "bovinesandbuttercups:lingholm"
+        }
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bovinesandbuttercups:lingholm_cupcake"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_nectar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bovinesandbuttercups:lingholm_cupcake"
+    ]
+  }
+}

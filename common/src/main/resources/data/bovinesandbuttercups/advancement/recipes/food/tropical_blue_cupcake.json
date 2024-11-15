@@ -1,19 +1,22 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_brown_mushroom": {
+    "has_nectar": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:brown_mushroom"
+            "items": "bovinesandbuttercups:nectar_bowl"
           }
-        ]
+        ],
+        "components": {
+          "bovinesandbuttercups:nectar": "bovinesandbuttercups:tropical_blue"
+        }
       },
       "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bovinesandbuttercups:brown_mushroom_puff_pastry"
+        "recipe": "bovinesandbuttercups:tropical_blue_cupcake"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +24,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_brown_mushroom"
+      "has_nectar"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bovinesandbuttercups:brown_mushroom_puff_pastry"
+      "bovinesandbuttercups:tropical_blue_cupcake"
     ]
   }
 }
