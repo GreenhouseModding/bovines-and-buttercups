@@ -29,7 +29,7 @@ public class CustomMushroomPotBlockRenderer implements BlockEntityRenderer<Custo
     public void render(CustomMushroomPotBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BakedModel bakedModel = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("potted_missing_mushroom")), blockEntity.getBlockState());
 
-        if (blockEntity.getMushroomType() != null) {
+        if (blockEntity.getMushroomType() != null && blockEntity.getMushroomType().holder().isBound() && blockEntity.getMushroomType().holder().value().hasPotted()) {
             @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(blockEntity.getMushroomType().holder().unwrapKey().get().location().withPath(s -> "potted_" + s));
 
             if (modelSet != null) {

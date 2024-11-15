@@ -16,17 +16,22 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import java.util.Objects;
 import java.util.Optional;
 
-public record CustomMushroomType(Optional<ResourceKey<StructureTemplatePool>> hugeMushroomStructurePool,
-                                 boolean randomlyRotateHugeStructure) {
+public record CustomMushroomType(
+        boolean hasHugeBlock,
+        boolean hasPotted,
+        Optional<ResourceKey<StructureTemplatePool>> hugeMushroomStructurePool,
+        boolean randomlyRotateHugeStructure) {
 
     public static final Codec<CustomMushroomType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            Codec.BOOL.optionalFieldOf("has_huge_block", true).forGetter(CustomMushroomType::hasHugeBlock),
+            Codec.BOOL.optionalFieldOf("has_potted", true).forGetter(CustomMushroomType::hasPotted),
             ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_mushroom_template_pool").forGetter(CustomMushroomType::hugeMushroomStructurePool),
             Codec.BOOL.optionalFieldOf("randomly_rotate_huge_mushroom", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
     ).apply(builder, CustomMushroomType::new));
 
     public static final Codec<Holder<CustomMushroomType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE);
     public static final ResourceKey<CustomMushroomType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, BovinesAndButtercups.asResource("missing_mushroom"));
-    public static final CustomMushroomType MISSING = new CustomMushroomType(Optional.empty(), false);
+    public static final CustomMushroomType MISSING = new CustomMushroomType(true, true, Optional.empty(), false);
 
     @Override
     public boolean equals(final Object obj) {

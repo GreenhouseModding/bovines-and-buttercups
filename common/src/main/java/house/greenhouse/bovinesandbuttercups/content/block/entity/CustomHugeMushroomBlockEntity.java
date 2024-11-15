@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.block.entity;
 
+import com.mojang.serialization.DataResult;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.content.block.CustomHugeMushroomBlock;
@@ -38,6 +39,10 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameab
     }
 
     public void setMushroomType(@Nullable ItemCustomMushroom value) {
+        if (value != null && !value.holder().value().hasHugeBlock()) {
+            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom type \"{}\" does not support huge mushroom blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
+            return;
+        }
         customMushroom = value;
         updateState();
     }

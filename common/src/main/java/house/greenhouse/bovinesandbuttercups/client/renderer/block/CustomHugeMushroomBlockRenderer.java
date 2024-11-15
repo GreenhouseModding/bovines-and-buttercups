@@ -29,7 +29,7 @@ public class CustomHugeMushroomBlockRenderer implements BlockEntityRenderer<Cust
     public void render(CustomHugeMushroomBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BakedModel bakedModel = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_mushroom_block")), blockEntity.getBlockState());
 
-        if (blockEntity.getMushroomType() != null) {
+        if (blockEntity.getMushroomType() != null && blockEntity.getMushroomType().holder().isBound() && blockEntity.getMushroomType().holder().value().hasHugeBlock()) {
             @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(blockEntity.getMushroomType().holder().unwrapKey().get().location().withPath(s -> s + "_block"));
 
             if (modelSet != null) {

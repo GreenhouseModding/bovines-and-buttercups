@@ -29,7 +29,7 @@ public class CustomFlowerPotBlockRenderer implements BlockEntityRenderer<CustomF
     public void render(CustomFlowerPotBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BakedModel bakedModel = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("potted_missing_flower")), blockEntity.getBlockState());
 
-        if (blockEntity.getFlowerType() != null) {
+        if (blockEntity.getFlowerType() != null && blockEntity.getFlowerType().holder().isBound() && blockEntity.getFlowerType().holder().value().hasPotted()) {
             @Nullable BovinesModelSet modelSet = BovinesModelSetRegistry.get(blockEntity.getFlowerType().holder().unwrapKey().get().location().withPath(s -> "potted_" + s));
 
             if (modelSet != null) {

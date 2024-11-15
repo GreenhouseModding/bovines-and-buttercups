@@ -32,6 +32,10 @@ public class CustomMushroomPotBlockEntity extends BlockEntity implements Nameabl
     }
 
     public void setMushroomType(@Nullable ItemCustomMushroom value) {
+        if (value != null && !value.holder().value().hasPotted()) {
+            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom type \"{}\" does not support potted blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
+            return;
+        }
         customMushroom = value;
     }
 

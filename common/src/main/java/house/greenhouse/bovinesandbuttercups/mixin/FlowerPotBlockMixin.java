@@ -32,8 +32,8 @@ public abstract class FlowerPotBlockMixin {
 
     @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;defaultBlockState()Lnet/minecraft/world/level/block/state/BlockState;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void bovinesandbuttercups$useDataDefinedItemOnPot(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
-        if (stack.getItem() instanceof CustomFlowerItem) {
-            if (this.isEmpty()) {
+        if (stack.getItem() instanceof CustomFlowerItem && stack.has(BovinesDataComponents.CUSTOM_FLOWER) && stack.get(BovinesDataComponents.CUSTOM_FLOWER).holder().isBound() && stack.get(BovinesDataComponents.CUSTOM_FLOWER).holder().value().hasPotted()) {
+            if (isEmpty()) {
                 level.setBlock(pos, BovinesBlocks.POTTED_CUSTOM_FLOWER.defaultBlockState(), 3);
                 level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
                 if (stack.has(BovinesDataComponents.CUSTOM_FLOWER))
@@ -45,8 +45,8 @@ public abstract class FlowerPotBlockMixin {
                 cir.setReturnValue(ItemInteractionResult.sidedSuccess(level.isClientSide));
             } else
                 cir.setReturnValue(ItemInteractionResult.CONSUME);
-        } else if (stack.getItem() instanceof CustomMushroomItem) {
-            if (this.isEmpty()) {
+        } else if (stack.getItem() instanceof CustomMushroomItem && stack.has(BovinesDataComponents.CUSTOM_MUSHROOM) && stack.get(BovinesDataComponents.CUSTOM_MUSHROOM).holder().isBound() && stack.get(BovinesDataComponents.CUSTOM_MUSHROOM).holder().value().hasPotted()) {
+            if (isEmpty()) {
                 level.setBlock(pos, BovinesBlocks.POTTED_CUSTOM_MUSHROOM.defaultBlockState(), 3);
                 level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
                 if (stack.has(BovinesDataComponents.CUSTOM_MUSHROOM))
