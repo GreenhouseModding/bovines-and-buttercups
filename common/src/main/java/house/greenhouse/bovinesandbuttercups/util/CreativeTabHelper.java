@@ -65,16 +65,16 @@ public class CreativeTabHelper {
 
     public static List<ItemStack> getNectarBowlsForCreativeTab(HolderLookup.Provider lookup) {
         HolderSet<Nectar> creativeModeTabOrder = lookup.lookupOrThrow(BovinesRegistryKeys.NECTAR).getOrThrow(BovinesTags.NectarTags.CREATIVE_MENU_ORDER);
-        return lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).listElements().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && ((MoobloomConfiguration) cowType.value().configuration()).nectar().isPresent()).map(cowType -> {
-            ItemStack stack = new ItemStack(BovinesItems.NECTAR_BOWL);
-            stack.set(BovinesDataComponents.NECTAR, new ItemNectar(((MoobloomConfiguration) cowType.value().configuration()).nectar().get()));
-            return stack;
-        }).sorted(Comparator.comparingInt(value -> {
-            int i = creativeModeTabOrder.stream().toList().indexOf(value.get(BovinesDataComponents.NECTAR).holder());
+        return lookup.lookupOrThrow(BovinesRegistryKeys.NECTAR).listElements().sorted(Comparator.comparingInt(nectar -> {
+            int i = creativeModeTabOrder.stream().toList().indexOf(nectar);
             if (i == -1)
                 return Integer.MAX_VALUE;
             return i;
-        })).toList();
+        })).map(nectar -> {
+            ItemStack stack = new ItemStack(BovinesItems.NECTAR_BOWL);
+            stack.set(BovinesDataComponents.NECTAR, new ItemNectar(nectar));
+            return stack;
+        }).toList();
     }
 
     public static List<ItemStack> getFlowerCrownsForCreativeTab(HolderLookup.Provider lookup) {
