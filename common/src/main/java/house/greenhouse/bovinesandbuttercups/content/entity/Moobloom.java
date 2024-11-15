@@ -441,7 +441,9 @@ public class Moobloom extends Cow {
             LootContext otherContext = new LootContext.Builder(params.create(BovinesLootContextParamSets.BREEDING)).create(Optional.empty());
 
             if (conditions.thisConditions().stream().allMatch(condition -> condition.test(thisContext))
-            && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext)))
+                    && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext))
+                    || (conditions.thisConditions().stream().allMatch(condition -> condition.test(otherContext))
+                    && conditions.otherConditions().stream().allMatch(condition -> condition.test(thisContext))))
                 eligibleCowTypes.add(moobloomType);
         }
 
