@@ -9,6 +9,7 @@ import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryOps;
@@ -52,6 +53,10 @@ public record MooshroomConfiguration(Settings settings,
 
     public void tick(Entity entity) {
         layers.forEach(cowModelLayer -> cowModelLayer.tickTextureModifiers(entity));
+    }
+
+    public boolean hasSnow(Entity entity) {
+        return entity instanceof MushroomCow mooshroom && BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom).hasSnow();
     }
 
     public static MooshroomConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {

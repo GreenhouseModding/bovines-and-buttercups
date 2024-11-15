@@ -8,6 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 public class BovinesEntitySubPredicateTypes {
     public static void registerAll(RegistrationCallback<MapCodec<? extends EntitySubPredicate>> callback) {
-        callback.register(BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, BovinesAndButtercups.asResource("cow"), CowSnowSubPredicate.CODEC);
+        callback.register(BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, BovinesAndButtercups.asResource("cow"), CowSubPredicate.CODEC);
     }
 }

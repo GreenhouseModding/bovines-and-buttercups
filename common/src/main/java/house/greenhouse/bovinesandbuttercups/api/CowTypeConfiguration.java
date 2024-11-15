@@ -35,6 +35,10 @@ public interface CowTypeConfiguration {
         return List.of();
     }
 
+    default boolean hasSnow(Entity entity) {
+        return false;
+    }
+
     /**
      * @return The settings of the cow type, null if not set.
      */

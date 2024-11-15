@@ -10,6 +10,7 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.GrassTintTextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
+import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryOps;
@@ -36,6 +37,10 @@ public record MoobloomConfiguration(Settings settings,
 
     public void tick(Entity entity) {
         layers.forEach(cowModelLayer -> cowModelLayer.tickTextureModifiers(entity));
+    }
+
+    public boolean hasSnow(Entity entity) {
+        return entity instanceof Moobloom moobloom && moobloom.hasSnow();
     }
 
     public static MoobloomConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {
