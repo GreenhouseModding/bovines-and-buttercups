@@ -59,6 +59,10 @@ public record MooshroomConfiguration(Settings settings,
         return entity instanceof MushroomCow mooshroom && BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom).hasSnow();
     }
 
+    public boolean allowsConversion(Entity entity) {
+        return entity instanceof MushroomCow mooshroom && BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom).allowConversion();
+    }
+
     public static MooshroomConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {
         return new MooshroomConfiguration(new Settings(Optional.of(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/missing_mooshroom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.empty()), new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).orElseThrow().getter().getOrThrow(CustomMushroomType.MISSING_KEY))), List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/mooshroom/mooshroom_mycelium_layer"), List.of())), Optional.of(false), Optional.empty(), OffspringConditions.EMPTY);
     }

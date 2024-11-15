@@ -43,6 +43,10 @@ public record MoobloomConfiguration(Settings settings,
         return entity instanceof Moobloom moobloom && moobloom.hasSnow();
     }
 
+    public boolean allowsConversion(Entity entity) {
+        return entity instanceof Moobloom moobloom && moobloom.shouldAllowConversion();
+    }
+
     public static MoobloomConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {
         return new MoobloomConfiguration(new CowTypeConfiguration.Settings(Optional.of(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/missing_moobloom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.empty()), new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).orElseThrow().getter().getOrThrow(CustomFlowerType.MISSING_KEY))), new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).orElseThrow().getter().getOrThrow(CustomFlowerType.MISSING_KEY))), List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_grass_layer"), List.of(new GrassTintTextureModifierFactory()))), Optional.empty(), OffspringConditions.EMPTY);
     }

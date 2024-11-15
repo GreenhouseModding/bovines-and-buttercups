@@ -284,6 +284,8 @@ public class BovinesAndButtercupsNeoForge {
             Entity entity = event.getEntity();
             if (entity instanceof LivingEntity living && !(entity instanceof Moobloom) && entity.hasData(BovinesAttachments.COW_TYPE)) {
                 CowTypeAttachment attachment = entity.getData(BovinesAttachments.COW_TYPE);
+                if (!attachment.cowType().isBound() || !attachment.cowType().value().configuration().allowsConversion(entity))
+                    return;
                 if (attachment.previousCowType().isEmpty()) {
                     if (attachment.cowType().value().configuration().settings().thunderConverts().isEmpty())
                         return;

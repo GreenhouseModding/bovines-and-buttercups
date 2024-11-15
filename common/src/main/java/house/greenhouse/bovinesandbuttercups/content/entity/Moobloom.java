@@ -89,6 +89,7 @@ public class Moobloom extends Cow {
     private static final EntityDataAccessor<Integer> POLLINATED_RESET_TICKS = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STANDING_STILL_FOR_BEE_TICKS = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> ALLOW_SHEARING = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ALLOW_CONVERSION = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_SNOW = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SNOW_LAYER_PERSISTENT = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
     @Nullable
@@ -114,6 +115,7 @@ public class Moobloom extends Cow {
         builder.define(POLLINATED_RESET_TICKS, 0);
         builder.define(STANDING_STILL_FOR_BEE_TICKS, 0);
         builder.define(ALLOW_SHEARING, true);
+        builder.define(ALLOW_CONVERSION, false);
         builder.define(HAS_SNOW, false);
         builder.define(SNOW_LAYER_PERSISTENT, false);
     }
@@ -131,6 +133,7 @@ public class Moobloom extends Cow {
         tag.putInt("flower_spread_attempts", getFlowerSpreadAttempts());
         tag.putInt("pollinated_reset_ticks", getPollinatedResetTicks());
         tag.putBoolean("allow_shearing", shouldAllowShearing());
+        tag.putBoolean("allow_conversion", shouldAllowConversion());
         tag.putBoolean("has_snow", hasSnow());
         if (isSnowLayerPersistent())
             tag.putBoolean("snow_layer_persistent", true);
@@ -146,6 +149,8 @@ public class Moobloom extends Cow {
             setPollinatedResetTicks(tag.getInt("pollinated_reset_ticks"));
         if (tag.contains("allow_shearing", Tag.TAG_BYTE))
             setAllowShearing(tag.getBoolean("allow_shearing"));
+        if (tag.contains("allow_conversion", Tag.TAG_BYTE))
+            setAllowConversion(tag.getBoolean("allow_conversion"));
         if (tag.contains("has_snow", Tag.TAG_BYTE))
             setSnow(tag.getBoolean("has_snow"));
         if (tag.contains("snow_layer_persistent", Tag.TAG_BYTE))
@@ -197,7 +202,7 @@ public class Moobloom extends Cow {
     @Override
     public void thunderHit(ServerLevel level, LightningBolt bolt) {
         UUID uuid = bolt.getUUID();
-        if (!uuid.equals(lastLightningBoltUUID)) {
+        if (getCowType().isBound() && getCowType().value().configuration().allowsConversion(this) && !uuid.equals(lastLightningBoltUUID)) {
             if (getPreviousCowType() == null) {
                 if (getCowType().value().configuration().settings().thunderConverts().isEmpty()) {
                     super.thunderHit(level, bolt);
@@ -548,6 +553,15 @@ public class Moobloom extends Cow {
     public void setAllowShearing(boolean value) {
         entityData.set(ALLOW_SHEARING, value);
     }
+
+    public boolean shouldAllowConversion() {
+        return entityData.get(ALLOW_CONVERSION);
+    }
+
+    public void setAllowConversion(boolean value) {
+        entityData.set(ALLOW_CONVERSION, value);
+    }
+
 
     public boolean hasSnow() {
         return entityData.get(HAS_SNOW);

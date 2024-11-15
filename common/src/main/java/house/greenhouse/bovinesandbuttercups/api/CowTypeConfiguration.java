@@ -39,6 +39,10 @@ public interface CowTypeConfiguration {
         return false;
     }
 
+    default boolean allowsConversion(Entity entity) {
+        return false;
+    }
+
     /**
      * @return The settings of the cow type, null if not set.
      */
