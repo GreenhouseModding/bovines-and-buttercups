@@ -2,6 +2,7 @@
 2.0.0 is a total rewrite of the mod, both content-wise and datapacking-wise.
 
 Thank you to [GaeaKat](https://github.com/GaeaKat), [TathanDev](https://github.com/TathanDev) and [ferriarnus](https://github.com/ferriarnus) for helping with this update by submitting PRs!
+Additionally, a huge thank you to [Omniv](https://bsky.app/profile/omniv.bsky.social) for contributing many textures for this update.
 
 ## Main Features
 - Added a new Moobloom, the Lingholm Moobloom, a cyan flower themed after non-snowy Taiga biomes.
