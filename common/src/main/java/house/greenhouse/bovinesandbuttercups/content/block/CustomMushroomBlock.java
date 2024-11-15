@@ -140,10 +140,10 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
 
                 level.removeBlock(pos, false);
                 Rotation rotation = customMushroom.value().randomlyRotateHugeStructure() ? Rotation.getRandom(level.random) : Rotation.NONE;
-                BlockPos centeredPos = new BlockPos(pos.getX() - structurePoolElement.get().getSize(structureTemplateManager, rotation).getX() / 2, pos.getY(), pos.getZ() - structurePoolElement.get().getSize(structureTemplateManager, rotation).getZ() / 2);
+                BlockPos centeredPos = pos.offset(structurePoolElement.get().getSize(structureTemplateManager, rotation).getX() / 2, 0, structurePoolElement.get().getSize(structureTemplateManager, rotation).getZ() / 2);
                 if (ChunkPos.rangeClosed(new ChunkPos(centeredPos), new ChunkPos(centeredPos.offset(structurePoolElement.get().getSize(structureTemplateManager, rotation)))).allMatch((chunkPos) -> level.isLoaded(chunkPos.getWorldPosition()))) {
                     BoundingBox structureBox = structurePoolElement.get().getBoundingBox(structureTemplateManager, centeredPos, rotation);
-                    if (level.getBlockStates(AABB.of(structureBox)).allMatch(bs -> bs.isAir() || bs.is(BlockTags.LEAVES))) {
+                    if (BlockPos.betweenClosedStream(AABB.of(structureBox)).allMatch(p -> pos.equals(p) || level.getBlockState(p).isAir() || level.getBlockState(p).is(BlockTags.LEAVES))) {
                         structurePoolElement.get().place(structureTemplateManager, level, level.structureManager(), level.getChunkSource().getGenerator(), centeredPos, centeredPos, rotation, structureBox, randomSource, LiquidSettings.APPLY_WATERLOGGING, false);
                         return;
                     }

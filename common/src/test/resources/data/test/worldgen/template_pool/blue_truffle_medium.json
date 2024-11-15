@@ -11,5 +11,5 @@
       }
     }
   ],
-  "fallback": "test:blue_truffle_medium"
+  "fallback": "minecraft:empty"
 }
