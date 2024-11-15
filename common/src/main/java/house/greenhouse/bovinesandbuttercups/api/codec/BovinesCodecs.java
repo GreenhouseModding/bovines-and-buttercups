@@ -21,20 +21,11 @@ public class BovinesCodecs {
                 Weight.CODEC.optionalFieldOf("weight", Weight.of(1)).forGetter(WeightedEntry.Wrapper::weight)
         ).apply(inst, WeightedEntry.Wrapper::new));
 
-        return Codec.either(codec.listOf(), direct.listOf())
-                .xmap(either -> either.map(t -> {
-                    var builder = SimpleWeightedRandomList.<T>builder();
-                    for (var value : t) {
-                        builder.add(value);
-                    }
-                    return builder.build();
-                }, weighted -> {
-                    var builder = SimpleWeightedRandomList.<T>builder();
-                    for (var value : weighted) {
-                        builder.add(value.data(), value.weight().asInt());
-                    }
-                    return builder.build();
-                }),
-                wrapper -> Either.right(wrapper.unwrap()));
+        return Codec.either(codec, direct).listOf().xmap(list -> {
+            var builder = SimpleWeightedRandomList.<T>builder();
+            list.forEach(value ->
+                    value.ifLeft(builder::add).ifRight(wrapper -> builder.add(wrapper.data(), wrapper.weight().asInt())));
+            return builder.build();
+        }, list -> list.unwrap().stream().map(Either::<T, WeightedEntry.Wrapper<T>>right).toList());
     }
 }
