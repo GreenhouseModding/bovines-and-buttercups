@@ -3,10 +3,12 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
-import house.greenhouse.bovinesandbuttercups.mixin.EntitySuperMixin;
+import house.greenhouse.bovinesandbuttercups.mixin.CowSuperMixin;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
@@ -20,8 +22,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +35,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MushroomCow.class)
-public abstract class MushroomCowMixin extends EntitySuperMixin {
+public abstract class MushroomCowMixin extends CowSuperMixin {
+
+    protected MushroomCowMixin(EntityType<? extends Animal> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @ModifyReturnValue(method = "checkMushroomSpawnRules", at = @At("RETURN"))
     private static boolean bovinesandbuttercups$allowSpawning(boolean original, EntityType<MushroomCow> entityType, LevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
@@ -41,7 +49,7 @@ public abstract class MushroomCowMixin extends EntitySuperMixin {
     @Inject(method = "thunderHit", at = @At(value = "HEAD"), cancellable = true)
     private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
         boolean bl = BovinesAndButtercups.convertedByBovines;
-        if (!bl && (!((Entity)(Object)this).hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || ((Entity)(Object)this).getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion())) {
+        if (!bl && CowTypeAttachment.getCowTypeFromEntity(this, BovinesCowTypeTypes.MOOSHROOM_TYPE) != null && CowTypeAttachment.getCowTypeFromEntity(this, BovinesCowTypeTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
             bovinesandbuttercups$thunderHit(level, lightning);
             ci.cancel();
         }

@@ -1,30 +1,19 @@
 package house.greenhouse.bovinesandbuttercups.integration.jei.recipe;
 
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
-import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
-import house.greenhouse.bovinesandbuttercups.content.recipe.FlowerCrownRecipe;
 import house.greenhouse.bovinesandbuttercups.content.recipe.SuspiciousEdibleRecipe;
-import house.greenhouse.bovinesandbuttercups.integration.recipe.BovinesRecipeViewerUtil;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SuspiciousStewItem;
-import net.minecraft.world.item.component.SuspiciousStewEffects;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.SuspiciousEffectHolder;
 

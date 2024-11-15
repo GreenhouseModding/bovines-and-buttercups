@@ -115,7 +115,7 @@ public class Moobloom extends Cow {
         builder.define(POLLINATED_RESET_TICKS, 0);
         builder.define(STANDING_STILL_FOR_BEE_TICKS, 0);
         builder.define(ALLOW_SHEARING, true);
-        builder.define(ALLOW_CONVERSION, false);
+        builder.define(ALLOW_CONVERSION, true);
         builder.define(HAS_SNOW, false);
         builder.define(SNOW_LAYER_PERSISTENT, false);
     }

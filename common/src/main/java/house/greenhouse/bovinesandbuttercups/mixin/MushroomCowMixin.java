@@ -2,29 +2,36 @@ package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
+import house.greenhouse.bovinesandbuttercups.content.item.CustomFlowerItem;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = MushroomCow.class)
+import java.util.Optional;
+
+@Mixin(MushroomCow.class)
 public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess {
     @Shadow public abstract MushroomCow.MushroomType getVariant();
 
@@ -56,6 +63,14 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
                 return MushroomCow.MushroomType.RED;
         }
         return original;
+    }
+
+    @ModifyVariable(method = "mobInteract", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getEffectsFromItemStack(Lnet/minecraft/world/item/ItemStack;)Ljava/util/Optional;"))
+    private Optional<SuspiciousStewEffects> bovinesandbuttercups$getSuspiciousEffectsFromCustomFlower(Optional<SuspiciousStewEffects> value, @Local ItemStack stack) {
+        if (value.isEmpty() && stack.is(BovinesItems.CUSTOM_FLOWER) && stack.has(BovinesDataComponents.CUSTOM_FLOWER))
+            return CustomFlowerItem.getSuspiciousStewEffects(stack);
+
+        return value;
     }
 
     @Override
