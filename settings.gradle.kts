@@ -23,4 +23,3 @@ rootProject.name = "bovines-and-buttercups"
 include("common")
 include("fabric")
 include("neoforge")
-// include("publish")
