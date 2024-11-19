@@ -5,12 +5,13 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -61,6 +62,11 @@ public class CowTypeType<C extends CowTypeConfiguration> {
     @Nullable
     public C defaultConfig() {
         return defaultConfig;
+    }
+
+    @ApiStatus.Internal
+    public void setFromRegistries(RegistryAccess registryAccess) {
+        defaultConfig = (C) registryAccess.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).getOrThrow(defaultKey).value().configuration();
     }
 
     public C createDefaultConfig(RegistryOps.RegistryInfoLookup lookup) {
