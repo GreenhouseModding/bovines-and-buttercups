@@ -3,7 +3,6 @@ package house.greenhouse.bovinesandbuttercups.gradle
 object Properties {
     const val GROUP = "house.greenhouse"
     const val MOD_NAME = "Bovines and Buttercups"
-    const val ARCHIVES_NAME = "bovines-and-buttercups"
     const val MOD_ID = "bovinesandbuttercups"
     const val MOD_AUTHOR = "Greenhouse Team"
     val MOD_CONTRIBUTORS = listOf("MerchantPug", "SpiderKolo", "Omniv")
