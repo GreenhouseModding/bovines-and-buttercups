@@ -7,6 +7,7 @@ import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomBlockEntity;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomMushroomPotBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomMushroomRenderer implements BlockEntityRenderer<CustomMushroomBlockEntity> {
@@ -39,5 +41,10 @@ public class CustomMushroomRenderer implements BlockEntityRenderer<CustomMushroo
             }
         }
         BovinesAndButtercupsClient.getHelper().tesselateBlock(blockRenderDispatcher, blockEntity.getLevel(), bakedModel, blockEntity.getBlockState(), blockEntity.getBlockPos(), poseStack, bufferSource, RenderType.cutout(), false, RandomSource.create(), blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY);
+    }
+
+    @Override
+    public boolean shouldRender(CustomMushroomBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 }
