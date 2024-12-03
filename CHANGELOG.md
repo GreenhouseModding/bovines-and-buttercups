@@ -60,6 +60,10 @@ Additionally, a huge thank you to [Omniv](https://bsky.app/profile/omniv.bsky.so
   - This translation may be slightly out of date for specific bits of content as it was made before this update was finished.
 
 ## Data Packing Changes
+An example pack repository can be found [here](https://github.com/GreenhouseModding/bovines-and-buttercups-example-pack).
+
+The README of the above repository is the only current documentation for Bovines and Buttercups data packing. A wiki is in the works and will house this information at a later date.
+
 - Bovines and Buttercups now utilises datapack/dynamic registries.
   - A side effect of this means that you can no longer reload the registry through `/reload`.
   - This change was made to better implement Bovines with vanilla systems.
