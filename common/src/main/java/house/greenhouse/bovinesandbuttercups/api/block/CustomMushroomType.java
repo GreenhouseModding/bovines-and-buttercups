@@ -25,7 +25,7 @@ public record CustomMushroomType(
     public static final Codec<CustomMushroomType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Codec.BOOL.optionalFieldOf("has_huge_block", true).forGetter(CustomMushroomType::hasHugeBlock),
             Codec.BOOL.optionalFieldOf("has_potted", true).forGetter(CustomMushroomType::hasPotted),
-            ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_mushroom_template_pool").forGetter(CustomMushroomType::hugeMushroomStructurePool),
+            ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_mushroom_template_pools").forGetter(CustomMushroomType::hugeMushroomStructurePool),
             Codec.BOOL.optionalFieldOf("randomly_rotate_huge_mushroom", false).forGetter(CustomMushroomType::randomlyRotateHugeStructure)
     ).apply(builder, CustomMushroomType::new));
 
