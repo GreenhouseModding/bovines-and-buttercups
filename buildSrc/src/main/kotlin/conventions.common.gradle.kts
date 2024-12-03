@@ -8,9 +8,9 @@ plugins {
     `maven-publish`
 }
 
-base.archivesName.set("${Properties.ARCHIVES_NAME}-${project.name}")
+base.archivesName.set(Properties.ARCHIVES_NAME)
 group = Properties.GROUP
-version = "${Versions.MOD}+${Versions.MINECRAFT}"
+version = "${Versions.MOD}+${Versions.MINECRAFT}-${project.name}"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(Versions.JAVA))
