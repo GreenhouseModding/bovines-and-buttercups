@@ -12,6 +12,7 @@ public class BovinesSoundEvents {
     public static final SoundEvent MOOBLOOM_MILK = SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.milk"));
     public static final SoundEvent MOOBLOOM_SHEAR = SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.shear"));
     public static final SoundEvent MOOBLOOM_CONVERT = SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.convert"));
+    public static final SoundEvent MOOBLOOM_PLANT = SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.plant"));
     public static Holder<SoundEvent> EQUIP_FLOWER_CROWN;
 
     public static void registerAll(RegistrationCallback<SoundEvent> callback) {
@@ -19,6 +20,7 @@ public class BovinesSoundEvents {
         callback.register(BuiltInRegistries.SOUND_EVENT, BovinesAndButtercups.asResource("entity.moobloom.milk"), MOOBLOOM_MILK);
         callback.register(BuiltInRegistries.SOUND_EVENT, BovinesAndButtercups.asResource("entity.moobloom.shear"), MOOBLOOM_SHEAR);
         callback.register(BuiltInRegistries.SOUND_EVENT, BovinesAndButtercups.asResource("entity.moobloom.convert"), MOOBLOOM_CONVERT);
+        callback.register(BuiltInRegistries.SOUND_EVENT, BovinesAndButtercups.asResource("entity.moobloom.plant"), MOOBLOOM_PLANT);
     }
 
     public static void registerHolders(HolderRegistrationCallback<SoundEvent> callback) {

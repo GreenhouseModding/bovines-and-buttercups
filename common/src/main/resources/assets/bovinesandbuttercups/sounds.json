@@ -13,27 +13,33 @@
     "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.convert"
   },
   "entity.moobloom.eat": {
-    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.eat",
     "sounds": [
       "mob/mooshroom/eat1",
       "mob/mooshroom/eat2",
       "mob/mooshroom/eat3",
       "mob/mooshroom/eat4"
-    ]
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.eat"
   },
   "entity.moobloom.milk": {
-    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.milk",
     "sounds": [
       "bovinesandbuttercups:mob/moobloom/milk1",
       "bovinesandbuttercups:mob/moobloom/milk2",
       "bovinesandbuttercups:mob/moobloom/milk3"
-    ]
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.milk"
   },
   "entity.moobloom.shear": {
-    "subtitle": "subtitles.item.shears.shear",
     "sounds": [
       "mob/sheep/shear"
-    ]
+    ],
+    "subtitle": "subtitles.item.shears.shear"
+  },
+  "entity.moobloom.plant": {
+    "sounds": [
+      "bovinesandbuttercups:mob/moobloom/plant"
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.plant"
   },
   "item.armor.equip_flower_crown": {
     "sounds": [

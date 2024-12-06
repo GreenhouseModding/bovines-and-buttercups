@@ -3,6 +3,7 @@ package house.greenhouse.bovinesandbuttercups;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
@@ -87,6 +88,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         registerCompostables();
         registerBiomeModifications();
         registerResourcePacks();
+        MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
             if (entity instanceof LivingEntity living) {

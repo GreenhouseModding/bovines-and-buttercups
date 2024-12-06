@@ -75,6 +75,7 @@
   "subtitles.entity.bovinesandbuttercups.moobloom.convert": "Moobloom transforms",
   "subtitles.entity.bovinesandbuttercups.moobloom.eat": "Moobloom eats",
   "subtitles.entity.bovinesandbuttercups.moobloom.milk": "Moobloom gets milked",
+  "subtitles.entity.bovinesandbuttercups.moobloom.plant": "Moobloom plants",
 
   "effect.bovinesandbuttercups.lockdown": "Lockdown",
   "potion.bovinesandbuttercups.lockdown": "Lockdown (%s) (%s)",

@@ -28,6 +28,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -92,11 +93,15 @@ public class Moobloom extends Cow {
     private static final EntityDataAccessor<Boolean> ALLOW_CONVERSION = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_SNOW = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SNOW_LAYER_PERSISTENT = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.BOOLEAN);
+
+    public static final int TICKS_UNTIL_SPREAD = 80;
+
     @Nullable
     public Bee bee;
     private boolean hasRefreshedDimensionsForLaying;
     @Nullable
     private BlockPos previousPos = null;
+    private int ticksUntilSpread = -1;
     @Nullable private UUID lastLightningBoltUUID;
     private final Map<Holder<CowType<?>>, List<Vec3>> particlePositions = new HashMap<>();
 
@@ -131,6 +136,9 @@ public class Moobloom extends Cow {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("flower_spread_attempts", getFlowerSpreadAttempts());
+        if (previousPos != null)
+            tag.put("previous_flower_pos", BlockPos.CODEC.encodeStart(NbtOps.INSTANCE, previousPos).getOrThrow());
+        tag.putInt("ticks_until_spread", ticksUntilSpread);
         tag.putInt("pollinated_reset_ticks", getPollinatedResetTicks());
         tag.putBoolean("allow_shearing", shouldAllowShearing());
         tag.putBoolean("allow_conversion", shouldAllowConversion());
@@ -145,6 +153,10 @@ public class Moobloom extends Cow {
         backwardsCompat(tag);
         if (tag.contains("flower_spread_attempts", Tag.TAG_INT))
             setFlowerSpreadAttempts(tag.getInt("flower_spread_attempts"));
+        if (tag.contains("previous_flower_pos", Tag.TAG_INT_ARRAY))
+            previousPos = BlockPos.CODEC.decode(NbtOps.INSTANCE, tag.get("previous_flower_pos")).getOrThrow().getFirst();
+        if (tag.contains("ticks_until_spread", Tag.TAG_INT))
+            ticksUntilSpread = tag.getInt("ticks_until_spread");
         if (tag.contains("pollinated_reset_ticks", Tag.TAG_INT))
             setPollinatedResetTicks(tag.getInt("pollinated_reset_ticks"));
         if (tag.contains("allow_shearing", Tag.TAG_BYTE))
@@ -264,12 +276,21 @@ public class Moobloom extends Cow {
             if (getUpAnimationState.isStarted() && getUpAnimationState.getAccumulatedTime() >= 1000)
                 getUpAnimationState.stop();
         } else {
-            if ((previousPos == null || blockPosition().distSqr(previousPos) > 4) && getFlowerSpreadAttempts() > 0) {
-                if (spreadFlowers())
+            if (ticksUntilSpread > 0)
+                --ticksUntilSpread;
+
+            if ((previousPos == null || blockPosition().distSqr(previousPos) > 4 || ticksUntilSpread == 0) && getFlowerSpreadAttempts() > 0) {
+                if (spreadFlowers()) {
+                    level().playSound(null, blockPosition(), BovinesSoundEvents.MOOBLOOM_PLANT, getSoundSource(), 1.0F, (random.nextFloat() * 0.2F) + 0.9F);
+                    gameEvent(GameEvent.ENTITY_ACTION);
                     setFlowerSpreadAttempts(getFlowerSpreadAttempts() - 1);
-                previousPos = blockPosition();
-                if (getFlowerSpreadAttempts() <= 0)
+                    ticksUntilSpread = TICKS_UNTIL_SPREAD;
+                    previousPos = blockPosition();
+                }
+                if (getFlowerSpreadAttempts() <= 0) {
                     previousPos = null;
+                    ticksUntilSpread = -1;
+                }
             }
 
             if (bee != null && !bee.isAlive()) {
@@ -287,10 +308,11 @@ public class Moobloom extends Cow {
                 setSnow(false);
                 BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(this, new SyncMoobloomSnowLayerClientboundPacket(getId(), false));
             }
+
+            if (getPollinatedResetTicks() > 0)
+                setPollinatedResetTicks(getPollinatedResetTicks() - 1);
         }
 
-        if (getPollinatedResetTicks() > 0)
-            setPollinatedResetTicks(getPollinatedResetTicks() - 1);
 
         if (getStandingStillForBeeTicks() > 0) {
             if (!hasRefreshedDimensionsForLaying) {
@@ -363,7 +385,7 @@ public class Moobloom extends Cow {
     }
 
     public void setBlockToFlower(BlockState state, BlockPos pos) {
-        if (level().isClientSide) return;
+        if (level().isClientSide || !state.canSurvive(level(), pos.below())) return;
         ((ServerLevel) level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D, 4, 0.2, 0.1, 0.2, 0.0);
         if (state.getBlock() == BovinesBlocks.CUSTOM_FLOWER && getCowType().value().configuration().flower().customType().isPresent()) {
             level().setBlock(pos, state, Block.UPDATE_ALL);
@@ -389,15 +411,10 @@ public class Moobloom extends Cow {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!isBaby()) {
-            if (stack.is(Items.BONE_MEAL) && getFlowerSpreadAttempts() < 8) {
+            if (stack.is(Items.BONE_MEAL) && feed()) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                if (!level().isClientSide) {
-                    ((ServerLevel) level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, position().x(), position().y() + 1.6D, position().z(), 8, 0.5, 0.1, 0.4, 0.0);
-                    setFlowerSpreadAttempts(getFlowerSpreadAttempts() + 8);
-                }
-                playSound(BovinesSoundEvents.MOOBLOOM_EAT, 1.0f, (random.nextFloat() * 0.4F) + 0.8F);
                 return InteractionResult.sidedSuccess(level().isClientSide);
             } else if (stack.is(Items.BOWL)) {
                 ItemStack stack2;
@@ -418,6 +435,19 @@ public class Moobloom extends Cow {
         if (result != InteractionResult.PASS)
             return result;
         return super.mobInteract(player, hand);
+    }
+
+    public boolean feed() {
+        if (getFlowerSpreadAttempts() >= 8)
+            return false;
+        if (!level().isClientSide) {
+            ((ServerLevel) level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, position().x(), position().y() + 1.6D, position().z(), 8, 0.5, 0.1, 0.4, 0.0);
+            previousPos = blockPosition();
+            ticksUntilSpread = TICKS_UNTIL_SPREAD;
+            setFlowerSpreadAttempts(getFlowerSpreadAttempts() + 8);
+        }
+        playSound(BovinesSoundEvents.MOOBLOOM_EAT, 1.0f, (random.nextFloat() * 0.4F) + 0.8F);
+        return true;
     }
 
     public Pair<Holder<CowType<MoobloomConfiguration>>, Optional<Holder<CowType<MoobloomConfiguration>>>> chooseBabyType(ServerLevel level, Moobloom otherParent, Moobloom child) {
