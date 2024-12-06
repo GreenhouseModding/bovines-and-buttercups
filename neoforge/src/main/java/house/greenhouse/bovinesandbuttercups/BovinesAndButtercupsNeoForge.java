@@ -103,11 +103,6 @@ public class BovinesAndButtercupsNeoForge {
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
     public static class GameEvents {
         @SubscribeEvent
-        public static void onCommonSetup(FMLCommonSetupEvent event) {
-            MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
-        }
-
-        @SubscribeEvent
         public static void registerCommands(RegisterCommandsEvent event) {
             BovinesCommands.register(event.getDispatcher(), event.getBuildContext());
         }
@@ -327,6 +322,10 @@ public class BovinesAndButtercupsNeoForge {
 
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
     public static class ModEvents {
+        @SubscribeEvent
+        public static void onCommonSetup(FMLCommonSetupEvent event) {
+            MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
+        }
 
         @SubscribeEvent
         public static void createEntityAttributes(EntityAttributeCreationEvent event) {
