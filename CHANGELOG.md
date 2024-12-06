@@ -1,1 +1,2 @@
 - Removed distance restriction on custom block renderers.
+- Updated Moobloom Spawn Egg to match Minecraft Earth's spawn egg.
