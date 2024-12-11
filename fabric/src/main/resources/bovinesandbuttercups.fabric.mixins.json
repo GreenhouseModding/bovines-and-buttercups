@@ -13,14 +13,13 @@
     "PistonStructureResolverMixin"
   ],
   "client": [
-    "client.EffectRenderingInventoryScreenMixin",
+    "client.EffectsInInventoryMixin",
     "client.GuiMixin",
     "client.LivingEntityRendererMixin",
+    "client.ModelManagerMixin",
     "client.MushroomCowRendererMixin",
     "client.PlayerRendererMixin",
     "client.TerrainParticleMixin"
-  ],
-  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

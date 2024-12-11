@@ -37,7 +37,7 @@ public record AddCowTypeSpawnsModifier(Holder<CowTypeType<?>> cowType, Optional<
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (!cowType.isBound()) return;
-        if (ServerLifecycleHooks.getCurrentServer().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(entry -> entry.type() == cowType.value() && entry.configuration().settings() != null && entry.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome)) && entry.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)) && phase == Phase.ADD && (this.excludedBiomes.isEmpty() || !this.excludedBiomes.get().contains(biome))) {
+        if (ServerLifecycleHooks.getCurrentServer().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(entry -> entry.type() == cowType.value() && entry.configuration().settings() != null && entry.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome)) && entry.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)) && phase == Phase.ADD && (this.excludedBiomes.isEmpty() || !this.excludedBiomes.get().contains(biome))) {
             MobSpawnSettingsBuilder spawns = builder.getMobSpawnSettings();
             for (MobSpawnSettings.SpawnerData spawner : this.spawners) {
                 EntityType<?> type = spawner.type;

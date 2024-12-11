@@ -1,3 +1,5 @@
 {
+  "item_model": "test:custom_mushroom",
+  "huge_block_item_model": "test:custom_mushroom_block",
   "huge_mushroom_template_pool": "test:green_truffle"
 }

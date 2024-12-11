@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
 import house.greenhouse.bovinesandbuttercups.client.particle.BloomParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ModelLocationParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ShroomParticle;
@@ -21,13 +22,11 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.Flower
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
-import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
-import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
+import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.neoforge.client.EntityRenderersEventAddLayersAccessor;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import net.minecraft.client.Minecraft;
@@ -40,13 +39,21 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MushroomCowRenderer;
+import net.minecraft.client.renderer.entity.state.MushroomCowRenderState;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelBakery.TextureGetter;
+import net.minecraft.client.resources.model.ModelDebugName;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.MushroomCow;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -59,9 +66,14 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.function.Function;
 
 @Mod(value = BovinesAndButtercups.MOD_ID, dist = Dist.CLIENT)
 public class BovinesAndButtercupsNeoForgeClient {
@@ -82,7 +94,7 @@ public class BovinesAndButtercupsNeoForgeClient {
     public static class ModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            BovinesAccessoriesIntegrationClient.init();
+//            BovinesAccessoriesIntegrationClient.init();
             BovinesModelSetTypes.init();
         }
 
@@ -94,41 +106,59 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerMobEffect(LockdownClientEffectExtensions.INSTANCE, BovinesEffects.LOCKDOWN);
+        }
 
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.CUSTOM_FLOWER);
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.CUSTOM_MUSHROOM);
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.CUSTOM_MUSHROOM_BLOCK);
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.FLOWER_CROWN);
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.NECTAR_BOWL);
-            event.registerItem(BovinesBEWLR.ITEM_EXTENSIONS, BovinesItems.PLACEABLE_EDIBLE);
+        private static final Map<ResourceLocation, UnbakedModel> MODEL_CACHE = new HashMap<>();
+
+        @SubscribeEvent
+        public static void additionalModels(ModelEvent.RegisterAdditional event) {
+            List<ResourceLocation> models = BovinesModelSetUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
+            for (ResourceLocation entry : models) {
+                UnbakedModel unbaked = BovinesModelSetUtil.getUnbakedModel(entry);
+                if (unbaked != null) {
+                    unbaked.resolveDependencies(model -> {
+                        event.register(model);
+                        return null;
+                    });
+                    MODEL_CACHE.put(entry, unbaked);
+                }
+            }
+            event.register(FlowerCrownItemRenderer.BASE);
         }
 
         @SubscribeEvent
         public static void bakeModels(ModelEvent.ModifyBakingResult event) {
             List<ResourceLocation> models = BovinesModelSetUtil.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join();
             for (ResourceLocation entry : models) {
-                UnbakedModel unbaked = BovinesModelSetUtil.getUnbakedModel(entry, ((ModelBakeryAccessor)event.getModelBakery())::bovinesandbuttercups$getModel);
+                UnbakedModel unbaked = MODEL_CACHE.get(entry);
                 if (unbaked != null) {
-                    unbaked.resolveParents(location -> ((ModelBakeryAccessor)event.getModelBakery()).bovinesandbuttercups$getModel(location));
-                    ModelResourceLocation modelResource = ModelResourceLocation.standalone(entry);
-                    BakedModel model = unbaked.bake(event.getModelBakery().new ModelBakerImpl((rl, material) -> material.sprite(), modelResource), event.getTextureGetter(), BlockModelRotation.X0_Y0);
-                    event.getModels().put(modelResource, model);
+                    event.getBakingResult().standaloneModels().put(entry, bakeModel(entry, unbaked, event.getTextureGetter(), event.getModelBakery()));
                 }
             }
+            MODEL_CACHE.clear();
+        }
 
-            List<ResourceLocation> flowerCrownModels = List.of(FlowerCrownItemRenderer.BASE);
-            for (ResourceLocation entry : flowerCrownModels) {
-                UnbakedModel unbaked = ((ModelBakeryAccessor)event.getModelBakery()).bovinesandbuttercups$getModel(entry);
-                unbaked.resolveParents(location -> ((ModelBakeryAccessor)event.getModelBakery()).bovinesandbuttercups$getModel(location));
-                ModelResourceLocation modelResource = ModelResourceLocation.standalone(entry);
-                BakedModel model = unbaked.bake(event.getModelBakery().new ModelBakerImpl((rl, material) -> material.sprite(), modelResource), event.getTextureGetter(), BlockModelRotation.X0_Y0);
-                event.getModels().put(modelResource, model);
-            }
+        private static BakedModel bakeModel(ResourceLocation key, UnbakedModel model, Function<Material, TextureAtlasSprite> textureGetter, ModelBakery bakery) {
+            TextureGetter getter = new ModelBakery.TextureGetter() {
+
+                @Override
+                public TextureAtlasSprite get(ModelDebugName name, Material material) {
+                    return textureGetter.apply(material);
+                }
+
+                @Override
+                public TextureAtlasSprite reportMissingReference(ModelDebugName name, String reference) {
+                    return textureGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation()));
+                }
+            };
+
+            return UnbakedModel.bakeWithTopModelValues(model, bakery.new ModelBakerImpl(getter, key::toString), BlockModelRotation.X0_Y0);
         }
 
         @SubscribeEvent
         public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_MOOBLOOM_MODEL_LAYER, () -> CowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
             event.registerLayerDefinition(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
             event.registerLayerDefinition(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         }
@@ -147,21 +177,21 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void registerRenderLayers(EntityRenderersEvent.AddLayers event) {
             MushroomCowRenderer mushroomCowRenderer = event.getRenderer(EntityType.MOOSHROOM);
-            mushroomCowRenderer.addLayer(new CowLayersLayer<>(mushroomCowRenderer));
+            mushroomCowRenderer.addLayer(new CowLayersLayer(mushroomCowRenderer));
             mushroomCowRenderer.addLayer(new MooshroomDatapackMushroomLayer<>(mushroomCowRenderer, event.getContext().getBlockRenderDispatcher()));
 
-            List<LivingEntityRenderer<?, ?>> renderers = new ArrayList<>();
+            List<LivingEntityRenderer<?, ?, ?>> renderers = new ArrayList<>();
             for (PlayerSkin.Model skin : event.getSkins()) {
-                if (event.getSkin(skin) instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+                if (event.getSkin(skin) instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
                     livingRenderer.addLayer(new FlowerCrownLayer(livingRenderer, modelLayerLocation -> event.getContext().bakeLayer((ModelLayerLocation) modelLayerLocation), event.getContext().getModelManager()));
                     renderers.add(livingRenderer);
                 }
             }
 
             ((EntityRenderersEventAddLayersAccessor)event).bovinesandbuttercups$getRenderers().forEach((entityType, entityRenderer) -> {
-                if (entityRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer && !renderers.contains(livingRenderer)) {
+                if (entityRenderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer && !renderers.contains(livingRenderer)) {
                     Model model = livingRenderer.getModel();
-                    if (model instanceof HumanoidModel<?> || model instanceof IllagerModel<?> || model instanceof VillagerModel<?>)
+                    if (model instanceof HumanoidModel<?> || model instanceof IllagerModel<?> || model instanceof VillagerModel)
                         livingRenderer.addLayer(new FlowerCrownLayer(livingRenderer, modelLayerLocation -> event.getContext().bakeLayer((ModelLayerLocation) modelLayerLocation), event.getContext().getModelManager()));
                 }
             });

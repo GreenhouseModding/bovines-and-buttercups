@@ -7,10 +7,10 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import net.minecraft.Util;
+import net.minecraft.client.resources.model.MissingBlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -98,7 +98,7 @@ public class BovinesModelSetUtil {
         });
     }
 
-    public static UnbakedModel getUnbakedModel(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemFunction) {
+    public static UnbakedModel getUnbakedModel(ResourceLocation modelId) {
         if (modelId == null)
             return null;
 
@@ -108,9 +108,9 @@ public class BovinesModelSetUtil {
 
             BovinesModelSetType modelsType = BovinesModelSetRegistry.getType(typeKey);
             if (modelsType == null)
-                return BovinesModelUtil.MISSING_MODEL;
+                return MissingBlockModel.missingModel();
 
-            return modelsType.createUnbaked(modelId, itemFunction);
+            return modelsType.createUnbaked(modelId);
         }
         return null;
     }
@@ -120,7 +120,7 @@ public class BovinesModelSetUtil {
         public <T> Optional<RegistryOps.RegistryInfo<T>> lookup(ResourceKey<? extends Registry<? extends T>> registryKey) {
             if (!BuiltInRegistries.REGISTRY.containsKey((ResourceKey) registryKey))
                 throw new UnsupportedOperationException("Registry \"" + registryKey.location() + "\" is not supoprted within edible bovines model sets.");
-            return Optional.of(new RegistryOps.RegistryInfo<>(new HolderOwner<T>() {
+            return Optional.of(new RegistryOps.RegistryInfo<>(new HolderOwner<>() {
                 @Override
                 public boolean canSerializeIn(HolderOwner<T> owner) {
                     return true;
@@ -130,7 +130,7 @@ public class BovinesModelSetUtil {
                 public Optional<Holder.Reference<T>> get(ResourceKey<T> resourceKey) {
                     if (!BuiltInRegistries.REGISTRY.containsKey((ResourceKey) registryKey))
                         throw new UnsupportedOperationException("Registry \"" + registryKey.location() + "\" is not supoprted within edible bovines model sets.");
-                    return (Optional) BuiltInRegistries.REGISTRY.get((ResourceKey) registryKey).getHolder(resourceKey);
+                    return ((Registry)BuiltInRegistries.REGISTRY.getOrThrow((ResourceKey) registryKey).value()).get(resourceKey);
                 }
 
                 @Override

@@ -22,7 +22,7 @@ public class GuiMixin {
     @Shadow @Final
     private Minecraft minecraft;
 
-    @ModifyArg(method = "renderEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V"))
+    @ModifyArg(method = "renderEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIII)V"))
     private ResourceLocation bovinesandbuttercups$overlayLockdownBorder(ResourceLocation original, @Local(ordinal = 2) int width, @Local(ordinal = 3) int height, @Local Holder<MobEffect> effect) {
         if (minecraft.player == null || !minecraft.player.hasEffect(BovinesEffects.LOCKDOWN))
             return original;

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "cyan_dye",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:lingholm"
-    }
+    "bovinesandbuttercups:lingholm"
   ],
   "result": {
     "count": 1,

@@ -10,11 +10,8 @@
       "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.lock_effect.description"
     },
     "icon": {
-      "components": {
-        "bovinesandbuttercups:nectar": "bovinesandbuttercups:freesia"
-      },
       "count": 1,
-      "id": "bovinesandbuttercups:nectar_bowl"
+      "id": "bovinesandbuttercups:buttercup_nectar_bowl"
     },
     "title": {
       "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.lock_effect.title"

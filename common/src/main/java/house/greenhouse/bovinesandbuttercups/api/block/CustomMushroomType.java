@@ -10,6 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
@@ -17,12 +18,16 @@ import java.util.Objects;
 import java.util.Optional;
 
 public record CustomMushroomType(
+        ResourceLocation itemModel,
+        Optional<ResourceLocation> hugeBlockItemModel,
         boolean hasHugeBlock,
         boolean hasPotted,
         Optional<ResourceKey<StructureTemplatePool>> hugeMushroomStructurePool,
         boolean randomlyRotateHugeStructure) {
 
     public static final Codec<CustomMushroomType> DIRECT_CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            ResourceLocation.CODEC.fieldOf("item_model").forGetter(CustomMushroomType::itemModel),
+            ResourceLocation.CODEC.optionalFieldOf("huge_block_item_model").forGetter(CustomMushroomType::hugeBlockItemModel),
             Codec.BOOL.optionalFieldOf("has_huge_block", true).forGetter(CustomMushroomType::hasHugeBlock),
             Codec.BOOL.optionalFieldOf("has_potted", true).forGetter(CustomMushroomType::hasPotted),
             ResourceKey.codec(Registries.TEMPLATE_POOL).optionalFieldOf("huge_mushroom_template_pool").forGetter(CustomMushroomType::hugeMushroomStructurePool),
@@ -31,7 +36,14 @@ public record CustomMushroomType(
 
     public static final Codec<Holder<CustomMushroomType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE);
     public static final ResourceKey<CustomMushroomType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, BovinesAndButtercups.asResource("missing_mushroom"));
-    public static final CustomMushroomType MISSING = new CustomMushroomType(true, true, Optional.empty(), false);
+    public static final CustomMushroomType MISSING = new CustomMushroomType(BovinesAndButtercups.asResource("missing_mushroom"), Optional.of(BovinesAndButtercups.asResource("missing_mushorom_block")), true, true, Optional.empty(), false);
+
+    public CustomMushroomType {
+        if (hasHugeBlock && hugeBlockItemModel.isEmpty()) {
+            throw new NullPointerException("Custom Mushroom with 'has_huge_block' set to true must have 'huge_block_item_model' set.");
+        }
+    }
+
 
     @Override
     public boolean equals(final Object obj) {

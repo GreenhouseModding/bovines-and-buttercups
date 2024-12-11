@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 2400,
-      "id": "minecraft:speed"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/lingholm_nectar_bowl"
-}

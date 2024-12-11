@@ -4,12 +4,13 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.NoOpTextureModifier;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.FallbackTextureModifier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
 import java.util.List;
 
-public class FallbackTextureModifierFactory extends TextureModifierFactory<NoOpTextureModifier> {
+public class FallbackTextureModifierFactory extends TextureModifierFactory<FallbackTextureModifier> {
     public static final MapCodec<FallbackTextureModifierFactory> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             ResourceLocation.CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter(FallbackTextureModifierFactory::conditions)
     ).apply(inst, FallbackTextureModifierFactory::new));
@@ -25,15 +26,8 @@ public class FallbackTextureModifierFactory extends TextureModifierFactory<NoOpT
     }
 
     @Override
-    protected NoOpTextureModifier createProvider() {
-        return new NoOpTextureModifier();
-    }
-
-    @Override
-    public boolean canDisplay(Entity entity) {
-        if (conditions.isEmpty())
-            return !ConditionedTextureModifierFactory.isConditionalDisplaying(entity);
-        return conditions.stream().noneMatch(condition -> ConditionedTextureModifierFactory.shouldDisplayConditional(entity, condition));
+    protected FallbackTextureModifier createProvider() {
+        return new FallbackTextureModifier(conditions);
     }
 
     @Override

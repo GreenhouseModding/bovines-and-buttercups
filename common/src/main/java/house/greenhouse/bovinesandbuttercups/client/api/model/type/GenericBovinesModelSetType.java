@@ -5,8 +5,18 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
+import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryModelBakerImplInvoker;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.TextureSlots;
+import net.minecraft.client.renderer.block.model.UnbakedBlockStateModel;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MissingBlockModel;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
@@ -18,14 +28,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Optional;
 
 public class GenericBovinesModelSetType implements BovinesModelSetType {
     public static final GenericBovinesModelSetType INSTANCE = new GenericBovinesModelSetType();
 
     private static final StateDefinition<Block, BlockState> EMPTY_STATE = (new StateDefinition.Builder<Block, BlockState>(Blocks.AIR)).create(Block::defaultBlockState, BlockState::new);
     private static final Map<ResourceLocation, JsonObject> LOADED_JSON = new HashMap<>();
-    private static final BlockModelDefinition.Context CONTEXT = new BlockModelDefinition.Context();
 
     protected GenericBovinesModelSetType() {}
 
@@ -39,20 +48,31 @@ public class GenericBovinesModelSetType implements BovinesModelSetType {
     }
 
     @Override
-    public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
+    public UnbakedModel createUnbaked(ResourceLocation modelId) {
         JsonObject json = LOADED_JSON.get(modelId);
         LOADED_JSON.remove(modelId);
 
         var blockStateJson = remapToBlockStateJson(json);
         if (blockStateJson == null)
-            return BovinesModelUtil.MISSING_MODEL;
+            return MissingBlockModel.missingModel();
 
-        BlockModelDefinition definition = BlockModelDefinition.fromJsonElement(CONTEXT, blockStateJson);
+        Map<BlockState, UnbakedBlockStateModel> definition = BlockModelDefinition.fromJsonElement(blockStateJson).instantiate(EMPTY_STATE, modelId.toString());
 
-        if (definition.isMultiPart())
-            return definition.getMultiPart();
+        Optional<UnbakedBlockStateModel> variant = definition.values().stream().findFirst();
+        if (variant.isEmpty())
+            return MissingBlockModel.missingModel();
 
-        return definition.getVariants().get("");
+        return new UnbakedModel() {
+            @Override
+            public BakedModel bake(TextureSlots textureSlots, ModelBaker baker, ModelState modelState, boolean hasAmbientOcclusion, boolean useBlockLight, ItemTransforms transforms) {
+                return variant.get().bake(baker);
+            }
+
+            @Override
+            public void resolveDependencies(Resolver resolver) {
+                variant.get().resolveDependencies(resolver);
+            }
+        };
     }
 
     @Nullable
@@ -109,9 +129,5 @@ public class GenericBovinesModelSetType implements BovinesModelSetType {
         public String getSerializedName() {
             return name;
         }
-    }
-
-    static {
-        CONTEXT.setDefinition(EMPTY_STATE);
     }
 }

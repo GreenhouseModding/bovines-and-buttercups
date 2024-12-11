@@ -51,19 +51,17 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.FABRIC_API}")
     modLocalRuntime("com.terraformersmc:modmenu:${Versions.MOD_MENU}")
 
-    // Recipe Viewer Mods
-    modCompileOnly("mezz.jei:jei-${Versions.MINECRAFT}-fabric-api:${Versions.JEI}")
-    // modLocalRuntime("mezz.jei:jei-${Versions.MINECRAFT}-fabric:${Versions.JEI}")
-
-    modCompileOnly("dev.emi:emi-fabric:${Versions.EMI}:api")
-    modLocalRuntime("dev.emi:emi-fabric:${Versions.EMI}")
-
-    // Equipment Mods
-    modCompileOnly("io.wispforest:accessories-fabric:${Versions.ACCESSORIES}")
-    // modLocalRuntime("io.wispforest:accessories-fabric:${Versions.ACCESSORIES}")
-
-    modCompileOnly("dev.emi:trinkets:${Versions.TRINKETS}")
-    // modLocalRuntime("dev.emi:trinkets:${Versions.TRINKETS}")
+//TODO: Re-enable when updated.
+//    // Recipe Viewer Mods
+//    modCompileOnly("mezz.jei:jei-${Versions.MINECRAFT}-fabric-api:${Versions.JEI}")
+//    // modLocalRuntime("mezz.jei:jei-${Versions.MINECRAFT}-fabric:${Versions.JEI}")
+//    modCompileOnly("dev.emi:emi-fabric:${Versions.EMI}:api")
+//    modLocalRuntime("dev.emi:emi-fabric:${Versions.EMI}")
+//    // Equipment Mods
+//    modCompileOnly("io.wispforest:accessories-fabric:${Versions.ACCESSORIES}")
+//    // modLocalRuntime("io.wispforest:accessories-fabric:${Versions.ACCESSORIES}")
+//    modCompileOnly("dev.emi:trinkets:${Versions.TRINKETS}")
+//    // modLocalRuntime("dev.emi:trinkets:${Versions.TRINKETS}")
 }
 
 loom {
@@ -95,7 +93,7 @@ loom {
             vmArgs("-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true")
         }
         register("datagen") {
-            server()
+            client()
             configName = "Fabric Datagen"
             setSource(sourceSets["datagen"])
             ideConfigGenerated(true)

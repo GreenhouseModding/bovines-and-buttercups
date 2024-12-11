@@ -1,14 +1,17 @@
 accessWidener v2 named
 accessible method net/minecraft/advancements/CriteriaTriggers register (Ljava/lang/String;Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
-accessible class net/minecraft/client/renderer/texture/SimpleTexture$TextureImage
 accessible class net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl
-accessible method net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl <init> (Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/resources/model/ModelBakery$TextureGetter;Lnet/minecraft/client/resources/model/ModelResourceLocation;)V
+accessible method net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl <init> (Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/resources/model/ModelBakery$TextureGetter;Lnet/minecraft/client/resources/model/ModelDebugName;)V
 accessible class net/minecraft/client/resources/model/ModelManager$ReloadState
+accessible method net/minecraft/client/renderer/block/model/multipart/MultiPart <init> (Ljava/util/List;)V
+accessible class net/minecraft/client/renderer/block/model/TextureSlots$Value
+accessible method net/minecraft/client/renderer/block/model/TextureSlots$Value <init> (Lnet/minecraft/client/resources/model/Material;)V
 accessible class net/minecraft/world/entity/animal/Bee$BaseBeeGoal
 accessible method net/minecraft/world/entity/animal/Bee$BaseBeeGoal <init> (Lnet/minecraft/world/entity/animal/Bee;)V
 accessible field net/minecraft/world/level/block/FlowerPotBlock POTTED_BY_CONTENT Ljava/util/Map;
 accessible method net/minecraft/world/level/block/HoneyBlock maybeDoSlideEffects (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
 extendable method net/minecraft/world/level/block/HoneyBlock maybeDoSlideEffects (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible method net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier create (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;
 extendable class net/minecraft/world/level/levelgen/structure/structures/JigsawStructure
-accessible method net/minecraft/data/models/ModelProvider saveCollection (Lnet/minecraft/data/CachedOutput;Ljava/util/Map;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;
-extendable method net/minecraft/data/models/ModelProvider saveCollection (Lnet/minecraft/data/CachedOutput;Ljava/util/Map;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;

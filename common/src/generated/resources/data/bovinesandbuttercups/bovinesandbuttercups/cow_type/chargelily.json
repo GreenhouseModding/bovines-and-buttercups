@@ -42,7 +42,9 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:chargelily",
+  "nectar": {
+    "id": "bovinesandbuttercups:chargelily_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "block": {
@@ -69,5 +71,6 @@
   "particle": {
     "type": "bovinesandbuttercups:bloom",
     "color": 6671095
-  }
+  },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/chargelily"
 }

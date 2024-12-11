@@ -1,7 +1,5 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.entity.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,26 +9,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-public class FlowerCrownModel<T extends LivingEntity> extends EntityModel<T> implements HeadedModel {
-    private ModelPart root;
-    private ModelPart head;
-
+public class FlowerCrownModel<T extends LivingEntityRenderState> extends EntityModel<T> implements HeadedModel {
+    private final ModelPart head;
     public FlowerCrownModel(ModelPart root) {
-        this.root = root;
+        super(root);
         this.head = root.getChild("head");
-    }
-
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        root.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 
     public static LayerDefinition createLayer(CubeDeformation deformation) {

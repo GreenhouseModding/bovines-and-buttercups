@@ -31,8 +31,9 @@ import java.util.Optional;
 public class MooshroomChildTypeUtil {
     public static Pair<Holder<CowType<MooshroomConfiguration>>, Optional<Holder<CowType<MooshroomConfiguration>>>> chooseMooshroomBabyType(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
         List<Holder<CowType<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
+        var registry = parent.level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE);
 
-        for (Holder.Reference<CowType<?>> cowType : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+        for (Holder.Reference<CowType<?>> cowType : registry.registryKeySet().stream().map(registry::getOrThrow).filter(type -> type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
             Holder<CowType<MooshroomConfiguration>> mooshroomType = (Holder) cowType;
             var conditions = mooshroomType.value().configuration().offspringConditions();
 

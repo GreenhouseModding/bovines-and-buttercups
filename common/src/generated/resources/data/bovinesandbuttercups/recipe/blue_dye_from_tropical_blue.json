@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "blue_dye",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:tropical_blue"
-    }
+    "bovinesandbuttercups:tropical_blue"
   ],
   "result": {
     "count": 1,

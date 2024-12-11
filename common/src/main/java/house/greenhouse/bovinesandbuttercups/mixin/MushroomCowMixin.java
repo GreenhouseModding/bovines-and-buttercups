@@ -33,11 +33,11 @@ import java.util.Optional;
 
 @Mixin(MushroomCow.class)
 public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess {
-    @Shadow public abstract MushroomCow.MushroomType getVariant();
+    @Shadow public abstract MushroomCow.Variant getVariant();
 
     @Nullable
     @Unique
-    private MushroomCow.MushroomType bovineandbuttercups$initializedType;
+    private MushroomCow.Variant bovineandbuttercups$initializedType;
 
     @Inject(method = "readAdditionalSaveData", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;contains(Ljava/lang/String;I)Z"))
     private void bovinesandbuttercups$setInitializedType(CompoundTag compound, CallbackInfo ci) {
@@ -53,14 +53,14 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
         CowTypeAttachment.setCowType(baby, pair.getFirst(), pair.getSecond());
     }
 
-    @ModifyExpressionValue(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getVariant()Lnet/minecraft/world/entity/animal/MushroomCow$MushroomType;"))
-    private MushroomCow.MushroomType bovinesandbuttercups$allowMooshroomToEatFlowers(MushroomCow.MushroomType original) {
+    @ModifyExpressionValue(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getVariant()Lnet/minecraft/world/entity/animal/MushroomCow$Variant;"))
+    private MushroomCow.Variant bovinesandbuttercups$allowMooshroomToEatFlowers(MushroomCow.Variant original) {
         @Nullable CowType<MooshroomConfiguration> cowType = CowTypeAttachment.getCowTypeFromEntity((MushroomCow)(Object)this, BovinesCowTypeTypes.MOOSHROOM_TYPE);
         if (cowType != null) {
-            if (cowType.configuration().canEatFlowers().isPresent() && cowType.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.RED)
-                return MushroomCow.MushroomType.BROWN;
-            else if (cowType.configuration().canEatFlowers().isPresent() && !cowType.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.BROWN)
-                return MushroomCow.MushroomType.RED;
+            if (cowType.configuration().canEatFlowers().isPresent() && cowType.configuration().canEatFlowers().get() && original == MushroomCow.Variant.RED)
+                return MushroomCow.Variant.BROWN;
+            else if (cowType.configuration().canEatFlowers().isPresent() && !cowType.configuration().canEatFlowers().get() && original == MushroomCow.Variant.BROWN)
+                return MushroomCow.Variant.RED;
         }
         return original;
     }
@@ -74,7 +74,7 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
     }
 
     @Override
-    public MushroomCow.MushroomType bovinesandbuttercups$initialType() {
+    public MushroomCow.Variant bovinesandbuttercups$initialType() {
         return bovineandbuttercups$initializedType;
     }
 

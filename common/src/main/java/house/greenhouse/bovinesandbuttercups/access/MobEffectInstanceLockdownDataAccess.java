@@ -1,10 +1,11 @@
 package house.greenhouse.bovinesandbuttercups.access;
 
 import house.greenhouse.bovinesandbuttercups.util.LockdownData;
+import net.minecraft.world.effect.MobEffectInstance;
 
 import java.util.List;
 
 public interface MobEffectInstanceLockdownDataAccess {
     List<LockdownData> bovinesandbuttercups$getLockdownData();
-    void bovinesandbuttercups$setLockdownData(List<LockdownData> data);
+    MobEffectInstance bovinesandbuttercups$setLockdownData(List<LockdownData> data);
 }

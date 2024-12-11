@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 9600,
-      "id": "minecraft:water_breathing"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/freesia_nectar_bowl"
-}

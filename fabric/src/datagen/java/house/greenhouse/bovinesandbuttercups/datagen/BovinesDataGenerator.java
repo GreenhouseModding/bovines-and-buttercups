@@ -1,30 +1,25 @@
 package house.greenhouse.bovinesandbuttercups.datagen;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.api.BovinesConventionalTags;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.select.EdibleBlockSelectProperty;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.BovinesNectars;
-import house.greenhouse.bovinesandbuttercups.content.recipe.SuspiciousEdibleRecipe;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -43,14 +38,19 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -59,14 +59,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.models.BlockModelGenerators;
-import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.model.ModelTemplate;
-import net.minecraft.data.models.model.TextureMapping;
-import net.minecraft.data.models.model.TextureSlot;
-import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -80,13 +72,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
@@ -107,15 +94,11 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class BovinesDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -134,7 +117,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(EntityTypeTagProvider::new);
         pack.addProvider(FlowerCrownMaterialTagProvider::new);
         pack.addProvider(ItemTagProvider::new);
-        pack.addProvider(NectarTagProvider::new);
 
         pack.addProvider(ModelProvider::new);
     }
@@ -146,7 +128,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
-        registryBuilder.add(BovinesRegistryKeys.NECTAR, BovinesNectars::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.COW_TYPE, BovinesCowTypes::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesFlowerCrownMaterials::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesEdibleBlockTypes::bootstrap);
@@ -160,7 +141,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(HolderLookup.Provider registries, Entries entries) {
-            BovinesNectars.bootstrap(createContext(registries, entries));
             BovinesCowTypes.bootstrap(createContext(registries, entries));
             BovinesFlowerCrownMaterials.bootstrap(createContext(registries, entries));
             BovinesEdibleBlockTypes.bootstrap(createContext(registries, entries));
@@ -195,10 +175,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         @Override
         @SuppressWarnings("removal")
         public void generateAdvancement(HolderLookup.Provider lookup, Consumer<AdvancementHolder> consumer) {
-            ItemStack lockEffectStack = new ItemStack(BovinesItems.NECTAR_BOWL);
-            lockEffectStack.set(BovinesDataComponents.NECTAR, new ItemNectar(lookup.asGetterLookup().lookupOrThrow(BovinesRegistryKeys.NECTAR).getOrThrow(BovinesNectars.BUTTERCUP)));
-            ItemStack preventEffectStack = new ItemStack(BovinesItems.NECTAR_BOWL);
-            lockEffectStack.set(BovinesDataComponents.NECTAR, new ItemNectar(lookup.asGetterLookup().lookupOrThrow(BovinesRegistryKeys.NECTAR).getOrThrow(BovinesNectars.FREESIA)));
+            ItemStack lockEffectStack = new ItemStack(BovinesItems.BUTTERCUP_NECTAR_BOWL);
+            ItemStack preventEffectStack = new ItemStack(BovinesItems.FREESIA_NECTAR_BOWL);
             consumer.accept(Advancement.Builder.advancement()
                     .display(new DisplayInfo(
                             lockEffectStack,
@@ -295,47 +273,53 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     )
                     .parent(ResourceLocation.withDefaultNamespace("husbandry/root"))
                     .requirements(AdvancementRequirements.allOf(List.of("get_flower_crown")))
-                    .addCriterion("get_flower_crown", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(BovinesItems.FLOWER_CROWN)))
+                    .addCriterion("get_flower_crown", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(lookup.lookupOrThrow(Registries.ITEM), BovinesItems.FLOWER_CROWN)))
                     .build(BovinesAndButtercups.asResource("husbandry/obtain_flower_crown")));
         }
     }
 
     private static class RecipeProvider extends FabricRecipeProvider {
-        private final CompletableFuture<HolderLookup.Provider> registries;
-
         public RecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
             super(output, lookup);
-            this.registries = lookup;
         }
 
         @Override
-        public void buildRecipes(RecipeOutput output) {
-            HolderLookup.Provider lookup = registries.join();
+        protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput output) {
+            return new net.minecraft.data.recipes.RecipeProvider(registryLookup, output) {
+                @Override
+                public void buildRecipes() {
+                    oneToOneConversionRecipe(Items.ORANGE_DYE, BovinesBlocks.BIRD_OF_PARADISE, "orange_dye");
+                    oneToOneConversionRecipe(Items.YELLOW_DYE, BovinesBlocks.BUTTERCUP, "yellow_dye");
+                    oneToOneConversionRecipe(Items.LIGHT_BLUE_DYE, BovinesBlocks.CHARGELILY, "light_blue_dye");
+                    oneToOneConversionRecipe(Items.RED_DYE, BovinesBlocks.FREESIA, "red_dye");
+                    oneToOneConversionRecipe(Items.PURPLE_DYE, BovinesBlocks.HYACINTH, "purple_dye");
+                    oneToOneConversionRecipe(Items.LIME_DYE, BovinesBlocks.LIMELIGHT, "lime_dye");
+                    oneToOneConversionRecipe(Items.CYAN_DYE, BovinesBlocks.LINGHOLM, "cyan_dye");
+                    oneToOneConversionRecipe(Items.PINK_DYE, BovinesBlocks.PINK_DAISY, "pink_dye");
+                    oneToOneConversionRecipe(Items.WHITE_DYE, BovinesBlocks.SNOWDROP, "white_dye");
+                    oneToOneConversionRecipe(Items.BLUE_DYE, BovinesBlocks.TROPICAL_BLUE, "blue_dye");
 
-            oneToOneConversionRecipe(output, Items.ORANGE_DYE, BovinesBlocks.BIRD_OF_PARADISE, "orange_dye");
-            oneToOneConversionRecipe(output, Items.YELLOW_DYE, BovinesBlocks.BUTTERCUP, "yellow_dye");
-            oneToOneConversionRecipe(output, Items.LIGHT_BLUE_DYE, BovinesBlocks.CHARGELILY, "light_blue_dye");
-            oneToOneConversionRecipe(output, Items.RED_DYE, BovinesBlocks.FREESIA, "red_dye");
-            oneToOneConversionRecipe(output, Items.PURPLE_DYE, BovinesBlocks.HYACINTH, "purple_dye");
-            oneToOneConversionRecipe(output, Items.LIME_DYE, BovinesBlocks.LIMELIGHT, "lime_dye");
-            oneToOneConversionRecipe(output, Items.CYAN_DYE, BovinesBlocks.LINGHOLM, "cyan_dye");
-            oneToOneConversionRecipe(output, Items.PINK_DYE, BovinesBlocks.PINK_DAISY, "pink_dye");
-            oneToOneConversionRecipe(output, Items.WHITE_DYE, BovinesBlocks.SNOWDROP, "white_dye");
-            oneToOneConversionRecipe(output, Items.BLUE_DYE, BovinesBlocks.TROPICAL_BLUE, "blue_dye");
+                    ShapelessRecipeBuilder.shapeless(registryLookup.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, Items.SUGAR, 3)
+                            .requires(BovinesItems.RICH_HONEY_BOTTLE)
+                            .group("sugar")
+                            .unlockedBy("has_rich_honey_bottle", has(BovinesItems.RICH_HONEY_BOTTLE))
+                            .save(output, getConversionRecipeName(Items.SUGAR, BovinesItems.RICH_HONEY_BOTTLE));
+                    ShapelessRecipeBuilder.shapeless(registryLookup.lookupOrThrow(Registries.ITEM), RecipeCategory.FOOD, BovinesItems.RICH_HONEY_BOTTLE, 4)
+                            .requires(BovinesItems.RICH_HONEY_BLOCK)
+                            .requires(Items.GLASS_BOTTLE, 4)
+                            .unlockedBy("has_rich_honey_block", has(BovinesBlocks.RICH_HONEY_BLOCK))
+                            .save(output);
+                    twoByTwoPacker(RecipeCategory.REDSTONE, BovinesBlocks.RICH_HONEY_BLOCK, BovinesItems.RICH_HONEY_BOTTLE);
 
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.SUGAR, 3)
-                    .requires(BovinesItems.RICH_HONEY_BOTTLE)
-                    .group("sugar")
-                    .unlockedBy("has_rich_honey_bottle", has(BovinesItems.RICH_HONEY_BOTTLE))
-                    .save(output, getConversionRecipeName(Items.SUGAR, BovinesItems.RICH_HONEY_BOTTLE));
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, BovinesItems.RICH_HONEY_BOTTLE, 4)
-                    .requires(BovinesItems.RICH_HONEY_BLOCK)
-                    .requires(Items.GLASS_BOTTLE, 4)
-                    .unlockedBy("has_rich_honey_block", has(BovinesBlocks.RICH_HONEY_BLOCK))
-                    .save(output);
-            twoByTwoPacker(output, RecipeCategory.REDSTONE, BovinesBlocks.RICH_HONEY_BLOCK, BovinesItems.RICH_HONEY_BOTTLE);
+                    SpecialRecipeBuilder.special(FlowerCrownRecipe::new).save(output, ResourceKey.create(Registries.RECIPE, BovinesAndButtercups.asResource("flower_crown")));
+                }
+            };
+        }
 
-            SpecialRecipeBuilder.special(FlowerCrownRecipe::new).save(output, BovinesAndButtercups.asResource("flower_crown"));
+
+        @Override
+        public String getName() {
+            return "";
         }
     }
 
@@ -701,27 +685,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class NectarTagProvider extends FabricTagProvider<Nectar> {
-        public NectarTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
-            super(output, BovinesRegistryKeys.NECTAR, lookup);
-        }
-
-        @Override
-        protected void addTags(HolderLookup.Provider lookup) {
-            tag(BovinesTags.NectarTags.CREATIVE_MENU_ORDER)
-                    .add(BovinesNectars.FREESIA)
-                    .add(BovinesNectars.BIRD_OF_PARADISE)
-                    .add(BovinesNectars.BUTTERCUP)
-                    .add(BovinesNectars.LIMELIGHT)
-                    .add(BovinesNectars.LINGHOLM)
-                    .add(BovinesNectars.CHARGELILY)
-                    .add(BovinesNectars.TROPICAL_BLUE)
-                    .add(BovinesNectars.HYACINTH)
-                    .add(BovinesNectars.PINK_DAISY)
-                    .add(BovinesNectars.SNOWDROP);
-        }
-    }
-
     private static class ModelProvider extends FabricModelProvider {
         public ModelProvider(FabricDataOutput output) {
             super(output);
@@ -842,20 +805,50 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generateItemModels(ItemModelGenerators generators) {
-            // No-op
-        }
+            generators.itemModelOutput.accept(BovinesItems.PLACEABLE_EDIBLE, ItemModelUtils.select(new EdibleBlockSelectProperty(), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/missing_edible")),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.BIRD_OF_PARADISE_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/bird_of_paradise_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.BUTTERCUP_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/buttercup_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/chargelily_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.FREESIA_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/freesia_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/hyacinth_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.LIMELIGHT_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/limelight_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.LINGHOLM_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/lingholm_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/pink_daisy_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/snowdrop_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/tropical_blue_cupcake"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/brown_mushroom_puff_pastry"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/red_mushroom_puff_pastry"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/suspicious_brown_mushroom_puff_pastry"))),
+                    new SelectItemModel.SwitchCase<>(List.of(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY), ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/suspicious_red_mushroom_puff_pastry")))
+            ));
+            generators.itemModelOutput.accept(BovinesItems.BIRD_OF_PARADISE_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/bird_of_paradise_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.BUTTERCUP_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/buttercup_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.CHARGELILY_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/chargelily_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.FREESIA_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/freesia_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.HYACINTH_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/hyacinth_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.LIMELIGHT_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/limelight_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.LINGHOLM_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/lingholm_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.PINK_DAISY_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/pink_daisy_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.SNOWDROP_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/snowdrop_nectar_bowl")));
+            generators.itemModelOutput.accept(BovinesItems.TROPICAL_BLUE_NECTAR_BOWL, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/tropical_blue_nectar_bowl")));
 
-        @Override
-        public <T> CompletableFuture<?> saveCollection(CachedOutput output, Map<T, ? extends Supplier<JsonElement>> objectToJsonMap, Function<T, Path> resolveObjectPath) {
-            return CompletableFuture.allOf(objectToJsonMap.entrySet().stream().map((entry) -> {
-                Path path = resolveObjectPath.apply(entry.getKey());
-                JsonElement jsonElement = (JsonElement)((Supplier)entry.getValue()).get();
-                if (jsonElement.isJsonObject()) {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    jsonObject.addProperty("render_type", "cutout");
-                }
-                return DataProvider.saveStable(output, jsonElement, path);
-            }).toArray(CompletableFuture[]::new));
+            generators.itemModelOutput.accept(BovinesItems.MOOBLOOM_SPAWN_EGG, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/moobloom_spawn_egg")));
+            generators.itemModelOutput.accept(BovinesItems.BIRD_OF_PARADISE, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/bird_of_paradise")));
+            generators.itemModelOutput.accept(BovinesItems.BUTTERCUP, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/buttercup")));
+            generators.itemModelOutput.accept(BovinesItems.CHARGELILY, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/chargelily")));
+            generators.itemModelOutput.accept(BovinesItems.FREESIA, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/freesia")));
+            generators.itemModelOutput.accept(BovinesItems.HYACINTH, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/hyacinth")));
+            generators.itemModelOutput.accept(BovinesItems.LIMELIGHT, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/limelight")));
+            generators.itemModelOutput.accept(BovinesItems.LINGHOLM, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/lingholm")));
+            generators.itemModelOutput.accept(BovinesItems.PINK_DAISY, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/pink_daisy")));
+            generators.itemModelOutput.accept(BovinesItems.SNOWDROP, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/snowdrop")));
+            generators.itemModelOutput.accept(BovinesItems.TROPICAL_BLUE, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/tropical_blue")));
+            generators.itemModelOutput.accept(BovinesItems.CUSTOM_FLOWER, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/missing_flower")));
+            generators.itemModelOutput.accept(BovinesItems.CUSTOM_MUSHROOM, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/missing_mushroom")));
+            generators.itemModelOutput.accept(BovinesItems.CUSTOM_MUSHROOM_BLOCK, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/missing_mushroom_block")));
+            generators.itemModelOutput.accept(BovinesItems.RICH_HONEY_BOTTLE, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("item/rich_honey_bottle")));
+            generators.itemModelOutput.accept(BovinesItems.RICH_HONEY_BLOCK, ItemModelUtils.plainModel(BovinesAndButtercups.asResource("block/rich_honey_block")));
+            generators.itemModelOutput.accept(BovinesItems.FLOWER_CROWN, ItemModelUtils.specialModel(FlowerCrownItemRenderer.BASE, FlowerCrownItemRenderer.Unbaked.INSTANCE));
         }
     }
 }

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "pink_dye",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:pink_daisy"
-    }
+    "bovinesandbuttercups:pink_daisy"
   ],
   "result": {
     "count": 1,

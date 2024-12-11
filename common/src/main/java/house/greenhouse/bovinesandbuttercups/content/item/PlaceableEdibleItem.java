@@ -23,9 +23,9 @@ public class PlaceableEdibleItem extends BlockItem {
         if (stack.has(BovinesDataComponents.EDIBLE_TYPE)) {
             ItemEdible type = stack.get(BovinesDataComponents.EDIBLE_TYPE);
             if (type.holder().isBound())
-                return BlockUtil.getOrCreateBlockNameTranslationKey(type.holder().unwrapKey().orElseThrow().location());
+                return BlockUtil.getOrCreateItemNameTranslationKey(type.holder().unwrapKey().orElseThrow().location());
         }
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_edible"));
+        return BlockUtil.getOrCreateItemNameTranslationKey(BovinesAndButtercups.asResource("missing_edible"));
     }
 
     @Override

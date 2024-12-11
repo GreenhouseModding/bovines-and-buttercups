@@ -39,7 +39,9 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:limelight",
+  "nectar": {
+    "id": "bovinesandbuttercups:limelight_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -156,6 +158,7 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 9827185
   },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/limelight",
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

@@ -5,9 +5,11 @@ import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachmen
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Holder;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,7 +24,7 @@ public class LockdownClientEffectExtensions implements IClientMobEffectExtension
     protected LockdownClientEffectExtensions() {}
 
     @Override
-    public boolean renderInventoryIcon(MobEffectInstance instance, EffectRenderingInventoryScreen<?> screen, GuiGraphics guiGraphics, int x, int y, int blitOffset) {
+    public boolean renderInventoryIcon(MobEffectInstance instance, AbstractContainerScreen<?> screen, GuiGraphics guiGraphics, int x, int y, int blitOffset) {
         List<Map.Entry<Holder<MobEffect>, Integer>> list = Minecraft.getInstance().player.getData(BovinesAttachments.LOCKDOWN).effects().entrySet().stream().toList();
         if (!list.isEmpty()) {
             int lockdownEffectIndex = Minecraft.getInstance().player.tickCount / (160 / list.size()) % list.size();
@@ -31,7 +33,7 @@ public class LockdownClientEffectExtensions implements IClientMobEffectExtension
 
             TextureAtlasSprite additionalSprite = Minecraft.getInstance().getMobEffectTextures().get(mobEffect1);
             RenderSystem.setShaderTexture(0, additionalSprite.atlasLocation());
-            guiGraphics.blit(x, y + 7, blitOffset, 18, 18, additionalSprite);
+            guiGraphics.blitSprite(RenderType::guiTextured, additionalSprite, x, y + 7, 18, 18);
         }
 
         return false;
@@ -61,11 +63,9 @@ public class LockdownClientEffectExtensions implements IClientMobEffectExtension
             }
 
             TextureAtlasSprite additionalSprite = Minecraft.getInstance().getMobEffectTextures().get(statusEffect1);
-            float finalAlpha = a;
 
-            RenderSystem.setShaderTexture(0, additionalSprite.atlasLocation());
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, finalAlpha);
-            guiGraphics.blit(x + 3, y + 3, 0, 18, 18, additionalSprite);
+            int argb = ARGB.white(a);
+            guiGraphics.blitSprite(RenderType::guiTextured, additionalSprite, x + 3, y + 3, 18, 18, argb);
         }
         return false;
     }

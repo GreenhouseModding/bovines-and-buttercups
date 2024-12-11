@@ -10,21 +10,26 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
 import house.greenhouse.bovinesandbuttercups.client.api.model.condition.PlaceableEdibleSelector;
-import house.greenhouse.bovinesandbuttercups.client.model.PlaceableEdibleMultiPart;
+import house.greenhouse.bovinesandbuttercups.client.renderer.block.model.PlaceableEdibleMultiPart;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
-import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
+import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryModelBakerImplInvoker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BlockModelDefinition;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.TextureSlots;
 import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MissingBlockModel;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -34,20 +39,13 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType {
+public class EdibleBlockBovinesModelSetType implements BovinesModelSetType {
     public static final EdibleBlockBovinesModelSetType INSTANCE = new EdibleBlockBovinesModelSetType();
-    private static final Map<ResourceLocation, BlockModelDefinition> LOADED = new HashMap<>();
+    private static final Map<ResourceLocation, EdibleModelDefinition> LOADED = new HashMap<>();
 
     protected EdibleBlockBovinesModelSetType() {}
-
-    public static BakedModel getItemModel(BovinesModelSet modelSet) {
-        if (modelSet == null)
-            return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(modelSet.id().withPath(s -> s + "/inventory"));
-    }
 
     public static BakedModel getBlockModel(BovinesModelSet modelSet, PlaceableEdibleBlockEntity blockEntity) {
         if (modelSet == null || blockEntity.getEdibleType() == null)
@@ -65,23 +63,19 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
         Map<ResourceLocation, ResourceLocation> modelIds = new HashMap<>();
         Map<Object, ResourceLocation> lookup = new HashMap<>();
 
-        if (json.has("item_model")) {
-            ResourceLocation itemModelLocation = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, json.get("item_model")).getOrThrow().getFirst();
-            modelIds.put(fileId.withPath(s -> s + "/inventory"), itemModelLocation.withPath(s -> "bovinesandbuttercups/item/" + s + "/inventory"));
-        }
+        EdibleModelDefinition definition = EdibleModelDefinition.GSON.fromJson(json, EdibleModelDefinition.class);
 
-        BlockModelDefinition definition = Deserializer.GSON.fromJson(json, BlockModelDefinition.class);
         if (definition != null) {
-            if (definition.isMultiPart() && definition.getMultiPart() instanceof PlaceableEdibleMultiPart multiPart) {
-                for (PlaceableEdibleSelector selector : multiPart.getEdibleSelectors()) {
+            if (definition.multiPart != null) {
+                for (PlaceableEdibleSelector selector : definition.multiPart.getEdibleSelectors()) {
                     ResourceLocation filePath = fileId.withPath(s -> s + "/" + selector.condition().toModelVariantString());
                     ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
                     modelIds.put(filePath, resolvedPath);
                     lookup.put(selector, filePath);
                     LOADED.put(resolvedPath, definition);
                 }
-            } else if (!definition.getVariants().isEmpty()) {
-                Map<ResourceLocation, ResourceLocation> locations = definition.getVariants().keySet().stream().map(multiVariant -> {
+            } else if (!definition.variants.isEmpty()) {
+                Map<ResourceLocation, ResourceLocation> locations = definition.variants.keySet().stream().map(multiVariant -> {
                     ResourceLocation filePath = fileId.withPath(s -> s + "/" + mapVariant(multiVariant));
                     ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
                     return Pair.of(filePath, resolvedPath);
@@ -96,34 +90,52 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
     }
 
     @Override
-    public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
-        if (modelId.getPath().endsWith("/inventory"))
-            return super.createUnbaked(modelId, itemModelLoader);
-
-        BlockModelDefinition definition = LOADED.get(modelId);
+    public UnbakedModel createUnbaked(ResourceLocation modelId) {
+        EdibleModelDefinition definition = LOADED.get(modelId);
         LOADED.remove(modelId);
 
         if (definition == null) {
             BovinesAndButtercups.LOG.warn("Failed to load model {} defaulting to missing model.", modelId);
-            return BovinesModelUtil.MISSING_MODEL;
+            return MissingBlockModel.missingModel();
         }
 
-        if (definition.isMultiPart())
-            return definition.getMultiPart();
+        if (definition.multiPart() != null) {
+            return new UnbakedModel() {
+                @Override
+                public BakedModel bake(TextureSlots textureSlots, ModelBaker baker, ModelState modelState, boolean hasAmbientOcclusion, boolean useBlockLight, ItemTransforms transforms) {
+                    return definition.multiPart().bake(baker);
+                }
+
+                @Override
+                public void resolveDependencies(Resolver resolver) {
+                    definition.multiPart().resolveDependencies(resolver);
+                }
+            };
+        }
 
         String variant = getVariant(modelId);
         MultiVariant multiVariant;
-        if (definition.hasVariant(variant))
-            multiVariant = definition.getVariants().get(variant);
+        if (definition.variants().containsKey(variant))
+            multiVariant = definition.variants().get(variant);
         else
-            multiVariant = definition.getVariants().get("");
+            multiVariant = definition.variants().get("");
 
         if (multiVariant == null) {
             BovinesAndButtercups.LOG.warn("Failed to load model {} with variant {} defaulting to missing model.", modelId.withPath(s -> s.replace("/" + mapVariant(variant), "")), variant);
-            return BovinesModelUtil.MISSING_MODEL;
+            return MissingBlockModel.missingModel();
         }
 
-        return multiVariant;
+        return new UnbakedModel() {
+            @Override
+            public BakedModel bake(TextureSlots textureSlots, ModelBaker baker, ModelState modelState, boolean hasAmbientOcclusion, boolean useBlockLight, ItemTransforms transforms) {
+                return multiVariant.bake(baker);
+            }
+
+            @Override
+            public void resolveDependencies(Resolver resolver) {
+                multiVariant.resolveDependencies(resolver);
+            }
+        };
     }
 
     private static String acceptedProperties(PlaceableEdibleBlockEntity blockEntity) {
@@ -142,46 +154,49 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
         return path.substring(path.lastIndexOf("/") + 1).replaceAll("tag.", "#").replace(".separator.", ":").replaceAll("\\.", "=").replaceAll("-", ",");
     }
 
-    public static class Deserializer implements JsonDeserializer<BlockModelDefinition> {
+    private record EdibleModelDefinition(Map<String, MultiVariant> variants, @Nullable PlaceableEdibleMultiPart multiPart) {
         public static final Gson GSON = new GsonBuilder()
-                .registerTypeAdapter(BlockModelDefinition.class, new Deserializer())
+                .registerTypeAdapter(EdibleModelDefinition.class, new EdibleModelDefinition.Deserializer())
                 .registerTypeAdapter(Variant.class, new Variant.Deserializer())
                 .registerTypeAdapter(MultiVariant.class, new MultiVariant.Deserializer())
                 .registerTypeAdapter(PlaceableEdibleMultiPart.class, new PlaceableEdibleMultiPart.Deserializer())
                 .registerTypeAdapter(PlaceableEdibleSelector.class, new PlaceableEdibleSelector.Deserializer())
                 .create();
 
-        public BlockModelDefinition deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-            JsonObject jsonobject = json.getAsJsonObject();
-            Map<String, MultiVariant> map = getVariants(context, jsonobject);
-            PlaceableEdibleMultiPart multipart = getMultiPart(context, jsonobject);
-            if (!map.isEmpty() || multipart != null && !multipart.getMultiVariants().isEmpty()) {
-                return new BlockModelDefinition(map, multipart);
-            } else {
-                throw new JsonParseException("Neither 'variants' nor 'multipart' found");
-            }
-        }
-
-        protected Map<String, MultiVariant> getVariants(JsonDeserializationContext context, JsonObject json) {
-            Map<String, MultiVariant> map = Maps.newHashMap();
-            if (json.has("variants")) {
-                JsonObject jsonobject = GsonHelper.getAsJsonObject(json, "variants");
-
-                for (Map.Entry<String, JsonElement> entry : jsonobject.entrySet()) {
-                    map.put(entry.getKey(), context.deserialize(entry.getValue(), MultiVariant.class));
+        public static class Deserializer implements JsonDeserializer<EdibleModelDefinition> {
+            @Override
+            public EdibleModelDefinition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                JsonObject jsonobject = json.getAsJsonObject();
+                Map<String, MultiVariant> map = this.getVariants(context, jsonobject);
+                PlaceableEdibleMultiPart multipart$definition = getMultiPart(context, jsonobject);
+                if (map.isEmpty() && multipart$definition == null) {
+                    throw new JsonParseException("Neither 'variants' nor 'multipart' found");
+                } else {
+                    return new EdibleModelDefinition(map, multipart$definition);
                 }
             }
 
-            return map;
-        }
+            protected Map<String, MultiVariant> getVariants(JsonDeserializationContext context, JsonObject json) {
+                Map<String, MultiVariant> map = Maps.newHashMap();
+                if (json.has("variants")) {
+                    JsonObject jsonobject = GsonHelper.getAsJsonObject(json, "variants");
 
-        @Nullable
-        protected PlaceableEdibleMultiPart getMultiPart(JsonDeserializationContext context, JsonObject json) {
-            if (!json.has("multipart")) {
-                return null;
-            } else {
-                JsonArray jsonarray = GsonHelper.getAsJsonArray(json, "multipart");
-                return context.deserialize(jsonarray, PlaceableEdibleMultiPart.class);
+                    for (Map.Entry<String, JsonElement> entry : jsonobject.entrySet()) {
+                        map.put(entry.getKey(), context.deserialize(entry.getValue(), MultiVariant.class));
+                    }
+                }
+
+                return map;
+            }
+
+            @Nullable
+            protected PlaceableEdibleMultiPart getMultiPart(JsonDeserializationContext context, JsonObject json) {
+                if (!json.has("multipart")) {
+                    return null;
+                } else {
+                    JsonArray jsonarray = GsonHelper.getAsJsonArray(json, "multipart");
+                    return context.deserialize(jsonarray, PlaceableEdibleMultiPart.class);
+                }
             }
         }
     }

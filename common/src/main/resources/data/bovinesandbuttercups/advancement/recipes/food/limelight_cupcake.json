@@ -5,12 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "bovinesandbuttercups:nectar_bowl"
+            "items": "bovinesandbuttercups:limelight_nectar_bowl"
           }
-        ],
-        "components": {
-          "bovinesandbuttercups:nectar": "bovinesandbuttercups:limelight"
-        }
+        ]
       },
       "trigger": "minecraft:inventory_changed"
     },

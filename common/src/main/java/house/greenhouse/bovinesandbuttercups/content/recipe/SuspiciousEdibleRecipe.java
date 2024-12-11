@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
-import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
@@ -25,17 +24,22 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SuspiciousEdibleRecipe extends CustomRecipe {
     private final ShapedRecipePattern pattern;
     private final Holder<EdibleBlockType> edibleType;
     private final String group;
     private final boolean symmetrical;
+    @Nullable
+    private PlacementInfo placementInfo;
 
     public SuspiciousEdibleRecipe(CraftingBookCategory category, ShapedRecipePattern pattern, Holder<EdibleBlockType> edibleType, String group) {
         super(category);
@@ -49,7 +53,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
     public boolean matches(CraftingInput input, Level level) {
         for (int i = 0; i < pattern.height(); i++) {
             for (int j = 0; j < pattern.width(); j++) {
-                Ingredient ingredient;
+                Optional<Ingredient> ingredient;
                 if (symmetrical) {
                     ingredient = pattern.ingredients().get(pattern.width() - j - 1 + i * pattern.width());
                 } else {
@@ -57,7 +61,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 }
 
                 ItemStack stack = input.getItem(j, i);
-                if ((!ingredient.test(stack) && (!stack.is(Items.SUSPICIOUS_STEW) || !ingredient.test(new ItemStack(Items.SUSPICIOUS_STEW))))) {
+                if (ingredient.isPresent() && (!ingredient.get().test(stack) && (!stack.is(Items.SUSPICIOUS_STEW) || !ingredient.get().test(new ItemStack(Items.SUSPICIOUS_STEW))))) {
                     return false;
                 }
             }
@@ -87,17 +91,20 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
     }
 
     @Override
-    public String getGroup() {
+    public String group() {
         return this.group;
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= pattern.width() * pattern.height();
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.createFromOptionals(this.pattern.ingredients());
+        }
+        return this.placementInfo;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<SuspiciousEdibleRecipe> getSerializer() {
         return BovinesRecipeSerializers.SUSPICIOUS_EDIBLE;
     }
 
@@ -106,7 +113,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 CraftingBookCategory.CODEC.optionalFieldOf("category", CraftingBookCategory.MISC).forGetter(CraftingRecipe::category),
                 ShapedRecipePattern.MAP_CODEC.fieldOf("pattern").forGetter(SuspiciousEdibleRecipe::getPattern),
                 EdibleBlockType.CODEC.fieldOf("result").forGetter(SuspiciousEdibleRecipe::getEdibleType),
-                Codec.STRING.fieldOf("group").forGetter(SuspiciousEdibleRecipe::getGroup)
+                Codec.STRING.fieldOf("group").forGetter(SuspiciousEdibleRecipe::group)
         ).apply(inst, SuspiciousEdibleRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, SuspiciousEdibleRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -117,7 +124,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 ByteBufCodecs.holderRegistry(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE),
                 SuspiciousEdibleRecipe::getEdibleType,
                 ByteBufCodecs.STRING_UTF8,
-                SuspiciousEdibleRecipe::getGroup,
+                SuspiciousEdibleRecipe::group,
                 SuspiciousEdibleRecipe::new
         );
 

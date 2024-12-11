@@ -8,7 +8,6 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.EntityAccessor;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
@@ -47,9 +46,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -171,7 +170,7 @@ public class Moobloom extends Cow {
 
     public void backwardsCompat(CompoundTag tag) {
         if (tag.contains("Type", Tag.TAG_STRING)) {
-            Optional<Holder.Reference<CowType<?>>> cowType = level().registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
+            Optional<Holder.Reference<CowType<?>>> cowType = level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceLocation.parse(tag.getString("Type")));
             if (cowType.isEmpty()) {
                 BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
                 return;
@@ -181,7 +180,7 @@ public class Moobloom extends Cow {
                 return;
             }
             if (tag.contains("PreviousType", Tag.TAG_STRING)) {
-                Optional<Holder.Reference<CowType<?>>> previousCowType = level().registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
+                Optional<Holder.Reference<CowType<?>>> previousCowType = level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceLocation.parse(tag.getString("Type")));
                 if (previousCowType.isEmpty()) {
                     BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
                     return;
@@ -207,7 +206,7 @@ public class Moobloom extends Cow {
         bee = value;
     }
 
-    public static boolean canMoobloomSpawn(EntityType<? extends Moobloom> type, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean canMoobloomSpawn(EntityType<? extends Moobloom> type, LevelAccessor level, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && Animal.isBrightEnoughToSpawn(level, pos) && getTotalSpawnWeight(level, pos) > 0;
     }
 
@@ -250,15 +249,15 @@ public class Moobloom extends Cow {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (isInvulnerableTo(source)) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (isInvulnerableTo(level, source)) {
             return false;
         }
-        if (bee != null && !level().isClientSide()) {
+        if (bee != null) {
             setStandingStillForBeeTicks(0);
             bee = null;
         }
-        return super.hurt(source, amount);
+        return super.hurtServer(level, source, amount);
     }
 
     @Override
@@ -273,7 +272,7 @@ public class Moobloom extends Cow {
                 getUpAnimationState.startIfStopped(tickCount);
             }
 
-            if (getUpAnimationState.isStarted() && getUpAnimationState.getAccumulatedTime() >= 1000)
+            if (getUpAnimationState.isStarted() && getUpAnimationState.getTimeInMillis(level().getGameTime()) >= 1000)
                 getUpAnimationState.stop();
         } else {
             if (ticksUntilSpread > 0)
@@ -346,7 +345,7 @@ public class Moobloom extends Cow {
             return false;
         } else {
             Biome biome = level().getBiome(pos).value();
-            return biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW;
+            return biome.getPrecipitationAt(pos, level().getSeaLevel()) == Biome.Precipitation.SNOW;
         }
     }
 
@@ -415,12 +414,11 @@ public class Moobloom extends Cow {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                return InteractionResult.sidedSuccess(level().isClientSide);
+                return InteractionResult.SUCCESS;
             } else if (stack.is(Items.BOWL)) {
                 ItemStack stack2;
-                stack2 = new ItemStack(BovinesItems.NECTAR_BOWL);
                 if (getCowType().value().configuration().nectar().isPresent()) {
-                    stack2.set(BovinesDataComponents.NECTAR, new ItemNectar(getCowType().value().configuration().nectar().get()));
+                    stack2= getCowType().value().configuration().nectar().get();
                 } else {
                     return InteractionResult.PASS;
                 }
@@ -428,7 +426,7 @@ public class Moobloom extends Cow {
                 ItemStack stack3 = ItemUtils.createFilledResult(stack, player, stack2, false);
                 player.setItemInHand(hand, stack3);
                 playSound(BovinesSoundEvents.MOOBLOOM_MILK, 1.0f, 1.0f);
-                return InteractionResult.sidedSuccess(level().isClientSide());
+                return InteractionResult.SUCCESS;
             }
         }
         InteractionResult result = SnowLayerUtil.removeSnowIfShovel(this, player, hand, stack);
@@ -453,7 +451,9 @@ public class Moobloom extends Cow {
     public Pair<Holder<CowType<MoobloomConfiguration>>, Optional<Holder<CowType<MoobloomConfiguration>>>> chooseBabyType(ServerLevel level, Moobloom otherParent, Moobloom child) {
         List<Holder<CowType<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
-        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).registryKeySet().stream().map(key -> level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).getOrThrow(key)).filter(type -> {
+            return type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY;
+        }).toList()) {
             Holder.Reference<CowType<MoobloomConfiguration>> moobloomType = (Holder.Reference) cowType;
             var conditions = moobloomType.value().configuration().offspringConditions();
 
@@ -527,14 +527,14 @@ public class Moobloom extends Cow {
 
     @Override
     public Moobloom getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        Moobloom moobloom = BovinesEntityTypes.MOOBLOOM.create(level);
+        Moobloom moobloom = BovinesEntityTypes.MOOBLOOM.create(level, EntitySpawnReason.BREEDING);
         var pair = chooseBabyType(level, (Moobloom)otherParent, moobloom);
         CowTypeAttachment.setCowType(moobloom, pair.getFirst(), pair.getSecond());
         return moobloom;
     }
 
     public Holder<CowType<MoobloomConfiguration>> getCowType() {
-        return Optional.ofNullable(CowTypeAttachment.getCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).getHolderOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM));
+        return Optional.ofNullable(CowTypeAttachment.getCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).getOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM));
     }
 
     @Nullable
@@ -614,7 +614,7 @@ public class Moobloom extends Cow {
     public static int getTotalSpawnWeight(LevelAccessor level, BlockPos pos) {
         int totalWeight = 0;
 
-        for (CowType<?> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().stream().filter(cowType -> cowType.configuration() instanceof MoobloomConfiguration).toList()) {
+        for (CowType<?> cowType : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).stream().filter(cowType -> cowType.configuration() instanceof MoobloomConfiguration).toList()) {
             if (!(cowType.configuration() instanceof MoobloomConfiguration configuration))
                 continue;
 
@@ -626,8 +626,8 @@ public class Moobloom extends Cow {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData data) {
-        if (spawnType != MobSpawnType.STRUCTURE) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData data) {
+        if (spawnType != EntitySpawnReason.STRUCTURE) {
             if (data == null) {
                 data = new MoobloomGroupData();
             }
@@ -666,10 +666,11 @@ public class Moobloom extends Cow {
         }
 
         public Holder<CowType<MoobloomConfiguration>> getMostCommonMoobloomSpawnType(ServerLevelAccessor level, RandomSource random) {
+            var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE);
             int largestWeight = 0;
-            Holder<CowType<?>> finalCowType = level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).get();
+            Holder<CowType<?>> finalCowType = registry.getOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM);
 
-            for (Holder<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
+            for (Holder<CowType<?>> cowType : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
                 if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
@@ -683,10 +684,11 @@ public class Moobloom extends Cow {
         }
 
         public Holder<CowType<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
+            var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE);
             List<Holder<CowType<MoobloomConfiguration>>> moobloomList = new ArrayList<>();
             int totalWeight = 0;
 
-            for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
+            for (Holder.Reference<CowType<?>> cowType : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
                 if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -707,7 +709,7 @@ public class Moobloom extends Cow {
                         return cowType;
                 }
             }
-            return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).get();
+            return (Holder)registry.getOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM);
         }
     }
 }

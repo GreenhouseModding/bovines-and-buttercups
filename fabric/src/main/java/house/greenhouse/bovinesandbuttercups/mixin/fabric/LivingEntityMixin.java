@@ -7,7 +7,6 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.util.LockdownData;
@@ -23,15 +22,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.MushroomCow;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -88,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity {
                 for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())
                     attachment.addLockdownMobEffect(data.linkedEffect(), data.duration().orElse(effect.getDuration()));
             } else if (!level().isClientSide() && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
-                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(level().enabledFeatures())).toList(), level().getRandom());
+                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.registryKeySet().stream().map(BuiltInRegistries.MOB_EFFECT::getOrThrow).filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(level().enabledFeatures())).toList(), level().getRandom());
                 randomEffect.ifPresent(entry -> {
                     attachment.addLockdownMobEffect(entry, effect.getDuration());
                 });
@@ -106,10 +104,10 @@ public abstract class LivingEntityMixin extends Entity {
         return original;
     }
 
-    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
-    private void bovinesandbuttercups$removeAllLockdownEffects(MobEffectInstance effect, CallbackInfo ci) {
+    @Inject(method = "onEffectsRemoved", at = @At("TAIL"))
+    private void bovinesandbuttercups$removeAllLockdownEffects(Collection<MobEffectInstance> effects, CallbackInfo ci) {
         LockdownAttachment attachment = this.getAttached(BovinesAttachments.LOCKDOWN);
-        if (level().isClientSide || attachment == null || !((Entity)(Object)this instanceof LivingEntity living) || !effect.getEffect().isBound() || !(effect.getEffect().is(BovinesEffects.LOCKDOWN))) return;
+        if (level().isClientSide || attachment == null || !((Entity)(Object)this instanceof LivingEntity living) || effects.stream().noneMatch(effect -> effect.getEffect().isBound() && effect.getEffect().is(BovinesEffects.LOCKDOWN))) return;
         attachment.effects().clear();
         LockdownAttachment.sync(living);
     }

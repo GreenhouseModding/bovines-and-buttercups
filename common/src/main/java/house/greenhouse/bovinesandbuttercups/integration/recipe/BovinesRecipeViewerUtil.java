@@ -46,14 +46,14 @@ public class BovinesRecipeViewerUtil {
     );
 
     public static ItemStack generateRandomFlowerCrown(Random random, Item item) {
-        var registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL);
+        var registry = Minecraft.getInstance().level.registryAccess().lookupOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL);
         ItemStack stack = new ItemStack(item);
-        if (registry.holders().findAny().isEmpty())
+        if (registry.registryKeySet().isEmpty())
             return stack;
 
         List<ResourceKey<FlowerCrownMaterial>> materials = COMBINATIONS.get(random.nextInt(COMBINATIONS.size()));
 
-        Holder<FlowerCrownMaterial> centerLeft = registry.holders().findFirst().orElseThrow();
+        Holder<FlowerCrownMaterial> centerLeft = registry.registryKeySet().stream().map(registry::getOrThrow).findFirst().orElseThrow();
         Holder<FlowerCrownMaterial> topLeft = centerLeft;
         Holder<FlowerCrownMaterial> top = topLeft;
         Holder<FlowerCrownMaterial> topRight = topLeft;
@@ -64,7 +64,7 @@ public class BovinesRecipeViewerUtil {
 
         if (materials.size() == 1) {
             if (materials.getFirst().equals(MONOCOLOR)) {
-                centerLeft = registry.getHolder(random.nextInt(registry.size())).orElseThrow();
+                centerLeft = registry.get(random.nextInt(registry.size())).orElseThrow();
                 topLeft = centerLeft;
                 top = centerLeft;
                 topRight = centerLeft;
@@ -73,9 +73,9 @@ public class BovinesRecipeViewerUtil {
                 bottom = centerLeft;
                 bottomLeft = centerLeft;
             } else if (materials.getFirst().equals(RANDOM_TWO)) {
-                centerLeft = registry.getHolder(random.nextInt(registry.size())).orElseThrow();
+                centerLeft = registry.get(random.nextInt(registry.size())).orElseThrow();
                 Holder<FlowerCrownMaterial> finalCenterLeft = centerLeft;
-                List<Holder.Reference<FlowerCrownMaterial>> topLeftMaterials = registry.holders().filter(reference -> !reference.is(finalCenterLeft)).toList();
+                List<Holder.Reference<FlowerCrownMaterial>> topLeftMaterials = registry.registryKeySet().stream().map(registry::getOrThrow).filter(reference -> !reference.is(finalCenterLeft)).toList();
                 topLeft = topLeftMaterials.get(random.nextInt(topLeftMaterials.size()));
                 top = centerLeft;
                 topRight = topLeft;
@@ -84,15 +84,15 @@ public class BovinesRecipeViewerUtil {
                 bottom = centerLeft;
                 bottomLeft = topLeft;
             } else if (materials.getFirst().equals(RANDOM_FOUR)) {
-                centerLeft = registry.getHolder(random.nextInt(registry.size())).orElseThrow();
+                centerLeft = registry.get(random.nextInt(registry.size())).orElseThrow();
                 Holder<FlowerCrownMaterial> finalCenterLeft = centerLeft;
-                List<Holder.Reference<FlowerCrownMaterial>> topLeftMaterials = registry.holders().filter(reference -> !reference.is(finalCenterLeft)).toList();
+                List<Holder.Reference<FlowerCrownMaterial>> topLeftMaterials = registry.registryKeySet().stream().map(registry::getOrThrow).filter(reference -> !reference.is(finalCenterLeft)).toList();
                 topLeft = topLeftMaterials.get(random.nextInt(topLeftMaterials.size()));
                 Holder<FlowerCrownMaterial> finalTopLeft = topLeft;
-                List<Holder.Reference<FlowerCrownMaterial>> topMaterials = registry.holders().filter(reference -> !reference.is(finalCenterLeft) && !reference.is(finalTopLeft)).toList();
+                List<Holder.Reference<FlowerCrownMaterial>> topMaterials = registry.registryKeySet().stream().map(registry::getOrThrow).filter(reference -> !reference.is(finalCenterLeft) && !reference.is(finalTopLeft)).toList();
                 top = topMaterials.get(random.nextInt(topMaterials.size()));
                 Holder<FlowerCrownMaterial> finalTop = top;
-                List<Holder.Reference<FlowerCrownMaterial>> topRightMaterials = registry.holders().filter(reference -> !reference.is(finalCenterLeft) && !reference.is(finalTopLeft) && !reference.is(finalTop)).toList();
+                List<Holder.Reference<FlowerCrownMaterial>> topRightMaterials = registry.registryKeySet().stream().map(registry::getOrThrow).filter(reference -> !reference.is(finalCenterLeft) && !reference.is(finalTopLeft) && !reference.is(finalTop)).toList();
                 topRight = topRightMaterials.get(random.nextInt(topRightMaterials.size()));
                 centerRight = centerLeft;
                 bottomRight = topLeft;
@@ -100,14 +100,14 @@ public class BovinesRecipeViewerUtil {
                 bottomLeft = topRight;
             }
         } else if (materials.size() == 8) {
-            centerLeft = registry.getHolderOrThrow(materials.get(0));
-            topLeft = registry.getHolderOrThrow(materials.get(1));
-            top = registry.getHolderOrThrow(materials.get(2));
-            topRight = registry.getHolderOrThrow(materials.get(3));
-            centerRight = registry.getHolderOrThrow(materials.get(4));
-            bottomRight = registry.getHolderOrThrow(materials.get(5));
-            bottom = registry.getHolderOrThrow(materials.get(6));
-            bottomLeft = registry.getHolderOrThrow(materials.get(7));
+            centerLeft = registry.getOrThrow(materials.get(0));
+            topLeft = registry.getOrThrow(materials.get(1));
+            top = registry.getOrThrow(materials.get(2));
+            topRight = registry.getOrThrow(materials.get(3));
+            centerRight = registry.getOrThrow(materials.get(4));
+            bottomRight = registry.getOrThrow(materials.get(5));
+            bottom = registry.getOrThrow(materials.get(6));
+            bottomLeft = registry.getOrThrow(materials.get(7));
         } else {
             return stack;
         }

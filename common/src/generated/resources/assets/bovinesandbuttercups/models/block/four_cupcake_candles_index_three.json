@@ -1,6 +1,5 @@
 {
   "parent": "bovinesandbuttercups:block/template_four_cupcake_candles_index_three",
-  "render_type": "cutout",
   "textures": {
     "all": "minecraft:block/candle"
   }

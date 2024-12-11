@@ -20,6 +20,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -55,7 +56,7 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CustomMushroomBlockEntity cmpbe)
@@ -102,8 +103,8 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
 
     }
 
-    protected boolean mayPlaceOn(BlockState p_54894_, BlockGetter p_54895_, BlockPos p_54896_) {
-        return p_54894_.isSolidRender(p_54895_, p_54896_);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter getter, BlockPos pos) {
+        return state.isSolidRender();
     }
 
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
@@ -133,7 +134,7 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
 
             Holder<CustomMushroomType> customMushroom = mushroomBlockEntity.getMushroomType().holder();
             if (customMushroom.isBound() && customMushroom.value().hugeMushroomStructurePool().isPresent()) {
-                Optional<StructurePoolElement> structurePoolElement = customMushroom.value().hugeMushroomStructurePool().filter(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).containsKey(key)).map(key -> level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL).getHolderOrThrow(key).value().getRandomTemplate(randomSource));
+                Optional<StructurePoolElement> structurePoolElement = customMushroom.value().hugeMushroomStructurePool().filter(key -> level.registryAccess().lookupOrThrow(Registries.TEMPLATE_POOL).containsKey(key)).map(key -> level.registryAccess().lookupOrThrow(Registries.TEMPLATE_POOL).getOrThrow(key).value().getRandomTemplate(randomSource));
 
                 if (structurePoolElement.isEmpty())
                     return;
@@ -168,17 +169,5 @@ public class CustomMushroomBlock extends BaseEntityBlock implements Bonemealable
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
-    }
-
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        return !blockState.canSurvive(levelAccessor, blockPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
-    }
-
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
-        return blockState.getFluidState().isEmpty();
-    }
-
-    public boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
-        return pathComputationType == PathComputationType.AIR && !this.hasCollision || super.isPathfindable(blockState, pathComputationType);
     }
 }

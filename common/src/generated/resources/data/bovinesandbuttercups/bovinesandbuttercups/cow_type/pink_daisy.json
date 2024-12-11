@@ -47,7 +47,9 @@
       "biomes": "#bovinesandbuttercups:has_moobloom/flower_forest"
     }
   ],
-  "nectar": "bovinesandbuttercups:pink_daisy",
+  "nectar": {
+    "id": "bovinesandbuttercups:pink_daisy_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -172,6 +174,7 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 16494549
   },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/pink_daisy",
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

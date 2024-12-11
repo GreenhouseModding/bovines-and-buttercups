@@ -8,9 +8,11 @@ import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataCompon
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -45,7 +47,7 @@ public class CustomHugeMushroomBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CustomHugeMushroomBlockEntity cmpbe)
@@ -53,10 +55,20 @@ public class CustomHugeMushroomBlock extends BaseEntityBlock {
         return stack;
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState state2, LevelAccessor level, BlockPos pos, BlockPos pos2) {
+    @Override
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
         if (level.getBlockEntity(pos) != null)
             ((CustomHugeMushroomBlockEntity)level.getBlockEntity(pos)).updateState();
-        return super.updateShape(state, direction, state2, level, pos, pos2);
+        return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     public BlockState rotate(BlockState $$0, Rotation $$1) {

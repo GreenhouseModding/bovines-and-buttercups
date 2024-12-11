@@ -2,22 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "M": {
-      "item": "minecraft:brown_mushroom"
-    },
+    "M": "minecraft:brown_mushroom",
     "S": {
       "fabric:type": "bovinesandbuttercups:remainder",
-      "type": "bovinesandbuttercups:remainder",
-      "base": {
-        "item": "minecraft:mushroom_stew"
-      },
+      "neoforge:ingredient_type": "bovinesandbuttercups:remainder",
+      "base": "minecraft:mushroom_stew",
       "remainder": {
         "id": "minecraft:bowl"
       }
     },
-    "W": {
-      "item": "minecraft:wheat"
-    }
+    "W": "minecraft:wheat"
   },
   "pattern": [
     " M ",

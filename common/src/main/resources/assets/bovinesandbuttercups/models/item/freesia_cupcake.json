@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "bovinesandbuttercups:item/freesia_cupcake"
-	}
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bovinesandbuttercups:item/freesia_cupcake"
+  }
 }

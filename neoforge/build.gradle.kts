@@ -71,19 +71,17 @@ repositories {
 }
 
 dependencies {
-    // Recipe Viewer Mods
-    compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge-api:${Versions.JEI}")
-    // runtimeOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge:${Versions.JEI}")
-
-    compileOnly("dev.emi:emi-neoforge:${Versions.EMI}:api")
-    runtimeOnly("dev.emi:emi-neoforge:${Versions.EMI}")
-
-    // Equipment Mods
-    compileOnly("io.wispforest:accessories-neoforge:${Versions.ACCESSORIES}")
-    // runtimeOnly("io.wispforest:accessories-neoforge:${Versions.ACCESSORIES}")
-
-    compileOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
-    // runtimeOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
+////TODO: Re-enable when updated.
+//    // Recipe Viewer Mods
+//    compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge-api:${Versions.JEI}")
+//    // runtimeOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge:${Versions.JEI}")
+//    compileOnly("dev.emi:emi-neoforge:${Versions.EMI}:api")
+//    runtimeOnly("dev.emi:emi-neoforge:${Versions.EMI}")
+//    // Equipment Mods
+//    compileOnly("io.wispforest:accessories-neoforge:${Versions.ACCESSORIES}")
+//    // runtimeOnly("io.wispforest:accessories-neoforge:${Versions.ACCESSORIES}")
+//    compileOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
+//    // runtimeOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
 }
 
 tasks {

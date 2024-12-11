@@ -3,12 +3,10 @@ package house.greenhouse.bovinesandbuttercups.client.model;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.client.api.model.condition.PlaceableEdibleSelector;
-import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -34,7 +32,6 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
     protected final boolean usesBlockLight;
     protected final TextureAtlasSprite particleIcon;
     protected final ItemTransforms transforms;
-    protected final ItemOverrides overrides;
     private final Map<PlaceableEdibleBlockEntity.EdibleBlockEntityValues, BitSet> selectorCache = new Reference2ObjectOpenHashMap<>();
 
     private static final ModelProperty<BitSet> BIT_SET_PROPERTY = new ModelProperty<>();
@@ -47,7 +44,6 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
         this.usesBlockLight = model.usesBlockLight();
         this.particleIcon = model.getParticleIcon();
         this.transforms = model.getTransforms();
-        this.overrides = model.getOverrides();
     }
 
     @Override
@@ -113,11 +109,6 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
     }
 
     @Override
-    public boolean isCustomRenderer() {
-        return false;
-    }
-
-    @Override
     public TextureAtlasSprite getParticleIcon(ModelData data) {
         return particleIcon;
     }
@@ -131,10 +122,5 @@ public class PlaceableEdibleMultiPartBakedModel implements BakedModel {
     @Override
     public ItemTransforms getTransforms() {
         return this.transforms;
-    }
-
-    @Override
-    public ItemOverrides getOverrides() {
-        return this.overrides;
     }
 }

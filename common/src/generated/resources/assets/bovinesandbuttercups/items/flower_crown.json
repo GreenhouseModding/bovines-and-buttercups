@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "bovinesandbuttercups:item/base_flower_crown",
+    "model": {
+      "type": "bovinesandbuttercups:flower_crown"
+    }
+  }
+}

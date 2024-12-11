@@ -12,12 +12,9 @@ import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockE
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
-import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.goal.MoveToMoobloomGoal;
 import house.greenhouse.bovinesandbuttercups.content.entity.goal.PollinateMoobloomGoal;
-import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
-import house.greenhouse.bovinesandbuttercups.integration.curios.BovinesCuriosEvents;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
@@ -96,8 +93,8 @@ public class BovinesAndButtercupsNeoForge {
     
     public BovinesAndButtercupsNeoForge(IEventBus eventBus) {
         BovinesAndButtercups.init(new BovinesPlatformHelperNeoForge());
-        BovinesAccessoriesEvents.init();
-        BovinesCuriosEvents.init();
+//        BovinesAccessoriesEvents.init();
+//        BovinesCuriosEvents.init();
     }
 
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
@@ -236,7 +233,7 @@ public class BovinesAndButtercupsNeoForge {
                 for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())
                     attachment.addLockdownMobEffect(data.linkedEffect(), data.duration().orElse(effect.getDuration()));
             } else if (!entity.level().isClientSide() && (attachment.effects().isEmpty() || attachment.effects().values().stream().allMatch(value -> value < effect.getDuration()))) {
-                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.holders().filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(entity.level().enabledFeatures())).toList(), entity.level().getRandom());
+                Optional<Holder.Reference<MobEffect>> randomEffect = Util.getRandomSafe(BuiltInRegistries.MOB_EFFECT.registryKeySet().stream().map(BuiltInRegistries.MOB_EFFECT::getOrThrow).filter(holder -> holder.isBound() && !holder.is(BovinesEffects.LOCKDOWN) && holder.value().isEnabled(entity.level().enabledFeatures())).toList(), entity.level().getRandom());
                 randomEffect.ifPresent(entry -> {
                     attachment.addLockdownMobEffect(entry, effect.getDuration());
                 });

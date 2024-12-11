@@ -48,7 +48,9 @@
       "weight": 7
     }
   ],
-  "nectar": "bovinesandbuttercups:buttercup",
+  "nectar": {
+    "id": "bovinesandbuttercups:buttercup_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -166,6 +168,7 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 16770340
   },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/buttercup",
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

@@ -22,9 +22,9 @@ public class CustomFlowerItem extends BlockItem {
         if (stack.has(BovinesDataComponents.CUSTOM_FLOWER)) {
             ItemCustomFlower flower = stack.get(BovinesDataComponents.CUSTOM_FLOWER);
             if (flower.holder().isBound())
-                return BlockUtil.getOrCreateBlockNameTranslationKey(flower.holder().unwrapKey().orElseThrow().location());
+                return BlockUtil.getOrCreateItemNameTranslationKey(flower.holder().unwrapKey().orElseThrow().location());
         }
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_flower"));
+        return BlockUtil.getOrCreateItemNameTranslationKey(BovinesAndButtercups.asResource("missing_flower"));
     }
 
 

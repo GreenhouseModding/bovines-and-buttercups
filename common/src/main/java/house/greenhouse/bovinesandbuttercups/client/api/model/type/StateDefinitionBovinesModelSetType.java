@@ -1,16 +1,22 @@
 package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 
 import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelUtil;
-import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryAccessor;
+import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryModelBakerImplInvoker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.TextureSlots;
+import net.minecraft.client.renderer.block.model.UnbakedBlockStateModel;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MissingBlockModel;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -19,20 +25,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
-public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSetType {
-    private static final Map<ResourceLocation, BlockModelDefinition> LOADED = new HashMap<>();
-    private final BlockModelDefinition.Context context = new BlockModelDefinition.Context();
+public class StateDefinitionBovinesModelSetType implements BovinesModelSetType {
+    private static final Map<ResourceLocation, UnbakedBlockStateModel> LOADED = new HashMap<>();
+    private final StateDefinition<Block, BlockState> definition;
 
     public StateDefinitionBovinesModelSetType(StateDefinition<Block, BlockState> definition) {
-        context.setDefinition(definition);
-    }
-
-    public static BakedModel getItemModel(BovinesModelSet modelSet) {
-        if (modelSet == null)
-            return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(modelSet.id().withPath(s -> s + "/inventory"));
+        this.definition = definition;
     }
 
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
@@ -46,56 +45,44 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
         Map<ResourceLocation, ResourceLocation> modelIds = new HashMap<>();
         Map<Object, ResourceLocation> lookup = new HashMap<>();
 
-        if (json.has("item_model")) {
-            ResourceLocation itemModelLocation = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, json.get("item_model")).getOrThrow().getFirst();
-            modelIds.put(fileId.withPath(s -> s + "/inventory"), itemModelLocation.withPath(s -> "bovinesandbuttercups/item/" + s + "/inventory"));
-        }
+        Map<BlockState, UnbakedBlockStateModel> def = BlockModelDefinition.fromJsonElement(json).instantiate(definition, fileId.toString());
 
-        BlockModelDefinition definition = BlockModelDefinition.fromJsonElement(context, json);
-
-        for (BlockState state : context.getDefinition().getPossibleStates()) {
+        for (Map.Entry<BlockState, UnbakedBlockStateModel> state : def.entrySet()) {
             ResourceLocation stateResource = fileId.withPath(s ->
-                    s + "/" + acceptedProperties(BlockModelShaper.statePropertiesToString(state.getValues()))
+                    s + "/" + acceptedProperties(BlockModelShaper.statePropertiesToString(state.getKey().getValues()))
             );
             ResourceLocation resolvedResource = stateResource.withPath(s -> "bovinesandbuttercups/" + s);
             modelIds.put(stateResource, resolvedResource);
             lookup.put(state, stateResource);
-            LOADED.put(resolvedResource, definition);
+            LOADED.put(resolvedResource, state.getValue());
         }
         return new BovinesModelSet(fileId, this, modelIds, lookup);
     }
 
     @Override
-    public UnbakedModel createUnbaked(ResourceLocation modelId, Function<ResourceLocation, UnbakedModel> itemModelLoader) {
-        if (modelId.getPath().endsWith("/inventory"))
-            return super.createUnbaked(modelId, itemModelLoader);
-
-        BlockModelDefinition definition = LOADED.get(modelId);
+    public UnbakedModel createUnbaked(ResourceLocation modelId) {
+        UnbakedBlockStateModel model = LOADED.get(modelId);
         LOADED.remove(modelId);
 
-        if (definition == null) {
+        if (model == null || definition == null) {
             BovinesAndButtercups.LOG.warn("Failed to load model {} defaulting to missing model.", modelId);
-            return BovinesModelUtil.MISSING_MODEL;
+            return MissingBlockModel.missingModel();
         }
 
-        if (definition.isMultiPart())
-            return definition.getMultiPart();
+        return new UnbakedModel() {
+            @Override
+            public BakedModel bake(TextureSlots textureSlots, ModelBaker baker, ModelState modelState, boolean hasAmbientOcclusion, boolean useBlockLight, ItemTransforms transforms) {
+                return model.bake(baker);
+            }
 
-        String variant = getVariant(modelId);
-        if (definition.getVariants().containsKey(variant))
-            return definition.getVariants().get(variant);
-
-        return definition.getVariants().get("");
+            @Override
+            public void resolveDependencies(Resolver resolver) {
+                model.resolveDependencies(resolver);
+            }
+        };
     }
 
     private static String acceptedProperties(String stateProperties) {
         return stateProperties.replaceAll("=", ".").replaceAll(",", "-");
-    }
-
-    private static String getVariant(ResourceLocation modelId) {
-        String path = modelId.getPath();
-        if (path.lastIndexOf("/") == path.length() - 1)
-            return "";
-        return path.substring(path.lastIndexOf("/") + 1).replaceAll("\\.", "=").replaceAll("-", ",");
     }
 }

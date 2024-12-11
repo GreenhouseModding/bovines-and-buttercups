@@ -42,7 +42,9 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:tropical_blue",
+  "nectar": {
+    "id": "bovinesandbuttercups:tropical_blue_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -157,6 +159,7 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 5014015
   },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/tropical_blue",
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

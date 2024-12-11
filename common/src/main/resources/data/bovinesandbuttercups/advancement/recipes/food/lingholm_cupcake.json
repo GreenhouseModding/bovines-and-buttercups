@@ -5,12 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "bovinesandbuttercups:nectar_bowl"
+            "items": "bovinesandbuttercups:lingholm_nectar_bowl"
           }
-        ],
-        "components": {
-          "bovinesandbuttercups:nectar": "bovinesandbuttercups:lingholm"
-        }
+        ]
       },
       "trigger": "minecraft:inventory_changed"
     },

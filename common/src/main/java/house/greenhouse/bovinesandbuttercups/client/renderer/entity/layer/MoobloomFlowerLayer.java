@@ -3,16 +3,13 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.MoobloomModel;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.state.MoobloomRenderState;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
-import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -20,36 +17,34 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
+public class MoobloomFlowerLayer extends RenderLayer<MoobloomRenderState, MoobloomModel> {
     private final BlockRenderDispatcher blockRenderer;
 
-    public MoobloomFlowerLayer(RenderLayerParent<Moobloom, MoobloomModel> context, BlockRenderDispatcher blockRenderer) {
+    public MoobloomFlowerLayer(RenderLayerParent<MoobloomRenderState, MoobloomModel> context, BlockRenderDispatcher blockRenderer) {
         super(context);
         this.blockRenderer = blockRenderer;
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moobloom entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        boolean bl;
-        bl = Minecraft.getInstance().shouldEntityAppearGlowing(entity) && entity.isInvisible();
-        if (entity.isInvisible() && !bl) return;
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, MoobloomRenderState renderState, float yRot, float xRot) {
+        boolean bl = renderState.appearsGlowing && renderState.isInvisible;
+        if (renderState.isInvisible && !bl) return;
 
-        MoobloomConfiguration configuration = entity.getCowType().value().configuration();
+        MoobloomConfiguration configuration = renderState.cowType.value().configuration();
 
-        int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
+        int m = LivingEntityRenderer.getOverlayCoords(renderState, 0.0f);
 
         Optional<BlockState> blockState;
         BakedModel model = null;
 
-        if (entity.isBaby()) {
+        if (renderState.isBaby) {
             if (configuration.bud().modelSet().isPresent()) {
                 var modelSet = BovinesModelSetRegistry.get(configuration.bud().modelSet().get());
                 if (modelSet != null) {
@@ -68,7 +63,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
             } else if (configuration.flower().blockState().isEmpty())
                 return;
             blockState = configuration.bud().blockState();
-            handleMoobudRender(poseStack, buffer, packedLight, bl, m, blockState, model);
+            handleMoobudRender(poseStack, bufferSource, packedLight, bl, m, blockState, model);
         } else {
             if (configuration.flower().modelSet().isPresent()) {
                 var modelSet = BovinesModelSetRegistry.get(configuration.flower().modelSet().get());
@@ -88,7 +83,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
             } else if (configuration.flower().blockState().isEmpty())
                 return;
             blockState = configuration.flower().blockState();
-            handleMoobloomRender(poseStack, buffer, packedLight, bl, m, blockState, model);
+            handleMoobloomRender(poseStack, bufferSource, packedLight, bl, m, blockState, model);
         }
     }
 
@@ -115,8 +110,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.popPose();
 
         poseStack.pushPose();
-        poseStack.translate(0.0f, 0.625, 0.25f);
-        this.getParentModel().getCowModel().getHead().translateAndRotate(poseStack);
+        this.getParentModel().getHead().translateAndRotate(poseStack);
         poseStack.translate(0.0, -0.7f, -0.2f);
         poseStack.mulPose(Axis.YP.rotationDegrees(45.0f));
         poseStack.scale(-0.75f, -0.75f, 0.75f);
@@ -161,7 +155,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         poseStack.popPose();
 
         poseStack.pushPose();
-        this.getParentModel().getCowModel().getHead().translateAndRotate(poseStack);
+        this.getParentModel().getHead().translateAndRotate(poseStack);
         poseStack.translate(0.0, -0.7f, -0.2f);
         poseStack.mulPose(Axis.YP.rotationDegrees(45.0f));
         poseStack.scale(-0.75f, -0.75f, 0.75f);
@@ -178,7 +172,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
             flowerModel = BovinesAndButtercupsClient.getHelper().getModel(BovinesAndButtercups.asResource("bovinesandbuttercups/missing_flower/"));
 
         if (outlineAndInvisible)
-            blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer.getBuffer(RenderType.outline(InventoryMenu.BLOCK_ATLAS)), null, flowerModel, 0.0f, 0.0f, 0.0f, light, overlay);
+            blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), null, flowerModel, 0.0f, 0.0f, 0.0f, light, overlay);
         else {
             if (flowerState.isPresent())
                 blockRenderDispatcher.renderSingleBlock(flowerState.get(), poseStack, buffer, light, overlay);

@@ -13,10 +13,8 @@ import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataCompon
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModifierFactories;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesArmorMaterials;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
@@ -58,9 +56,8 @@ public class BovinesRegistryEvents {
         register(event, BovinesStructureTypes::registerAll);
         register(event, BovinesTextureModifierFactories::registerAll);
 
-        if (event.getRegistryKey() == Registries.ARMOR_MATERIAL) {
+        if (event.getRegistryKey() == Registries.SOUND_EVENT) {
             registerHolders(BovinesSoundEvents::registerHolders);
-            registerHolders(BovinesArmorMaterials::registerAll);
             BovinesItems.registerAll(Registry::register);
         }
 
@@ -92,7 +89,6 @@ public class BovinesRegistryEvents {
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, CustomFlowerType.DIRECT_CODEC, CustomFlowerType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, CustomMushroomType.DIRECT_CODEC, CustomMushroomType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, EdibleBlockType.DIRECT_CODEC, EdibleBlockType.DIRECT_CODEC);
-        event.dataPackRegistry(BovinesRegistryKeys.NECTAR, Nectar.DIRECT_CODEC, Nectar.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, FlowerCrownMaterial.DIRECT_CODEC, FlowerCrownMaterial.DIRECT_CODEC);
     }
 }

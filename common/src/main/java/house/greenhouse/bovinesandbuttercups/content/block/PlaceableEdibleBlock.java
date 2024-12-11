@@ -18,10 +18,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +26,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -47,7 +45,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.system.windows.MONITORINFOEX;
 
 import java.util.List;
 import java.util.Map;
@@ -81,30 +78,28 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide)
+        if (level.isClientSide) {
             return InteractionResult.CONSUME;
+        }
 
         return eat(level, pos, state, player);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide)
-            return ItemInteractionResult.CONSUME;
-
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         Item item = stack.getItem();
         if (!(level.getBlockEntity(pos) instanceof PlaceableEdibleBlockEntity be) || be.getEdibleType() == null || !be.getEdibleType().holder().isBound())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         int i = state.getValue(BITES);
-        if (stack.is(BovinesItems.PLACEABLE_EDIBLE) && be.getEdibleType().equals(stack.getOrDefault(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY), List.of())))) {
+        if (stack.is(BovinesItems.PLACEABLE_EDIBLE) && be.getEdibleType().equals(stack.getOrDefault(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(level.registryAccess().lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(EdibleBlockType.MISSING_KEY), List.of())))) {
             if (i >= be.getEdibleType().holder().value().bites())
-                return ItemInteractionResult.CONSUME;
+                return InteractionResult.CONSUME;
             stack.consume(1, player);
             level.setBlock(pos, state.setValue(BITES, i + 1), Block.UPDATE_ALL);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             level.playSound(null, pos, getSoundType(state).getPlaceSound(), SoundSource.BLOCKS);
             player.awardStat(Stats.ITEM_USED.get(item));
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         var activateResult = be.activate(stack, player, hand, hitResult);
@@ -119,17 +114,16 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         if (removeAttachmentResult.consumesAction())
             return removeAttachmentResult;
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos blockPos, BlockState blockState) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos blockPos, BlockState blockState, boolean includeData) {
         ItemStack itemStack = new ItemStack(this);
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         if (blockEntity instanceof PlaceableEdibleBlockEntity pebe)
             if (pebe.getEdibleType() != null)
                 ItemEdible.apply(itemStack, pebe.getEdibleType());
-
         return itemStack;
     }
 
@@ -191,12 +185,12 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
             level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
         }
 
-        return InteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         LootParams lootParams = params.withParameter(LootContextParams.BLOCK_STATE, state).create(LootContextParamSets.BLOCK);
-        BlockEntity blockEntity = lootParams.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+        BlockEntity blockEntity = lootParams.contextMap().getOptional(LootContextParams.BLOCK_ENTITY);
         if (!(blockEntity instanceof PlaceableEdibleBlockEntity placeableEdibleBlockEntity))
             return super.getDrops(state, params);
         ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
@@ -206,15 +200,24 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    protected VoxelShape getOcclusionShape(BlockState state) {
         return Shapes.empty();
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        return facing == Direction.DOWN && !state.canSurvive(level, currentPos)
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
+        return direction == Direction.DOWN && !state.canSurvive(level, pos)
                 ? Blocks.AIR.defaultBlockState()
-                : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+                : super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override

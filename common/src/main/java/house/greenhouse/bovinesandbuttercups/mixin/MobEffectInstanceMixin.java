@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -65,15 +66,21 @@ public abstract class MobEffectInstanceMixin implements MobEffectInstanceLockdow
             cir.setReturnValue(true);
     }
 
+    @Inject(method = "setDetailsFrom", at = @At("TAIL"))
+    private void bovinesandbuttercups$setLockdownDataFromOtherEffect(MobEffectInstance effectInstance, CallbackInfo ci) {
+        if (effect.is(BovinesEffects.LOCKDOWN) && effectInstance.is(BovinesEffects.LOCKDOWN))
+            bovinesandbuttercups$setLockdownData(((MobEffectInstanceLockdownDataAccess)effectInstance).bovinesandbuttercups$getLockdownData());
+    }
+
     public List<LockdownData> bovinesandbuttercups$getLockdownData() {
         if (!effect.is(BovinesEffects.LOCKDOWN) || bovinesandbuttercups$lockdownData == null)
             return List.of();
         return bovinesandbuttercups$lockdownData;
     }
 
-    public void bovinesandbuttercups$setLockdownData(List<LockdownData> data) {
-        if (!effect.is(BovinesEffects.LOCKDOWN))
-            return;
-        bovinesandbuttercups$lockdownData = data;
+    public MobEffectInstance bovinesandbuttercups$setLockdownData(List<LockdownData> data) {
+        if (effect.is(BovinesEffects.LOCKDOWN))
+            bovinesandbuttercups$lockdownData = data;
+        return (MobEffectInstance)(Object)this;
     }
 }

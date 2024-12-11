@@ -9,7 +9,7 @@ import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataCompon
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,15 +23,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(FlowerPotBlock.class)
 public abstract class FlowerPotBlockMixin {
     @Shadow
     protected abstract boolean isEmpty();
 
-    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;defaultBlockState()Lnet/minecraft/world/level/block/state/BlockState;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void bovinesandbuttercups$useDataDefinedItemOnPot(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
+    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;defaultBlockState()Lnet/minecraft/world/level/block/state/BlockState;"), cancellable = true)
+    private void bovinesandbuttercups$useDataDefinedItemOnPot(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (stack.getItem() instanceof CustomFlowerItem && stack.has(BovinesDataComponents.CUSTOM_FLOWER) && stack.get(BovinesDataComponents.CUSTOM_FLOWER).holder().isBound() && stack.get(BovinesDataComponents.CUSTOM_FLOWER).holder().value().hasPotted()) {
             if (isEmpty()) {
                 level.setBlock(pos, BovinesBlocks.POTTED_CUSTOM_FLOWER.defaultBlockState(), 3);
@@ -42,9 +41,9 @@ public abstract class FlowerPotBlockMixin {
                 level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                 player.awardStat(Stats.POT_FLOWER);
                 stack.consume(1, player);
-                cir.setReturnValue(ItemInteractionResult.sidedSuccess(level.isClientSide));
+                cir.setReturnValue(InteractionResult.SUCCESS);
             } else
-                cir.setReturnValue(ItemInteractionResult.CONSUME);
+                cir.setReturnValue(InteractionResult.CONSUME);
         } else if (stack.getItem() instanceof CustomMushroomItem && stack.has(BovinesDataComponents.CUSTOM_MUSHROOM) && stack.get(BovinesDataComponents.CUSTOM_MUSHROOM).holder().isBound() && stack.get(BovinesDataComponents.CUSTOM_MUSHROOM).holder().value().hasPotted()) {
             if (isEmpty()) {
                 level.setBlock(pos, BovinesBlocks.POTTED_CUSTOM_MUSHROOM.defaultBlockState(), 3);
@@ -55,9 +54,9 @@ public abstract class FlowerPotBlockMixin {
                 level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                 player.awardStat(Stats.POT_FLOWER);
                 stack.consume(1, player);
-                cir.setReturnValue(ItemInteractionResult.sidedSuccess(level.isClientSide));
+                cir.setReturnValue(InteractionResult.SUCCESS);
             } else
-                cir.setReturnValue(ItemInteractionResult.CONSUME);
+                cir.setReturnValue(InteractionResult.CONSUME);
         }
     }
 }

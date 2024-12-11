@@ -12,9 +12,7 @@ import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDat
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.NectarEffects;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import house.greenhouse.bovinesandbuttercups.util.CreativeModeTabEntry;
@@ -65,6 +63,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public record EdibleBlockType(
+        Optional<ResourceLocation> itemModel,
         int bites,
         int maxStackSize,
         Map<BlockValuesEntry, VoxelShape> shapes,
@@ -84,6 +83,7 @@ public record EdibleBlockType(
             Codec.intRange(0, 15).fieldOf("level").forGetter(Pair::getSecond)
     ).apply(inst, Pair::of));
     public static final Codec<EdibleBlockType> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            ResourceLocation.CODEC.optionalFieldOf("item_model").forGetter(EdibleBlockType::itemModel),
             Codec.intRange(1, 16).fieldOf("bites").forGetter(EdibleBlockType::bites),
             Codec.intRange(1, 99).fieldOf("stack_size").forGetter(EdibleBlockType::maxStackSize),
             SHAPE_CODEC.listOf().fieldOf("shapes").xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).forGetter(EdibleBlockType::shapes),
@@ -95,33 +95,31 @@ public record EdibleBlockType(
     public static final Codec<Holder<EdibleBlockType>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE);
     public static final ResourceKey<EdibleBlockType> MISSING_KEY = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("missing_edible"));
 
-    public static EdibleBlockType cupcake(BootstrapContext<EdibleBlockType> context, NectarEffects nectarEffects) {
+    public static EdibleBlockType cupcake(BootstrapContext<EdibleBlockType> context, MobEffectInstance instance, Optional<ResourceLocation> itemModel) {
         ImmutableMap.Builder<HolderSet<Item>, AttachmentEntry> builder = ImmutableMap.builder();
         builder.put(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), new AttachmentEntry(4, Map.of(BlockValuesEntry.builder()
                 .addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(1).active(true)).build(), 3,
                 BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(2).active(true)).build(), 3,
                 BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(3).active(true)).build(), 3,
                 BlockValuesEntry.builder().addAttachment(context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES), BlockValuesEntry.AttachmentValueEntry.builder().lowerBoundCount(4).active(true)).build(), 3), List.of(
-                new ActivationEntry(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/igniter"))), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FLINTANDSTEEL_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
-                new ActivationEntry(Ingredient.of(Items.FIRE_CHARGE), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FIRECHARGE_USE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
-                new ActivationEntry(Ingredient.EMPTY, false, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_EXTINGUISH.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), createEmptyActivationParticles(context), List.of())
-        ), Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CAKE_ADD_CANDLE.getLocation())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F)))));
+                new ActivationEntry(Ingredient.of(context.lookup(Registries.ITEM).getOrThrow(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/igniter")))), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FLINTANDSTEEL_USE.location())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
+                new ActivationEntry(Ingredient.of(Items.FIRE_CHARGE), true, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.FIRECHARGE_USE.location())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), Map.of(), List.of(InvertedLootItemCondition.invert(LocationCheck.checkLocation(LocationPredicate.Builder.location().setFluid(FluidPredicate.Builder.fluid().of(context.lookup(Registries.FLUID).getOrThrow(FluidTags.WATER))))).build())),
+                new ActivationEntry(Optional.empty(), false, Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_EXTINGUISH.location())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F))), createEmptyActivationParticles(context), List.of())
+        ), Optional.of(new SoundSettings(context.lookup(Registries.SOUND_EVENT).get(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CAKE_ADD_CANDLE.location())).orElseThrow(), 1.0F, FloatRange.exact(1.0F), FloatRange.exact(1.0F)))));
 
-        List<CreativeModeTabEntry.ComponentsEntry> effects = nectarEffects.effects().stream().map(entry -> {
-            MobEffectInstance inst = new MobEffectInstance(BovinesEffects.LOCKDOWN, entry.duration() / 4);
-            ((MobEffectInstanceLockdownDataAccess)inst).bovinesandbuttercups$setLockdownData(List.of(new LockdownData(entry.effect(), Optional.empty())));
-            return new CreativeModeTabEntry.ComponentsEntry(DataComponentMap.EMPTY, List.of(new ItemEdible.MobEffectEntry(inst, entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.ALWAYS)));
-        }).toList();
+        MobEffectInstance inst = new MobEffectInstance(BovinesEffects.LOCKDOWN, instance.getDuration() / 4);
+        ((MobEffectInstanceLockdownDataAccess)inst).bovinesandbuttercups$setLockdownData(List.of(new LockdownData(instance.getEffect())));
+        CreativeModeTabEntry.ComponentsEntry componentsEntry = new CreativeModeTabEntry.ComponentsEntry(DataComponentMap.EMPTY, List.of(new ItemEdible.MobEffectEntry(inst, instance.getDuration(), ItemEdible.MobEffectEntry.ShowTooltip.ALWAYS)));
 
-        return new EdibleBlockType(4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), effects, new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
+        return new EdibleBlockType(itemModel, 4, 16, createCupcakeShapeMap(context), builder.build(), createParticlePositionMap(context), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(componentsEntry), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
     }
 
-    public static EdibleBlockType puffPastry(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
+    public static EdibleBlockType puffPastry(BootstrapContext<EdibleBlockType> context, Optional<ResourceLocation> itemModel) {
+        return new EdibleBlockType(itemModel, 4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
     }
 
-    public static EdibleBlockType suspiciousPuffPastry(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
+    public static EdibleBlockType suspiciousPuffPastry(BootstrapContext<EdibleBlockType> context, Optional<ResourceLocation> itemModel) {
+        return new EdibleBlockType(itemModel, 4, 16, createPuffPastryShapeMap(context), Map.of(), Map.of(), List.of(new CreativeModeTabEntry(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace("food_and_drinks")), List.of(), new CreativeModeTabEntry.PlacementEntry(Optional.of(Either.right(Items.CAKE)), CreativeModeTabEntry.Ordering.AFTER))));
     }
 
     private static Map<BlockValuesEntry, VoxelShape> createPuffPastryShapeMap(BootstrapContext<EdibleBlockType> context) {
@@ -246,7 +244,7 @@ public record EdibleBlockType(
     }
 
     private static Map<BlockValuesEntry, List<ParticleEntry>> createParticlePositionMap(BootstrapContext<EdibleBlockType> context) {
-        Holder.Reference<SoundEvent> candleAmbient = context.lookup(Registries.SOUND_EVENT).getOrThrow(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_AMBIENT.getLocation()));
+        Holder.Reference<SoundEvent> candleAmbient = context.lookup(Registries.SOUND_EVENT).getOrThrow(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_AMBIENT.location()));
         Object2ObjectOpenHashMap<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectOpenHashMap<>();
 
         HolderSet<Item> candles = context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES);
@@ -488,17 +486,21 @@ public record EdibleBlockType(
 
     @ApiStatus.Internal
     public static EdibleBlockType missingEdible(BootstrapContext<EdibleBlockType> context) {
-        return new EdibleBlockType(1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().lowerBoundBiteCount(1).build(), Block.box(5.5, 0.0, 5.5, 10.5, 2.0, 10.5)), Map.of(), Map.of(), List.of());
+        return new EdibleBlockType(Optional.empty(),1, 64, Map.of(EdibleBlockType.BlockValuesEntry.builder().lowerBoundBiteCount(1).build(), Block.box(5.5, 0.0, 5.5, 10.5, 2.0, 10.5)), Map.of(), Map.of(), List.of());
     }
 
-    public record ActivationEntry(Ingredient ingredient, boolean setTo, Optional<SoundSettings> sound, Map<BlockValuesEntry, List<ParticleEntry>> particles, List<LootItemCondition> condition) {
+    public record ActivationEntry(Optional<Ingredient> ingredient, boolean setTo, Optional<SoundSettings> sound, Map<BlockValuesEntry, List<ParticleEntry>> particles, List<LootItemCondition> condition) {
         public static final Codec<ActivationEntry> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-                Ingredient.CODEC.fieldOf("ingredient").forGetter(ActivationEntry::ingredient),
+                Ingredient.CODEC.optionalFieldOf("ingredient").forGetter(ActivationEntry::ingredient),
                 Codec.BOOL.fieldOf("set_to").forGetter(ActivationEntry::setTo),
                 SoundSettings.CODEC.optionalFieldOf("sound").forGetter(ActivationEntry::sound),
                 PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).collect(Collectors.toList())).forGetter(ActivationEntry::particles),
                 LootItemCondition.DIRECT_CODEC.listOf().optionalFieldOf("condition", List.of()).forGetter(ActivationEntry::condition)
         ).apply(inst, ActivationEntry::new));
+
+        public ActivationEntry(Ingredient ingredient, boolean setTo, Optional<SoundSettings> sound, Map<BlockValuesEntry, List<ParticleEntry>> particles, List<LootItemCondition> condition) {
+            this(Optional.of(ingredient), setTo, sound, particles, condition);
+        }
 
         @Override
         public boolean equals(Object obj) {

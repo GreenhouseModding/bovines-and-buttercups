@@ -31,19 +31,19 @@ public record BlockInRadiusCondition(BlockPredicate predicate, AABB radius) impl
 
     @Override
     public boolean test(LootContext context) {
-        Vec3 origin = context.getParam(LootContextParams.ORIGIN);
+        Vec3 origin = context.getParameter(LootContextParams.ORIGIN);
         AABB aabb = radius.move(origin);
         return BlockPos.betweenClosedStream(aabb).map(BlockPos::immutable).sorted(Comparator.comparing(pos -> origin.distanceTo(pos.getCenter()))).toList().stream().anyMatch(pos -> {
             BlockState state = context.getLevel().getBlockState(pos);
             boolean bl = predicate.matches(context.getLevel(), pos);
-            if (bl && context.hasParam(BovinesLootContextParams.BREEDING_TYPE) && context.hasParam(BovinesLootContextParams.CHILD)) {
-                Entity child = context.getParam(BovinesLootContextParams.CHILD);
+            if (bl && context.hasParameter(BovinesLootContextParams.BREEDING_TYPE) && context.hasParameter(BovinesLootContextParams.CHILD)) {
+                Entity child = context.getParameter(BovinesLootContextParams.CHILD);
                 if (child instanceof Moobloom moobloom) {
                     VoxelShape shape = state.getCollisionShape(context.getLevel(), pos);
-                    moobloom.addParticlePosition(context.getParam(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
+                    moobloom.addParticlePosition(context.getParameter(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
                 } else if (child instanceof LivingEntity living && BovinesRegistries.COW_TYPE_TYPE.stream().anyMatch(cowTypeType -> cowTypeType.isApplicable(child))) {
                     VoxelShape shape = state.getCollisionShape(context.getLevel(), pos);
-                    BovinesAndButtercups.getHelper().addParticlePosition(living, context.getParam(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
+                    BovinesAndButtercups.getHelper().addParticlePosition(living, context.getParameter(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
                 }
             }
             return bl;

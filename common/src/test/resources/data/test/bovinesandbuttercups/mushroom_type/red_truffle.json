@@ -1,4 +1,6 @@
 {
+  "item_model": "test:custom_mushroom",
+  "huge_block_item_model": "test:custom_mushroom_block",
   "huge_mushroom_template_pool": "test:red_truffle",
   "randomly_rotate_huge_mushroom": true
 }

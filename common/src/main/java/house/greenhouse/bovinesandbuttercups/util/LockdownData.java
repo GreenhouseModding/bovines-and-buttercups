@@ -32,4 +32,8 @@ public record LockdownData(Holder<MobEffect> linkedEffect, Optional<Integer> dur
             LockdownData::duration,
             LockdownData::new
     );
+
+    public LockdownData(Holder<MobEffect> linkedEffect) {
+        this(linkedEffect, Optional.empty());
+    }
 }

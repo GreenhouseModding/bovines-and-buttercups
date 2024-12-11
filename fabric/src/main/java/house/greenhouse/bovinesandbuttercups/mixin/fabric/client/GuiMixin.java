@@ -3,17 +3,18 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
-import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class GuiMixin {
     @Shadow @Final private Minecraft minecraft;
 
-    @ModifyArg(method = "renderEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V"))
+    @ModifyArg(method = "renderEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIII)V"))
     private ResourceLocation bovinesandbuttercups$overlayLockdownBorder(ResourceLocation original, @Local(ordinal = 2) int width, @Local(ordinal = 3) int height, @Local Holder<MobEffect> effect) {
         if (minecraft.player == null || !minecraft.player.hasEffect(BovinesEffects.LOCKDOWN))
             return original;
@@ -78,9 +79,8 @@ public class GuiMixin {
         float a = alpha;
 
         list.add(() -> {
-            graphics.setColor(1.0f, 1.0f, 1.0f, a);
-            graphics.blit(n + 3, o + 3, 0, 18, 18, additionalSprite);
-            graphics.setColor(1.0f, 1.0f, 1.0f, 1.0F);
+            int argb = ARGB.white(a);
+            graphics.blitSprite(RenderType::guiTextured, additionalSprite, n + 3, o + 3, 18, 18, argb);
         });
     }
 }

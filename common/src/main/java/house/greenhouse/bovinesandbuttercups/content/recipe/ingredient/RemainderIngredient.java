@@ -5,9 +5,11 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -17,8 +19,8 @@ import java.util.stream.Stream;
 
 public interface RemainderIngredient {
     ResourceLocation ID = BovinesAndButtercups.asResource("remainder");
-    static MapCodec<RemainderIngredient> createCodec(Constructor constructor, boolean allowEmpty) {
-        Codec<Ingredient> ingredientCodec = !allowEmpty ? Ingredient.CODEC_NONEMPTY : Ingredient.CODEC;
+    static MapCodec<RemainderIngredient> createCodec(Constructor constructor) {
+        Codec<Ingredient> ingredientCodec = Ingredient.CODEC;
         return RecordCodecBuilder.mapCodec(inst -> inst.group(
                 ingredientCodec.fieldOf("base").forGetter(RemainderIngredient::base),
                 ItemStack.STRICT_SINGLE_ITEM_CODEC.validate(
@@ -46,8 +48,8 @@ public interface RemainderIngredient {
         return base().test(stack);
     }
 
-    default Stream<ItemStack> getItems() {
-        return Arrays.stream(base().getItems());
+    default Stream<Holder<Item>> items() {
+        return base().items();
     }
 
     @FunctionalInterface

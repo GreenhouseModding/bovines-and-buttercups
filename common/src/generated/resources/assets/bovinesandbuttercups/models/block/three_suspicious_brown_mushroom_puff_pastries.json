@@ -1,6 +1,5 @@
 {
   "parent": "bovinesandbuttercups:block/template_three_puff_pastries",
-  "render_type": "cutout",
   "textures": {
     "all": "bovinesandbuttercups:block/suspicious_brown_mushroom_puff_pastry"
   }

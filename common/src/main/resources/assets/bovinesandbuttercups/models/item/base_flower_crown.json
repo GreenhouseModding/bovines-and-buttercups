@@ -5,6 +5,7 @@
     "layer1": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_right",
     "layer2": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_left",
     "layer3": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_right",
-    "layer4": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top"
+    "layer4": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top",
+    "particle": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top"
   }
 }

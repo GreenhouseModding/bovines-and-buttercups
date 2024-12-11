@@ -1,0 +1,110 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/bird_of_paradise_cupcake"
+        },
+        "when": "bovinesandbuttercups:bird_of_paradise_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/buttercup_cupcake"
+        },
+        "when": "bovinesandbuttercups:buttercup_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/chargelily_cupcake"
+        },
+        "when": "bovinesandbuttercups:chargelily_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/freesia_cupcake"
+        },
+        "when": "bovinesandbuttercups:freesia_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/hyacinth_cupcake"
+        },
+        "when": "bovinesandbuttercups:hyacinth_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/limelight_cupcake"
+        },
+        "when": "bovinesandbuttercups:limelight_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/lingholm_cupcake"
+        },
+        "when": "bovinesandbuttercups:lingholm_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/pink_daisy_cupcake"
+        },
+        "when": "bovinesandbuttercups:pink_daisy_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/snowdrop_cupcake"
+        },
+        "when": "bovinesandbuttercups:snowdrop_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/tropical_blue_cupcake"
+        },
+        "when": "bovinesandbuttercups:tropical_blue_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/brown_mushroom_puff_pastry"
+        },
+        "when": "bovinesandbuttercups:brown_mushroom_puff_pastry"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/red_mushroom_puff_pastry"
+        },
+        "when": "bovinesandbuttercups:red_mushroom_puff_pastry"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/suspicious_brown_mushroom_puff_pastry"
+        },
+        "when": "bovinesandbuttercups:suspicious_brown_mushroom_puff_pastry"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/suspicious_red_mushroom_puff_pastry"
+        },
+        "when": "bovinesandbuttercups:suspicious_red_mushroom_puff_pastry"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "bovinesandbuttercups:item/missing_edible"
+    },
+    "property": "bovinesandbuttercups:edible"
+  }
+}

@@ -1,24 +1,19 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.PlaceableEdibleItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
-import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -36,11 +31,7 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroo
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomFlowerItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomHugeMushroomItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.CustomMushroomItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.NectarBowlItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
@@ -49,30 +40,45 @@ import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEff
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
+    private static ModelBakery bakery;
+
+    private static final Map<ResourceLocation, UnbakedModel> MODELS = new HashMap<>();
+    private static final Set<ResourceLocation> DEPENDENCIES = new HashSet<>();
+
     @Override
     public void onInitializeClient() {
         BovinesAndButtercupsClient.init(new BovinesClientHelperFabric());
-        BovinesAccessoriesIntegrationClient.init();
+//        BovinesAccessoriesIntegrationClient.init();
         BovinesModelSetTypes.init();
 
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_MOOBLOOM_MODEL_LAYER, () -> CowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         EntityRendererRegistry.register(BovinesEntityTypes.MOOBLOOM, MoobloomRenderer::new);
@@ -86,8 +92,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
             }
 
             @Override
-            public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
-                return listener.reload(preparationBarrier, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor);
+            public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager manager, Executor backgroundExecutor, Executor gameExecutor) {
+                return listener.reload(barrier, manager, backgroundExecutor, gameExecutor);
             }
         });
 
@@ -97,11 +103,32 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
                         cowTypeType.setFromRegistries(client.level.registryAccess()));
         });
 
+
         PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
+            for (ResourceLocation entry : data) {
+                UnbakedModel model = BovinesModelSetUtil.getUnbakedModel(entry);
+                model.resolveDependencies(dependency -> {
+                    context.addModels(dependency);
+                    DEPENDENCIES.add(dependency);
+                    return null;
+                });
+                MODELS.put(entry, model);
+            }
             context.addModels(data);
-            context.resolveModel().register((ctx) -> BovinesModelSetUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));
+            context.modifyModelOnLoad().register((model, ctx) -> {
+                var newModel = MODELS.remove(ctx.id());
+                if (newModel == null) {
+                    if (DEPENDENCIES.contains(ctx.id())) {
+                        DEPENDENCIES.remove(ctx.id());
+                        return getBlockModel(ctx.id());
+                    }
+                    return model;
+                }
+                return newModel;
+            });
         });
-        ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(FlowerCrownItemRenderer.BASE));
+        ModelLoadingPlugin.register(pluginContext ->
+                pluginContext.addModels(FlowerCrownItemRenderer.BASE));
         ClientTickEvents.END_WORLD_TICK.register(world -> {
             SyncCowTypeClientboundPacket.retry(world);
             SyncLockdownEffectsClientboundPacket.retry(world);
@@ -111,9 +138,33 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         registerNetwork();
         registerBlockLayers();
         registerBlockRenderers();
-        registerItemRenderers();
         registerParticleFactories();
     }
+
+    // Fabric does not resolve model dependencies, we must do it ourselves.
+    private static UnbakedModel getBlockModel(ResourceLocation id) {
+        Optional<Resource> resource = Minecraft.getInstance().getResourceManager().getResource(id.withPath(s -> "models/" + s + ".json"));
+        if (resource.isEmpty())
+            // Minecraft will error here if null, we can ignore.
+            return null;
+        try (Reader reader = resource.get().openAsReader()) {
+            BlockModel model = BlockModel.fromStream(reader);
+            model.resolveDependencies(BovinesAndButtercupsFabricClient::getBlockModel);
+            return model;
+        } catch (IOException ignored) {
+            return null;
+        }
+    }
+
+
+    public static ModelBakery getBakery() {
+        return bakery;
+    }
+
+    public static void setBakery(ModelBakery bakery) {
+        BovinesAndButtercupsFabricClient.bakery = bakery;
+    }
+
 
     public static void registerNetwork() {
         ClientPlayNetworking.registerGlobalReceiver(SyncConditionedTextureModifier.TYPE, (packet, context) -> packet.handle());
@@ -130,15 +181,6 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockEntityRenderers.register(BovinesBlockEntityTypes.POTTED_CUSTOM_MUSHROOM, CustomMushroomPotBlockRenderer::new);
         BlockEntityRenderers.register(BovinesBlockEntityTypes.CUSTOM_MUSHROOM_BLOCK, CustomHugeMushroomBlockRenderer::new);
         BlockEntityRenderers.register(BovinesBlockEntityTypes.PLACEABLE_EDIBLE, PlaceableEdibleBlockRenderer::new);
-    }
-
-    public static void registerItemRenderers() {
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.CUSTOM_FLOWER, CustomFlowerItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.CUSTOM_MUSHROOM, CustomMushroomItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.CUSTOM_MUSHROOM_BLOCK, CustomHugeMushroomItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.NECTAR_BOWL, NectarBowlItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.FLOWER_CROWN, FlowerCrownItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(BovinesItems.PLACEABLE_EDIBLE, PlaceableEdibleItemRenderer::render);
     }
 
     public static void registerParticleFactories() {

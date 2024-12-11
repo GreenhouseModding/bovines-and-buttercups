@@ -22,7 +22,11 @@ import java.util.function.Function;
 
 public class BlockUtil {
     public static Component getOrCreateBlockNameTranslationKey(ResourceLocation location) {
-        return Component.translatable("block." + location.getNamespace() + "." + location.getPath());
+        return Component.translatable("item." + location.getNamespace() + "." + location.getPath());
+    }
+
+    public static Component getOrCreateItemNameTranslationKey(ResourceLocation location) {
+        return Component.translatable("item." + location.getNamespace() + "." + location.getPath());
     }
 
     private static final Codec<BooleanOp> BOOLEAN_OP_CODEC = new Codec<>() {

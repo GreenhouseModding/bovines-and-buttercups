@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "orange_dye",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:bird_of_paradise"
-    }
+    "bovinesandbuttercups:bird_of_paradise"
   ],
   "result": {
     "count": 1,

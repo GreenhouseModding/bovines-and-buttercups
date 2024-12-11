@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "red_dye",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:freesia"
-    }
+    "bovinesandbuttercups:freesia"
   ],
   "result": {
     "count": 1,

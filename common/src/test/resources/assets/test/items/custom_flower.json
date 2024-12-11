@@ -1,0 +1,19 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "test:item/fire_flower"
+        },
+        "when": "test:fire_flower"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "bovinesandbuttercups:item/missing_flower"
+    },
+    "property": "bovinesandbuttercups:custom_flower"
+  }
+}

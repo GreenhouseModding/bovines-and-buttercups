@@ -4,37 +4,25 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
-import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
-import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
-import house.greenhouse.bovinesandbuttercups.util.LockdownData;
 import house.greenhouse.bovinesandbuttercups.util.TooltipUtil;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.TooltipProvider;
 
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.locks.Lock;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -59,9 +47,11 @@ public record ItemEdible(Holder<EdibleBlockType> holder, List<MobEffectEntry> ef
 
     public static void apply(ItemStack stack, ItemEdible edible) {
         if (edible.holder.isBound()) {
-            List<DataComponentType<?>> requiredPatches = List.of(DataComponents.MAX_STACK_SIZE, BovinesDataComponents.EDIBLE_TYPE);
-            if (!stack.getComponentsPatch().entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toSet()).containsAll(requiredPatches))
+            var dataComponentTypes = stack.getComponentsPatch().entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toSet());
+            if (!dataComponentTypes.contains(DataComponents.MAX_STACK_SIZE))
                 stack.set(DataComponents.MAX_STACK_SIZE, edible.holder.value().maxStackSize());
+            if (!dataComponentTypes.contains(DataComponents.ITEM_MODEL) && edible.holder.value().itemModel().isPresent())
+                stack.set(DataComponents.ITEM_MODEL, edible.holder.value().itemModel().get());
             stack.set(BovinesDataComponents.EDIBLE_TYPE, edible);
         }
     }

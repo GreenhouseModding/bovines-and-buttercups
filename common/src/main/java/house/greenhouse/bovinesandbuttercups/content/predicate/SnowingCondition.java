@@ -19,9 +19,9 @@ public class SnowingCondition implements LootItemCondition {
 
     @Override
     public boolean test(LootContext context) {
-        Vec3 pos = context.getParam(LootContextParams.ORIGIN);
+        Vec3 pos = context.getParameter(LootContextParams.ORIGIN);
         BlockPos blockPos = BlockPos.containing(pos);
-        return context.getLevel().isRaining() && context.getLevel().getBiome(blockPos).isBound() && context.getLevel().getBiome(blockPos).value().getPrecipitationAt(blockPos) == Biome.Precipitation.SNOW;
+        return context.getLevel().isRaining() && context.getLevel().getBiome(blockPos).isBound() && context.getLevel().getBiome(blockPos).value().getPrecipitationAt(blockPos, context.getLevel().getSeaLevel()) == Biome.Precipitation.SNOW;
     }
 
     @Override

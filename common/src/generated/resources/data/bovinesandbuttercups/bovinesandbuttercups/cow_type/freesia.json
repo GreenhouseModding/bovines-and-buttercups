@@ -42,7 +42,9 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:freesia",
+  "nectar": {
+    "id": "bovinesandbuttercups:freesia_nectar_bowl"
+  },
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -157,6 +159,7 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 15223894
   },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/freesia",
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 2400,
-      "id": "minecraft:poison"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/buttercup_nectar_bowl"
-}

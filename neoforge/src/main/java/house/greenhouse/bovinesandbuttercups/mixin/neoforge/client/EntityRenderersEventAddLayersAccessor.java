@@ -11,5 +11,5 @@ import java.util.Map;
 @Mixin(EntityRenderersEvent.AddLayers.class)
 public interface EntityRenderersEventAddLayersAccessor {
     @Accessor(value = "renderers", remap = false)
-    Map<EntityType<?>, EntityRenderer<?>> bovinesandbuttercups$getRenderers();
+    Map<EntityType<?>, EntityRenderer<?, ?>> bovinesandbuttercups$getRenderers();
 }

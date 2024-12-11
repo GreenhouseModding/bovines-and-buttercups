@@ -1,11 +1,15 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
-import house.greenhouse.bovinesandbuttercups.access.SimpleTextureExceptionAccess;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.client.api.RenderStateObject;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.select.BovinesSelectProperties;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.renderer.special.SpecialModelRenderers;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.ReloadableTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 
@@ -15,18 +19,16 @@ public class BovinesAndButtercupsClient {
     private static final HashSet<ResourceLocation> LOADED_COW_TEXTURES = new HashSet<>();
     private static final HashSet<ResourceLocation> FAILED_COW_TEXTURES = new HashSet<>();
     private static BovinesClientHelper clientHelper;
-    private static ModelBakery modelBakery;
 
     public static void init(BovinesClientHelper helper) {
         clientHelper = helper;
+        RenderStateObject.registerAll();
+        BovinesSelectProperties.registerAll();
+        registerItemRenderers();
     }
 
-    public static ModelBakery getModelBakery() {
-        return modelBakery;
-    }
-
-    public static void setModelBakery(ModelBakery modelBakery) {
-        BovinesAndButtercupsClient.modelBakery = modelBakery;
+    public static void registerItemRenderers() {
+        SpecialModelRenderers.ID_MAPPER.put(FlowerCrownItemRenderer.Unbaked.ID, FlowerCrownItemRenderer.Unbaked.MAP_CODEC);
     }
 
     public static void clearCowTextureCache() {
@@ -48,7 +50,7 @@ public class BovinesAndButtercupsClient {
             return getTextureFromCowType(cowType.value().type().defaultConfig(), cowType.value().type().fallbackTexturePath(), cowType.value().type().defaultKey().location());
         }
 
-        if (!((SimpleTextureExceptionAccess)Minecraft.getInstance().getTextureManager().getTexture(remappedLocation)).bovinesandbuttercups$causedException()) {
+        if (!(Minecraft.getInstance().getTextureManager().getTexture(remappedLocation) instanceof ReloadableTexture reloadableTexture) || !reloadableTexture.resourceId().equals(MissingTextureAtlasSprite.getLocation())) {
             LOADED_COW_TEXTURES.add(remappedLocation);
             return remappedLocation;
         }

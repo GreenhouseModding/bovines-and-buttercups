@@ -17,7 +17,7 @@ public class PottedBlockMapUtil {
         if (POTTED_CONTENT_MAP == null) {
             ImmutableMap.Builder<Block, Block> builder = ImmutableMap.builder();
             for (Map.Entry<ResourceLocation, Supplier<? extends Block>> forgeEntry : ((FlowerPotBlock) Blocks.FLOWER_POT).getFullPotsView().entrySet()) {
-                builder.put(BuiltInRegistries.BLOCK.get(forgeEntry.getKey()), forgeEntry.getValue().get());
+                builder.put(BuiltInRegistries.BLOCK.getValue(forgeEntry.getKey()), forgeEntry.getValue().get());
             }
             POTTED_CONTENT_MAP = builder.build();
         }

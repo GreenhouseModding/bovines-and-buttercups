@@ -24,15 +24,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public record ValueCondition(Optional<IntRange> bites, Map<Either<TagKey<Item>, List<ResourceKey<Item>>>, AttachmentValues> attachments) implements PlaceableEdibleCondition {
     public boolean test(PlaceableEdibleBlockEntity blockEntity) {
-        var registry = blockEntity.getLevel().registryAccess().registryOrThrow(Registries.ITEM);
+        var registry = blockEntity.getLevel().registryAccess().lookupOrThrow(Registries.ITEM);
         return (bites.isEmpty() || bites.get().test(blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES))) && (attachments.isEmpty() || attachments.entrySet().stream().allMatch(entry -> {
-            if (entry.getKey().map(itemTagKey -> registry.getTag(itemTagKey).isEmpty(), itemResourceKeys -> itemResourceKeys.stream().noneMatch(key -> registry.getHolder(key).isEmpty())) || !blockEntity.getAttachments().containsKey(entry.getKey().map(itemTagKey -> {
-                return registry.getTag(itemTagKey).map(holders -> (HolderSet<Item>)holders).orElseGet(HolderSet::empty);
+            if (entry.getKey().map(itemTagKey -> registry.get(itemTagKey).isEmpty(), itemResourceKeys -> itemResourceKeys.stream().noneMatch(key -> registry.get(key).isEmpty())) || !blockEntity.getAttachments().containsKey(entry.getKey().map(itemTagKey -> {
+                return registry.get(itemTagKey).map(holders -> (HolderSet<Item>)holders).orElseGet(HolderSet::empty);
             }, itemResourceKeys -> HolderSet.direct(itemResourceKeys.stream().map(key -> {
-                return registry.getHolder(key).orElse(null);
+                return registry.get(key).orElse(null);
             }).filter(Objects::nonNull).toList()))))
                 return false;
-            PlaceableEdibleBlockEntity.AttachmentState state = blockEntity.getAttachments().get(entry.getKey().map(itemTagKey -> registry.getTag(itemTagKey).orElseThrow(), itemResourceKeys -> HolderSet.direct(itemResourceKeys.stream().map(registry::getHolderOrThrow).toList())));
+            PlaceableEdibleBlockEntity.AttachmentState state = blockEntity.getAttachments().get(entry.getKey().map(itemTagKey -> registry.getOrThrow(itemTagKey), itemResourceKeys -> HolderSet.direct(itemResourceKeys.stream().map(registry::getOrThrow).toList())));
             for (int i = 0 ; i < state.items().size(); ++i) {
                 if (entry.getValue().index().isEmpty() || entry.getValue().index().get().test(i)) {
                     int finalI = i;

@@ -1,6 +1,5 @@
 {
   "parent": "bovinesandbuttercups:block/template_four_cupcakes",
-  "render_type": "cutout",
   "textures": {
     "all": "bovinesandbuttercups:block/chargelily_cupcake"
   }

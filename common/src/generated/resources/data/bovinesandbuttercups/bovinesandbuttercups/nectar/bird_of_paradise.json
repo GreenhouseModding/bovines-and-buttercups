@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 7200,
-      "id": "minecraft:slow_falling"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/bird_of_paradise_nectar_bowl"
-}

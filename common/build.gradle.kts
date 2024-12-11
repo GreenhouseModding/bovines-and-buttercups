@@ -46,9 +46,10 @@ dependencies {
     annotationProcessor("io.github.llamalad7:mixinextras-common:${Versions.MIXIN_EXTRAS}")
     compileOnly("net.fabricmc:sponge-mixin:${Versions.FABRIC_MIXIN}")
 
-    compileOnly("io.wispforest:accessories-common:${Versions.ACCESSORIES}-mojmap")
-    compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-common-api:${Versions.JEI}")
-    compileOnly("dev.emi:emi-xplat-mojmap:${Versions.EMI}:api")
+// TODO: Re-enable when updated.
+//    compileOnly("io.wispforest:accessories-common:${Versions.ACCESSORIES}-mojmap")
+//    compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-common-api:${Versions.JEI}")
+//    compileOnly("dev.emi:emi-xplat-mojmap:${Versions.EMI}:api")
 }
 
 configurations {

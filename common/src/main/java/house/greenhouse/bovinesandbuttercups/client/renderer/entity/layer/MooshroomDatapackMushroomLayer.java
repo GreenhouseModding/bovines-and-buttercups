@@ -3,14 +3,12 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
+import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -19,33 +17,35 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.MushroomCowRenderState;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.animal.MushroomCow;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends RenderLayer<T, CowModel<T>> {
+public class MooshroomDatapackMushroomLayer<T extends MushroomCowRenderState> extends RenderLayer<T, CowModel> {
     private final BlockRenderDispatcher blockRenderer;
 
-    public MooshroomDatapackMushroomLayer(RenderLayerParent<T, CowModel<T>> context, BlockRenderDispatcher blockRenderer) {
+    public MooshroomDatapackMushroomLayer(RenderLayerParent<T, CowModel> context, BlockRenderDispatcher blockRenderer) {
         super(context);
         this.blockRenderer = blockRenderer;
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        boolean bl = Minecraft.getInstance().shouldEntityAppearGlowing(entity) && entity.isInvisible();
-        Holder<CowType<MooshroomConfiguration>> cowType = CowTypeAttachment.getCowTypeHolderFromEntity(entity, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        if (cowType == null || entity.isInvisible() && !bl
-                || entity.isBaby()
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
+        boolean bl = renderState.appearsGlowing && renderState.isInvisible;
+        Holder<CowType<MooshroomConfiguration>> cowType = ((CowTypeRenderState<MushroomCow, MooshroomConfiguration>)renderState).getCowType();
+
+        if (cowType == null || renderState.isInvisible && !bl
+                || renderState.isBaby
                 || cowType.value().configuration().mushroom().blockState().isPresent() && cowType.value().configuration().vanillaType().isPresent() && cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState()))
             return;
 
-        int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
+        int m = LivingEntityRenderer.getOverlayCoords(renderState, 0.0f);
 
         BakedModel model = null;
         if (cowType.value().configuration().mushroom().modelSet().isPresent()) {
@@ -66,7 +66,7 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends Rende
         } else if (cowType.value().configuration().mushroom().blockState().isEmpty())
             return;
 
-        handleMooshroomRender(poseStack, buffer, packedLight, bl, m, cowType.value().configuration().mushroom().blockState(), model);
+        handleMooshroomRender(poseStack, bufferSource, packedLight, bl, m, cowType.value().configuration().mushroom().blockState(), model);
     }
 
     private void handleMooshroomRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable BakedModel model) {
@@ -102,7 +102,7 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends Rende
         BakedModel mushroomModel = mushroomState.map(blockRenderDispatcher::getBlockModel).orElse(model);
 
         if (outlineAndInvisible) {
-            blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer.getBuffer(RenderType.outline(InventoryMenu.BLOCK_ATLAS)), null, mushroomModel, 0.0f, 0.0f, 0.0f, light, overlay);
+            blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), null, mushroomModel, 0.0f, 0.0f, 0.0f, light, overlay);
         } else {
             if (mushroomState.isPresent()) {
                 blockRenderDispatcher.renderSingleBlock(mushroomState.get(), poseStack, buffer, light, overlay);

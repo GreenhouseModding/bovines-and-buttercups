@@ -6,8 +6,6 @@ import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifie
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
-import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
-import house.greenhouse.bovinesandbuttercups.integration.trinkets.BovinesTrinketsEvents;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
@@ -31,7 +29,6 @@ import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesArmorMaterials;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -138,8 +135,8 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         FabricDefaultAttributeRegistry.register(BovinesEntityTypes.MOOBLOOM, Moobloom.createAttributes());
         LandPathNodeTypesRegistry.register(BovinesBlocks.RICH_HONEY_BLOCK, PathType.STICKY_HONEY, null);
 
-        BovinesAccessoriesEvents.init();
-        BovinesTrinketsEvents.init();
+//        BovinesAccessoriesEvents.init();
+//        BovinesTrinketsEvents.init();
     }
 
     private static void registerNetwork() {
@@ -152,7 +149,6 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     private static void registerContents() {
         BovinesSoundEvents.registerHolders(Registry::registerForHolder);
-        BovinesArmorMaterials.registerAll(Registry::registerForHolder);
         BovinesBlockEntityTypes.registerAll(Registry::register);
         BovinesBlocks.registerAll(Registry::register);
         BovinesCowTypeTypes.registerAll(Registry::register);
@@ -232,10 +228,10 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     public static void registerBiomeModifications() {
         createBiomeModifications(BovinesAndButtercups.asResource("moobloom"),
-                biome -> biomeRegistries.registryOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(cowType -> cowType.type() == BovinesCowTypeTypes.MOOBLOOM_TYPE && cowType.configuration().settings() != null && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome.getBiomeRegistryEntry())) && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)),
+                biome -> biomeRegistries.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(cowType -> cowType.type() == BovinesCowTypeTypes.MOOBLOOM_TYPE && cowType.configuration().settings() != null && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome.getBiomeRegistryEntry())) && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)),
                 BovinesEntityTypes.MOOBLOOM, 15, 4, 4);
         createBiomeModifications(BovinesAndButtercups.asResource("mooshroom"),
-                biome -> biome.getBiomeKey() != Biomes.MUSHROOM_FIELDS && biomeRegistries.registryOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(cowType -> cowType.type() == BovinesCowTypeTypes.MOOSHROOM_TYPE && cowType.configuration().settings() != null && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome.getBiomeRegistryEntry())) && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)),
+                biome -> biome.getBiomeKey() != Biomes.MUSHROOM_FIELDS && biomeRegistries.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).stream().anyMatch(cowType -> cowType.type() == BovinesCowTypeTypes.MOOSHROOM_TYPE && cowType.configuration().settings() != null && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.data().contains(biome.getBiomeRegistryEntry())) && cowType.configuration().settings().biomes().unwrap().stream().anyMatch(wrapper -> wrapper.weight().asInt() > 0)),
                 EntityType.MOOSHROOM, 15, 4, 4);
         BiomeModifications.create(BovinesAndButtercups.asResource("remove_cows")).add(ModificationPhase.REMOVALS, biome -> biome.hasTag(BovinesTags.BiomeTags.PREVENT_COW_SPAWNS), context -> context.getSpawnSettings().removeSpawnsOfEntityType(EntityType.COW));
     }

@@ -6,7 +6,6 @@ import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 
 public class BovinesModelSetTypes {
     public static final BovinesModelSetType GENERIC = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("generic"), GenericBovinesModelSetType.INSTANCE);
-    public static final BovinesModelSetType ITEM = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("item"), InventoryBovinesModelSetType.INSTANCE);
 
     public static final BovinesModelSetType FLOWER = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("flower"), new StateDefinitionBovinesModelSetType(BovinesBlocks.CUSTOM_FLOWER.getStateDefinition()));
     public static final BovinesModelSetType MUSHROOM = BovinesModelSetRegistry.registerType(BovinesAndButtercups.asResource("mushroom"), new StateDefinitionBovinesModelSetType(BovinesBlocks.CUSTOM_MUSHROOM.getStateDefinition()));

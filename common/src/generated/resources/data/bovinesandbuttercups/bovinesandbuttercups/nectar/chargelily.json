@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 1200,
-      "id": "minecraft:haste"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/chargelily_nectar_bowl"
-}

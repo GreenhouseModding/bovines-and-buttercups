@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
@@ -25,6 +26,7 @@ public class FlowerCrownRecipe extends CustomRecipe {
             Optional.of(Unit.INSTANCE), Optional.of(Unit.INSTANCE), Optional.of(Unit.INSTANCE),
             Optional.of(Unit.INSTANCE), Optional.empty(), Optional.of(Unit.INSTANCE),
             Optional.of(Unit.INSTANCE), Optional.of(Unit.INSTANCE), Optional.of(Unit.INSTANCE));
+    private PlacementInfo info;
 
     public FlowerCrownRecipe(CraftingBookCategory category) {
         super(category);
@@ -38,7 +40,7 @@ public class FlowerCrownRecipe extends CustomRecipe {
             for (int j = 0; j < input.width(); j++) {
                 Optional<Unit> hasItem = SHAPE.get(j + i * input.width());
                 ItemStack stack = input.getItem(j, i);
-                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().registry(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).orElseThrow().stream().noneMatch(petal -> ItemStack.isSameItemSameComponents(petal.ingredient(), stack))) {
+                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().lookupOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).stream().noneMatch(petal -> ItemStack.isSameItemSameComponents(petal.ingredient(), stack))) {
                     return false;
                 }
                 if (hasItem.isEmpty())
@@ -80,12 +82,7 @@ public class FlowerCrownRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= SHAPE.size();
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<FlowerCrownRecipe> getSerializer() {
         return BovinesRecipeSerializers.FLOWER_CROWN;
     }
 }

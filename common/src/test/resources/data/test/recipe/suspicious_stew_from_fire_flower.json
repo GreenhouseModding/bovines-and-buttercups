@@ -2,21 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:bowl"
-    },
-    {
-      "item": "minecraft:red_mushroom"
-    },
-    {
-      "item": "minecraft:brown_mushroom"
-    },
+    "minecraft:bowl",
+    "minecraft:red_mushroom",
+    "minecraft:brown_mushroom",
     {
       "fabric:type": "fabric:components",
-      "base": {
-        "item": "bovinesandbuttercups:custom_flower"
-      },
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
+      "base": "bovinesandbuttercups:custom_flower",
       "items": [
         "bovinesandbuttercups:custom_flower"
       ],

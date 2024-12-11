@@ -37,7 +37,7 @@ public record CowSubPredicate(Optional<Holder<CowType<?>>> type, Optional<Boolea
         if (!(entity instanceof LivingEntity living))
             return false;
 
-        if (level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).stream().noneMatch(cowType -> cowType.type().isApplicable(entity)))
+        if (level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_TYPE).stream().noneMatch(cowType -> cowType.type().isApplicable(entity)))
             return false;
 
         if (type.isPresent()) {

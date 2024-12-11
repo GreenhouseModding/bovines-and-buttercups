@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 2400,
-      "id": "minecraft:regeneration"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/limelight_nectar_bowl"
-}

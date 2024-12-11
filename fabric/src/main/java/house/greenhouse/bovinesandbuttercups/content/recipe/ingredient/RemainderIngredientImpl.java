@@ -3,14 +3,17 @@ package house.greenhouse.bovinesandbuttercups.content.recipe.ingredient;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public record RemainderIngredientImpl(Ingredient base, ItemStack remainder) implements RemainderIngredient, CustomIngredient {
     public static final Serializer SERIALIZER = new Serializer();
@@ -21,8 +24,8 @@ public record RemainderIngredientImpl(Ingredient base, ItemStack remainder) impl
     }
 
     @Override
-    public List<ItemStack> getMatchingStacks() {
-        return RemainderIngredient.super.getItems().toList();
+    public Stream<Holder<Item>> getMatchingItems() {
+        return RemainderIngredient.super.items();
     }
 
     @Override
@@ -47,8 +50,8 @@ public record RemainderIngredientImpl(Ingredient base, ItemStack remainder) impl
         }
 
         @Override
-        public MapCodec<RemainderIngredientImpl> getCodec(boolean allowEmpty) {
-            return RemainderIngredient.createCodec(RemainderIngredientImpl::new, allowEmpty).xmap(remainderIngredient -> (RemainderIngredientImpl) remainderIngredient, Function.identity());
+        public MapCodec<RemainderIngredientImpl> getCodec() {
+            return RemainderIngredient.createCodec(RemainderIngredientImpl::new).xmap(remainderIngredient -> (RemainderIngredientImpl) remainderIngredient, Function.identity());
         }
 
         @Override

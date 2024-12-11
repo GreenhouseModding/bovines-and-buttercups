@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "sugar",
   "ingredients": [
-    {
-      "item": "bovinesandbuttercups:rich_honey_bottle"
-    }
+    "bovinesandbuttercups:rich_honey_bottle"
   ],
   "result": {
     "count": 3,

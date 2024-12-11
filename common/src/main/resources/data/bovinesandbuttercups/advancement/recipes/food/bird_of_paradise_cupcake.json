@@ -5,12 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "bovinesandbuttercups:nectar_bowl"
+            "items": "bovinesandbuttercups:bird_of_paradise_nectar_bowl"
           }
-        ],
-        "components": {
-          "bovinesandbuttercups:nectar": "bovinesandbuttercups:bird_of_paradise"
-        }
+        ]
       },
       "trigger": "minecraft:inventory_changed"
     },

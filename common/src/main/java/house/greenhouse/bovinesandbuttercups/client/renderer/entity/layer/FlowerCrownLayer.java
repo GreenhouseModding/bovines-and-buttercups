@@ -3,12 +3,11 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
+import house.greenhouse.bovinesandbuttercups.client.access.FlowerCrownRenderStateAccess;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesAtlases;
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
-import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.PiglinModel;
@@ -18,18 +17,17 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
-public class FlowerCrownLayer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
+public class FlowerCrownLayer<T extends LivingEntityRenderState, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
     private final TextureAtlas petalsTextureAtlas;
     private final FlowerCrownModel<T> model;
 
@@ -44,24 +42,15 @@ public class FlowerCrownLayer<T extends LivingEntity, M extends EntityModel<T> &
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        ItemStack stack = BovinesAndButtercupsClient.getHelper().getEquippedFlowerCrownForRendering(livingEntity);
-        if (stack.isEmpty())
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
+        FlowerCrown flowerCrown = ((FlowerCrownRenderStateAccess)renderState).bovinesandbuttercups$getFlowerCrown();
+        if (flowerCrown == null)
             return;
-        FlowerCrown component = stack.get(BovinesDataComponents.FLOWER_CROWN);
 
-        getParentModel().copyPropertiesTo(model);
         model.getHead().copyFrom(getParentModel().getHead());
-
-        renderPart(model, poseStack, bufferSource, packedLight, 0, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 1, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 2, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 3, component);
-
-        renderPart(model, poseStack, bufferSource, packedLight, 4, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 5, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 6, component);
-        renderPart(model, poseStack, bufferSource, packedLight, 7, component);
+        for (int i = 0; i < 8; ++i) {
+            renderPart(model, poseStack, bufferSource, packedLight, i, flowerCrown);
+        }
     }
 
     private void renderPart(FlowerCrownModel<T> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int index, @Nullable FlowerCrown crown) {

@@ -1,7 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.registry;
 
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
@@ -15,7 +14,6 @@ public class BovinesFabricDynamicRegistries {
         DynamicRegistries.registerSynced(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, CustomFlowerType.DIRECT_CODEC);
         DynamicRegistries.registerSynced(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, CustomMushroomType.DIRECT_CODEC);
         DynamicRegistries.registerSynced(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, EdibleBlockType.DIRECT_CODEC);
-        DynamicRegistries.registerSynced(BovinesRegistryKeys.NECTAR, Nectar.DIRECT_CODEC);
         DynamicRegistries.registerSynced(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, FlowerCrownMaterial.DIRECT_CODEC);
     }
 

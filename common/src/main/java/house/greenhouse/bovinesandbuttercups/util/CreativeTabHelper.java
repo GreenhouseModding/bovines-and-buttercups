@@ -8,11 +8,8 @@ import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
-import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
@@ -20,6 +17,7 @@ import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -43,6 +41,7 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).listElements().filter(flowerType -> flowerType.isBound() && !flowerType.value().equals(CustomFlowerType.MISSING)).map(flowerType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_FLOWER);
             stack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(flowerType));
+            stack.set(DataComponents.ITEM_MODEL, flowerType.value().itemModel());
             return stack;
         }).toList();
     }
@@ -51,6 +50,7 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).listElements().filter(mushroomType -> mushroomType.isBound() && !mushroomType.value().equals(CustomMushroomType.MISSING)).map(mushroomType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, new ItemCustomMushroom(mushroomType));
+            stack.set(DataComponents.ITEM_MODEL, mushroomType.value().itemModel());
             return stack;
         }).toList();
     }
@@ -59,22 +59,24 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).listElements().filter(mushroomType -> mushroomType.isBound() && !mushroomType.value().equals(CustomMushroomType.MISSING)).map(mushroomType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM_BLOCK);
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, new ItemCustomMushroom(mushroomType));
+            stack.set(DataComponents.ITEM_MODEL, mushroomType.value().hugeBlockItemModel().orElse(null));
             return stack;
         }).toList();
     }
 
     public static List<ItemStack> getNectarBowlsForCreativeTab(HolderLookup.Provider lookup) {
-        HolderSet<Nectar> creativeModeTabOrder = lookup.lookupOrThrow(BovinesRegistryKeys.NECTAR).getOrThrow(BovinesTags.NectarTags.CREATIVE_MENU_ORDER);
-        return lookup.lookupOrThrow(BovinesRegistryKeys.NECTAR).listElements().sorted(Comparator.comparingInt(nectar -> {
-            int i = creativeModeTabOrder.stream().toList().indexOf(nectar);
-            if (i == -1)
-                return Integer.MAX_VALUE;
-            return i;
-        })).map(nectar -> {
-            ItemStack stack = new ItemStack(BovinesItems.NECTAR_BOWL);
-            stack.set(BovinesDataComponents.NECTAR, new ItemNectar(nectar));
-            return stack;
-        }).toList();
+        return List.of(
+                BovinesItems.FREESIA_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.BIRD_OF_PARADISE_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.BUTTERCUP_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.LIMELIGHT_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.LINGHOLM_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.CHARGELILY_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.TROPICAL_BLUE_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.HYACINTH_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.PINK_DAISY_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance()
+        );
     }
 
     public static List<ItemStack> getFlowerCrownsForCreativeTab(HolderLookup.Provider lookup) {

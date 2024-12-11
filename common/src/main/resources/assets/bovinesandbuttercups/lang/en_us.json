@@ -20,6 +20,18 @@
   "block.bovinesandbuttercups.tropical_blue": "Tropical Blue",
   "block.bovinesandbuttercups.freesia": "Freesia",
   "block.bovinesandbuttercups.lingholm": "Lingholm",
+
+  "item.bovinesandbuttercups.buttercup": "Buttercup",
+  "item.bovinesandbuttercups.pink_daisy": "Pink Daisy",
+  "item.bovinesandbuttercups.limelight": "Limelight",
+  "item.bovinesandbuttercups.bird_of_paradise": "Bird of Paradise",
+  "item.bovinesandbuttercups.chargelily": "Chargelily",
+  "item.bovinesandbuttercups.hyacinth": "Hyacinth",
+  "item.bovinesandbuttercups.snowdrop": "Snowdrop",
+  "item.bovinesandbuttercups.tropical_blue": "Tropical Blue",
+  "item.bovinesandbuttercups.freesia": "Freesia",
+  "item.bovinesandbuttercups.lingholm": "Lingholm",
+
   "block.bovinesandbuttercups.potted_buttercup": "Potted Buttercup",
   "block.bovinesandbuttercups.potted_pink_daisy": "Potted Pink Daisy",
   "block.bovinesandbuttercups.potted_limelight": "Potted Limelight",
@@ -30,6 +42,7 @@
   "block.bovinesandbuttercups.potted_tropical_blue": "Potted Tropical Blue",
   "block.bovinesandbuttercups.potted_freesia": "Potted Freesia",
   "block.bovinesandbuttercups.potted_lingholm": "Potted Lingholm",
+
   "block.bovinesandbuttercups.buttercup_cupcake": "Buttercup Cupcake",
   "block.bovinesandbuttercups.pink_daisy_cupcake": "Pink Daisy Cupcake",
   "block.bovinesandbuttercups.limelight_cupcake": "Limelight Cupcake",
@@ -40,10 +53,29 @@
   "block.bovinesandbuttercups.tropical_blue_cupcake": "Tropical Blue Cupcake",
   "block.bovinesandbuttercups.freesia_cupcake": "Freesia Cupcake",
   "block.bovinesandbuttercups.lingholm_cupcake": "Lingholm Cupcake",
+
   "block.bovinesandbuttercups.brown_mushroom_puff_pastry": "Brown Mushroom Puff Pastry",
   "block.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
+
   "block.bovinesandbuttercups.suspicious_brown_mushroom_puff_pastry": "Suspicious Brown Mushroom Puff Pastry",
   "block.bovinesandbuttercups.suspicious_red_mushroom_puff_pastry": "Suspicious Red Mushroom Puff Pastry",
+
+  "item.bovinesandbuttercups.buttercup_cupcake": "Buttercup Cupcake",
+  "item.bovinesandbuttercups.pink_daisy_cupcake": "Pink Daisy Cupcake",
+  "item.bovinesandbuttercups.limelight_cupcake": "Limelight Cupcake",
+  "item.bovinesandbuttercups.bird_of_paradise_cupcake": "Bird of Paradise Cupcake",
+  "item.bovinesandbuttercups.chargelily_cupcake": "Chargelily Cupcake",
+  "item.bovinesandbuttercups.hyacinth_cupcake": "Hyacinth Cupcake",
+  "item.bovinesandbuttercups.snowdrop_cupcake": "Snowdrop Cupcake",
+  "item.bovinesandbuttercups.tropical_blue_cupcake": "Tropical Blue Cupcake",
+  "item.bovinesandbuttercups.freesia_cupcake": "Freesia Cupcake",
+  "item.bovinesandbuttercups.lingholm_cupcake": "Lingholm Cupcake",
+
+  "item.bovinesandbuttercups.brown_mushroom_puff_pastry": "Brown Mushroom Puff Pastry",
+  "item.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
+
+  "item.bovinesandbuttercups.suspicious_brown_mushroom_puff_pastry": "Suspicious Brown Mushroom Puff Pastry",
+  "item.bovinesandbuttercups.suspicious_red_mushroom_puff_pastry": "Suspicious Red Mushroom Puff Pastry",
 
   "block.bovinesandbuttercups.missing_flower": "Unknown Flower",
   "block.bovinesandbuttercups.missing_mushroom": "Unknown Mushroom",
@@ -52,7 +84,17 @@
   "block.bovinesandbuttercups.missing_potted_mushroom": "Unknown Potted Mushroom",
   "block.bovinesandbuttercups.missing_edible": "Unknown Edible",
 
-  "item.bovinesandbuttercups.nectar_bowl": "Nectar Bowl",
+  "item.bovinesandbuttercups.bird_of_paradise_nectar_bowl": "Bird of Paradise Nectar Bowl",
+  "item.bovinesandbuttercups.buttercup_nectar_bowl": "Buttercup Nectar Bowl",
+  "item.bovinesandbuttercups.chargelily_nectar_bowl": "Chargelily Nectar Bowl",
+  "item.bovinesandbuttercups.freesia_nectar_bowl": "Freesia Nectar Bowl",
+  "item.bovinesandbuttercups.hyacinth_nectar_bowl": "Hyacinth Nectar Bowl",
+  "item.bovinesandbuttercups.limelight_nectar_bowl": "Limelight Nectar Bowl",
+  "item.bovinesandbuttercups.lingholm_nectar_bowl": "Lingholm Nectar Bowl",
+  "item.bovinesandbuttercups.pink_daisy_nectar_bowl": "Pink Daisy Nectar Bowl",
+  "item.bovinesandbuttercups.snowdrop_nectar_bowl": "Snowdrop Nectar Bowl",
+  "item.bovinesandbuttercups.tropical_blue_nectar_bowl": "Tropical Blue Nectar Bowl",
+
   "item.bovinesandbuttercups.moobloom_spawn_egg": "Moobloom Spawn Egg",
   "item.bovinesandbuttercups.flower_crown": "Flower Crown",
   "item.bovinesandbuttercups.rich_honey_bottle": "Rich Honey Bottle",

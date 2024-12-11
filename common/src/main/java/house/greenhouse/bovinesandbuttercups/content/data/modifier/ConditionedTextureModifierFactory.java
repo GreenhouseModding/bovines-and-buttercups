@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.NoOpTextureModifier;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.ConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
@@ -28,7 +29,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-public class ConditionedTextureModifierFactory extends TextureModifierFactory<NoOpTextureModifier> {
+public class ConditionedTextureModifierFactory extends TextureModifierFactory<ConditionedTextureModifier> {
     public static final MapCodec<ConditionedTextureModifierFactory> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             ResourceLocation.CODEC.fieldOf("id").forGetter(f -> f.id),
             LootItemCondition.DIRECT_CODEC.validate(
@@ -55,16 +56,12 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
         this.tickRate = tickRate;
     }
 
-    public static boolean isConditionalDisplaying(Entity entity) {
-        return CONDITION_VALUES.containsKey(entity.getUUID()) && CONDITION_VALUES.get(entity.getUUID()).values().stream().anyMatch(bool -> bool);
-    }
-
-    public static boolean shouldDisplayConditional(Entity entity, ResourceLocation conditionId) {
-        return CONDITION_VALUES.containsKey(entity.getUUID()) && CONDITION_VALUES.get(entity.getUUID()).getOrDefault(conditionId, false);
-    }
-
     public ResourceLocation getConditionId() {
         return id;
+    }
+
+    public boolean getConditionValue(Entity entity) {
+        return CONDITION_VALUES.getOrDefault(entity.getUUID(), new HashMap<>()).getOrDefault(id, false);
     }
 
     public void setConditionValue(Entity entity, boolean value) {
@@ -72,13 +69,8 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
     }
 
     @Override
-    protected NoOpTextureModifier createProvider() {
-        return new NoOpTextureModifier();
-    }
-
-    @Override
-    public boolean canDisplay(Entity entity) {
-        return CONDITION_VALUES.getOrDefault(entity.getUUID(), new HashMap<>()).getOrDefault(id, false);
+    protected ConditionedTextureModifier createProvider() {
+        return new ConditionedTextureModifier(id);
     }
 
     @Override
@@ -107,7 +99,7 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<No
         params.withParameter(LootContextParams.ORIGIN, entity.position());
         LootContext context = new LootContext.Builder(params.create(BovinesLootContextParamSets.ENTITY)).create(Optional.empty());
         boolean conditionValue = condition.stream().allMatch(condition1 -> condition1.test(context));
-        boolean oldConditionValue = canDisplay(entity);
+        boolean oldConditionValue = getConditionValue(entity);
         if (conditionValue != oldConditionValue) {
             setConditionValue(entity, conditionValue);
             BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));

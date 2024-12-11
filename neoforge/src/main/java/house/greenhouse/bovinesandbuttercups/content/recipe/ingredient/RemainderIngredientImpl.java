@@ -1,7 +1,9 @@
 package house.greenhouse.bovinesandbuttercups.content.recipe.ingredient;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
@@ -12,7 +14,7 @@ import java.util.stream.Stream;
 
 public record RemainderIngredientImpl(Ingredient base, ItemStack remainder) implements RemainderIngredient, ICustomIngredient {
     private static final StreamCodec<RegistryFriendlyByteBuf, RemainderIngredientImpl> STREAM_CODEC = RemainderIngredient.createStreamCodec(RemainderIngredientImpl::new).map(remainderIngredient -> (RemainderIngredientImpl) remainderIngredient, Function.identity());;
-    public static final IngredientType<RemainderIngredientImpl> TYPE = new IngredientType<>(RemainderIngredient.createCodec(RemainderIngredientImpl::new, false).xmap(remainderIngredient -> (RemainderIngredientImpl)remainderIngredient, Function.identity()), STREAM_CODEC);
+    public static final IngredientType<RemainderIngredientImpl> TYPE = new IngredientType<>(RemainderIngredient.createCodec(RemainderIngredientImpl::new).xmap(remainderIngredient -> (RemainderIngredientImpl)remainderIngredient, Function.identity()), STREAM_CODEC);
 
     @Override
     public boolean test(ItemStack stack) {
@@ -20,8 +22,8 @@ public record RemainderIngredientImpl(Ingredient base, ItemStack remainder) impl
     }
 
     @Override
-    public Stream<ItemStack> getItems() {
-        return RemainderIngredient.super.getItems();
+    public Stream<Holder<Item>> items() {
+        return RemainderIngredient.super.items();
     }
 
     @Override

@@ -1,9 +1,0 @@
-{
-  "effects": [
-    {
-      "duration": 2400,
-      "id": "minecraft:strength"
-    }
-  ],
-  "model_set": "bovinesandbuttercups:item/pink_daisy_nectar_bowl"
-}

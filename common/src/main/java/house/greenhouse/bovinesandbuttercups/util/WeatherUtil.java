@@ -24,7 +24,7 @@ public class WeatherUtil {
             return false;
         } else {
             Biome biome = level.getBiome(pos).value();
-            return biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW;
+            return biome.getPrecipitationAt(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW;
         }
     }
 }

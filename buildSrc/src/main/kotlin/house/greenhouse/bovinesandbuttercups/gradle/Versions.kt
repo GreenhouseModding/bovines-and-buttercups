@@ -1,28 +1,28 @@
 package house.greenhouse.bovinesandbuttercups.gradle
 
 object Versions {
-    const val MOD = "2.0.2"
+    const val MOD = "2.1.0"
 
     // Minecraft
-    const val MINECRAFT = "1.21.1"
-    const val PARCHMENT_MINECRAFT = "1.21"
-    const val NEOFORM = "$MINECRAFT-20240808.144430"
-    const val PARCHMENT = "2024.07.28"
+    const val MINECRAFT = "1.21.4"
+    const val PARCHMENT_MINECRAFT = "1.21.4"
+    const val NEOFORM = "$MINECRAFT-20241203.161809"
+    const val PARCHMENT = "2024.12.07"
 
     // Resource Packs
     const val RESOURCE_PACK_FORMAT = 34
 
     // Fabric
-    const val FABRIC_API = "0.108.0+1.21.1"
+    const val FABRIC_API = "0.111.0+1.21.4"
     const val FABRIC_LOADER = "0.16.9"
-    const val MOD_MENU = "11.0.3"
+    const val MOD_MENU = "13.0.0-beta.1"
     const val FABRIC_LOADER_RANGE = ">=0.16"
-    const val FABRIC_MINECRAFT_RANGE = ">=1.21-"
+    const val FABRIC_MINECRAFT_RANGE = ">=1.21.4"
 
     // NeoForge
-    const val NEOFORGE = "21.1.73"
+    const val NEOFORGE = "21.4.13-beta"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
-    const val NEOFORGE_MINECRAFT_RANGE = "[1.21,)"
+    const val NEOFORGE_MINECRAFT_RANGE = "[1.21.4,)"
 
     // Misc
     const val FABRIC_MIXIN = "0.15.3+mixin.0.8.7"

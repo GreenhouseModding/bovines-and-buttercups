@@ -9,7 +9,6 @@ import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
-import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
@@ -21,6 +20,5 @@ public class BovinesRegistryKeys {
     public static final ResourceKey<Registry<CustomFlowerType>> CUSTOM_FLOWER_TYPE = ResourceKey.createRegistryKey(BovinesAndButtercups.asResource("flower_type"));
     public static final ResourceKey<Registry<CustomMushroomType>> CUSTOM_MUSHROOM_TYPE = ResourceKey.createRegistryKey(BovinesAndButtercups.asResource("mushroom_type"));
     public static final ResourceKey<Registry<EdibleBlockType>> EDIBLE_BLOCK_TYPE = ResourceKey.createRegistryKey(BovinesAndButtercups.asResource("edible_block"));
-    public static final ResourceKey<Registry<Nectar>> NECTAR = ResourceKey.createRegistryKey(BovinesAndButtercups.asResource("nectar"));
     public static final ResourceKey<Registry<FlowerCrownMaterial>> FLOWER_CROWN_MATERIAL = ResourceKey.createRegistryKey(BovinesAndButtercups.asResource("flower_crown_material"));
 }

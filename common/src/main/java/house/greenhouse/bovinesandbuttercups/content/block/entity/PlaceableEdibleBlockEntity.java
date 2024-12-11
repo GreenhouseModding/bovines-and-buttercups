@@ -28,7 +28,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -91,14 +91,14 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         return builder.toString();
     }
 
-    public ItemInteractionResult addAttachmentItem(ItemStack stack, Player player) {
+    public InteractionResult addAttachmentItem(ItemStack stack, Player player) {
         if (level.isClientSide)
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.CONSUME;
         Optional<Map.Entry<HolderSet<Item>, EdibleBlockType.AttachmentEntry>> items = type.holder().value().attachable().entrySet().stream().filter(holders -> holders.getKey().contains(stack.getItemHolder())).findFirst();
         if (items.isEmpty())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!attachments.isEmpty() && attachments.get(items.get().getKey()).items().size() >= Math.min(items.get().getValue().maxCount(), getBlockState().getValue(PlaceableEdibleBlock.BITES)))
-            return ItemInteractionResult.CONSUME;
+            return InteractionResult.CONSUME;
         attachments.compute(items.get().getKey(), (set, previous) -> {
             ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
             boolean active = false;
@@ -119,24 +119,24 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
-    public ItemInteractionResult removeAttachmentItem(ItemStack stack) {
+    public InteractionResult removeAttachmentItem(ItemStack stack) {
         if (level.isClientSide)
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.CONSUME;
 
         List<Map.Entry<HolderSet<Item>, EdibleBlockType.AttachmentEntry>> items = type.holder().value().attachable().entrySet().stream().toList();
         if (items.isEmpty())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         Map.Entry<HolderSet<Item>, EdibleBlockType.AttachmentEntry> item = items.getLast();
         if (!attachments.containsKey(item.getKey()) || attachments.get(item.getKey()).items.isEmpty())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
 
         ItemStack last = attachments.get(item.getKey()).items().getLast();
 
-        if (item.getValue().activations().stream().noneMatch(activationEntry -> !activationEntry.setTo() && activationEntry.ingredient().test(stack)))
-            return ItemInteractionResult.CONSUME;
+        if (item.getValue().activations().stream().noneMatch(activationEntry -> !activationEntry.setTo() && (activationEntry.ingredient().isEmpty() && stack.isEmpty() || activationEntry.ingredient().isPresent() && activationEntry.ingredient().get().test(stack))))
+            return InteractionResult.CONSUME;
 
         if (attachments.get(item.getKey()).items().size() == 1)
             attachments.remove(item.getKey());
@@ -157,7 +157,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
 
@@ -169,12 +169,12 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         }))).reduce(0, Integer::sum), 15);
     }
 
-    public ItemInteractionResult activate(ItemStack stack, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult activate(ItemStack stack, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.isClientSide())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        List<Pair<HolderSet<Item>, List<EdibleBlockType.ActivationEntry>>> activations = type.holder().value().attachable().entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue().activations().stream().filter(activationEntry -> activationEntry.ingredient().test(stack)).toList())).toList();
+            return InteractionResult.CONSUME;
+        List<Pair<HolderSet<Item>, List<EdibleBlockType.ActivationEntry>>> activations = type.holder().value().attachable().entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue().activations().stream().filter(activationEntry -> activationEntry.ingredient().isEmpty() && stack.isEmpty() || activationEntry.ingredient().isPresent() && activationEntry.ingredient().get().test(stack)).toList())).toList();
         if (activations.isEmpty())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
 
         LootParams params = new LootParams.Builder((ServerLevel)level)
                 .withParameter(LootContextParams.BLOCK_STATE, getBlockState())
@@ -186,7 +186,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         LootContext context = new LootContext.Builder(params).create(Optional.empty());
 
         if (attachments.isEmpty() || activations.stream().noneMatch(pair -> pair.getSecond().stream().anyMatch(activationEntry -> (activationEntry.condition().isEmpty() || activationEntry.condition().stream().allMatch(condition -> condition.test(context))) && activationEntry.setTo() != (attachments.containsKey(pair.getFirst()) && attachments.get(pair.getFirst()).active()))))
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
 
         activations.forEach(entry ->
                 entry.getSecond().forEach(activationEntry -> {
@@ -215,7 +215,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     public void setAttachmentActive(HolderSet<Item> items, boolean value) {
@@ -306,7 +306,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
     public record EdibleBlockEntityValues(ItemEdible placeableEdible, int bites, Map<HolderSet<Item>, PlaceableEdibleBlockEntity.AttachmentState> state) {
         public static EdibleBlockEntityValues fromBlockEntity(PlaceableEdibleBlockEntity blockEntity) {
-            return new EdibleBlockEntityValues(Optional.of(blockEntity.getEdibleType()).orElseGet(() -> new ItemEdible(blockEntity.level.registryAccess().registryOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getHolderOrThrow(EdibleBlockType.MISSING_KEY), List.of())), blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES), blockEntity.getAttachments());
+            return new EdibleBlockEntityValues(Optional.of(blockEntity.getEdibleType()).orElseGet(() -> new ItemEdible(blockEntity.level.registryAccess().lookupOrThrow(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE).getOrThrow(EdibleBlockType.MISSING_KEY), List.of())), blockEntity.getBlockState().getValue(PlaceableEdibleBlock.BITES), blockEntity.getAttachments());
         }
     }
 }

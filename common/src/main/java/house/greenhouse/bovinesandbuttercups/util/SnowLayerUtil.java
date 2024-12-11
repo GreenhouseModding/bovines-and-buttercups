@@ -4,6 +4,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
@@ -23,22 +24,23 @@ import net.minecraft.world.level.gameevent.GameEvent;
 public class SnowLayerUtil {
     public static InteractionResult removeSnowIfShovel(Entity entity, Player player, InteractionHand hand, ItemStack stack) {
         if (stack.is(ItemTags.SHOVELS) && !WeatherUtil.isInSnowyWeather(entity) && hasSnow(entity) && !isSnowLayerPersistent(entity)) {
-            removeSnowLayer(entity, SoundSource.PLAYERS);
             entity.gameEvent(GameEvent.ENTITY_INTERACT);
-            if (!entity.level().isClientSide)
+            if (!entity.level().isClientSide) {
+                removeSnowLayer((ServerLevel)entity.level(), entity, SoundSource.PLAYERS);
                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-            return InteractionResult.sidedSuccess(entity.level().isClientSide());
+            }
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
 
-    public static void removeSnowLayer(Entity entity, SoundSource source) {
+    public static void removeSnowLayer(ServerLevel level, Entity entity, SoundSource source) {
         entity.level().playSound(null, entity, SoundEvents.SNOW_BREAK, source, 1.0F, 1.0F);
         setSnow(entity, false);
         int snowAmount = entity instanceof AgeableMob ageable && ageable.isBaby() ? 1 : 2;
 
         for (int j = 0; j < snowAmount; j++) {
-            ItemEntity item = entity.spawnAtLocation(Items.SNOWBALL, 1);
+            ItemEntity item = entity.spawnAtLocation(level, Items.SNOWBALL, 1);
             if (item != null) {
                 item.setDeltaMovement(
                         item.getDeltaMovement()

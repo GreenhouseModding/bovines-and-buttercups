@@ -1,6 +1,5 @@
 {
   "parent": "bovinesandbuttercups:block/template_cupcake",
-  "render_type": "cutout",
   "textures": {
     "all": "bovinesandbuttercups:block/snowdrop_cupcake"
   }

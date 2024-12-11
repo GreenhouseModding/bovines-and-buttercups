@@ -1,66 +1,42 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.entity.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.animation.MoobloomAnimations;
-import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.HierarchicalModel;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.state.MoobloomRenderState;
+import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 
-public class MoobloomModel extends HierarchicalModel<Moobloom> {
-    private final ModelPart root;
-    private final CowModel<Moobloom> cowModel;
-    private final ModelPart body;
-
+public class MoobloomModel extends QuadrupedModel<MoobloomRenderState> {
     public MoobloomModel(ModelPart root) {
-        super();
-        this.root = root;
-        cowModel = new CowModel<>(root);
-        this.body = root.getChild("body");
+        super(root);
     }
 
     @Override
-    public void setupAnim(Moobloom moobloom, float limbSwing, float limbSwingAmount, float delta, float yRot, float xRot) {
+    public void setupAnim(MoobloomRenderState state) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        cowModel.attackTime = attackTime;
-        cowModel.riding = riding;
-        cowModel.young = young;
-        if (animateLayingDown(moobloom, delta)) {
-            if (moobloom.layDownAnimationState.isStarted()) {
-                cowModel.getHead().xRot = xRot * (float) (Math.PI / 180.0);
-                cowModel.getHead().yRot = yRot * (float) (Math.PI / 180.0);
+        if (animateLayingDown(state)) {
+            if (state.layDownAnimationState.isStarted()) {
+                head.xRot = head.xRot * (float) (Math.PI / 180.0);
+                head.yRot = head.yRot * (float) (Math.PI / 180.0);
             }
             return;
         }
-        cowModel.setupAnim(moobloom, limbSwing, limbSwingAmount, delta, yRot, xRot);
+        super.setupAnim(state);
     }
 
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        cowModel.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, color);
-    }
-
-    protected boolean animateLayingDown(Moobloom moobloom, float delta) {
-        if (moobloom.getUpAnimationState.isStarted() || moobloom.layDownAnimationState.isStarted()) {
-            animate(moobloom.getUpAnimationState, MoobloomAnimations.MOOBLOOM_GET_UP, delta, 1.0F);
-            animate(moobloom.layDownAnimationState, MoobloomAnimations.MOOBLOOM_LAY_DOWN, delta, 1.0F);
+    protected boolean animateLayingDown(MoobloomRenderState state) {
+        if (state.getUpAnimationState.isStarted() || state.layDownAnimationState.isStarted()) {
+            animate(state.getUpAnimationState, MoobloomAnimations.MOOBLOOM_GET_UP, state.ageInTicks, 1.0F);
+            animate(state.layDownAnimationState, MoobloomAnimations.MOOBLOOM_LAY_DOWN, state.ageInTicks, 1.0F);
             return true;
         }
         return false;
     }
 
-    @Override
-    public ModelPart root() {
-        return root;
+    public ModelPart getHead() {
+        return head;
     }
 
     public ModelPart getBody() {
         return body;
-    }
-
-    public CowModel<Moobloom> getCowModel() {
-        return cowModel;
     }
 }

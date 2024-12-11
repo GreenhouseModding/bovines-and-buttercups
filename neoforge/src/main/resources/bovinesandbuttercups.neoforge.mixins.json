@@ -8,11 +8,9 @@
   ],
   "client": [
     "client.BlockModelShaperMixin",
-    "client.EffectRenderingInventoryScreenMixin",
+    "client.EffectsInInventoryMixin",
     "client.EntityRenderersEventAddLayersAccessor",
     "client.GuiMixin"
-  ],
-  "server": [
   ],
   "injectors": {
     "defaultRequire": 1
