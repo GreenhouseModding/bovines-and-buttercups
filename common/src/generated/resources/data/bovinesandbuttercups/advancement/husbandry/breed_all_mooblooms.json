@@ -15,6 +15,13 @@
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
+    "bovinesandbuttercups:camellia": {
+      "conditions": {
+        "cow_type_type": "bovinesandbuttercups:moobloom",
+        "cow_types": "bovinesandbuttercups:camellia"
+      },
+      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+    },
     "bovinesandbuttercups:chargelily": {
       "conditions": {
         "cow_type_type": "bovinesandbuttercups:moobloom",
@@ -93,6 +100,9 @@
       "bovinesandbuttercups:buttercup"
     ],
     [
+      "bovinesandbuttercups:camellia"
+    ],
+    [
       "bovinesandbuttercups:chargelily"
     ],
     [
@@ -117,5 +127,8 @@
       "bovinesandbuttercups:tropical_blue"
     ]
   ],
+  "rewards": {
+    "experience": 100
+  },
   "sends_telemetry_event": true
 }

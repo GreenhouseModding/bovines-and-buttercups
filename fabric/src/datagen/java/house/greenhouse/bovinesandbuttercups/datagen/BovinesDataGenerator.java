@@ -10,14 +10,12 @@ import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
 import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.Nectar;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.BovinesNectars;
-import house.greenhouse.bovinesandbuttercups.content.recipe.SuspiciousEdibleRecipe;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -50,7 +48,6 @@ import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -66,7 +63,6 @@ import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
-import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -80,13 +76,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
@@ -262,6 +253,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .requirements(AdvancementRequirements.allOf(List.of(
                             "bovinesandbuttercups:bird_of_paradise",
                             "bovinesandbuttercups:buttercup",
+                            "bovinesandbuttercups:camellia",
                             "bovinesandbuttercups:chargelily",
                             "bovinesandbuttercups:freesia",
                             "bovinesandbuttercups:hyacinth",
@@ -273,6 +265,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     )))
                     .addCriterion("bovinesandbuttercups:bird_of_paradise", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.BIRD_OF_PARADISE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:buttercup", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.BUTTERCUP)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:camellia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.CAMELLIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:chargelily", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.CHARGELILY)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:freesia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.FREESIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:hyacinth", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.HYACINTH)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
@@ -281,6 +274,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .addCriterion("bovinesandbuttercups:pink_daisy", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.PINK_DAISY)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:snowdrop", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.SNOWDROP)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .addCriterion("bovinesandbuttercups:tropical_blue", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.TROPICAL_BLUE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .rewards(AdvancementRewards.Builder.experience(100))
                     .build(BovinesAndButtercups.asResource("husbandry/breed_all_mooblooms")));
             consumer.accept(Advancement.Builder.advancement()
                     .display(new DisplayInfo(
@@ -301,19 +295,15 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
     }
 
     private static class RecipeProvider extends FabricRecipeProvider {
-        private final CompletableFuture<HolderLookup.Provider> registries;
-
         public RecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
             super(output, lookup);
-            this.registries = lookup;
         }
 
         @Override
         public void buildRecipes(RecipeOutput output) {
-            HolderLookup.Provider lookup = registries.join();
-
             oneToOneConversionRecipe(output, Items.ORANGE_DYE, BovinesBlocks.BIRD_OF_PARADISE, "orange_dye");
             oneToOneConversionRecipe(output, Items.YELLOW_DYE, BovinesBlocks.BUTTERCUP, "yellow_dye");
+            oneToOneConversionRecipe(output, Items.MAGENTA_DYE, BovinesBlocks.CAMELLIA, "magenta_dye");
             oneToOneConversionRecipe(output, Items.LIGHT_BLUE_DYE, BovinesBlocks.CHARGELILY, "light_blue_dye");
             oneToOneConversionRecipe(output, Items.RED_DYE, BovinesBlocks.FREESIA, "red_dye");
             oneToOneConversionRecipe(output, Items.PURPLE_DYE, BovinesBlocks.HYACINTH, "purple_dye");
@@ -349,6 +339,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         public void generate() {
             dropSelf(BovinesBlocks.BIRD_OF_PARADISE);
             dropSelf(BovinesBlocks.BUTTERCUP);
+            dropSelf(BovinesBlocks.CAMELLIA);
             dropSelf(BovinesBlocks.CHARGELILY);
             dropSelf(BovinesBlocks.FREESIA);
             dropSelf(BovinesBlocks.HYACINTH);
@@ -360,6 +351,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
             dropPottedContents(BovinesBlocks.POTTED_BIRD_OF_PARADISE);
             dropPottedContents(BovinesBlocks.POTTED_BUTTERCUP);
+            dropPottedContents(BovinesBlocks.POTTED_CAMELLIA);
             dropPottedContents(BovinesBlocks.POTTED_CHARGELILY);
             dropPottedContents(BovinesBlocks.POTTED_FREESIA);
             dropPottedContents(BovinesBlocks.POTTED_HYACINTH);
@@ -573,6 +565,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(
                             reverseLookup(BovinesBlocks.BIRD_OF_PARADISE),
                             reverseLookup(BovinesBlocks.BUTTERCUP),
+                            reverseLookup(BovinesBlocks.CAMELLIA),
                             reverseLookup(BovinesBlocks.CHARGELILY),
                             reverseLookup(BovinesBlocks.CUSTOM_FLOWER),
                             reverseLookup(BovinesBlocks.FREESIA),
@@ -623,6 +616,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.CAMELLIA_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY)
@@ -665,6 +659,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesFlowerCrownMaterials.CHARGELILY)
                     .add(BovinesFlowerCrownMaterials.TROPICAL_BLUE)
                     .add(BovinesFlowerCrownMaterials.HYACINTH)
+                    .add(BovinesFlowerCrownMaterials.CAMELLIA)
                     .add(BovinesFlowerCrownMaterials.PINK_DAISY)
                     .add(BovinesFlowerCrownMaterials.SNOWDROP);
         }
@@ -683,6 +678,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(
                             reverseLookup(BovinesItems.BIRD_OF_PARADISE),
                             reverseLookup(BovinesItems.BUTTERCUP),
+                            reverseLookup(BovinesItems.CAMELLIA),
                             reverseLookup(BovinesItems.CHARGELILY),
                             reverseLookup(BovinesItems.CUSTOM_FLOWER),
                             reverseLookup(BovinesItems.FREESIA),
@@ -717,6 +713,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesNectars.CHARGELILY)
                     .add(BovinesNectars.TROPICAL_BLUE)
                     .add(BovinesNectars.HYACINTH)
+                    .add(BovinesNectars.CAMELLIA)
                     .add(BovinesNectars.PINK_DAISY)
                     .add(BovinesNectars.SNOWDROP);
         }
@@ -755,6 +752,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
             createCupcakes(BovinesEdibleBlockTypes.BIRD_OF_PARADISE_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.BUTTERCUP_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.CAMELLIA_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.CHARGELILY_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.FREESIA_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE, generators);

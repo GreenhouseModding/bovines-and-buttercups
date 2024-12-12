@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "bovinesandbuttercups:block/camellia_bud"
+  }
+}

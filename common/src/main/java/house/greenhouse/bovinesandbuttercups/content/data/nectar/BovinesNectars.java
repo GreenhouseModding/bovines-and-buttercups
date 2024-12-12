@@ -11,6 +11,7 @@ import java.util.List;
 public class BovinesNectars {
     public static final ResourceKey<Nectar> BIRD_OF_PARADISE = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("bird_of_paradise"));
     public static final ResourceKey<Nectar> BUTTERCUP = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("buttercup"));
+    public static final ResourceKey<Nectar> CAMELLIA = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("camellia"));
     public static final ResourceKey<Nectar> CHARGELILY = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("chargelily"));
     public static final ResourceKey<Nectar> FREESIA = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("freesia"));
     public static final ResourceKey<Nectar> HYACINTH = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("hyacinth"));
@@ -27,6 +28,9 @@ public class BovinesNectars {
         context.register(BUTTERCUP,
                 new Nectar(BovinesAndButtercups.asResource("item/buttercup_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.POISON, 2400)))));
+        context.register(CAMELLIA,
+                new Nectar(BovinesAndButtercups.asResource("item/camellia_nectar_bowl"),
+                        new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.HUNGER, 2400)))));
         context.register(CHARGELILY,
                 new Nectar(BovinesAndButtercups.asResource("item/chargelily_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SPEED, 1200)))));

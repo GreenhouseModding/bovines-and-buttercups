@@ -1,0 +1,9 @@
+{
+  "effects": [
+    {
+      "duration": 2400,
+      "id": "minecraft:hunger"
+    }
+  ],
+  "model_set": "bovinesandbuttercups:item/camellia_nectar_bowl"
+}
