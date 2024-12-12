@@ -26,6 +26,7 @@ public class BovinesBlocks {
     public static final FlowerBlock TROPICAL_BLUE = new FlowerBlock(MobEffects.FIRE_RESISTANCE, 4, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("tropical_blue"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
     public static final FlowerBlock FREESIA = new FlowerBlock(MobEffects.WATER_BREATHING, 8, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("freesia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
     public static final FlowerBlock LINGHOLM = new FlowerBlock(MobEffects.MOVEMENT_SPEED, 4, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("lingholm"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock CAMELLIA = new FlowerBlock(MobEffects.SATURATION, 0.35F, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("camellia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 
     public static final FlowerPotBlock POTTED_BUTTERCUP = new FlowerPotBlock(BUTTERCUP, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_buttercup"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_PINK_DAISY = new FlowerPotBlock(PINK_DAISY, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_pink_daisy"))).instabreak().noOcclusion());
@@ -37,6 +38,7 @@ public class BovinesBlocks {
     public static final FlowerPotBlock POTTED_TROPICAL_BLUE = new FlowerPotBlock(TROPICAL_BLUE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_tropical_blue"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_FREESIA = new FlowerPotBlock(FREESIA, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_freesia"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_LINGHOLM = new FlowerPotBlock(LINGHOLM, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_lingholm"))).instabreak().noOcclusion());
+    public static final FlowerPotBlock POTTED_CAMELLIA = new FlowerPotBlock(CAMELLIA, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_camellia"))).instabreak().noOcclusion());
 
     public static final Block RICH_HONEY_BLOCK = new RichHoneyBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("rich_honey_block"))).mapColor(MapColor.COLOR_ORANGE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
 
@@ -60,6 +62,7 @@ public class BovinesBlocks {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("tropical_blue"), TROPICAL_BLUE);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("freesia"), FREESIA);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("lingholm"), LINGHOLM);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("camellia"), CAMELLIA);
 
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_buttercup"), POTTED_BUTTERCUP);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_pink_daisy"), POTTED_PINK_DAISY);
@@ -71,6 +74,7 @@ public class BovinesBlocks {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_tropical_blue"), POTTED_TROPICAL_BLUE);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_freesia"), POTTED_FREESIA);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_lingholm"), POTTED_LINGHOLM);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_camellia"), POTTED_CAMELLIA);
 
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("rich_honey_block"), RICH_HONEY_BLOCK);
 

@@ -74,6 +74,7 @@ public class CreativeTabHelper {
                 BovinesItems.CHARGELILY_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.TROPICAL_BLUE_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.HYACINTH_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.CAMELLIA_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.PINK_DAISY_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance()
         );

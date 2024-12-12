@@ -20,6 +20,7 @@
   "block.bovinesandbuttercups.tropical_blue": "Tropical Blue",
   "block.bovinesandbuttercups.freesia": "Freesia",
   "block.bovinesandbuttercups.lingholm": "Lingholm",
+  "block.bovinesandbuttercups.camellia": "Camellia",
 
   "item.bovinesandbuttercups.buttercup": "Buttercup",
   "item.bovinesandbuttercups.pink_daisy": "Pink Daisy",
@@ -31,6 +32,7 @@
   "item.bovinesandbuttercups.tropical_blue": "Tropical Blue",
   "item.bovinesandbuttercups.freesia": "Freesia",
   "item.bovinesandbuttercups.lingholm": "Lingholm",
+  "item.bovinesandbuttercups.camellia": "Camellia",
 
   "block.bovinesandbuttercups.potted_buttercup": "Potted Buttercup",
   "block.bovinesandbuttercups.potted_pink_daisy": "Potted Pink Daisy",
@@ -42,6 +44,7 @@
   "block.bovinesandbuttercups.potted_tropical_blue": "Potted Tropical Blue",
   "block.bovinesandbuttercups.potted_freesia": "Potted Freesia",
   "block.bovinesandbuttercups.potted_lingholm": "Potted Lingholm",
+  "block.bovinesandbuttercups.potted_camellia": "Potted Camellia",
 
   "block.bovinesandbuttercups.buttercup_cupcake": "Buttercup Cupcake",
   "block.bovinesandbuttercups.pink_daisy_cupcake": "Pink Daisy Cupcake",
@@ -53,6 +56,7 @@
   "block.bovinesandbuttercups.tropical_blue_cupcake": "Tropical Blue Cupcake",
   "block.bovinesandbuttercups.freesia_cupcake": "Freesia Cupcake",
   "block.bovinesandbuttercups.lingholm_cupcake": "Lingholm Cupcake",
+  "block.bovinesandbuttercups.camellia_cupcake": "Camellia Cupcake",
 
   "block.bovinesandbuttercups.brown_mushroom_puff_pastry": "Brown Mushroom Puff Pastry",
   "block.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
@@ -70,6 +74,7 @@
   "item.bovinesandbuttercups.tropical_blue_cupcake": "Tropical Blue Cupcake",
   "item.bovinesandbuttercups.freesia_cupcake": "Freesia Cupcake",
   "item.bovinesandbuttercups.lingholm_cupcake": "Lingholm Cupcake",
+  "item.bovinesandbuttercups.camellia_cupcake": "Camellia Cupcake",
 
   "item.bovinesandbuttercups.brown_mushroom_puff_pastry": "Brown Mushroom Puff Pastry",
   "item.bovinesandbuttercups.red_mushroom_puff_pastry": "Red Mushroom Puff Pastry",
@@ -86,6 +91,7 @@
 
   "item.bovinesandbuttercups.bird_of_paradise_nectar_bowl": "Bird of Paradise Nectar Bowl",
   "item.bovinesandbuttercups.buttercup_nectar_bowl": "Buttercup Nectar Bowl",
+  "item.bovinesandbuttercups.camellia_nectar_bowl": "Camellia Nectar Bowl",
   "item.bovinesandbuttercups.chargelily_nectar_bowl": "Chargelily Nectar Bowl",
   "item.bovinesandbuttercups.freesia_nectar_bowl": "Freesia Nectar Bowl",
   "item.bovinesandbuttercups.hyacinth_nectar_bowl": "Hyacinth Nectar Bowl",
@@ -111,6 +117,7 @@
   "flower_crown_material.bovinesandbuttercups.tropical_blue": "Tropical Blue Flower",
   "flower_crown_material.bovinesandbuttercups.freesia": "Freesia Flower",
   "flower_crown_material.bovinesandbuttercups.lingholm": "Lingholm Flower",
+  "flower_crown_material.bovinesandbuttercups.camellia": "Camellia Flower",
   "subtitles.item.armor.bovinesandbuttercups.equip_flower_crown": "Flower Crown rustles",
 
   "entity.bovinesandbuttercups.moobloom": "Moobloom",

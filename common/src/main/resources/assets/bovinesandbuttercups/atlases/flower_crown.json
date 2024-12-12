@@ -1,35 +1,36 @@
 {
-    "sources": [
-        {
-            "type": "directory",
-            "source": "bovinesandbuttercups/flower_crown/models",
-            "prefix": "bovinesandbuttercups/flower_crown/models/"
-        },
-        {
-            "type": "paletted_permutations",
-            "textures": [
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom",
-                "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right"
-            ],
-            "palette_key": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/flower_crown_palette",
-            "permutations": {
-                "bird_of_paradise": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/bird_of_paradise",
-                "buttercup": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/buttercup",
-                "chargelily": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/chargelily",
-                "freesia": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/freesia",
-                "hyacinth": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/hyacinth",
-                "limelight": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/limelight",
-                "lingholm": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/lingholm",
-                "pink_daisy": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/pink_daisy",
-                "snowdrop": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/snowdrop",
-                "tropical_blue": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/tropical_blue"
-            }
-        }
-    ]
+  "sources": [
+    {
+      "type": "directory",
+      "source": "bovinesandbuttercups/flower_crown/models",
+      "prefix": "bovinesandbuttercups/flower_crown/models/"
+    },
+    {
+      "type": "paletted_permutations",
+      "textures": [
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom",
+        "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right"
+      ],
+      "palette_key": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/flower_crown_palette",
+      "permutations": {
+        "bird_of_paradise": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/bird_of_paradise",
+        "buttercup": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/buttercup",
+        "camellia": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/camellia",
+        "chargelily": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/chargelily",
+        "freesia": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/freesia",
+        "hyacinth": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/hyacinth",
+        "limelight": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/limelight",
+        "lingholm": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/lingholm",
+        "pink_daisy": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/pink_daisy",
+        "snowdrop": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/snowdrop",
+        "tropical_blue": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/tropical_blue"
+      }
+    }
+  ]
 }

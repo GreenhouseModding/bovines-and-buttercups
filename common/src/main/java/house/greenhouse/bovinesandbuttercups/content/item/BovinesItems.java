@@ -34,9 +34,11 @@ public class BovinesItems {
     public static final BlockItem TROPICAL_BLUE = new BlockItem(BovinesBlocks.TROPICAL_BLUE, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("tropical_blue"))));
     public static final BlockItem FREESIA = new BlockItem(BovinesBlocks.FREESIA, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("freesia"))));
     public static final BlockItem LINGHOLM = new BlockItem(BovinesBlocks.LINGHOLM, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("lingholm"))));
+    public static final BlockItem CAMELLIA = new BlockItem(BovinesBlocks.CAMELLIA, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("camellia"))));
 
     public static final NectarBowlItem BIRD_OF_PARADISE_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("bird_of_paradise_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.BIRD_OF_PARADISE_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
     public static final NectarBowlItem BUTTERCUP_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("buttercup_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.BUTTERCUP_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
+    public static final NectarBowlItem CAMELLIA_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("camellia_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.CAMELLIA_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
     public static final NectarBowlItem CHARGELILY_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("chargelily_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.CHARGELILY_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
     public static final NectarBowlItem FREESIA_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("freesia_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.FREESIA_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
     public static final NectarBowlItem HYACINTH_NECTAR_BOWL = new NectarBowlItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, BovinesAndButtercups.asResource("hyacinth_nectar_bowl"))).stacksTo(1).component(DataComponents.CONSUMABLE, BovinesFoods.Consumables.HYACINTH_NECTAR).usingConvertsTo(Items.BOWL).craftRemainder(Items.BOWL));
@@ -69,9 +71,11 @@ public class BovinesItems {
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("tropical_blue"), TROPICAL_BLUE);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("freesia"), FREESIA);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("lingholm"), LINGHOLM);
+        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("camellia"), CAMELLIA);
 
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("bird_of_paradise_nectar_bowl"), BIRD_OF_PARADISE_NECTAR_BOWL);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("buttercup_nectar_bowl"), BUTTERCUP_NECTAR_BOWL);
+        callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("camellia_nectar_bowl"), CAMELLIA_NECTAR_BOWL);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("chargelily_nectar_bowl"), CHARGELILY_NECTAR_BOWL);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("freesia_nectar_bowl"), FREESIA_NECTAR_BOWL);
         callback.register(BuiltInRegistries.ITEM, BovinesAndButtercups.asResource("hyacinth_nectar_bowl"), HYACINTH_NECTAR_BOWL);

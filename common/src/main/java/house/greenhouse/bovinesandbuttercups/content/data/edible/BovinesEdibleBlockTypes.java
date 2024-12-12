@@ -13,6 +13,7 @@ import java.util.Optional;
 public class BovinesEdibleBlockTypes {
     public static final ResourceKey<EdibleBlockType> BIRD_OF_PARADISE_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("bird_of_paradise_cupcake"));
     public static final ResourceKey<EdibleBlockType> BUTTERCUP_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("buttercup_cupcake"));
+    public static final ResourceKey<EdibleBlockType> CAMELLIA_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("camellia_cupcake"));
     public static final ResourceKey<EdibleBlockType> CHARGELILY_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("chargelily_cupcake"));
     public static final ResourceKey<EdibleBlockType> FREESIA_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("freesia_cupcake"));
     public static final ResourceKey<EdibleBlockType> HYACINTH_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("hyacinth_cupcake"));
@@ -30,6 +31,7 @@ public class BovinesEdibleBlockTypes {
     public static void bootstrap(BootstrapContext<EdibleBlockType> context) {
         context.register(BIRD_OF_PARADISE_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.SLOW_FALLING, 7200), Optional.empty()));
         context.register(BUTTERCUP_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.POISON, 2400), Optional.empty()));
+        context.register(CAMELLIA_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.HUNGER, 2400), Optional.empty()));
         context.register(CHARGELILY_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.DIG_SPEED, 1200), Optional.empty()));
         context.register(FREESIA_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.WATER_BREATHING, 9600), Optional.empty()));
         context.register(HYACINTH_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.WITHER, 2400), Optional.empty()));

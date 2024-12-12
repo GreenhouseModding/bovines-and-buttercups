@@ -199,6 +199,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                     BovinesItems.CHARGELILY,
                     BovinesItems.TROPICAL_BLUE,
                     BovinesItems.HYACINTH,
+                    BovinesItems.CAMELLIA,
                     BovinesItems.PINK_DAISY,
                     BovinesItems.SNOWDROP
             ).map(ItemStack::new).toList());

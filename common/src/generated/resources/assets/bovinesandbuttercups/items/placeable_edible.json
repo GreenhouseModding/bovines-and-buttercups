@@ -19,6 +19,13 @@
       {
         "model": {
           "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/camellia_cupcake"
+        },
+        "when": "bovinesandbuttercups:camellia_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
           "model": "bovinesandbuttercups:item/chargelily_cupcake"
         },
         "when": "bovinesandbuttercups:chargelily_cupcake"

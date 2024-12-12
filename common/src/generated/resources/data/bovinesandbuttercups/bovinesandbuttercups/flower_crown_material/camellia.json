@@ -1,0 +1,29 @@
+{
+  "description": {
+    "color": "#E748C9",
+    "translate": "flower_crown_material.bovinesandbuttercups.camellia"
+  },
+  "equipped_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_camellia",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left_camellia",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right_camellia",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left_camellia",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right_camellia",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_camellia",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left_camellia",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right_camellia"
+  },
+  "ingredient": {
+    "id": "bovinesandbuttercups:camellia"
+  },
+  "item_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_camellia",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_left_camellia",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_right_camellia",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_left_camellia",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_right_camellia",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_camellia",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_left_camellia",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_right_camellia"
+  }
+}

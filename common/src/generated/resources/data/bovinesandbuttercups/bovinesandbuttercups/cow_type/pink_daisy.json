@@ -92,8 +92,7 @@
                       "minecraft:allium",
                       "minecraft:potted_allium",
                       "minecraft:pink_tulip",
-                      "minecraft:potted_pink_tulip",
-                      "minecraft:pink_petals"
+                      "minecraft:potted_pink_tulip"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -121,11 +120,7 @@
                       "minecraft:oak_log",
                       "minecraft:oak_wood",
                       "minecraft:oak_sapling",
-                      "minecraft:potted_oak_sapling",
-                      "minecraft:cherry_log",
-                      "minecraft:cherry_wood",
-                      "minecraft:cherry_sapling",
-                      "minecraft:potted_cherry_sapling"
+                      "minecraft:potted_oak_sapling"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",

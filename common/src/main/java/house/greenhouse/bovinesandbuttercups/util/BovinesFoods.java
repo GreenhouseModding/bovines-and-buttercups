@@ -40,6 +40,14 @@ public class BovinesFoods {
                         .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.POISON)))))
                 .hasConsumeParticles(false)
                 .build();
+        public static final Consumable CAMELLIA_NECTAR = Consumable.builder()
+                .consumeSeconds(1.6F)
+                .animation(ItemUseAnimation.DRINK)
+                .sound(SoundEvents.GENERIC_DRINK)
+                .onConsume(new ApplyStatusEffectsConsumeEffect(((MobEffectInstanceLockdownDataAccess)new MobEffectInstance(BovinesEffects.LOCKDOWN, 2400))
+                        .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.HUNGER)))))
+                .hasConsumeParticles(false)
+                .build();
         public static final Consumable CHARGELILY_NECTAR = Consumable.builder()
                 .consumeSeconds(1.6F)
                 .animation(ItemUseAnimation.DRINK)

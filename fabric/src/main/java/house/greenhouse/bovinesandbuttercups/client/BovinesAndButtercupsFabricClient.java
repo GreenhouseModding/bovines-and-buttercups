@@ -194,6 +194,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_BIRD_OF_PARADISE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.BUTTERCUP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_BUTTERCUP, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CAMELLIA, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_CAMELLIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CHARGELILY, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CHARGELILY, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.FREESIA, RenderType.cutout());

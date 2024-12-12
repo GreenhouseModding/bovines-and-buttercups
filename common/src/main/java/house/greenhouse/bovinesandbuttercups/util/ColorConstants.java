@@ -6,6 +6,7 @@ package house.greenhouse.bovinesandbuttercups.util;
 public class ColorConstants {
     public static final int BIRD_OF_PARADISE = 0xff823a;
     public static final int BUTTERCUP = 0xffe524;
+    public static final int CAMELLIA = 0xe748c9;
     public static final int CHARGELILY = 0x65caf7;
     public static final int FREESIA = 0xe84c56;
     public static final int HYACINTH = 0xaa86f1;

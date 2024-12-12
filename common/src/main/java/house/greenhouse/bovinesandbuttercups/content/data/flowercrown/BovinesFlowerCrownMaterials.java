@@ -13,6 +13,7 @@ import net.minecraft.world.level.ItemLike;
 public class BovinesFlowerCrownMaterials {
     public static final ResourceKey<FlowerCrownMaterial> BIRD_OF_PARADISE = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("bird_of_paradise"));
     public static final ResourceKey<FlowerCrownMaterial> BUTTERCUP = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("buttercup"));
+    public static final ResourceKey<FlowerCrownMaterial> CAMELLIA = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("camellia"));
     public static final ResourceKey<FlowerCrownMaterial> CHARGELILY = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("chargelily"));
     public static final ResourceKey<FlowerCrownMaterial> FREESIA = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("freesia"));
     public static final ResourceKey<FlowerCrownMaterial> HYACINTH = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("hyacinth"));
@@ -25,6 +26,7 @@ public class BovinesFlowerCrownMaterials {
     public static void bootstrap(BootstrapContext<FlowerCrownMaterial> context) {
         context.register(BIRD_OF_PARADISE, createFromKey(BovinesItems.BIRD_OF_PARADISE, BIRD_OF_PARADISE, ColorConstants.BIRD_OF_PARADISE));
         context.register(BUTTERCUP, createFromKey(BovinesItems.BUTTERCUP, BUTTERCUP, ColorConstants.BUTTERCUP));
+        context.register(CAMELLIA, createFromKey(BovinesItems.CAMELLIA, CAMELLIA, ColorConstants.CAMELLIA));
         context.register(CHARGELILY, createFromKey(BovinesItems.CHARGELILY, CHARGELILY, ColorConstants.CHARGELILY));
         context.register(FREESIA, createFromKey(BovinesItems.FREESIA, FREESIA, ColorConstants.FREESIA));
         context.register(HYACINTH, createFromKey(BovinesItems.HYACINTH, HYACINTH, ColorConstants.HYACINTH));

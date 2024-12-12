@@ -1,0 +1,165 @@
+{
+  "type": "bovinesandbuttercups:moobloom",
+  "bud": {
+    "model_set": "bovinesandbuttercups:camellia_bud"
+  },
+  "flower": {
+    "block_state": {
+      "Name": "bovinesandbuttercups:camellia"
+    }
+  },
+  "layers": [
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_grass_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:grass_tint"
+        },
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/snow_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:conditioned",
+          "condition": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type_specific": {
+                  "type": "bovinesandbuttercups:cow",
+                  "has_snow": true
+                }
+              }
+            }
+          ],
+          "id": "bovinesandbuttercups:snow_layer_with_snow"
+        }
+      ]
+    }
+  ],
+  "nectar": {
+    "id": "bovinesandbuttercups:camellia_nectar_bowl"
+  },
+  "offspring_conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": "minecraft:cherry_leaves"
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": "minecraft:pink_petals"
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": [
+                      "minecraft:cherry_log",
+                      "minecraft:cherry_wood",
+                      "minecraft:cherry_sapling",
+                      "minecraft:potted_cherry_sapling"
+                    ]
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": {
+            "blocks": [
+              "bovinesandbuttercups:pink_daisy",
+              "bovinesandbuttercups:potted_pink_daisy"
+            ]
+          },
+          "condition": "bovinesandbuttercups:block_in_radius",
+          "radius": {
+            "max": [
+              6.0,
+              4.0,
+              6.0
+            ],
+            "min": [
+              -6.0,
+              -2.0,
+              -6.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "particle": {
+    "type": "bovinesandbuttercups:bloom",
+    "color": 15157449
+  },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/camellia",
+  "thunder_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:chargelily"
+    }
+  ]
+}
