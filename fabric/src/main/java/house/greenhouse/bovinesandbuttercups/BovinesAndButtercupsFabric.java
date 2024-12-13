@@ -13,6 +13,7 @@ import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomEx
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
+import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
@@ -88,6 +89,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         registerCompostables();
         registerBiomeModifications();
         registerResourcePacks();
+        BovinesDataFixer.register();
         MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
