@@ -15,7 +15,7 @@ import net.minecraft.util.datafix.DataFixers;
 import java.util.function.BiFunction;
 
 public record BovinesDataFixer(DataFixer fixer) {
-    public static final int CURRENT_VERSION = 2140;
+    public static final int CURRENT_VERSION = 21400;
     private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
     private static BovinesDataFixer instance;
 
