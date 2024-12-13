@@ -40,14 +40,14 @@
           {
             "effect": {
               "id": "bovinesandbuttercups:lockdown",
-              "duration": 2400,
+              "duration": 600,
               "bovinesandbuttercups:lockdown_data": [
                 {
-                  "linked_effect": "minecraft:fire_resistance"
+                  "linked_effect": "minecraft:hunger"
                 }
               ]
             },
-            "max_duration": 9600
+            "max_duration": 2400
           }
         ]
       },
