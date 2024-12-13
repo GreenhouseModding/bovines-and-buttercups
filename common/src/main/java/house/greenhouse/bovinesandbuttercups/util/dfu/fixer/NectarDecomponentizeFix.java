@@ -1,0 +1,66 @@
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+
+import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.DSL;
+import com.mojang.datafixers.DataFix;
+import com.mojang.datafixers.OpticFinder;
+import com.mojang.datafixers.TypeRewriteRule;
+import com.mojang.datafixers.Typed;
+import com.mojang.datafixers.schemas.Schema;
+import com.mojang.datafixers.types.Type;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.util.datafix.fixes.References;
+import net.minecraft.util.datafix.schemas.NamespacedSchema;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+public class NectarDecomponentizeFix extends DataFix {
+    public NectarDecomponentizeFix(Schema outputSchema) {
+        super(outputSchema, false);
+    }
+
+    private static final Map<String, String> COMPONENT_TO_ITEM;
+
+    @Override
+    protected TypeRewriteRule makeRule() {
+        Type<?> type = getInputSchema().getType(References.ITEM_STACK);
+        OpticFinder<Pair<String, String>> idFinder = DSL.fieldFinder("id", DSL.named(References.ITEM_NAME.typeName(), NamespacedSchema.namespacedString()));
+        OpticFinder<?> componentsFinder = type.findField("components");
+        return fixTypeEverywhereTyped("Decomponentize nectar fix", type, typed -> {
+            Optional<Pair<String, String>> optional = typed.getOptional(idFinder);
+            if (optional.isPresent() && Objects.equals(optional.get().getSecond(), "bovinesandbuttercups:nectar_bowl")) {
+                String nectarId = "bovinesandbuttercups:buttercup_nectar_bowl";
+                Optional<? extends Typed<?>> componentTyped = typed.getOptionalTyped(componentsFinder);
+                if (componentTyped.isPresent()) {
+                    Optional<Dynamic<?>> dynamic = componentTyped.get().getOptional(DSL.remainderFinder());
+                    if (dynamic.isPresent()) {
+                        Dynamic<?> nectar = dynamic.get().remove("bovinesandbuttercups:nectar");
+                        nectarId = nectar.asString().mapOrElse(string -> string, stringError -> "bovinesandbuttercups:buttercup_nectar_bowl");
+                    }
+                }
+
+                return typed.set(idFinder, Pair.of(References.ITEM_NAME.typeName(), COMPONENT_TO_ITEM.getOrDefault(nectarId, "bovinesandbuttercups:buttercup_nectar_bowl")));
+            }
+            return typed;
+        });
+    }
+
+    static {
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+        builder.put("bovinesandbuttercups:bird_of_paradise", "bovinesandbuttercups:bird_of_paradise_nectar_bowl");
+        builder.put("bovinesandbuttercups:buttercup", "bovinesandbuttercups:buttercup_nectar_bowl");
+        builder.put("bovinesandbuttercups:camellia", "bovinesandbuttercups:camellia_nectar_bowl");
+        builder.put("bovinesandbuttercups:chargelily", "bovinesandbuttercups:chargelily_nectar_bowl");
+        builder.put("bovinesandbuttercups:freesia", "bovinesandbuttercups:freesia_nectar_bowl");
+        builder.put("bovinesandbuttercups:hyacinth", "bovinesandbuttercups:hyacinth_nectar_bowl");
+        builder.put("bovinesandbuttercups:limelight", "bovinesandbuttercups:limelight_nectar_bowl");
+        builder.put("bovinesandbuttercups:lingholm", "bovinesandbuttercups:lingholm_nectar_bowl");
+        builder.put("bovinesandbuttercups:pink_daisy", "bovinesandbuttercups:pink_daisy_nectar_bowl");
+        builder.put("bovinesandbuttercups:snowdrop", "bovinesandbuttercups:snowdrop_nectar_bowl");
+        builder.put("bovinesandbuttercups:tropical_blue", "bovinesandbuttercups:tropical_blue_nectar_bowl");
+        COMPONENT_TO_ITEM = builder.build();
+    }
+}

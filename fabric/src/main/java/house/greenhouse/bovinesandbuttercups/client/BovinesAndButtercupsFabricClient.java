@@ -107,12 +107,14 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
             for (ResourceLocation entry : data) {
                 UnbakedModel model = BovinesModelSetUtil.getUnbakedModel(entry);
-                model.resolveDependencies(dependency -> {
-                    context.addModels(dependency);
-                    DEPENDENCIES.add(dependency);
-                    return null;
-                });
-                MODELS.put(entry, model);
+                if (model != null) {
+                    model.resolveDependencies(dependency -> {
+                        context.addModels(dependency);
+                        DEPENDENCIES.add(dependency);
+                        return null;
+                    });
+                    MODELS.put(entry, model);
+                }
             }
             context.addModels(data);
             context.modifyModelOnLoad().register((model, ctx) -> {

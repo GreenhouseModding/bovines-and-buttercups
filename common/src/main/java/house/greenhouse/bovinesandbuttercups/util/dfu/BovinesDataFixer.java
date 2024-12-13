@@ -3,15 +3,21 @@ package house.greenhouse.bovinesandbuttercups.util.dfu;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.DataFixerBuilder;
+import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.NectarDecomponentizeFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.schema.BovinesV2440;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 
+import java.util.function.BiFunction;
+
 public record BovinesDataFixer(DataFixer fixer) {
-    public static final int CURRENT_VERSION = 2110;
+    public static final int CURRENT_VERSION = 2140;
+    private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
     private static BovinesDataFixer instance;
 
     public static BovinesDataFixer get() {
@@ -27,6 +33,8 @@ public record BovinesDataFixer(DataFixer fixer) {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
+        Schema schema2140 = builder.addSchema(2140, BovinesV2440::new);
+        builder.addFixer(new NectarDecomponentizeFix(schema2140));
         return builder.build().fixer();
     }
 
