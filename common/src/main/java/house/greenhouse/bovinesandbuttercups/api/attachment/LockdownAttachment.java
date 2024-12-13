@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
@@ -22,7 +23,7 @@ public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
     ).codec().xmap(LockdownAttachment::new, LockdownAttachment::effects);
 
     public LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
-        this.effects = new HashMap<>(effects);
+        this.effects = new ConcurrentHashMap<>(effects);
     }
 
     public boolean addLockdownMobEffect(Holder<MobEffect> effect, int duration) {
