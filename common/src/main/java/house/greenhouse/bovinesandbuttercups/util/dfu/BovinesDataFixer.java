@@ -7,7 +7,6 @@ import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
 import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.NectarDecomponentizeFix;
-import house.greenhouse.bovinesandbuttercups.util.dfu.schema.BovinesV2440;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -33,7 +32,7 @@ public record BovinesDataFixer(DataFixer fixer) {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
-        Schema schema2140 = builder.addSchema(2140, BovinesV2440::new);
+        Schema schema2140 = builder.addSchema(2140, SAME);
         builder.addFixer(new NectarDecomponentizeFix(schema2140));
         return builder.build().fixer();
     }

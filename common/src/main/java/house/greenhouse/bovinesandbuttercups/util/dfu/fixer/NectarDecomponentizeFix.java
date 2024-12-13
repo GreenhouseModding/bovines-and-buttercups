@@ -32,17 +32,16 @@ public class NectarDecomponentizeFix extends DataFix {
         return fixTypeEverywhereTyped("Decomponentize nectar fix", type, typed -> {
             Optional<Pair<String, String>> optional = typed.getOptional(idFinder);
             if (optional.isPresent() && Objects.equals(optional.get().getSecond(), "bovinesandbuttercups:nectar_bowl")) {
-                String nectarId = "bovinesandbuttercups:buttercup_nectar_bowl";
                 Optional<? extends Typed<?>> componentTyped = typed.getOptionalTyped(componentsFinder);
                 if (componentTyped.isPresent()) {
-                    Optional<Dynamic<?>> dynamic = componentTyped.get().getOptional(DSL.remainderFinder());
-                    if (dynamic.isPresent()) {
-                        Dynamic<?> nectar = dynamic.get().remove("bovinesandbuttercups:nectar");
-                        nectarId = nectar.asString().mapOrElse(string -> string, stringError -> "bovinesandbuttercups:buttercup_nectar_bowl");
-                    }
+                    Typed<?> nonOptionalComponent = componentTyped.get();
+                    Dynamic<?> dynamic = nonOptionalComponent.getOrCreate(DSL.remainderFinder());
+                    String nectarId = dynamic.get("bovinesandbuttercups:nectar").asString("bovinesandbuttercups:buttercup_nectar_bowl");
+                    dynamic = dynamic.remove("bovinesandbuttercups:nectar");
+                    nonOptionalComponent = nonOptionalComponent.set(DSL.remainderFinder(), dynamic);
+                    return typed.set(componentsFinder, nonOptionalComponent)
+                            .set(idFinder, Pair.of(References.ITEM_NAME.typeName(), COMPONENT_TO_ITEM.getOrDefault(nectarId, "bovinesandbuttercups:buttercup_nectar_bowl")));
                 }
-
-                return typed.set(idFinder, Pair.of(References.ITEM_NAME.typeName(), COMPONENT_TO_ITEM.getOrDefault(nectarId, "bovinesandbuttercups:buttercup_nectar_bowl")));
             }
             return typed;
         });
