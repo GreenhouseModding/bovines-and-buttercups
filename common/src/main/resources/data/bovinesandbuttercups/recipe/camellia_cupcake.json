@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": "#c:foods/honey",
+    "N": "bovinesandbuttercups:camellia_nectar_bowl",
+    "P": "minecraft:paper",
+    "W": "minecraft:wheat"
+  },
+  "pattern": [
+    " H ",
+    "WNW",
+    " P "
+  ],
+  "result": {
+    "count": 4,
+    "id": "bovinesandbuttercups:placeable_edible",
+    "components": {
+      "bovinesandbuttercups:edible_type": {
+        "type": "bovinesandbuttercups:camellia_cupcake",
+        "effects": [
+          {
+            "effect": {
+              "id": "bovinesandbuttercups:lockdown",
+              "duration": 600,
+              "bovinesandbuttercups:lockdown_data": [
+                {
+                  "linked_effect": "minecraft:hunger"
+                }
+              ]
+            },
+            "max_duration": 2400
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}
