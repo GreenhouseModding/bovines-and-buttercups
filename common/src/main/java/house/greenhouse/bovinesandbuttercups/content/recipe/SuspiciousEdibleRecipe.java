@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
@@ -78,7 +79,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
         List<ItemEdible.MobEffectEntry> entries = suspiciousStew.getOrDefault(DataComponents.SUSPICIOUS_STEW_EFFECTS, SuspiciousStewEffects.EMPTY).effects().stream().map(entry ->
                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float) entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
 
-        ItemEdible.apply(returnStack, new ItemEdible(edibleType, entries));
+        returnStack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, entries));
         return returnStack;
     }
 

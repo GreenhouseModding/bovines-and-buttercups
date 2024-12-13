@@ -80,7 +80,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @ModifyReturnValue(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("RETURN"))
     private boolean bovinesandbuttercups$syncLockdownOnAdd(boolean original, MobEffectInstance effect, Entity entity) {
-        if (original && effect.getEffect().isBound() && effect.getEffect().is(BovinesEffects.LOCKDOWN)) {
+        if (effect.getEffect().isBound() && effect.getEffect().is(BovinesEffects.LOCKDOWN)) {
             LockdownAttachment attachment = this.getAttachedOrCreate(BovinesAttachments.LOCKDOWN);
             if (!level().isClientSide() && !((MobEffectInstanceLockdownDataAccess)effect).bovinesandbuttercups$getLockdownData().isEmpty()) {
                 for (LockdownData data : ((MobEffectInstanceLockdownDataAccess) effect).bovinesandbuttercups$getLockdownData())

@@ -89,6 +89,11 @@
   "block.bovinesandbuttercups.missing_potted_mushroom": "Unknown Potted Mushroom",
   "block.bovinesandbuttercups.missing_edible": "Unknown Edible",
 
+  "item.bovinesandbuttercups.missing_flower": "Unknown Flower",
+  "item.bovinesandbuttercups.missing_mushroom": "Unknown Mushroom",
+  "item.bovinesandbuttercups.missing_mushroom_block": "Unknown Mushroom Block",
+  "item.bovinesandbuttercups.missing_edible": "Unknown Edible",
+
   "item.bovinesandbuttercups.bird_of_paradise_nectar_bowl": "Bird of Paradise Nectar Bowl",
   "item.bovinesandbuttercups.buttercup_nectar_bowl": "Buttercup Nectar Bowl",
   "item.bovinesandbuttercups.camellia_nectar_bowl": "Camellia Nectar Bowl",

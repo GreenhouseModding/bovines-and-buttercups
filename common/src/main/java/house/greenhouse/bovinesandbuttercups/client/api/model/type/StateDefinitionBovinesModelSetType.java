@@ -37,7 +37,7 @@ public class StateDefinitionBovinesModelSetType implements BovinesModelSetType {
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
         if (modelSet == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(state, null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
+        return modelSet.getModel(BlockModelShaper.stateToModelLocation(state).getVariant(), null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class StateDefinitionBovinesModelSetType implements BovinesModelSetType {
             );
             ResourceLocation resolvedResource = stateResource.withPath(s -> "bovinesandbuttercups/" + s);
             modelIds.put(stateResource, resolvedResource);
-            lookup.put(state, stateResource);
+            lookup.put(BlockModelShaper.stateToModelLocation(state.getKey()).getVariant(), stateResource);
             LOADED.put(resolvedResource, state.getValue());
         }
         return new BovinesModelSet(fileId, this, modelIds, lookup);

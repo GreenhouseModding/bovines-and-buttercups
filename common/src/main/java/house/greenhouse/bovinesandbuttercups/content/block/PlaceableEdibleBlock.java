@@ -123,7 +123,7 @@ public class PlaceableEdibleBlock extends BaseEntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         if (blockEntity instanceof PlaceableEdibleBlockEntity pebe)
             if (pebe.getEdibleType() != null)
-                ItemEdible.apply(itemStack, pebe.getEdibleType());
+                itemStack.set(BovinesDataComponents.EDIBLE_TYPE, pebe.getEdibleType());
         return itemStack;
     }
 

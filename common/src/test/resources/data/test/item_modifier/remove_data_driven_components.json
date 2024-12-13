@@ -1,0 +1,8 @@
+{
+  "function": "minecraft:set_components",
+  "components": {
+    "!bovinesandbuttercups:custom_flower": {},
+    "!bovinesandbuttercups:custom_mushroom": {},
+    "!bovinesandbuttercups:edible_type": {}
+  }
+}

@@ -41,7 +41,6 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).listElements().filter(flowerType -> flowerType.isBound() && !flowerType.value().equals(CustomFlowerType.MISSING)).map(flowerType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_FLOWER);
             stack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(flowerType));
-            stack.set(DataComponents.ITEM_MODEL, flowerType.value().itemModel());
             return stack;
         }).toList();
     }
@@ -50,7 +49,6 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).listElements().filter(mushroomType -> mushroomType.isBound() && !mushroomType.value().equals(CustomMushroomType.MISSING)).map(mushroomType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM);
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, new ItemCustomMushroom(mushroomType));
-            stack.set(DataComponents.ITEM_MODEL, mushroomType.value().itemModel());
             return stack;
         }).toList();
     }
@@ -59,7 +57,6 @@ public class CreativeTabHelper {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE).listElements().filter(mushroomType -> mushroomType.isBound() && !mushroomType.value().equals(CustomMushroomType.MISSING)).map(mushroomType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_MUSHROOM_BLOCK);
             stack.set(BovinesDataComponents.CUSTOM_MUSHROOM, new ItemCustomMushroom(mushroomType));
-            stack.set(DataComponents.ITEM_MODEL, mushroomType.value().hugeBlockItemModel().orElse(null));
             return stack;
         }).toList();
     }
@@ -135,7 +132,7 @@ public class CreativeTabHelper {
             List<Pair<ItemStack, CreativeModeTab.TabVisibility>> items = creativeModeTab.orElseThrow().componentsToAdd().stream().map(components -> {
                 ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
                 stack.applyComponents(components.map());
-                ItemEdible.apply(stack, new ItemEdible(type, components.effects()));
+                stack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(type, components.effects()));
                 return Pair.of(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }).toList();
             hasAddedOne.setValue(null);
@@ -146,14 +143,14 @@ public class CreativeTabHelper {
                         ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
                         List<ItemEdible.MobEffectEntry> entries = suspiciousEffectHolder.getSuspiciousEffects().effects().stream().map(entry ->
                                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float)entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
-                        ItemEdible.apply(stack, new ItemEdible(type, entries));
+                        stack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(type, entries));
                         CreativeModeTab.TabVisibility visibility = hasAddedOne.getValue() != null ? CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY : CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
                         hasAddedOne.setValue(Unit.INSTANCE);
                         return Pair.of(stack, visibility);
                     }).toList();
                 } else {
                     ItemStack stack = new ItemStack(BovinesItems.PLACEABLE_EDIBLE);
-                    ItemEdible.apply(stack, new ItemEdible(type, List.of()));
+                    stack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(type, List.of()));
                     items = List.of(Pair.of(stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 }
             }

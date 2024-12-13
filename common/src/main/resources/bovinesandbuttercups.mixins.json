@@ -23,6 +23,7 @@
     "FarmBlockMixin",
     "FlowerPotBlockMixin",
     "HoneyBlockAccessor",
+    "ItemStackMixin",
     "JigsawStructureAccessor",
     "LivingEntityMixin",
     "MobAccessor",
