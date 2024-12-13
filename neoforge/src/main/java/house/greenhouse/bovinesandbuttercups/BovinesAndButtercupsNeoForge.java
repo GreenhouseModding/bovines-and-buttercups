@@ -367,6 +367,7 @@ public class BovinesAndButtercupsNeoForge {
                         BovinesItems.CHARGELILY,
                         BovinesItems.TROPICAL_BLUE,
                         BovinesItems.HYACINTH,
+                        BovinesItems.CAMELLIA,
                         BovinesItems.PINK_DAISY,
                         BovinesItems.SNOWDROP
                 ), event::insertAfter);
