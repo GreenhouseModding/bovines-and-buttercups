@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
@@ -73,7 +74,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class BovinesAndButtercupsFabric implements ModInitializer {
     private static RegistryAccess biomeRegistries;
@@ -166,6 +166,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         BovinesSoundEvents.registerAll(Registry::register);
         BovinesStructureTypes.registerAll(Registry::register);
         BovinesTextureModifierFactories.registerAll(Registry::register);
+        BovinesCowModelTypes.registerAll(Registry::register);
 
         BovinesAttachments.init();
         BovinesIngredients.init();
@@ -192,20 +193,8 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     private static void registerCreativeTabEntries() {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(entries -> {
-            entries.addAfter(Items.SPORE_BLOSSOM, Stream.of(
-                    BovinesItems.FREESIA,
-                    BovinesItems.BIRD_OF_PARADISE,
-                    BovinesItems.BUTTERCUP,
-                    BovinesItems.LIMELIGHT,
-                    BovinesItems.LINGHOLM,
-                    BovinesItems.CHARGELILY,
-                    BovinesItems.TROPICAL_BLUE,
-                    BovinesItems.HYACINTH,
-                    BovinesItems.CAMELLIA,
-                    BovinesItems.PINK_DAISY,
-                    BovinesItems.SNOWDROP
-            ).map(ItemStack::new).toList());
-            entries.addAfter(BovinesItems.SNOWDROP, CreativeTabHelper.getCustomFlowersForCreativeTab(entries.getContext().holders()));
+            entries.addAfter(Items.SPORE_BLOSSOM, CreativeTabHelper.getFlowersForCreativeTab(entries.getContext().holders()));
+            entries.addAfter(BovinesItems.SOMBERCUP, CreativeTabHelper.getCustomFlowersForCreativeTab(entries.getContext().holders()));
             entries.addAfter(Items.RED_MUSHROOM, CreativeTabHelper.getCustomMushroomsForCreativeTab(entries.getContext().holders()));
             entries.addAfter(Items.RED_MUSHROOM_BLOCK, CreativeTabHelper.getCustomMushroomBlocksForCreativeTab(entries.getContext().holders()));
             entries.addAfter(Items.HONEY_BLOCK, BovinesItems.RICH_HONEY_BLOCK);

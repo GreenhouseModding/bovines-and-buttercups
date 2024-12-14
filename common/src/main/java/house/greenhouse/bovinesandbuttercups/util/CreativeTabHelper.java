@@ -37,6 +37,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class CreativeTabHelper {
+    public static List<ItemStack> getFlowersForCreativeTab(HolderLookup.Provider lookup) {
+        return List.of(
+                BovinesItems.FREESIA.getDefaultInstance(),
+                BovinesItems.BIRD_OF_PARADISE.getDefaultInstance(),
+                BovinesItems.BUTTERCUP.getDefaultInstance(),
+                BovinesItems.LIMELIGHT.getDefaultInstance(),
+                BovinesItems.LINGHOLM.getDefaultInstance(),
+                BovinesItems.CHARGELILY.getDefaultInstance(),
+                BovinesItems.TROPICAL_BLUE.getDefaultInstance(),
+                BovinesItems.HYACINTH.getDefaultInstance(),
+                BovinesItems.CAMELLIA.getDefaultInstance(),
+                BovinesItems.PINK_DAISY.getDefaultInstance(),
+                BovinesItems.SNOWDROP.getDefaultInstance(),
+                BovinesItems.NIGHTSHADE.getDefaultInstance(),
+                BovinesItems.SOMBERCUP.getDefaultInstance()
+        );
+    }
+
     public static List<ItemStack> getCustomFlowersForCreativeTab(HolderLookup.Provider lookup) {
         return lookup.lookupOrThrow(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).listElements().filter(flowerType -> flowerType.isBound() && !flowerType.value().equals(CustomFlowerType.MISSING)).map(flowerType -> {
             ItemStack stack = new ItemStack(BovinesItems.CUSTOM_FLOWER);
@@ -73,7 +91,9 @@ public class CreativeTabHelper {
                 BovinesItems.HYACINTH_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.CAMELLIA_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.PINK_DAISY_NECTAR_BOWL.getDefaultInstance(),
-                BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance()
+                BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.NIGHTSHADE_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.SOMBERCUP_NECTAR_BOWL.getDefaultInstance()
         );
     }
 

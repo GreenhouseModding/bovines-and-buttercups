@@ -355,25 +355,13 @@ public class BovinesAndButtercupsNeoForge {
         @SubscribeEvent
         public static void buildCreativeModeTabs(BuildCreativeModeTabContentsEvent event) {
             if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-                insertAfter(event.getParentEntries(), Items.SPORE_BLOSSOM, List.of(
-                        BovinesItems.FREESIA,
-                        BovinesItems.BIRD_OF_PARADISE,
-                        BovinesItems.BUTTERCUP,
-                        BovinesItems.LIMELIGHT,
-                        BovinesItems.LINGHOLM,
-                        BovinesItems.CHARGELILY,
-                        BovinesItems.TROPICAL_BLUE,
-                        BovinesItems.HYACINTH,
-                        BovinesItems.CAMELLIA,
-                        BovinesItems.PINK_DAISY,
-                        BovinesItems.SNOWDROP
-                ), event::insertAfter);
+                insertAfter(event.getParentEntries(), Items.SPORE_BLOSSOM, CreativeTabHelper.getFlowersForCreativeTab(event.getParameters().holders()), event::insertAfter);
                 CreativeTabHelper.getCustomFlowersForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(BovinesItems.SNOWDROP), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 CreativeTabHelper.getCustomMushroomsForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.RED_MUSHROOM), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 CreativeTabHelper.getCustomMushroomBlocksForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.RED_MUSHROOM_BLOCK), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 event.insertAfter(new ItemStack(Items.HONEY_BLOCK), new ItemStack(BovinesItems.RICH_HONEY_BLOCK), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-                CreativeTabHelper.getNectarBowlsForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.MILK_BUCKET), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
+                insertAfter(event.getParentEntries(), Items.MILK_BUCKET, CreativeTabHelper.getNectarBowlsForCreativeTab(event.getParameters().holders()), event::insertAfter);
                 event.insertAfter(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(BovinesItems.RICH_HONEY_BOTTLE), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             } else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
                 event.accept(BovinesItems.MOOBLOOM_SPAWN_EGG);
@@ -386,7 +374,7 @@ public class BovinesAndButtercupsNeoForge {
         }
     }
 
-    private static void insertAfter(Set<ItemStack> stacks, Item start, List<Item> itemsToAdd, AddAfterOperation operation) {
+    private static void insertAfter(Set<ItemStack> stacks, Item start, List<ItemStack> itemsToAdd, AddAfterOperation operation) {
         ItemStack startItem = null;
         for (ItemStack entry : stacks) {
             if (entry.is(start)) {
@@ -395,8 +383,7 @@ public class BovinesAndButtercupsNeoForge {
             }
         }
         if (startItem != null) {
-            for (Item item : itemsToAdd) {
-                ItemStack stack = new ItemStack(item);
+            for (ItemStack stack : itemsToAdd) {
                 operation.insertAfter(startItem, stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 startItem = stack;
             }

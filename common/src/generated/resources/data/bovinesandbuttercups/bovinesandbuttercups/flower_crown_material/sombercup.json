@@ -1,0 +1,29 @@
+{
+  "description": {
+    "color": "#243543",
+    "translate": "flower_crown_material.bovinesandbuttercups.sombercup"
+  },
+  "equipped_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_sombercup",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left_sombercup",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right_sombercup",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left_sombercup",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right_sombercup",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_sombercup",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left_sombercup",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right_sombercup"
+  },
+  "ingredient": {
+    "id": "bovinesandbuttercups:sombercup"
+  },
+  "item_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_sombercup",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_left_sombercup",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_right_sombercup",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_left_sombercup",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_right_sombercup",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_sombercup",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_left_sombercup",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_right_sombercup"
+  }
+}

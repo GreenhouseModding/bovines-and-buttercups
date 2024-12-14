@@ -1,0 +1,89 @@
+{
+  "type": "bovinesandbuttercups:moobloom",
+  "bud": {
+    "model_set": "bovinesandbuttercups:sombercup_bud"
+  },
+  "flower": {
+    "block_state": {
+      "Name": "bovinesandbuttercups:sombercup"
+    }
+  },
+  "layers": [
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:translucent",
+          "id": "bovinesandbuttercups:pulsating"
+        },
+        {
+          "type": "bovinesandbuttercups:emissive"
+        },
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_sculk_vein_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/snow_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:conditioned",
+          "condition": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type_specific": {
+                  "type": "bovinesandbuttercups:cow",
+                  "has_snow": true
+                }
+              }
+            }
+          ],
+          "id": "bovinesandbuttercups:snow_layer_with_snow"
+        }
+      ]
+    }
+  ],
+  "model": "bovinesandbuttercups:ox",
+  "nectar": {
+    "id": "bovinesandbuttercups:sombercup_nectar_bowl"
+  },
+  "offspring_conditions": [
+    {
+      "block": {
+        "blocks": [
+          "bovinesandbuttercups:sombercup",
+          "bovinesandbuttercups:potted_sombercup"
+        ]
+      },
+      "condition": "bovinesandbuttercups:block_in_radius",
+      "radius": {
+        "max": [
+          6.0,
+          4.0,
+          6.0
+        ],
+        "min": [
+          -6.0,
+          -2.0,
+          -6.0
+        ]
+      }
+    }
+  ],
+  "particle": {
+    "type": "bovinesandbuttercups:bloom",
+    "color": 2372931
+  },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/sombercup"
+}

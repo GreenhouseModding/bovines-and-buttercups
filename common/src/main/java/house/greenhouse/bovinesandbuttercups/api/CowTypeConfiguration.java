@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.codec.BovinesCodecs;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
@@ -30,6 +31,10 @@ import java.util.Optional;
  */
 public interface CowTypeConfiguration {
     default void tick(Entity entity) {}
+
+    default CowModelType model() {
+        return null;
+    }
 
     default List<CowModelLayer> layers() {
         return List.of();

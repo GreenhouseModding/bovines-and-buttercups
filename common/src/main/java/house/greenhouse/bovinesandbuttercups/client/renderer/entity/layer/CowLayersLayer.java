@@ -16,9 +16,11 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
-public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEntityRenderState & CowTypeRenderState<Entity, C>, M extends EntityModel<T>> extends RenderLayer<T, M> {
+import java.util.Comparator;
+
+public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEntityRenderState & CowTypeRenderState<LivingEntity, C, M>, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     public CowLayersLayer(RenderLayerParent<T, M> context) {
         super(context);
@@ -27,14 +29,14 @@ public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEnti
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
         Holder<CowType<C>> attachment = renderState.getCowType();
-        if (renderState.isInvisible || attachment == null || !renderState.getCowType().isBound() || renderState.getCowType().value().configuration().layers().isEmpty())
+        if (renderState.isInvisible || attachment == null || !renderState.getCowType().isBound() || attachment.value().configuration().layers().isEmpty())
             return;
 
-        loop: for (CowModelLayer cowLayer : renderState.getCowType().value().configuration().layers()) {
+        loop: for (CowModelLayer cowLayer : attachment.value().configuration().layers()) {
             ResourceLocation mappedTextureLocation = cowLayer.textureLocation().withPath(string -> "textures/entity/" + string + ".png");
             RenderType renderType = RenderType.entityTranslucent(mappedTextureLocation);
             int color = 0xFFFFFFFF;
-            for (TextureModifierFactory<?> factory : cowLayer.textureModifiers()) {
+            for (TextureModifierFactory<?> factory : cowLayer.textureModifiers().stream().sorted(Comparator.comparingInt(TextureModifierFactory::priority)).toList()) {
                 TextureModifier provider = factory.getOrCreateProvider();
                 if (!provider.canDisplay(renderState))
                     continue loop;

@@ -42,6 +42,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:highland",
   "nectar": {
     "id": "bovinesandbuttercups:lingholm_nectar_bowl"
   },

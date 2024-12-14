@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.content.block;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,17 +17,19 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 public class BovinesBlocks {
-    public static final FlowerBlock BUTTERCUP = new FlowerBlock(MobEffects.POISON, 12, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("buttercup"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock PINK_DAISY = new FlowerBlock(MobEffects.DAMAGE_BOOST, 3, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("pink_daisy"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock LIMELIGHT = new FlowerBlock(MobEffects.REGENERATION, 8, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("limelight"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock BIRD_OF_PARADISE = new FlowerBlock(MobEffects.SLOW_FALLING, 6, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("bird_of_paradise"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock CHARGELILY = new FlowerBlock(MobEffects.MOVEMENT_SPEED, 4, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("chargelily"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock HYACINTH = new FlowerBlock(MobEffects.POISON, 12, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("hyacinth"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock SNOWDROP = new FlowerBlock(MobEffects.MOVEMENT_SLOWDOWN, 5, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("snowdrop"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock TROPICAL_BLUE = new FlowerBlock(MobEffects.FIRE_RESISTANCE, 4, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("tropical_blue"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock FREESIA = new FlowerBlock(MobEffects.WATER_BREATHING, 8, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("freesia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock LINGHOLM = new FlowerBlock(MobEffects.MOVEMENT_SPEED, 4, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("lingholm"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
-    public static final FlowerBlock CAMELLIA = new FlowerBlock(MobEffects.SATURATION, 0.35F, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("camellia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock BUTTERCUP = new TagPlaceableFlowerBlock(MobEffects.POISON, 12, BovinesTags.BlockTags.BUTTERCUP_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("buttercup"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock PINK_DAISY = new TagPlaceableFlowerBlock(MobEffects.DAMAGE_BOOST, 3, BovinesTags.BlockTags.PINK_DAISY_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("pink_daisy"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock LIMELIGHT = new TagPlaceableFlowerBlock(MobEffects.REGENERATION, 8, BovinesTags.BlockTags.LIMELIGHT_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("limelight"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock BIRD_OF_PARADISE = new TagPlaceableFlowerBlock(MobEffects.SLOW_FALLING, 6, BovinesTags.BlockTags.BIRD_OF_PARADISE_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("bird_of_paradise"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock CHARGELILY = new TagPlaceableFlowerBlock(MobEffects.MOVEMENT_SPEED, 4, BovinesTags.BlockTags.CHARGELILY_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("chargelily"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock HYACINTH = new TagPlaceableFlowerBlock(MobEffects.POISON, 12, BovinesTags.BlockTags.HYACINTH_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("hyacinth"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock SNOWDROP = new TagPlaceableFlowerBlock(MobEffects.MOVEMENT_SLOWDOWN, 5, BovinesTags.BlockTags.SNOWDROP_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("snowdrop"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock TROPICAL_BLUE = new TagPlaceableFlowerBlock(MobEffects.FIRE_RESISTANCE, 4, BovinesTags.BlockTags.TROPICAL_BLUE_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("tropical_blue"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock FREESIA = new TagPlaceableFlowerBlock(MobEffects.WATER_BREATHING, 8, BovinesTags.BlockTags.FREESIA_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("freesia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock LINGHOLM = new TagPlaceableFlowerBlock(MobEffects.MOVEMENT_SPEED, 4, BovinesTags.BlockTags.LINGHOLM_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("lingholm"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock CAMELLIA = new TagPlaceableFlowerBlock(MobEffects.SATURATION, 0.35F, BovinesTags.BlockTags.CAMELLIA_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("camellia"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock SOMBERCUP = new TagPlaceableFlowerBlock(MobEffects.DARKNESS, 4, BovinesTags.BlockTags.SOMBERCUP_PLACEABLE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("sombercup"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+    public static final FlowerBlock NIGHTSHADE = new NightshadeBlock(MobEffects.INVISIBILITY, 2, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("nightshade"))).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 
     public static final FlowerPotBlock POTTED_BUTTERCUP = new FlowerPotBlock(BUTTERCUP, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_buttercup"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_PINK_DAISY = new FlowerPotBlock(PINK_DAISY, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_pink_daisy"))).instabreak().noOcclusion());
@@ -39,6 +42,8 @@ public class BovinesBlocks {
     public static final FlowerPotBlock POTTED_FREESIA = new FlowerPotBlock(FREESIA, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_freesia"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_LINGHOLM = new FlowerPotBlock(LINGHOLM, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_lingholm"))).instabreak().noOcclusion());
     public static final FlowerPotBlock POTTED_CAMELLIA = new FlowerPotBlock(CAMELLIA, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_camellia"))).instabreak().noOcclusion());
+    public static final FlowerPotBlock POTTED_SOMBERCUP = new FlowerPotBlock(SOMBERCUP, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_sombercup"))).instabreak().noOcclusion());
+    public static final FlowerPotBlock POTTED_NIGHTSHADE = new FlowerPotBlock(NIGHTSHADE, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("potted_nightshade"))).instabreak().noOcclusion());
 
     public static final Block RICH_HONEY_BLOCK = new RichHoneyBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("rich_honey_block"))).mapColor(MapColor.COLOR_ORANGE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
 
@@ -63,6 +68,8 @@ public class BovinesBlocks {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("freesia"), FREESIA);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("lingholm"), LINGHOLM);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("camellia"), CAMELLIA);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("sombercup"), SOMBERCUP);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("nightshade"), NIGHTSHADE);
 
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_buttercup"), POTTED_BUTTERCUP);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_pink_daisy"), POTTED_PINK_DAISY);
@@ -75,6 +82,8 @@ public class BovinesBlocks {
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_freesia"), POTTED_FREESIA);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_lingholm"), POTTED_LINGHOLM);
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_camellia"), POTTED_CAMELLIA);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_sombercup"), POTTED_SOMBERCUP);
+        callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("potted_nightshade"), POTTED_NIGHTSHADE);
 
         callback.register(BuiltInRegistries.BLOCK, BovinesAndButtercups.asResource("rich_honey_block"), RICH_HONEY_BLOCK);
 

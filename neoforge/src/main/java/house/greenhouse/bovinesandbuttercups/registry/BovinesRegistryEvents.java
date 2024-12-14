@@ -5,6 +5,7 @@ import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
+import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BovinesCriteriaTriggers;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -55,6 +56,7 @@ public class BovinesRegistryEvents {
         register(event, BovinesSoundEvents::registerAll);
         register(event, BovinesStructureTypes::registerAll);
         register(event, BovinesTextureModifierFactories::registerAll);
+        register(event, BovinesCowModelTypes::registerAll);
 
         if (event.getRegistryKey() == Registries.SOUND_EVENT) {
             registerHolders(BovinesSoundEvents::registerHolders);
@@ -80,6 +82,7 @@ public class BovinesRegistryEvents {
     @SubscribeEvent
     public static void createNewRegistries(NewRegistryEvent event) {
         event.register(BovinesRegistries.COW_TYPE_TYPE);
+        event.register(BovinesRegistries.MODEL_TYPE);
         event.register(BovinesRegistries.TEXTURE_MODIFIER);
     }
 

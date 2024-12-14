@@ -14,7 +14,7 @@ public class ConditionedTextureModifier implements TextureModifier {
         this.id = id;
     }
 
-    public boolean canDisplay(CowTypeRenderState<?, ?> state) {
+    public boolean canDisplay(CowTypeRenderState<?, ?, ?> state) {
         return state.getRenderStateObject(RenderStateObject.ACTIVE_CONDITIONS).contains(id);
     }
 }

@@ -73,13 +73,13 @@ public abstract class MobEffectInstanceMixin implements MobEffectInstanceLockdow
     }
 
     public List<LockdownData> bovinesandbuttercups$getLockdownData() {
-        if (!effect.is(BovinesEffects.LOCKDOWN) || bovinesandbuttercups$lockdownData == null)
+        if (effect == null || !effect.is(BovinesEffects.LOCKDOWN) || bovinesandbuttercups$lockdownData == null)
             return List.of();
         return bovinesandbuttercups$lockdownData;
     }
 
     public MobEffectInstance bovinesandbuttercups$setLockdownData(List<LockdownData> data) {
-        if (effect.is(BovinesEffects.LOCKDOWN))
+        if (effect == null || effect.is(BovinesEffects.LOCKDOWN))
             bovinesandbuttercups$lockdownData = data;
         return (MobEffectInstance)(Object)this;
     }

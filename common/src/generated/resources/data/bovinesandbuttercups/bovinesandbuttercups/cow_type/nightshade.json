@@ -1,0 +1,165 @@
+{
+  "type": "bovinesandbuttercups:moobloom",
+  "bud": {
+    "model_set": "bovinesandbuttercups:nightshade_bud"
+  },
+  "flower": {
+    "block_state": {
+      "Name": "bovinesandbuttercups:nightshade"
+    }
+  },
+  "layers": [
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_grass_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:grass_tint"
+        },
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/snow_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:conditioned",
+          "condition": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type_specific": {
+                  "type": "bovinesandbuttercups:cow",
+                  "has_snow": true
+                }
+              }
+            }
+          ],
+          "id": "bovinesandbuttercups:snow_layer_with_snow"
+        }
+      ]
+    }
+  ],
+  "nectar": {
+    "id": "bovinesandbuttercups:nightshade_nectar_bowl"
+  },
+  "offspring_conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": "minecraft:pale_hanging_moss"
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": [
+                      "minecraft:closed_eyeblossom",
+                      "minecraft:open_eyeblossom",
+                      "minecraft:potted_closed_eyeblossom",
+                      "minecraft:potted_open_eyeblossom"
+                    ]
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": [
+                      "minecraft:pale_oak_log",
+                      "minecraft:pale_oak_wood",
+                      "minecraft:pale_oak_sapling",
+                      "minecraft:potted_pale_oak_sapling"
+                    ]
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": {
+            "blocks": [
+              "bovinesandbuttercups:nightshade",
+              "bovinesandbuttercups:potted_nightshade"
+            ]
+          },
+          "condition": "bovinesandbuttercups:block_in_radius",
+          "radius": {
+            "max": [
+              6.0,
+              4.0,
+              6.0
+            ],
+            "min": [
+              -6.0,
+              -2.0,
+              -6.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "particle": {
+    "type": "bovinesandbuttercups:bloom",
+    "color": 13886950
+  },
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/nightshade"
+}

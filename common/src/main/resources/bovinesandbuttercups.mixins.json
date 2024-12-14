@@ -34,6 +34,7 @@
     "PlacedFeatureMixin",
     "PotionContentsMixin",
     "RegistryDataLoaderMixin",
+    "SculkCatalystBlockEntityMixin",
     "ServerLevelAccessor",
     "ShapesMixin",
     "SimpleJsonResourceReloadListenerMixin",
@@ -41,6 +42,7 @@
   ],
   "client": [
     "client.AbstractContainerScreenAccessor",
+    "client.AgeableMobRendererAccessor",
     "client.AtlasSetMixin",
     "client.CustomHeadLayerMixin",
     "client.EffectsInInventoryMixin",

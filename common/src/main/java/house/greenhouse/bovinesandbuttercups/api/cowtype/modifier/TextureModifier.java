@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public interface TextureModifier {
-    default int color(CowTypeRenderState<?, ?> entity, int previous) {
+    default int color(CowTypeRenderState<?, ?, ?> entity, int previous) {
         return previous;
     }
 
@@ -13,7 +13,7 @@ public interface TextureModifier {
         return previous;
     }
 
-    default boolean canDisplay(CowTypeRenderState<?, ?> state) {
+    default boolean canDisplay(CowTypeRenderState<?, ?, ?> state) {
         return true;
     }
 }

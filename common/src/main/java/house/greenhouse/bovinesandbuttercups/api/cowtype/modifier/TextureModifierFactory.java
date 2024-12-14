@@ -33,6 +33,10 @@ public abstract class TextureModifierFactory<T extends TextureModifier> {
 
     public void tick(Entity entity) {}
 
+    public int priority() {
+        return 500;
+    }
+
     protected abstract T createProvider();
 
     public abstract MapCodec<? extends TextureModifierFactory<?>> codec();

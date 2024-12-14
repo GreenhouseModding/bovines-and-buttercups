@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> {
     @ModifyVariable(method = "getRenderType", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;)Lnet/minecraft/resources/ResourceLocation;"))
     private ResourceLocation bovinesandbuttercups$modifyTextureLocation(ResourceLocation value, @Local(argsOnly = true) LivingEntityRenderState state) {
-        if (state instanceof CowTypeRenderState<?, ?> cowTypeRenderState && cowTypeRenderState.getCowType().isBound())
+        if (state instanceof CowTypeRenderState<?, ?, ?> cowTypeRenderState && cowTypeRenderState.getCowType().isBound())
             return BovinesAndButtercupsClient.getCachedTextures((Holder) cowTypeRenderState.getCowType(), value);
         return value;
     }

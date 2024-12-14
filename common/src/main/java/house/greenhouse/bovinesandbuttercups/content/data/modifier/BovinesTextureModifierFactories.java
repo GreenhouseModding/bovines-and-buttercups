@@ -13,5 +13,6 @@ public class BovinesTextureModifierFactories {
         callback.register(BovinesRegistries.TEXTURE_MODIFIER, BovinesAndButtercups.asResource("emissive"), EmissiveTextureModifierFactory.CODEC);
         callback.register(BovinesRegistries.TEXTURE_MODIFIER, BovinesAndButtercups.asResource("fallback"), FallbackTextureModifierFactory.CODEC);
         callback.register(BovinesRegistries.TEXTURE_MODIFIER, BovinesAndButtercups.asResource("grass_tint"), GrassTintTextureModifierFactory.CODEC);
+        callback.register(BovinesRegistries.TEXTURE_MODIFIER, BovinesAndButtercups.asResource("translucent"), TranslucentTextureModifierFactory.CODEC);
     }
 }

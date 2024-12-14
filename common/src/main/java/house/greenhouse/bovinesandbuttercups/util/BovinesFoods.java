@@ -88,6 +88,14 @@ public class BovinesFoods {
                         .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.MOVEMENT_SPEED)))))
                 .hasConsumeParticles(false)
                 .build();
+        public static final Consumable NIGHTSHADE_NECTAR = Consumable.builder()
+                .consumeSeconds(1.6F)
+                .animation(ItemUseAnimation.DRINK)
+                .sound(SoundEvents.GENERIC_DRINK)
+                .onConsume(new ApplyStatusEffectsConsumeEffect(((MobEffectInstanceLockdownDataAccess)new MobEffectInstance(BovinesEffects.LOCKDOWN, 2400))
+                        .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.INVISIBILITY)))))
+                .hasConsumeParticles(false)
+                .build();
         public static final Consumable PINK_DAISY_NECTAR = Consumable.builder()
                 .consumeSeconds(1.6F)
                 .animation(ItemUseAnimation.DRINK)
@@ -102,6 +110,14 @@ public class BovinesFoods {
                 .sound(SoundEvents.GENERIC_DRINK)
                 .onConsume(new ApplyStatusEffectsConsumeEffect(((MobEffectInstanceLockdownDataAccess)new MobEffectInstance(BovinesEffects.LOCKDOWN, 7200))
                         .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.DIG_SLOWDOWN)))))
+                .hasConsumeParticles(false)
+                .build();
+        public static final Consumable SOMBERCUP_NECTAR = Consumable.builder()
+                .consumeSeconds(1.6F)
+                .animation(ItemUseAnimation.DRINK)
+                .sound(SoundEvents.GENERIC_DRINK)
+                .onConsume(new ApplyStatusEffectsConsumeEffect(((MobEffectInstanceLockdownDataAccess)new MobEffectInstance(BovinesEffects.LOCKDOWN, 2400))
+                        .bovinesandbuttercups$setLockdownData(List.of(new LockdownData(MobEffects.DARKNESS)))))
                 .hasConsumeParticles(false)
                 .build();
         public static final Consumable TROPICAL_BLUE_NECTAR = Consumable.builder()

@@ -61,6 +61,13 @@
       {
         "model": {
           "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/nightshade_cupcake"
+        },
+        "when": "bovinesandbuttercups:nightshade_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
           "model": "bovinesandbuttercups:item/pink_daisy_cupcake"
         },
         "when": "bovinesandbuttercups:pink_daisy_cupcake"
@@ -71,6 +78,13 @@
           "model": "bovinesandbuttercups:item/snowdrop_cupcake"
         },
         "when": "bovinesandbuttercups:snowdrop_cupcake"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bovinesandbuttercups:item/sombercup_cupcake"
+        },
+        "when": "bovinesandbuttercups:sombercup_cupcake"
       },
       {
         "model": {

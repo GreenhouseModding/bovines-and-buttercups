@@ -15,8 +15,10 @@ public class BovinesLootTables {
     public static final ResourceKey<LootTable> SHEAR_HYACINTH_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/hyacinth"));
     public static final ResourceKey<LootTable> SHEAR_LIMELIGHT_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/limelight"));
     public static final ResourceKey<LootTable> SHEAR_LINGHOLM_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/lingholm"));
+    public static final ResourceKey<LootTable> SHEAR_NIGHTSHADE_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/nightshade"));
     public static final ResourceKey<LootTable> SHEAR_PINK_DAISY_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/pink_daisy"));
     public static final ResourceKey<LootTable> SHEAR_SNOWDROP_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/snowdrop"));
+    public static final ResourceKey<LootTable> SHEAR_SOMBERCUP_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/sombercup"));
     public static final ResourceKey<LootTable> SHEAR_TROPICAL_BLUE_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/tropical_blue"));
     public static final ResourceKey<LootTable> RANCH = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("chests/ranch"));
 }

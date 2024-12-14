@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.CustomCowModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
@@ -9,7 +10,6 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -54,7 +54,6 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 
-import java.io.IOError;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
@@ -79,6 +78,14 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_MOOBLOOM_MODEL_LAYER, () -> CowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.HIGHLAND_MODEL_LAYER, CustomCowModelLayers::createHighland);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_HIGHLAND_MODEL_LAYER, () -> CustomCowModelLayers.createHighland().apply(CowModel.BABY_TRANSFORMER));
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BUFFALO_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_BUFFALO_MODEL_LAYER, () -> CustomCowModelLayers.createBuffalo().apply(CowModel.BABY_TRANSFORMER));
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_OX_MODEL_LAYER, () -> CustomCowModelLayers.createOx().apply(CowModel.BABY_TRANSFORMER));
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.DECORATION_MODEL_LAYER, CustomCowModelLayers::createDecoration);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_DECORATION_MODEL_LAYER, () -> CustomCowModelLayers.createDecoration().apply(CowModel.BABY_TRANSFORMER));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         EntityRendererRegistry.register(BovinesEntityTypes.MOOBLOOM, MoobloomRenderer::new);
@@ -199,7 +206,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CAMELLIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_CAMELLIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CHARGELILY, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CHARGELILY, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_CHARGELILY, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.FREESIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_FREESIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.HYACINTH, RenderType.cutout());
@@ -208,10 +215,14 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_LIMELIGHT, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.LINGHOLM, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_LINGHOLM, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.NIGHTSHADE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_NIGHTSHADE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.PINK_DAISY, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_PINK_DAISY, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.SNOWDROP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_SNOWDROP, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.SOMBERCUP, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_SOMBERCUP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.TROPICAL_BLUE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_TROPICAL_BLUE, RenderType.cutout());
 

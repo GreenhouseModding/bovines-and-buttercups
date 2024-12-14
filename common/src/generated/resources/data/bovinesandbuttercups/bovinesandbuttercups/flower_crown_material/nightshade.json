@@ -1,0 +1,29 @@
+{
+  "description": {
+    "color": "#D3E5E6",
+    "translate": "flower_crown_material.bovinesandbuttercups.nightshade"
+  },
+  "equipped_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_nightshade",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left_nightshade",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right_nightshade",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left_nightshade",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right_nightshade",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_nightshade",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left_nightshade",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right_nightshade"
+  },
+  "ingredient": {
+    "id": "bovinesandbuttercups:nightshade"
+  },
+  "item_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_nightshade",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_left_nightshade",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_right_nightshade",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_left_nightshade",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_right_nightshade",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_nightshade",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_left_nightshade",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_right_nightshade"
+  }
+}

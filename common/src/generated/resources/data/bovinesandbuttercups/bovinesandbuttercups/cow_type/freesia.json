@@ -42,6 +42,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:buffalo",
   "nectar": {
     "id": "bovinesandbuttercups:freesia_nectar_bowl"
   },

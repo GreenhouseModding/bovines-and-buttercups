@@ -17,4 +17,9 @@ public class EmissiveTextureModifierFactory extends TextureModifierFactory<Emiss
         return CODEC;
     }
 
+    @Override
+    public int priority() {
+        return 600;
+    }
+
 }

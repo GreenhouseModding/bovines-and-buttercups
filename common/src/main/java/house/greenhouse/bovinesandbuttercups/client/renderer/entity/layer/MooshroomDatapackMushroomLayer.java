@@ -38,7 +38,7 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCowRenderState> ex
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
         boolean bl = renderState.appearsGlowing && renderState.isInvisible;
-        Holder<CowType<MooshroomConfiguration>> cowType = ((CowTypeRenderState<MushroomCow, MooshroomConfiguration>)renderState).getCowType();
+        Holder<CowType<MooshroomConfiguration>> cowType = ((CowTypeRenderState<MushroomCow, MooshroomConfiguration, CowModel>)renderState).getCowType();
 
         if (cowType == null || renderState.isInvisible && !bl
                 || renderState.isBaby
