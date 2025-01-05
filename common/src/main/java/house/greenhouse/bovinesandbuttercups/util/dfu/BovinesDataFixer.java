@@ -11,7 +11,7 @@ import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 
 public record BovinesDataFixer(DataFixer fixer) {
-    public static final int CURRENT_VERSION = 21100;
+    public static final int CURRENT_VERSION = 0;
     private static BovinesDataFixer instance;
 
     public static BovinesDataFixer get() {
