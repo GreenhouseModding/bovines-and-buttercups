@@ -39,10 +39,10 @@ public class BovinesEdibleBlockTypes {
         context.register(HYACINTH_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.WITHER, 2400), Optional.empty()));
         context.register(LIMELIGHT_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.REGENERATION, 2400), Optional.empty()));
         context.register(LINGHOLM_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400),Optional.empty()));
-        context.register(NIGHTSHADE_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.WATER_BREATHING, 9600), Optional.empty()));
+        context.register(NIGHTSHADE_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.INVISIBILITY, 2400), Optional.empty()));
         context.register(PINK_DAISY_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2400), Optional.empty()));
         context.register(SNOWDROP_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 7200), Optional.empty()));
-        context.register(SOMBERCUP_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.WATER_BREATHING, 9600), Optional.empty()));
+        context.register(SOMBERCUP_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.DARKNESS, 2400), Optional.empty()));
         context.register(TROPICAL_BLUE_CUPCAKE, EdibleBlockType.cupcake(context, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9600), Optional.empty()));
 
         context.register(BROWN_MUSHROOM_PUFF_PASTRY, EdibleBlockType.puffPastry(context, Optional.empty()));
