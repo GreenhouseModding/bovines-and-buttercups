@@ -36,8 +36,6 @@ public class MushroomCowRenderStateMixin implements CowTypeRenderState<MushroomC
     private final Map<CowModelType, Pair<CowModel, CowModel>> bovinesandbuttercups$models = new HashMap<>();
     @Unique
     private Function<ModelLayerLocation, CowModel> bovinesandbuttercups$bakeLayerFunction;
-    @Unique
-    private CowModelType bovinesandbuttercups$previousModel;
 
     @Override
     public Holder<CowType<MooshroomConfiguration>> getCowType() {
@@ -53,23 +51,21 @@ public class MushroomCowRenderStateMixin implements CowTypeRenderState<MushroomC
     @Override
     public void extractModel(LivingEntityRenderer<MushroomCow, ?, CowModel> renderer, MushroomCow entity) {
         bovinesandbuttercups$cowType = CowTypeAttachment.getCowTypeHolderFromEntity(entity, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        if (renderer instanceof AgeableMobRendererAccessor accessor) {
-            if (bovinesandbuttercups$previousModel == null || bovinesandbuttercups$previousModel != bovinesandbuttercups$cowType.value().configuration().model()) {
+        if (renderer instanceof AgeableMobRendererAccessor accessor && bovinesandbuttercups$cowType != null) {
+            CowModelType cowModel = bovinesandbuttercups$cowType.value().configuration().model();
+            if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowType.value().configuration().model())) {
                 ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
-                CowModelType cowModel = bovinesandbuttercups$cowType.value().configuration().model();
                 if (cowModel != null && cowModel.namespaceOverride() != null)
                     namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
                 if (cowModel != null && cowModel.pathOverride() != null)
                     namedEntityTypeLocation = namedEntityTypeLocation.withPath(cowModel.pathOverride());
-                if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowType.value().configuration().model())) {
-                    CowModel adultModel = bovinesandbuttercups$bakeLayerFunction.apply(Optional.ofNullable(cowModel).map(cm -> new ModelLayerLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()), "main")).orElse(new ModelLayerLocation(namedEntityTypeLocation, "main")));
-                    CowModel babyModel = bovinesandbuttercups$bakeLayerFunction.apply(Optional.ofNullable(cowModel).map(cm -> new ModelLayerLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).withSuffix(cm.babySuffix()), "main")).orElse(new ModelLayerLocation(namedEntityTypeLocation.withSuffix(BovinesCowModelTypes.DEFAULT.babySuffix()), "main")));
-                    bovinesandbuttercups$models.put(cowModel, Pair.of(adultModel, babyModel));
-                }
-                accessor.bovinesandbuttercups$setAdultModel(bovinesandbuttercups$models.get(cowModel).getFirst());
-                accessor.bovinesandbuttercups$setBabyModel(bovinesandbuttercups$models.get(cowModel).getSecond());
-                bovinesandbuttercups$previousModel = cowModel;
+                String babySuffix = cowModel != null ? cowModel.babySuffix() : BovinesCowModelTypes.DEFAULT.babySuffix();
+                CowModel adultModel = bovinesandbuttercups$bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation, "main"));
+                CowModel babyModel = bovinesandbuttercups$bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation.withSuffix(babySuffix), "main"));
+                bovinesandbuttercups$models.put(cowModel, Pair.of(adultModel, babyModel));
             }
+            accessor.bovinesandbuttercups$setAdultModel(bovinesandbuttercups$models.get(cowModel).getFirst());
+            accessor.bovinesandbuttercups$setBabyModel(bovinesandbuttercups$models.get(cowModel).getSecond());
         }
     }
 

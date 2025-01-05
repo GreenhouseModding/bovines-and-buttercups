@@ -29,6 +29,5 @@ public class ConvertMoobloomFromSculkTrigger extends SimpleCriterionTrigger<Conv
         return CODEC;
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player) implements SimpleInstance {
-    }
+    public record TriggerInstance(Optional<ContextAwarePredicate> player) implements SimpleInstance {}
 }

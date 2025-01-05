@@ -262,7 +262,6 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .addCriterion("bovinesandbuttercups:tropical_blue", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.TROPICAL_BLUE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .build(BovinesAndButtercups.asResource("husbandry/breed_all_mooblooms")));
-
             consumer.accept(Advancement.Builder.advancement()
                     .display(new DisplayInfo(
                             new ItemStack(BovinesItems.SOMBERCUP),

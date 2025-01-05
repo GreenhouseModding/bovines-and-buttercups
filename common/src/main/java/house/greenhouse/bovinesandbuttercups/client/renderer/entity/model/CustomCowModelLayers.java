@@ -32,9 +32,9 @@ public class CustomCowModelLayers {
 
         partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 6.0F)
                 .texOffs(22, 0).addBox("right_horn_base", 4.0F, -4.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(30, 0).addBox("right_horn", -7.0F, -5.0F, -6.0F, 1.0F, 1.0F, 2.0F)
+                .texOffs(30, 0).addBox("right_horn", -7.0F, -4.0F, -6.0F, 1.0F, 1.0F, 2.0F)
                 .texOffs(22, 0).addBox("left_horn_base", -6.0F, -4.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(30, 0).addBox("left_horn", 6.0F, -5.0F, -6.0F, 1.0F, 1.0F, 2.0F), PartPose.offset(0.0F, 4.0F, -8.0F));
+                .texOffs(30, 0).addBox("left_horn", 6.0F, -4.0F, -6.0F, 1.0F, 1.0F, 2.0F), PartPose.offset(0.0F, 4.0F, -8.0F));
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 4).addBox(-6.0F, -10.0F, -7.0F, 12.0F, 18.0F, 10.0F)
                 .texOffs(52, 0).addBox(-2.0F, 2.0F, -8.0F, 4.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, (float) (Math.PI / 2), 0.0F, 0.0F));
         partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-4.0F, 12.0F, 7.0F));

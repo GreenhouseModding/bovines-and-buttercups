@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 public record TranslucentTextureModifier(float speed, float min, float max) implements TextureModifier {
     @Override
     public int color(CowTypeRenderState<?, ?, ?> renderState, int previousColor) {
-        float current = ((((LivingEntityRenderState)renderState).ageInTicks + Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)) * speed);
+        float current = (((LivingEntityRenderState)renderState).ageInTicks + Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)) * speed;
         return ARGB.color((int) ((Mth.lerp(Mth.abs(Mth.cos(current)), min, max)) * 255), previousColor);
     }
 

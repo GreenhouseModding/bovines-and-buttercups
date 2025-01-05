@@ -59,6 +59,7 @@ public class NectarDecomponentizeFix extends DataFix {
         builder.put("bovinesandbuttercups:lingholm", "bovinesandbuttercups:lingholm_nectar_bowl");
         builder.put("bovinesandbuttercups:pink_daisy", "bovinesandbuttercups:pink_daisy_nectar_bowl");
         builder.put("bovinesandbuttercups:snowdrop", "bovinesandbuttercups:snowdrop_nectar_bowl");
+        builder.put("bovinesandbuttercups:sombercup", "bovinesandbuttercups:sombercup_nectar_bowl");
         builder.put("bovinesandbuttercups:tropical_blue", "bovinesandbuttercups:tropical_blue_nectar_bowl");
         COMPONENT_TO_ITEM = builder.build();
     }
