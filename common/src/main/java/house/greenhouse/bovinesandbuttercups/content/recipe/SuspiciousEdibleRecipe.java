@@ -54,10 +54,10 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
     public boolean matches(CraftingInput input, Level level) {
         for (int i = 0; i < pattern.height(); i++) {
             for (int j = 0; j < pattern.width(); j++) {
-                Optional<Ingredient> ingredient;
-                if (symmetrical) {
+                Optional<Ingredient> ingredient = Optional.empty();
+                if (symmetrical && pattern.ingredients().size() >= pattern.width() - j - 1 + i * pattern.width()) {
                     ingredient = pattern.ingredients().get(pattern.width() - j - 1 + i * pattern.width());
-                } else {
+                } else if (pattern.ingredients().size() >= j + i * pattern.width()) {
                     ingredient = pattern.ingredients().get(j + i * pattern.width());
                 }
 
