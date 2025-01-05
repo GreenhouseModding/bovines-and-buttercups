@@ -84,8 +84,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_BUFFALO_MODEL_LAYER, () -> CustomCowModelLayers.createBuffalo().apply(CowModel.BABY_TRANSFORMER));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_OX_MODEL_LAYER, () -> CustomCowModelLayers.createOx().apply(CowModel.BABY_TRANSFORMER));
-        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.DECORATION_MODEL_LAYER, CustomCowModelLayers::createDecoration);
-        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_DECORATION_MODEL_LAYER, () -> CustomCowModelLayers.createDecoration().apply(CowModel.BABY_TRANSFORMER));
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLAT_MODEL_LAYER, CustomCowModelLayers::createFlat);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_FLAT_MODEL_LAYER, () -> CustomCowModelLayers.createFlat().apply(CowModel.BABY_TRANSFORMER));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         EntityRendererRegistry.register(BovinesEntityTypes.MOOBLOOM, MoobloomRenderer::new);

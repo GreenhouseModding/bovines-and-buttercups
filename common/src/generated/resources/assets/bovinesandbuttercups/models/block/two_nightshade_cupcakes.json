@@ -1,0 +1,6 @@
+{
+  "parent": "bovinesandbuttercups:block/template_two_cupcakes",
+  "textures": {
+    "all": "bovinesandbuttercups:block/nightshade_cupcake"
+  }
+}

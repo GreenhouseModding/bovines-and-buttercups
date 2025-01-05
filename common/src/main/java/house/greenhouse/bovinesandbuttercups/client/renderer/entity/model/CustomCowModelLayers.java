@@ -15,9 +15,7 @@ public class CustomCowModelLayers {
                 .texOffs(22, 2).addBox("right_horn", 4.0F, -3.0F, -4.0F, 2.0F, 1.0F, 1.0F)
                 .texOffs(28, 1).addBox("right_horn_top", 5.0F, -5.0F, -4.0F, 1.0F, 2.0F, 1.0F)
                 .texOffs(23, 2).addBox("left_horn", -6.0F, -3.0F, -4.0F, 2.0F, 1.0F, 1.0F)
-                .texOffs(28, 1).addBox("left_horn_top", -6.0F, -5.0F, -4.0F, 1.0F, 2.0F, 1.0F)
-                .texOffs(44, 0).mirror().addBox("decoration_right", -9.1F, -4.9F, -3.5F, 4.0F, 4.0F, 0.01F)
-                .texOffs(44, 0).addBox("decoration_left", 5.1F, -4.9F, -3.5F, 4.0F, 4.0F, 0.01F), PartPose.offset(0.0F, 4.0F, -8.0F));
+                .texOffs(28, 1).addBox("left_horn_top", -6.0F, -5.0F, -4.0F, 1.0F, 2.0F, 1.0F), PartPose.offset(0.0F, 4.0F, -8.0F));
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 4).addBox(-6.0F, -10.0F, -7.0F, 12.0F, 18.0F, 10.0F)
                 .texOffs(52, 0).addBox(-2.0F, 2.0F, -8.0F, 4.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, (float) (Math.PI / 2), 0.0F, 0.0F));
         partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-4.0F, 12.0F, 7.0F));
@@ -33,12 +31,10 @@ public class CustomCowModelLayers {
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 6.0F)
-                .texOffs(22, 0).mirror().addBox("right_horn_base", 4.0F, -4.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(30, 0).mirror().addBox("right_horn", -7.0F, -5.0F, -6.0F, 1.0F, 2.0F, 2.0F)
+                .texOffs(22, 0).addBox("right_horn_base", 4.0F, -4.0F, -6.0F, 2.0F, 2.0F, 2.0F)
+                .texOffs(30, 0).addBox("right_horn", -7.0F, -5.0F, -6.0F, 1.0F, 1.0F, 2.0F)
                 .texOffs(22, 0).addBox("left_horn_base", -6.0F, -4.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(30, 0).addBox("left_horn", 6.0F, -5.0F, -6.0F, 1.0F, 2.0F, 2.0F)
-                .texOffs(44, 0).mirror().addBox("decoration_right", -10.1F, -4.9F, -5.0F, 4.0F, 4.0F, 0.01F)
-                .texOffs(44, 0).addBox("decoration_left", 6.1F, -4.9F, -5.0F, 4.0F, 4.0F, 0.01F), PartPose.offset(0.0F, 4.0F, -8.0F));
+                .texOffs(30, 0).addBox("left_horn", 6.0F, -5.0F, -6.0F, 1.0F, 1.0F, 2.0F), PartPose.offset(0.0F, 4.0F, -8.0F));
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 4).addBox(-6.0F, -10.0F, -7.0F, 12.0F, 18.0F, 10.0F)
                 .texOffs(52, 0).addBox(-2.0F, 2.0F, -8.0F, 4.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, (float) (Math.PI / 2), 0.0F, 0.0F));
         partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-4.0F, 12.0F, 7.0F));
@@ -49,16 +45,14 @@ public class CustomCowModelLayers {
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
     
-    public static LayerDefinition createDecoration() {
+    public static LayerDefinition createFlat() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
-        int i = 12;
+
         partDefinition.addOrReplaceChild(
                 "head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 6.0F)
-                        .texOffs(22, 0).addBox("right_horn", -5.0F, -5.0F, -4.0F, 1.0F, 3.0F, 1.0F)
-                        .texOffs(22, 0).addBox("left_horn", 4.0F, -5.0F, -4.0F, 1.0F, 3.0F, 1.0F)
-                        .texOffs(44, 0).mirror().addBox("decoration_right", -8.1F, -4.9F, -3.5F, 4.0F, 4.0F, 0.01F)
-                        .texOffs(44, 0).addBox("decoration_left", 4.1F, -4.9F, -3.5F, 4.0F, 4.0F, 0.01F), PartPose.offset(0.0F, 4.0F, -8.0F));
+                        .texOffs(52, 7).addBox(4.0F, -5.0F, -3.5F, 5.0F, 5.0F, 0.01F, true) // Right horn.
+                        .texOffs(52, 7).addBox(-9.0F, -5.0F, -3.5F, 5.0F, 5.0F, 0.01F), PartPose.offset(0.0F, 4.0F, -8.0F)); // Left horn
         partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 4).addBox(-6.0F, -10.0F, -7.0F, 12.0F, 18.0F, 10.0F)
                 .texOffs(52, 0).addBox(-2.0F, 2.0F, -8.0F, 4.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, (float) (Math.PI / 2), 0.0F, 0.0F));
         CubeListBuilder cubeListBuilder = CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F);
@@ -74,12 +68,10 @@ public class CustomCowModelLayers {
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 6.0F)
-                .texOffs(22, 0).mirror().addBox("right_horn_base", -6.0F, -3.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(52, 7).mirror().addBox("right_horn", -7.0F, -5.0F, -6.0F, 1.0F, 4.0F, 2.0F)
+                .texOffs(22, 0).addBox("right_horn_base", -6.0F, -3.0F, -6.0F, 2.0F, 2.0F, 2.0F)
+                .texOffs(52, 7).addBox("right_horn", -7.0F, -5.0F, -6.0F, 1.0F, 4.0F, 2.0F)
                 .texOffs(22, 0).addBox("left_horn_base", 4.0F, -3.0F, -6.0F, 2.0F, 2.0F, 2.0F)
-                .texOffs(52, 7).addBox("left_horn", 6.0F, -5.0F, -6.0F, 1.0F, 4.0F, 2.0F)
-                .texOffs(44, 0).mirror().addBox("decoration_right", -10.1F, -3.9F, -5.0F, 4.0F, 4.0F, 0.01F)
-                .texOffs(44, 0).addBox("decoration_left", 6.1F, -3.9F, -5.0F, 4.0F, 4.0F, 0.01F), PartPose.offset(0.0F, 4.0F, -8.0F));
+                .texOffs(52, 7).addBox("left_horn", 6.0F, -5.0F, -6.0F, 1.0F, 4.0F, 2.0F), PartPose.offset(0.0F, 4.0F, -8.0F));
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 4).addBox(-6.0F, -10.0F, -7.0F, 12.0F, 18.0F, 10.0F)
                 .texOffs(52, 0).addBox(-2.0F, 2.0F, -8.0F, 4.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, (float) (Math.PI / 2), 0.0F, 0.0F));
         partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-4.0F, 12.0F, 7.0F));

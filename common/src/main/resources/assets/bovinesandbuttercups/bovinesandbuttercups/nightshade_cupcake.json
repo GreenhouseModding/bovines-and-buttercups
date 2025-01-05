@@ -1,0 +1,6058 @@
+{
+  "type": "bovinesandbuttercups:edible",
+  "multipart": [
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/nightshade_cupcake"
+      },
+      "when": {
+        "bites": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_nightshade_cupcakes"
+      },
+      "when": {
+        "bites": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_nightshade_cupcakes"
+      },
+      "when": {
+        "bites": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_nightshade_cupcakes"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_white_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_white_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_white_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_white_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_white_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_white_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_white_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_white_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:white_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_orange_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_orange_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_orange_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_orange_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_orange_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_orange_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_orange_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_orange_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:orange_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_magenta_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_magenta_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_magenta_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_magenta_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_magenta_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_magenta_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_magenta_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_magenta_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:magenta_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_light_blue_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_light_blue_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_blue_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_blue_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_blue_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_blue_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_blue_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_yellow_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_yellow_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_yellow_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_yellow_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_yellow_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_yellow_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_yellow_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_yellow_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:yellow_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_lime_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_lime_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_lime_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_lime_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_lime_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_lime_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_lime_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_lime_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:lime_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_pink_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_pink_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_pink_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_pink_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_pink_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_pink_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_pink_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_pink_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:pink_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_gray_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_gray_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_gray_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_gray_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_gray_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_gray_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:gray_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_light_gray_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_light_gray_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_gray_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_gray_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_light_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_light_gray_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_light_gray_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:light_gray_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_cyan_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_cyan_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_cyan_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_cyan_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_cyan_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_cyan_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_cyan_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_cyan_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:cyan_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_purple_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_purple_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_purple_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_purple_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_purple_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_purple_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_purple_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_purple_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:purple_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_blue_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_blue_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_blue_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_blue_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_blue_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_blue_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:blue_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_brown_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_brown_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_brown_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_brown_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_brown_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_brown_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_brown_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_brown_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:brown_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_green_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_green_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_green_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_green_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_green_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_green_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_green_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_green_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:green_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_red_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_red_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_red_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_red_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_red_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_red_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_red_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_red_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:red_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_black_candle"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/cupcake_black_candle_lit"
+      },
+      "when": {
+        "bites": 1,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_black_candles_index_one"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_black_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_black_candles_index_two"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/two_cupcake_black_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 2,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_one"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_one_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_two"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_two_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_three"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/three_cupcake_black_candles_index_three_lit"
+      },
+      "when": {
+        "bites": 3,
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_one"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_one_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 0,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_two"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_two_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 1,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_three"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 2,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_three_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 2,
+            "active": true
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_four"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 3,
+            "active": false
+          }
+        }
+      }
+    },
+    {
+      "apply": {
+        "model": "bovinesandbuttercups:block/four_cupcake_black_candles_index_four_lit"
+      },
+      "when": {
+        "bites": {
+          "min": 4
+        },
+        "attachments": {
+          "#minecraft:candles": {
+            "items": [
+              "minecraft:black_candle"
+            ],
+            "index": 3,
+            "active": true
+          }
+        }
+      }
+    }
+  ],
+  "item_model": "bovinesandbuttercups:nightshade_cupcake"
+}

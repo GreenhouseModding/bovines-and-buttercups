@@ -77,11 +77,11 @@ public class BovinesCowTypes {
                 new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SOMBERCUP))),
                 new BlockReference<>(Optional.of(BovinesBlocks.SOMBERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("sombercup_bud")), Optional.empty()),
-                BovinesCowModelTypes.OX,
-                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer"), List.of(
-                                new TranslucentTextureModifierFactory(), new EmissiveTextureModifierFactory(), new FallbackTextureModifierFactory(List.of()))),
-                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_sculk_vein_layer"), List.of(
+                BovinesCowModelTypes.FLAT,
+                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_sculk_moss_layer"), List.of(
                                 new FallbackTextureModifierFactory(List.of()))),
+                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer"), List.of(
+                                new TranslucentTextureModifierFactory(), new EmissiveTextureModifierFactory(), new FallbackTextureModifierFactory(List.of()))),
                         new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.SOMBERCUP_NECTAR_BOWL.getDefaultInstance()),
@@ -264,7 +264,7 @@ public class BovinesCowTypes {
                 new BlockReference<>(Optional.of(BovinesBlocks.NIGHTSHADE.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("nightshade_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
-                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_grass_layer"), List.of(new GrassTintTextureModifierFactory(),
+                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_pale_moss_layer"), List.of(
                                 new FallbackTextureModifierFactory(List.of()))),
                         new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),

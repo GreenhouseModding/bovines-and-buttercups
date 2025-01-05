@@ -10,11 +10,8 @@
   },
   "layers": [
     {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_grass_layer",
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_pale_moss_layer",
       "texture_modifiers": [
-        {
-          "type": "bovinesandbuttercups:grass_tint"
-        },
         {
           "type": "bovinesandbuttercups:fallback"
         }

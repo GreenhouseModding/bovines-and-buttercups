@@ -613,12 +613,31 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void addTags(HolderLookup.Provider lookup) {
+            ((FabricTagBuilder)tag(BlockTags.BEE_ATTRACTIVE))
+                    .add(
+                            reverseLookup(BovinesBlocks.BIRD_OF_PARADISE),
+                            reverseLookup(BovinesBlocks.BUTTERCUP),
+                            reverseLookup(BovinesBlocks.CAMELLIA),
+                            reverseLookup(BovinesBlocks.CHARGELILY),
+                            reverseLookup(BovinesBlocks.CUSTOM_FLOWER),
+                            reverseLookup(BovinesBlocks.FREESIA),
+                            reverseLookup(BovinesBlocks.HYACINTH),
+                            reverseLookup(BovinesBlocks.LIMELIGHT),
+                            reverseLookup(BovinesBlocks.LINGHOLM),
+                            reverseLookup(BovinesBlocks.NIGHTSHADE),
+                            reverseLookup(BovinesBlocks.PINK_DAISY),
+                            reverseLookup(BovinesBlocks.SNOWDROP),
+                            reverseLookup(BovinesBlocks.SOMBERCUP),
+                            reverseLookup(BovinesBlocks.TROPICAL_BLUE)
+                    );
             ((FabricTagBuilder)tag(BlockTags.SMALL_FLOWERS))
                     .forceAddTag(BovinesTags.BlockTags.MOOBLOOM_FLOWERS);
 
-            ((FabricTagBuilder)tag(BovinesTags.BlockTags.DOES_NOT_STICK_RICH_HONEY_BLOCK))
-                    .add(reverseLookup(Blocks.SLIME_BLOCK))
-                    .add(reverseLookup(Blocks.HONEY_BLOCK));
+            tag(BovinesTags.BlockTags.DOES_NOT_STICK_RICH_HONEY_BLOCK)
+                    .add(
+                            reverseLookup(Blocks.SLIME_BLOCK),
+                            reverseLookup(Blocks.HONEY_BLOCK)
+                    );
             tag(BovinesTags.BlockTags.MOOBLOOM_FLOWERS)
                     .add(
                             reverseLookup(BovinesBlocks.BIRD_OF_PARADISE),
@@ -806,13 +825,15 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             createCupcakes(BovinesEdibleBlockTypes.HYACINTH_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.LIMELIGHT_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.LINGHOLM_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.NIGHTSHADE_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.SOMBERCUP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE, generators);
             createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators);
             createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators);
-            createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
-            createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
+            createPuffPastries(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY, generators);
+            createPuffPastries(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY, generators);
 
             createCandles(Blocks.CANDLE, generators);
             createCandles(Blocks.WHITE_CANDLE, generators);
@@ -843,15 +864,11 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         }
 
         public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
-            createPuffPastries(type, generators, "");
-        }
+            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
 
-        public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators, String prefix) {
-            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + prefix + s));
+            String plural = type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
 
-            String plural = prefix + type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
-
-            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + prefix + s), mapping, generators.modelOutput);
+            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + s), mapping, generators.modelOutput);
             TWO_PUFF_PASTRIES.create(type.location().withPath("block/two_" + plural), mapping, generators.modelOutput);
             THREE_PUFF_PASTRIES.create(type.location().withPath("block/three_" + plural), mapping, generators.modelOutput);
             FOUR_PUFF_PASTRIES.create(type.location().withPath("block/four_" + plural), mapping, generators.modelOutput);

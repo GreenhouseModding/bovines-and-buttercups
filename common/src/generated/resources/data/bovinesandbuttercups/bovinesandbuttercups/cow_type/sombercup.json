@@ -10,6 +10,14 @@
   },
   "layers": [
     {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_sculk_moss_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
       "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer",
       "texture_modifiers": [
         {
@@ -18,14 +26,6 @@
         {
           "type": "bovinesandbuttercups:emissive"
         },
-        {
-          "type": "bovinesandbuttercups:fallback"
-        }
-      ]
-    },
-    {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_sculk_vein_layer",
-      "texture_modifiers": [
         {
           "type": "bovinesandbuttercups:fallback"
         }
@@ -53,7 +53,7 @@
       ]
     }
   ],
-  "model": "bovinesandbuttercups:ox",
+  "model": "bovinesandbuttercups:flat",
   "nectar": {
     "id": "bovinesandbuttercups:sombercup_nectar_bowl"
   },

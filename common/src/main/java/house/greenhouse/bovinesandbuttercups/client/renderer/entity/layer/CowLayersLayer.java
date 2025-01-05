@@ -34,7 +34,7 @@ public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEnti
 
         loop: for (CowModelLayer cowLayer : attachment.value().configuration().layers()) {
             ResourceLocation mappedTextureLocation = cowLayer.textureLocation().withPath(string -> "textures/entity/" + string + ".png");
-            RenderType renderType = RenderType.entityTranslucent(mappedTextureLocation);
+            RenderType renderType = RenderType.entityCutout(mappedTextureLocation);
             int color = 0xFFFFFFFF;
             for (TextureModifierFactory<?> factory : cowLayer.textureModifiers().stream().sorted(Comparator.comparingInt(TextureModifierFactory::priority)).toList()) {
                 TextureModifier provider = factory.getOrCreateProvider();
