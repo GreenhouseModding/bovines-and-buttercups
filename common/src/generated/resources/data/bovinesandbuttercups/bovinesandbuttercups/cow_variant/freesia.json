@@ -1,11 +1,11 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_set": "bovinesandbuttercups:bird_of_paradise_bud"
+    "model_set": "bovinesandbuttercups:freesia_bud"
   },
   "flower": {
     "block_state": {
-      "Name": "bovinesandbuttercups:bird_of_paradise"
+      "Name": "bovinesandbuttercups:freesia"
     }
   },
   "layers": [
@@ -42,7 +42,8 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:bird_of_paradise",
+  "model": "bovinesandbuttercups:buffalo",
+  "nectar": "bovinesandbuttercups:freesia",
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -55,9 +56,32 @@
               "terms": [
                 {
                   "block": {
+                    "blocks": "minecraft:lily_pad"
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
                     "blocks": [
-                      "minecraft:melon",
-                      "minecraft:melon_stem"
+                      "minecraft:blue_orchid",
+                      "minecraft:potted_blue_orchid"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -82,36 +106,10 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:poppy",
-                      "minecraft:potted_poppy"
-                    ]
-                  },
-                  "condition": "bovinesandbuttercups:block_in_radius",
-                  "radius": {
-                    "max": [
-                      6.0,
-                      4.0,
-                      6.0
-                    ],
-                    "min": [
-                      -6.0,
-                      -2.0,
-                      -6.0
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "condition": "minecraft:any_of",
-              "terms": [
-                {
-                  "block": {
-                    "blocks": [
-                      "minecraft:acacia_log",
-                      "minecraft:acacia_wood",
-                      "minecraft:acacia_sapling",
-                      "minecraft:potted_acacia_sapling"
+                      "minecraft:mangrove_log",
+                      "minecraft:mangrove_wood",
+                      "minecraft:mangrove_propagule",
+                      "minecraft:potted_mangrove_propagule"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -135,8 +133,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:bird_of_paradise",
-              "bovinesandbuttercups:potted_bird_of_paradise"
+              "bovinesandbuttercups:freesia",
+              "bovinesandbuttercups:potted_freesia"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
@@ -158,8 +156,13 @@
   ],
   "particle": {
     "type": "bovinesandbuttercups:bloom",
-    "color": 16745018
+    "color": 15223894
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

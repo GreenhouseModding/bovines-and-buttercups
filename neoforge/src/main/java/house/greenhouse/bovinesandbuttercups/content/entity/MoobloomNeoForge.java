@@ -47,11 +47,11 @@ public class MoobloomNeoForge extends Moobloom implements IShearable {
                 cowEntity.setInvulnerable(isInvulnerable());
                 level().addFreshEntity(cowEntity);
                 for (int i = 0; i < 5; ++i) {
-                    if (getCowType().value().configuration().flower().blockState().isPresent()) {
-                        stacks.add(new ItemStack(getCowType().value().configuration().flower().blockState().get().getBlock()));
-                    } else if (getCowType().value().configuration().flower().customType().isPresent()) {
+                    if (getCowVariant().value().configuration().flower().blockState().isPresent()) {
+                        stacks.add(new ItemStack(getCowVariant().value().configuration().flower().blockState().get().getBlock()));
+                    } else if (getCowVariant().value().configuration().flower().customType().isPresent()) {
                         ItemStack itemStack = new ItemStack(BovinesItems.CUSTOM_FLOWER);
-                        itemStack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(getCowType().value().configuration().flower().customType().get()));
+                        itemStack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(getCowVariant().value().configuration().flower().customType().get()));
                         stacks.add(itemStack);
                     }
                 }

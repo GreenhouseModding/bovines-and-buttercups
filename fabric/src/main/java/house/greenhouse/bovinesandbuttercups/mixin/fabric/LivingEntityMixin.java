@@ -7,7 +7,6 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
-import house.greenhouse.bovinesandbuttercups.content.effect.LockdownEffect;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.util.LockdownData;
@@ -23,14 +22,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.MushroomCow;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -61,8 +58,8 @@ public abstract class LivingEntityMixin extends Entity {
             LockdownAttachment.sync(entity);
         }
 
-        if (entity.hasAttached(BovinesAttachments.COW_TYPE) && entity.getAttached(BovinesAttachments.COW_TYPE).cowType().isBound())
-            entity.getAttached(BovinesAttachments.COW_TYPE).cowType().value().configuration().tick(this);
+        if (entity.hasAttached(BovinesAttachments.COW_VARIANT) && entity.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().isBound())
+            entity.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration().tick(this);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

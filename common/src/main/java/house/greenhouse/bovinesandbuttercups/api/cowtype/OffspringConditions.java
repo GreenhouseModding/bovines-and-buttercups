@@ -5,9 +5,9 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import net.minecraft.core.Holder;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -35,10 +35,10 @@ public record OffspringConditions(List<LootItemCondition> thisConditions, List<L
         PARENT("parent_to_previous", (baby, parent, other) -> parentToPrevious(baby, parent)),
         OTHER("other_to_previous", (baby, parent, other) -> parentToPrevious(baby, other));
 
-        private static Pair<Holder<CowType<?>>, Optional<Holder<CowType<?>>>> parentToPrevious(Holder<CowType<?>> baby, CowTypeAttachment parent) {
-            if (parent.previousCowType().isPresent() && baby.is(parent.previousCowType().get()))
-                return Pair.of(baby, Optional.of(parent.cowType()));
-            return Pair.of(baby, parent.previousCowType());
+        private static Pair<Holder<CowVariant<?>>, Optional<Holder<CowVariant<?>>>> parentToPrevious(Holder<CowVariant<?>> baby, CowVariantAttachment parent) {
+            if (parent.previousCowVariant().isPresent() && baby.is(parent.previousCowVariant().get()))
+                return Pair.of(baby, Optional.of(parent.cowVariant()));
+            return Pair.of(baby, parent.previousCowVariant());
         }
 
         public static final Codec<Inheritance> CODEC = StringRepresentable.fromEnum(Inheritance::values);
@@ -50,8 +50,8 @@ public record OffspringConditions(List<LootItemCondition> thisConditions, List<L
             this.operation = operation;
         }
 
-        public <C extends CowTypeConfiguration> Pair<Holder<CowType<C>>, Optional<Holder<CowType<C>>>> handleInheritance(Holder<CowType<C>> baby, CowTypeAttachment parent, CowTypeAttachment other) {
-            return (Pair<Holder<CowType<C>>, Optional<Holder<CowType<C>>>>) operation.handleInheritance((Holder) baby, parent, other);
+        public <C extends CowTypeConfiguration> Pair<Holder<CowVariant<C>>, Optional<Holder<CowVariant<C>>>> handleInheritance(Holder<CowVariant<C>> baby, CowVariantAttachment parent, CowVariantAttachment other) {
+            return (Pair<Holder<CowVariant<C>>, Optional<Holder<CowVariant<C>>>>) operation.handleInheritance((Holder) baby, parent, other);
         }
 
         @Override
@@ -63,6 +63,6 @@ public record OffspringConditions(List<LootItemCondition> thisConditions, List<L
 
     @FunctionalInterface
     private interface InheritanceOperation {
-        Pair<Holder<CowType<?>>, Optional<Holder<CowType<?>>>> handleInheritance(Holder<CowType<?>> baby, CowTypeAttachment parent, CowTypeAttachment other);
+        Pair<Holder<CowVariant<?>>, Optional<Holder<CowVariant<?>>>> handleInheritance(Holder<CowVariant<?>> baby, CowVariantAttachment parent, CowVariantAttachment other);
     }
 }

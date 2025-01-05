@@ -20,6 +20,7 @@ public class BovinesEdibleBlockTypes {
     public static final ResourceKey<EdibleBlockType> LIMELIGHT_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("limelight_cupcake"));
     public static final ResourceKey<EdibleBlockType> LINGHOLM_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("lingholm_cupcake"));
     public static final ResourceKey<EdibleBlockType> PINK_DAISY_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("pink_daisy_cupcake"));
+    public static final ResourceKey<EdibleBlockType> SOMBERCUP_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("sombercup_cupcake"));
     public static final ResourceKey<EdibleBlockType> SNOWDROP_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("snowdrop_cupcake"));
     public static final ResourceKey<EdibleBlockType> TROPICAL_BLUE_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("tropical_blue_cupcake"));
 
@@ -38,6 +39,7 @@ public class BovinesEdibleBlockTypes {
         context.register(LIMELIGHT_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.REGENERATION, 2400)))));
         context.register(LINGHOLM_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.MOVEMENT_SPEED, 2400)))));
         context.register(PINK_DAISY_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DAMAGE_BOOST, 2400)))));
+        context.register(SOMBERCUP_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DARKNESS, 2400)))));
         context.register(SNOWDROP_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SLOWDOWN, 7200)))));
         context.register(TROPICAL_BLUE_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.FIRE_RESISTANCE, 9600)))));
 

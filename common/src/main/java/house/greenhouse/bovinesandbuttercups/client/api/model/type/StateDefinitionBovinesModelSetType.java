@@ -38,7 +38,7 @@ public class StateDefinitionBovinesModelSetType extends InventoryBovinesModelSet
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
         if (modelSet == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(state, null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
+        return modelSet.getModel(state, null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for variant \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
     }
 
     @Override

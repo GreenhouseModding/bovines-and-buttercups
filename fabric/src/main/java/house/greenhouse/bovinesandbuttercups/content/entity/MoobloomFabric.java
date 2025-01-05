@@ -1,7 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.entity;
 
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
-import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
@@ -64,11 +63,11 @@ public class MoobloomFabric extends Moobloom implements Shearable {
                 cowEntity.setInvulnerable(isInvulnerable());
                 level().addFreshEntity(cowEntity);
                 for (int i = 0; i < 5; ++i) {
-                    if (getCowType().value().configuration().flower().blockState().isPresent()) {
-                        stacks.add(new ItemStack(getCowType().value().configuration().flower().blockState().get().getBlock()));
-                    } else if (getCowType().value().configuration().flower().customType().isPresent()) {
+                    if (getCowVariant().value().configuration().flower().blockState().isPresent()) {
+                        stacks.add(new ItemStack(getCowVariant().value().configuration().flower().blockState().get().getBlock()));
+                    } else if (getCowVariant().value().configuration().flower().customType().isPresent()) {
                         ItemStack itemStack = new ItemStack(BovinesItems.CUSTOM_FLOWER);
-                        itemStack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(getCowType().value().configuration().flower().customType().get()));
+                        itemStack.set(BovinesDataComponents.CUSTOM_FLOWER, new ItemCustomFlower(getCowVariant().value().configuration().flower().customType().get()));
                         stacks.add(itemStack);
                     }
                 }

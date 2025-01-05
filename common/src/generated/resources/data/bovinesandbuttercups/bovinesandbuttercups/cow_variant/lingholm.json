@@ -1,11 +1,11 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_set": "bovinesandbuttercups:camellia_bud"
+    "model_set": "bovinesandbuttercups:lingholm_bud"
   },
   "flower": {
     "block_state": {
-      "Name": "bovinesandbuttercups:camellia"
+      "Name": "bovinesandbuttercups:lingholm"
     }
   },
   "layers": [
@@ -42,7 +42,8 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:camellia",
+  "model": "bovinesandbuttercups:highland",
+  "nectar": "bovinesandbuttercups:lingholm",
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -55,7 +56,10 @@
               "terms": [
                 {
                   "block": {
-                    "blocks": "minecraft:cherry_leaves"
+                    "blocks": [
+                      "minecraft:pumpkin",
+                      "minecraft:pumpkin_stem"
+                    ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
                   "radius": {
@@ -78,7 +82,7 @@
               "terms": [
                 {
                   "block": {
-                    "blocks": "minecraft:pink_petals"
+                    "blocks": "minecraft:sweet_berry_bush"
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
                   "radius": {
@@ -102,10 +106,10 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:cherry_log",
-                      "minecraft:cherry_wood",
-                      "minecraft:cherry_sapling",
-                      "minecraft:potted_cherry_sapling"
+                      "minecraft:spruce_log",
+                      "minecraft:spruce_wood",
+                      "minecraft:spruce_sapling",
+                      "minecraft:potted_spruce_sapling"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -129,8 +133,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:pink_daisy",
-              "bovinesandbuttercups:potted_pink_daisy"
+              "bovinesandbuttercups:lingholm",
+              "bovinesandbuttercups:potted_lingholm"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
@@ -152,8 +156,13 @@
   ],
   "particle": {
     "type": "bovinesandbuttercups:bloom",
-    "color": 15157449
+    "color": 4182750
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

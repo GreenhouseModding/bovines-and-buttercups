@@ -2,8 +2,8 @@ package house.greenhouse.bovinesandbuttercups.content.entity;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
@@ -13,8 +13,8 @@ import house.greenhouse.bovinesandbuttercups.content.data.configuration.Moobloom
 import house.greenhouse.bovinesandbuttercups.mixin.EntityAccessor;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
@@ -103,7 +103,7 @@ public class Moobloom extends Cow {
     private BlockPos previousPos = null;
     private int ticksUntilSpread = -1;
     @Nullable private UUID lastLightningBoltUUID;
-    private final Map<Holder<CowType<?>>, List<Vec3>> particlePositions = new HashMap<>();
+    private final Map<Holder<CowVariant<?>>, List<Vec3>> particlePositions = new HashMap<>();
 
     public final AnimationState layDownAnimationState = new AnimationState();
     public final AnimationState getUpAnimationState = new AnimationState();
@@ -171,30 +171,30 @@ public class Moobloom extends Cow {
 
     public void backwardsCompat(CompoundTag tag) {
         if (tag.contains("Type", Tag.TAG_STRING)) {
-            Optional<Holder.Reference<CowType<?>>> cowType = level().registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
-            if (cowType.isEmpty()) {
-                BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
+            Optional<Holder.Reference<CowVariant<?>>> cowVariant = level().registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
+            if (cowVariant.isEmpty()) {
+                BovinesAndButtercups.LOG.error("Could not deserialize legacy cow variant tag \"{}\" into a cow variant holder.", tag.getString("Type"));
                 return;
             }
-            if (!cowType.get().isBound() || cowType.get().value().type() != BovinesCowTypeTypes.MOOBLOOM_TYPE)  {
-                BovinesAndButtercups.LOG.error("Cow Type \"{}\" is not bound or is not a moobloom.", cowType);
+            if (!cowVariant.get().isBound() || cowVariant.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE)  {
+                BovinesAndButtercups.LOG.error("Cow Type \"{}\" is not bound or is not a moobloom.", cowVariant);
                 return;
             }
             if (tag.contains("PreviousType", Tag.TAG_STRING)) {
-                Optional<Holder.Reference<CowType<?>>> previousCowType = level().registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
+                Optional<Holder.Reference<CowVariant<?>>> previousCowType = level().registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
                 if (previousCowType.isEmpty()) {
-                    BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
+                    BovinesAndButtercups.LOG.error("Could not deserialize legacy cow variant tag \"{}\" into a cow variant holder.", tag.getString("Type"));
                     return;
                 }
-                if (!previousCowType.get().isBound() || previousCowType.get().value().type() != BovinesCowTypeTypes.MOOBLOOM_TYPE) {
-                    BovinesAndButtercups.LOG.error("Previous Cow Type \"{}\" is not bound or is not a moobloom.", cowType);
+                if (!previousCowType.get().isBound() || previousCowType.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE) {
+                    BovinesAndButtercups.LOG.error("Previous Cow Type \"{}\" is not bound or is not a moobloom.", cowVariant);
                     return;
                 }
-                BovinesAndButtercups.getHelper().setCowTypeAttachment(this, new CowTypeAttachment(cowType.get(), previousCowType.map(cowTypeReference -> cowTypeReference)));
-                CowTypeAttachment.sync(this);
+                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, new CowVariantAttachment(cowVariant.get(), previousCowType.map(cowTypeReference -> cowTypeReference)));
+                CowVariantAttachment.sync(this);
             } else {
-                setCowType((Holder) cowType.get());
-                CowTypeAttachment.sync(this);
+                setCowVariant((Holder) cowVariant.get());
+                CowVariantAttachment.sync(this);
             }
         }
         if (tag.contains("PollinatedResetTicks", Tag.TAG_INT))
@@ -214,35 +214,35 @@ public class Moobloom extends Cow {
     @Override
     public void thunderHit(ServerLevel level, LightningBolt bolt) {
         UUID uuid = bolt.getUUID();
-        if (getCowType().isBound() && getCowType().value().configuration().allowsConversion(this) && !uuid.equals(lastLightningBoltUUID)) {
-            if (getPreviousCowType() == null) {
-                if (getCowType().value().configuration().settings().thunderConverts().isEmpty()) {
+        if (getCowVariant().isBound() && getCowVariant().value().configuration().allowsConversion(this) && !uuid.equals(lastLightningBoltUUID)) {
+            if (getPreviousCowVariant() == null) {
+                if (getCowVariant().value().configuration().settings().thunderConverts().isEmpty()) {
                     super.thunderHit(level, bolt);
                     return;
                 }
 
-                List<WeightedEntry.Wrapper<Holder<CowType<MoobloomConfiguration>>>> compatibleList = getCowType().value().configuration().settings().filterThunderConverts(BovinesCowTypeTypes.MOOBLOOM_TYPE);
+                List<WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>>> compatibleList = getCowVariant().value().configuration().settings().filterThunderConverts(BovinesCowTypes.MOOBLOOM_TYPE);
 
                 if (compatibleList.isEmpty()) {
                     super.thunderHit(level, bolt);
                     return;
                 } else if (compatibleList.size() == 1) {
-                    setCurrentWithPreviousCowType(compatibleList.getFirst().data());
-                    CowTypeAttachment.sync(this);
+                    setCurrentWithPreviousCowVariant(compatibleList.getFirst().data());
+                    CowVariantAttachment.sync(this);
                 } else {
                     int totalWeight = level.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
-                    for (WeightedEntry.Wrapper<Holder<CowType<MoobloomConfiguration>>> cct : compatibleList) {
+                    for (WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>> cct : compatibleList) {
                         totalWeight -= cct.weight().asInt();
                         if (totalWeight < 0) {
-                            setCurrentWithPreviousCowType(cct.data());
-                            CowTypeAttachment.sync(this);
+                            setCurrentWithPreviousCowVariant(cct.data());
+                            CowVariantAttachment.sync(this);
                             break;
                         }
                     }
                 }
             } else {
-                setCowType(getPreviousCowType());
-                CowTypeAttachment.sync(this);
+                setCowVariant(getPreviousCowVariant());
+                CowVariantAttachment.sync(this);
             }
             lastLightningBoltUUID = uuid;
             playSound(BovinesSoundEvents.MOOBLOOM_CONVERT, 2.0F, 1.0F);
@@ -354,13 +354,13 @@ public class Moobloom extends Cow {
         if (level().isClientSide) return true;
 
         BlockState state = null;
-        if (getCowType().value().configuration().flower().blockState().isPresent())
-            state = getCowType().value().configuration().flower().blockState().get().getBlock().defaultBlockState();
-        else if (getCowType().value().configuration().flower().customType().isPresent())
+        if (getCowVariant().value().configuration().flower().blockState().isPresent())
+            state = getCowVariant().value().configuration().flower().blockState().get().getBlock().defaultBlockState();
+        else if (getCowVariant().value().configuration().flower().customType().isPresent())
             state = BovinesBlocks.CUSTOM_FLOWER.defaultBlockState();
 
         if (state == null) {
-            BovinesAndButtercups.LOG.warn("Moobloom with type '{}' tried to spread flowers without a valid flower type.", getCowType().getRegisteredName());
+            BovinesAndButtercups.LOG.warn("Moobloom with variant '{}' tried to spread flowers without a valid flower variant.", getCowVariant().getRegisteredName());
             return true;
         }
 
@@ -387,11 +387,11 @@ public class Moobloom extends Cow {
     public void setBlockToFlower(BlockState state, BlockPos pos) {
         if (level().isClientSide || !state.canSurvive(level(), pos.below())) return;
         ((ServerLevel) level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D, 4, 0.2, 0.1, 0.2, 0.0);
-        if (state.getBlock() == BovinesBlocks.CUSTOM_FLOWER && getCowType().value().configuration().flower().customType().isPresent()) {
+        if (state.getBlock() == BovinesBlocks.CUSTOM_FLOWER && getCowVariant().value().configuration().flower().customType().isPresent()) {
             level().setBlock(pos, state, Block.UPDATE_ALL);
             BlockEntity blockEntity = level().getBlockEntity(pos);
             if (blockEntity instanceof CustomFlowerBlockEntity customFlowerBlockEntity) {
-                customFlowerBlockEntity.setFlowerType(new ItemCustomFlower(getCowType().value().configuration().flower().customType().get()));
+                customFlowerBlockEntity.setFlowerType(new ItemCustomFlower(getCowVariant().value().configuration().flower().customType().get()));
                 customFlowerBlockEntity.setChanged();
             }
         } else {
@@ -419,8 +419,8 @@ public class Moobloom extends Cow {
             } else if (stack.is(Items.BOWL)) {
                 ItemStack stack2;
                 stack2 = new ItemStack(BovinesItems.NECTAR_BOWL);
-                if (getCowType().value().configuration().nectar().isPresent()) {
-                    stack2.set(BovinesDataComponents.NECTAR, new ItemNectar(getCowType().value().configuration().nectar().get()));
+                if (getCowVariant().value().configuration().nectar().isPresent()) {
+                    stack2.set(BovinesDataComponents.NECTAR, new ItemNectar(getCowVariant().value().configuration().nectar().get()));
                 } else {
                     return InteractionResult.PASS;
                 }
@@ -450,11 +450,11 @@ public class Moobloom extends Cow {
         return true;
     }
 
-    public Pair<Holder<CowType<MoobloomConfiguration>>, Optional<Holder<CowType<MoobloomConfiguration>>>> chooseBabyType(ServerLevel level, Moobloom otherParent, Moobloom child) {
-        List<Holder<CowType<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
+    public Pair<Holder<CowVariant<MoobloomConfiguration>>, Optional<Holder<CowVariant<MoobloomConfiguration>>>> chooseBabyType(ServerLevel level, Moobloom otherParent, Moobloom child) {
+        List<Holder<CowVariant<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
-        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
-            Holder.Reference<CowType<MoobloomConfiguration>> moobloomType = (Holder.Reference) cowType;
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+            Holder.Reference<CowVariant<MoobloomConfiguration>> moobloomType = (Holder.Reference) cowVariant;
             var conditions = moobloomType.value().configuration().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder(level);
@@ -462,7 +462,7 @@ public class Moobloom extends Cow {
             params.withParameter(BovinesLootContextParams.PARTNER, otherParent);
             params.withParameter(BovinesLootContextParams.CHILD, child);
             params.withParameter(LootContextParams.ORIGIN, position());
-            params.withParameter(BovinesLootContextParams.BREEDING_TYPE, cowType);
+            params.withParameter(BovinesLootContextParams.BREEDING_TYPE, cowVariant);
 
             LootContext thisContext = new LootContext.Builder(params.create(BovinesLootContextParamSets.BREEDING)).create(Optional.empty());
 
@@ -485,27 +485,27 @@ public class Moobloom extends Cow {
 
             if (getLoveCause() != null)
                 BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowTypeAttachment(this), BovinesAndButtercups.getHelper().getCowTypeAttachment(otherParent));
+            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
         }
 
         child.particlePositions.clear();
 
-        if (!otherParent.getCowType().equals(getCowType()) && getRandom().nextBoolean()) {
+        if (!otherParent.getCowVariant().equals(getCowVariant()) && getRandom().nextBoolean()) {
             if (getLoveCause() != null)
-                BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowType<?>>)(Holder<?>)otherParent.getCowType());
-            return Pair.of(otherParent.getCowType(), Optional.ofNullable(otherParent.getPreviousCowType()));
+                BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>)otherParent.getCowVariant());
+            return Pair.of(otherParent.getCowVariant(), Optional.ofNullable(otherParent.getPreviousCowVariant()));
         }
 
         if (getLoveCause() != null)
-            BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowType<?>>)(Holder<?>)getCowType());
-        return Pair.of(getCowType(), Optional.ofNullable(getPreviousCowType()));
+            BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>) getCowVariant());
+        return Pair.of(getCowVariant(), Optional.ofNullable(getPreviousCowVariant()));
     }
 
-    public void addParticlePosition(Holder<CowType<?>> type, Vec3 pos) {
+    public void addParticlePosition(Holder<CowVariant<?>> type, Vec3 pos) {
         particlePositions.computeIfAbsent(type, holder -> new ArrayList<>()).add(pos);
     }
 
-    public void createParticles(Holder<CowType<MoobloomConfiguration>> type, Vec3 parentPos) {
+    public void createParticles(Holder<CowVariant<MoobloomConfiguration>> type, Vec3 parentPos) {
         if (!type.isBound() || type.value().configuration().settings().particle().isEmpty())
             return;
 
@@ -529,29 +529,29 @@ public class Moobloom extends Cow {
     public Moobloom getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         Moobloom moobloom = BovinesEntityTypes.MOOBLOOM.create(level);
         var pair = chooseBabyType(level, (Moobloom)otherParent, moobloom);
-        CowTypeAttachment.setCowType(moobloom, pair.getFirst(), pair.getSecond());
+        CowVariantAttachment.setCowVariant(moobloom, pair.getFirst(), pair.getSecond());
         return moobloom;
     }
 
-    public Holder<CowType<MoobloomConfiguration>> getCowType() {
-        return Optional.ofNullable(CowTypeAttachment.getCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).getHolderOrThrow(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM));
+    public Holder<CowVariant<MoobloomConfiguration>> getCowVariant() {
+        return Optional.ofNullable(CowVariantAttachment.getCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).getHolderOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM));
     }
 
     @Nullable
-    public Holder<CowType<MoobloomConfiguration>> getPreviousCowType() {
-        return CowTypeAttachment.getPreviousCowTypeHolderFromEntity(this, BovinesCowTypeTypes.MOOBLOOM_TYPE);
+    public Holder<CowVariant<MoobloomConfiguration>> getPreviousCowVariant() {
+        return CowVariantAttachment.getPreviousCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE);
     }
 
-    public void setCowType(Holder<CowType<MoobloomConfiguration>> value) {
-        CowTypeAttachment.setCowType(this, value);
+    public void setCowVariant(Holder<CowVariant<MoobloomConfiguration>> value) {
+        CowVariantAttachment.setCowVariant(this, value);
     }
 
-    public void setCowType(Holder<CowType<MoobloomConfiguration>> value, Holder<CowType<MoobloomConfiguration>> previous) {
-        CowTypeAttachment.setCowType(this, value, previous);
+    public void setCowVariant(Holder<CowVariant<MoobloomConfiguration>> value, Holder<CowVariant<MoobloomConfiguration>> previous) {
+        CowVariantAttachment.setCowVariant(this, value, previous);
     }
 
-    public void setCurrentWithPreviousCowType(Holder<CowType<MoobloomConfiguration>> value) {
-        CowTypeAttachment.setCowType(this, value, getCowType());
+    public void setCurrentWithPreviousCowVariant(Holder<CowVariant<MoobloomConfiguration>> value) {
+        CowVariantAttachment.setCowVariant(this, value, getCowVariant());
     }
 
     public int getFlowerSpreadAttempts() {
@@ -614,8 +614,8 @@ public class Moobloom extends Cow {
     public static int getTotalSpawnWeight(LevelAccessor level, BlockPos pos) {
         int totalWeight = 0;
 
-        for (CowType<?> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().stream().filter(cowType -> cowType.configuration() instanceof MoobloomConfiguration).toList()) {
-            if (!(cowType.configuration() instanceof MoobloomConfiguration configuration))
+        for (CowVariant<?> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().stream().filter(cowVariant -> cowVariant.configuration() instanceof MoobloomConfiguration).toList()) {
+            if (!(cowVariant.configuration() instanceof MoobloomConfiguration configuration))
                 continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -631,9 +631,9 @@ public class Moobloom extends Cow {
             if (data == null) {
                 data = new MoobloomGroupData();
             }
-            setCowType(((MoobloomGroupData)data).getSpawnType(blockPosition(), level, level.getRandom()));
+            setCowVariant(((MoobloomGroupData)data).getSpawnType(blockPosition(), level, level.getRandom()));
         }
-        CowTypeAttachment.sync(this);
+        CowVariantAttachment.sync(this);
         return super.finalizeSpawn(level, difficulty, spawnType, data);
     }
 
@@ -658,23 +658,23 @@ public class Moobloom extends Cow {
             super(true);
         }
 
-        public Holder<CowType<MoobloomConfiguration>> getSpawnType(BlockPos pos, ServerLevelAccessor level, RandomSource random) {
+        public Holder<CowVariant<MoobloomConfiguration>> getSpawnType(BlockPos pos, ServerLevelAccessor level, RandomSource random) {
             if (getTotalSpawnWeight(level, pos) > 0)
                 return getMoobloomSpawnTypeDependingOnBiome(level, pos, random);
             else
                 return getMostCommonMoobloomSpawnType(level, random);
         }
 
-        public Holder<CowType<MoobloomConfiguration>> getMostCommonMoobloomSpawnType(ServerLevelAccessor level, RandomSource random) {
+        public Holder<CowVariant<MoobloomConfiguration>> getMostCommonMoobloomSpawnType(ServerLevelAccessor level, RandomSource random) {
             int largestWeight = 0;
-            Holder<CowType<?>> finalCowType = level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).get();
+            Holder<CowVariant<?>> finalCowType = level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM).get();
 
-            for (Holder<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
-                if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
+            for (Holder<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+                if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                 if (max > largestWeight) {
-                    finalCowType = cowType;
+                    finalCowType = cowVariant;
                     largestWeight = max;
                 }
             }
@@ -682,16 +682,16 @@ public class Moobloom extends Cow {
             return (Holder)finalCowType;
         }
 
-        public Holder<CowType<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
-            List<Holder<CowType<MoobloomConfiguration>>> moobloomList = new ArrayList<>();
+        public Holder<CowVariant<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
+            List<Holder<CowVariant<MoobloomConfiguration>>> moobloomList = new ArrayList<>();
             int totalWeight = 0;
 
-            for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MoobloomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
-                if (!(cowType.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
+            for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+                if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
                 if (biome.isPresent()) {
-                    moobloomList.add((Holder) cowType);
+                    moobloomList.add((Holder) cowVariant);
                     totalWeight += biome.get().weight().asInt();
                 }
             }
@@ -700,14 +700,14 @@ public class Moobloom extends Cow {
                 return moobloomList.getFirst();
             } else if (!moobloomList.isEmpty()) {
                 int r = Mth.nextInt(random, 0, totalWeight - 1);
-                for (Holder<CowType<MoobloomConfiguration>> cowType : moobloomList) {
-                    int max = cowType.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
+                for (Holder<CowVariant<MoobloomConfiguration>> cowVariant : moobloomList) {
+                    int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                     r -= max;
                     if (r < 0.0)
-                        return cowType;
+                        return cowVariant;
                 }
             }
-            return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MoobloomKeys.MISSING_MOOBLOOM).get();
+            return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM).get();
         }
     }
 }

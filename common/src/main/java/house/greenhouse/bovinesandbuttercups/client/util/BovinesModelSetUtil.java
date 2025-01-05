@@ -58,19 +58,19 @@ public class BovinesModelSetUtil {
                         reader.close();
                         if (json instanceof JsonObject jsonObject) {
                             if (!jsonObject.has("type")) {
-                                BovinesAndButtercups.LOG.error("Could not find 'type' field in Bovines and Buttercups model set json: {}.", resourceId);
+                                BovinesAndButtercups.LOG.error("Could not find 'variant' field in Bovines and Buttercups model set json: {}.", resourceId);
                                 return List.of();
                             }
 
                             if (!jsonObject.get("type").isJsonPrimitive() || !jsonObject.getAsJsonPrimitive("type").isString()) {
-                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a string in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                BovinesAndButtercups.LOG.error("'variant' field \"{}\" is not a string in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
                                 return List.of();
                             }
 
                             ResourceLocation typeLocation = ResourceLocation.tryParse(jsonObject.getAsJsonPrimitive("type").getAsString());
 
                             if (typeLocation == null) {
-                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a resource location in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                BovinesAndButtercups.LOG.error("'variant' field \"{}\" is not a resource location in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
                                 return List.of();
                             }
 

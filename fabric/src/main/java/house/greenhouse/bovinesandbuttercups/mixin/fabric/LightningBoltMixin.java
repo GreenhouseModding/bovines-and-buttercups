@@ -2,8 +2,7 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import net.minecraft.core.Holder;
@@ -25,36 +24,36 @@ public class LightningBoltMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"))
     private void bovinesandbuttercups$thunderHit(CallbackInfo ci, @Local Entity entity) {
-        if (hitEntities.contains(entity) || !(entity instanceof LivingEntity living) || (entity instanceof Moobloom) || !entity.hasAttached(BovinesAttachments.COW_TYPE))
+        if (hitEntities.contains(entity) || !(entity instanceof LivingEntity living) || (entity instanceof Moobloom) || !entity.hasAttached(BovinesAttachments.COW_VARIANT))
             return;
-        CowTypeAttachment attachment = entity.getAttached(BovinesAttachments.COW_TYPE);
-        if (!attachment.cowType().isBound() || !attachment.cowType().value().configuration().allowsConversion(entity))
+        CowVariantAttachment attachment = entity.getAttached(BovinesAttachments.COW_VARIANT);
+        if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
             return;
-        if (attachment.previousCowType().isEmpty()) {
-            if (attachment.cowType().value().configuration().settings().thunderConverts().isEmpty())
+        if (attachment.previousCowVariant().isEmpty()) {
+            if (attachment.cowVariant().value().configuration().settings().thunderConverts().isEmpty())
                 return;
 
-            var compatibleList = attachment.cowType().value().configuration().settings().filterThunderConverts(attachment.cowType().value().type());
+            var compatibleList = attachment.cowVariant().value().configuration().settings().filterThunderConverts(attachment.cowVariant().value().type());
 
             if (compatibleList.size() == 1) {
-                CowTypeAttachment.setCowType(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowType());
-                CowTypeAttachment.sync(living);
+                CowVariantAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
+                CowVariantAttachment.sync(living);
                 BovinesAndButtercups.convertedByBovines = true;
             } else if (!compatibleList.isEmpty()) {
                 int totalWeight = entity.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
                 for (var cct : compatibleList) {
                     totalWeight -= cct.weight().asInt();
                     if (totalWeight < 0) {
-                        CowTypeAttachment.setCowType(living, (Holder) cct.data(), (Holder) attachment.cowType());
-                        CowTypeAttachment.sync(living);
+                        CowVariantAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
+                        CowVariantAttachment.sync(living);
                         BovinesAndButtercups.convertedByBovines = true;
                         break;
                     }
                 }
             }
         } else {
-            CowTypeAttachment.setCowType(living, (Holder) attachment.previousCowType().get());
-            CowTypeAttachment.sync(living);
+            CowVariantAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
+            CowVariantAttachment.sync(living);
             BovinesAndButtercups.convertedByBovines = true;
         }
     }

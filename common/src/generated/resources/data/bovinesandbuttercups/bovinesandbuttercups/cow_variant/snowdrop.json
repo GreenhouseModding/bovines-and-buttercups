@@ -42,6 +42,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:highland",
   "nectar": "bovinesandbuttercups:snowdrop",
   "offspring_conditions": [
     {
@@ -160,6 +161,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 15266297
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

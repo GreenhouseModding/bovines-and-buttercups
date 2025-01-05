@@ -3,6 +3,7 @@ package house.greenhouse.bovinesandbuttercups.util.dfu;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.DataFixerBuilder;
+import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
 import net.minecraft.SharedConstants;
@@ -11,7 +12,8 @@ import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 
 public record BovinesDataFixer(DataFixer fixer) {
-    public static final int CURRENT_VERSION = 0;
+    public static final int CURRENT_VERSION = 1;
+
     private static BovinesDataFixer instance;
 
     public static BovinesDataFixer get() {
@@ -25,8 +27,8 @@ public record BovinesDataFixer(DataFixer fixer) {
 
     private static DataFixer registerFixers() {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
-        builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
-                .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
+        builder.addSchema(0, (integer, schema) -> new Schema(integer, DataFixers.getDataFixer()
+                .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()))));
         return builder.build().fixer();
     }
 

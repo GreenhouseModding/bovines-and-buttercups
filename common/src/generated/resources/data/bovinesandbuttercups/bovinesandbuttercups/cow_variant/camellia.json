@@ -1,11 +1,11 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_set": "bovinesandbuttercups:buttercup_bud"
+    "model_set": "bovinesandbuttercups:camellia_bud"
   },
   "flower": {
     "block_state": {
-      "Name": "bovinesandbuttercups:buttercup"
+      "Name": "bovinesandbuttercups:camellia"
     }
   },
   "layers": [
@@ -42,13 +42,7 @@
       ]
     }
   ],
-  "natural_spawns": [
-    {
-      "biomes": "#bovinesandbuttercups:has_moobloom/flower_forest",
-      "weight": 7
-    }
-  ],
-  "nectar": "bovinesandbuttercups:buttercup",
+  "nectar": "bovinesandbuttercups:camellia",
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -61,10 +55,30 @@
               "terms": [
                 {
                   "block": {
-                    "blocks": "minecraft:sunflower",
-                    "state": {
-                      "half": "upper"
-                    }
+                    "blocks": "minecraft:cherry_leaves"
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": "minecraft:pink_petals"
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
                   "radius": {
@@ -88,36 +102,10 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:dandelion",
-                      "minecraft:potted_dandelion"
-                    ]
-                  },
-                  "condition": "bovinesandbuttercups:block_in_radius",
-                  "radius": {
-                    "max": [
-                      6.0,
-                      4.0,
-                      6.0
-                    ],
-                    "min": [
-                      -6.0,
-                      -2.0,
-                      -6.0
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "condition": "minecraft:any_of",
-              "terms": [
-                {
-                  "block": {
-                    "blocks": [
-                      "minecraft:birch_log",
-                      "minecraft:birch_wood",
-                      "minecraft:birch_sapling",
-                      "minecraft:potted_birch_sapling"
+                      "minecraft:cherry_log",
+                      "minecraft:cherry_wood",
+                      "minecraft:cherry_sapling",
+                      "minecraft:potted_cherry_sapling"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -141,8 +129,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:buttercup",
-              "bovinesandbuttercups:potted_buttercup"
+              "bovinesandbuttercups:pink_daisy",
+              "bovinesandbuttercups:potted_pink_daisy"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
@@ -164,8 +152,13 @@
   ],
   "particle": {
     "type": "bovinesandbuttercups:bloom",
-    "color": 16770340
+    "color": 15157449
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

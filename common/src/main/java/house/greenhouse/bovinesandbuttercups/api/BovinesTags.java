@@ -35,7 +35,20 @@ public class BovinesTags {
     public static class BlockTags {
         public static final TagKey<Block> DOES_NOT_STICK_RICH_HONEY_BLOCK = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("does_not_stick/rich_honey_block"));
         public static final TagKey<Block> MOOBLOOM_FLOWERS = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("moobloom_flowers"));
-        public static final TagKey<Block> SNOWDROP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("snowdrop_placeable"));
+
+        public static final TagKey<Block> BIRD_OF_PARADISE_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/bird_of_paradise"));
+        public static final TagKey<Block> BUTTERCUP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/buttercup"));
+        public static final TagKey<Block> CAMELLIA_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/camellia"));
+        public static final TagKey<Block> CHARGELILY_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/chargelily"));
+        public static final TagKey<Block> FREESIA_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/freesia"));
+        public static final TagKey<Block> HYACINTH_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/hyacinth"));
+        public static final TagKey<Block> LIMELIGHT_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/limelight"));
+        public static final TagKey<Block> LINGHOLM_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/lingholm"));
+        public static final TagKey<Block> NIGHTSHADE_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/nightshade"));
+        public static final TagKey<Block> PINK_DAISY_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/pink_daisy"));
+        public static final TagKey<Block> SNOWDROP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/snowdrop"));
+        public static final TagKey<Block> SOMBERCUP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/sombercup"));
+        public static final TagKey<Block> TROPICAL_BLUE_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/tropical_blue"));
     }
 
     public static class ConfiguredFeatureTags {

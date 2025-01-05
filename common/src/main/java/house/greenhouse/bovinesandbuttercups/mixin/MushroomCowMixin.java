@@ -3,9 +3,9 @@ package house.greenhouse.bovinesandbuttercups.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
@@ -14,7 +14,6 @@ import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.ItemStack;
@@ -50,16 +49,16 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
         var pair = MooshroomChildTypeUtil.chooseMooshroomBabyType((MushroomCow)(Object)this, (MushroomCow)ageableMob, baby, ((Animal)(Object)this).getLoveCause());
         if (pair == null)
             return;
-        CowTypeAttachment.setCowType(baby, pair.getFirst(), pair.getSecond());
+        CowVariantAttachment.setCowVariant(baby, pair.getFirst(), pair.getSecond());
     }
 
     @ModifyExpressionValue(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getVariant()Lnet/minecraft/world/entity/animal/MushroomCow$MushroomType;"))
     private MushroomCow.MushroomType bovinesandbuttercups$allowMooshroomToEatFlowers(MushroomCow.MushroomType original) {
-        @Nullable CowType<MooshroomConfiguration> cowType = CowTypeAttachment.getCowTypeFromEntity((MushroomCow)(Object)this, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        if (cowType != null) {
-            if (cowType.configuration().canEatFlowers().isPresent() && cowType.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.RED)
+        @Nullable CowVariant<MooshroomConfiguration> cowVariant = CowVariantAttachment.getCowVariantFromEntity((MushroomCow)(Object)this, BovinesCowTypes.MOOSHROOM_TYPE);
+        if (cowVariant != null) {
+            if (cowVariant.configuration().canEatFlowers().isPresent() && cowVariant.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.RED)
                 return MushroomCow.MushroomType.BROWN;
-            else if (cowType.configuration().canEatFlowers().isPresent() && !cowType.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.BROWN)
+            else if (cowVariant.configuration().canEatFlowers().isPresent() && !cowVariant.configuration().canEatFlowers().get() && original == MushroomCow.MushroomType.BROWN)
                 return MushroomCow.MushroomType.RED;
         }
         return original;

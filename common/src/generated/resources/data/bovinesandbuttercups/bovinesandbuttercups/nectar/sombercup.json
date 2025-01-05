@@ -1,0 +1,9 @@
+{
+  "effects": [
+    {
+      "duration": 2400,
+      "id": "minecraft:darkness"
+    }
+  ],
+  "model_set": "bovinesandbuttercups:item/sombercup_nectar_bowl"
+}

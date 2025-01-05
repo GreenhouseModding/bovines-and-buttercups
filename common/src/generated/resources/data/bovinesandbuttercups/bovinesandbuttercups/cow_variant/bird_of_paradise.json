@@ -1,11 +1,11 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_set": "bovinesandbuttercups:pink_daisy_bud"
+    "model_set": "bovinesandbuttercups:bird_of_paradise_bud"
   },
   "flower": {
     "block_state": {
-      "Name": "bovinesandbuttercups:pink_daisy"
+      "Name": "bovinesandbuttercups:bird_of_paradise"
     }
   },
   "layers": [
@@ -42,12 +42,7 @@
       ]
     }
   ],
-  "natural_spawns": [
-    {
-      "biomes": "#bovinesandbuttercups:has_moobloom/flower_forest"
-    }
-  ],
-  "nectar": "bovinesandbuttercups:pink_daisy",
+  "nectar": "bovinesandbuttercups:bird_of_paradise",
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -60,37 +55,9 @@
               "terms": [
                 {
                   "block": {
-                    "blocks": "minecraft:lilac",
-                    "state": {
-                      "half": "upper"
-                    }
-                  },
-                  "condition": "bovinesandbuttercups:block_in_radius",
-                  "radius": {
-                    "max": [
-                      6.0,
-                      4.0,
-                      6.0
-                    ],
-                    "min": [
-                      -6.0,
-                      -2.0,
-                      -6.0
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "condition": "minecraft:any_of",
-              "terms": [
-                {
-                  "block": {
                     "blocks": [
-                      "minecraft:allium",
-                      "minecraft:potted_allium",
-                      "minecraft:pink_tulip",
-                      "minecraft:potted_pink_tulip"
+                      "minecraft:melon",
+                      "minecraft:melon_stem"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -115,10 +82,36 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:oak_log",
-                      "minecraft:oak_wood",
-                      "minecraft:oak_sapling",
-                      "minecraft:potted_oak_sapling"
+                      "minecraft:poppy",
+                      "minecraft:potted_poppy"
+                    ]
+                  },
+                  "condition": "bovinesandbuttercups:block_in_radius",
+                  "radius": {
+                    "max": [
+                      6.0,
+                      4.0,
+                      6.0
+                    ],
+                    "min": [
+                      -6.0,
+                      -2.0,
+                      -6.0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "block": {
+                    "blocks": [
+                      "minecraft:acacia_log",
+                      "minecraft:acacia_wood",
+                      "minecraft:acacia_sapling",
+                      "minecraft:potted_acacia_sapling"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -142,8 +135,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:pink_daisy",
-              "bovinesandbuttercups:potted_pink_daisy"
+              "bovinesandbuttercups:bird_of_paradise",
+              "bovinesandbuttercups:potted_bird_of_paradise"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
@@ -165,8 +158,13 @@
   ],
   "particle": {
     "type": "bovinesandbuttercups:bloom",
-    "color": 16494549
+    "color": 16745018
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

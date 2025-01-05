@@ -1,11 +1,11 @@
 {
   "type": "bovinesandbuttercups:moobloom",
   "bud": {
-    "model_set": "bovinesandbuttercups:freesia_bud"
+    "model_set": "bovinesandbuttercups:buttercup_bud"
   },
   "flower": {
     "block_state": {
-      "Name": "bovinesandbuttercups:freesia"
+      "Name": "bovinesandbuttercups:buttercup"
     }
   },
   "layers": [
@@ -42,7 +42,13 @@
       ]
     }
   ],
-  "nectar": "bovinesandbuttercups:freesia",
+  "natural_spawns": [
+    {
+      "biomes": "#bovinesandbuttercups:has_moobloom/flower_forest",
+      "weight": 7
+    }
+  ],
+  "nectar": "bovinesandbuttercups:buttercup",
   "offspring_conditions": [
     {
       "condition": "minecraft:any_of",
@@ -55,7 +61,10 @@
               "terms": [
                 {
                   "block": {
-                    "blocks": "minecraft:lily_pad"
+                    "blocks": "minecraft:sunflower",
+                    "state": {
+                      "half": "upper"
+                    }
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
                   "radius": {
@@ -79,8 +88,8 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:blue_orchid",
-                      "minecraft:potted_blue_orchid"
+                      "minecraft:dandelion",
+                      "minecraft:potted_dandelion"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -105,10 +114,10 @@
                 {
                   "block": {
                     "blocks": [
-                      "minecraft:mangrove_log",
-                      "minecraft:mangrove_wood",
-                      "minecraft:mangrove_propagule",
-                      "minecraft:potted_mangrove_propagule"
+                      "minecraft:birch_log",
+                      "minecraft:birch_wood",
+                      "minecraft:birch_sapling",
+                      "minecraft:potted_birch_sapling"
                     ]
                   },
                   "condition": "bovinesandbuttercups:block_in_radius",
@@ -132,8 +141,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:freesia",
-              "bovinesandbuttercups:potted_freesia"
+              "bovinesandbuttercups:buttercup",
+              "bovinesandbuttercups:potted_buttercup"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
@@ -155,8 +164,13 @@
   ],
   "particle": {
     "type": "bovinesandbuttercups:bloom",
-    "color": 15223894
+    "color": 16770340
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

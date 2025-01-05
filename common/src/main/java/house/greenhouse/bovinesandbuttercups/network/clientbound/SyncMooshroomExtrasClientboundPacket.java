@@ -2,7 +2,6 @@ package house.greenhouse.bovinesandbuttercups.network.clientbound;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
@@ -62,7 +61,7 @@ public record SyncMooshroomExtrasClientboundPacket(int entityId, MooshroomExtras
                 continue;
             }
             BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(living, pair.getKey().getSecond());
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowTypeAttachment(living).cowType().value().configuration().layers())
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
                 for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                     modifier.init(living);
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());

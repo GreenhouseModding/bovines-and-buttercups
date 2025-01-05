@@ -3,10 +3,8 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.MoobloomModel;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -21,7 +19,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +39,7 @@ public class MoobloomFlowerLayer extends RenderLayer<Moobloom, MoobloomModel> {
         bl = Minecraft.getInstance().shouldEntityAppearGlowing(entity) && entity.isInvisible();
         if (entity.isInvisible() && !bl) return;
 
-        MoobloomConfiguration configuration = entity.getCowType().value().configuration();
+        MoobloomConfiguration configuration = entity.getCowVariant().value().configuration();
 
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
 

@@ -1,8 +1,8 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
@@ -78,13 +78,13 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     }
 
     @Override
-    public CowTypeAttachment getCowTypeAttachment(LivingEntity entity) {
-        return entity.getExistingData(BovinesAttachments.COW_TYPE).orElse(null);
+    public CowVariantAttachment getCowVariantAttachment(LivingEntity entity) {
+        return entity.getExistingData(BovinesAttachments.COW_VARIANT).orElse(null);
     }
 
     @Override
-    public void setCowTypeAttachment(LivingEntity entity, CowTypeAttachment attachment) {
-        entity.setData(BovinesAttachments.COW_TYPE, attachment);
+    public void setCowVariantAttachment(LivingEntity entity, CowVariantAttachment attachment) {
+        entity.setData(BovinesAttachments.COW_VARIANT, attachment);
     }
 
     @Override
@@ -166,12 +166,12 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     }
 
     @Override
-    public Map<Holder<CowType<?>>, List<Vec3>> getParticlePositions(LivingEntity entity) {
+    public Map<Holder<CowVariant<?>>, List<Vec3>> getParticlePositions(LivingEntity entity) {
         return entity.getExistingData(BovinesAttachments.BABY_PARTICLE_POSITIONS).orElse(Map.of());
     }
 
     @Override
-    public void addParticlePosition(LivingEntity entity, Holder<CowType<?>> type, Vec3 pos) {
+    public void addParticlePosition(LivingEntity entity, Holder<CowVariant<?>> type, Vec3 pos) {
         entity.getData(BovinesAttachments.BABY_PARTICLE_POSITIONS).computeIfAbsent(type, holder -> new ArrayList<>()).add(pos);
     }
 

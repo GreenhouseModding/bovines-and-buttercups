@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.access.SimpleTextureExceptionAccess;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelper;
 import net.minecraft.client.Minecraft;
@@ -34,18 +34,18 @@ public class BovinesAndButtercupsClient {
         FAILED_COW_TEXTURES.clear();
     }
 
-    public static ResourceLocation getCachedTextures(Holder<CowType<?>> cowType, ResourceLocation original) {
-        if (cowType.value().configuration().settings() == null || cowType.value().type().defaultConfig().settings() == null)
+    public static ResourceLocation getCachedTextures(Holder<CowVariant<?>> cowVariant, ResourceLocation original) {
+        if (cowVariant.value().configuration().settings() == null || cowVariant.value().type().defaultConfig().settings() == null)
             return original;
-        ResourceLocation remappedLocation = getTextureFromCowType(cowType.value().configuration(), cowType.value().type().fallbackTexturePath(), cowType.unwrapKey().orElse(cowType.value().type().defaultKey()).location());
+        ResourceLocation remappedLocation = getTextureFromCowType(cowVariant.value().configuration(), cowVariant.value().type().fallbackTexturePath(), cowVariant.unwrapKey().orElse(cowVariant.value().type().defaultKey()).location());
 
         if (LOADED_COW_TEXTURES.contains(remappedLocation))
             return remappedLocation;
         if (FAILED_COW_TEXTURES.contains(remappedLocation)) {
-            if (cowType.value().type().defaultConfig().settings() == null)
+            if (cowVariant.value().type().defaultConfig().settings() == null)
                 return original;
 
-            return getTextureFromCowType(cowType.value().type().defaultConfig(), cowType.value().type().fallbackTexturePath(), cowType.value().type().defaultKey().location());
+            return getTextureFromCowType(cowVariant.value().type().defaultConfig(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
         }
 
         if (!((SimpleTextureExceptionAccess)Minecraft.getInstance().getTextureManager().getTexture(remappedLocation)).bovinesandbuttercups$causedException()) {
@@ -55,7 +55,7 @@ public class BovinesAndButtercupsClient {
         else
             FAILED_COW_TEXTURES.add(remappedLocation);
 
-        return getTextureFromCowType(cowType.value().type().defaultConfig(), cowType.value().type().fallbackTexturePath(), cowType.value().type().defaultKey().location());
+        return getTextureFromCowType(cowVariant.value().type().defaultConfig(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
     }
 
     private static ResourceLocation getTextureFromCowType(CowTypeConfiguration configuration, String fallbackTexturePath, ResourceLocation originalLocation) {

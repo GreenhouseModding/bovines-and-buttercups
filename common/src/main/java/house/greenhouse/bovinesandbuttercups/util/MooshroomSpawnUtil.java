@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.util;
 
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.BlockPos;
@@ -23,8 +23,8 @@ public class MooshroomSpawnUtil {
     public static int getTotalSpawnWeight(LevelAccessor level, BlockPos pos) {
         int totalWeight = 0;
 
-        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).holders().filter(configuredCowType -> configuredCowType.isBound() && configuredCowType.value().configuration() instanceof MooshroomConfiguration).toList()) {
-            if (!(cowType.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).holders().filter(configuredCowType -> configuredCowType.isBound() && configuredCowType.value().configuration() instanceof MooshroomConfiguration).toList()) {
+            if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
             if (biome.isPresent())
@@ -33,16 +33,16 @@ public class MooshroomSpawnUtil {
         return totalWeight;
     }
 
-    public static Holder<CowType<MooshroomConfiguration>> getMostCommonMooshroomSpawnType(LevelAccessor level, MushroomCow.MushroomType mushroomType) {
+    public static Holder<CowVariant<MooshroomConfiguration>> getMostCommonMooshroomSpawnType(LevelAccessor level, MushroomCow.MushroomType mushroomType) {
         int largestWeight = 0;
-        Holder<CowType<MooshroomConfiguration>> finalCowType = getMooshroomTypeFromMushroomType(level, mushroomType);
+        Holder<CowVariant<MooshroomConfiguration>> finalCowType = getMooshroomTypeFromMushroomType(level, mushroomType);
 
-        for (Holder<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MooshroomConfiguration mc && !mc.settings().biomes().isEmpty()).toList()) {
-            if (!(cowType.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
+        for (Holder<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && !mc.settings().biomes().isEmpty()).toList()) {
+            if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
             if (max > largestWeight) {
-                finalCowType = (Holder)cowType;
+                finalCowType = (Holder)cowVariant;
                 largestWeight = max;
             }
         }
@@ -50,21 +50,21 @@ public class MooshroomSpawnUtil {
         return finalCowType;
     }
 
-    public static Holder<CowType<MooshroomConfiguration>> getMooshroomTypeFromMushroomType(LevelAccessor level, MushroomCow.MushroomType mushroomType) {
-        var registry = level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE);
-        return (Holder)registry.holders().filter(cowTypeReference -> cowTypeReference.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse(registry.getHolderOrThrow(BovinesCowTypes.MooshroomKeys.MISSING_MOOSHROOM));
+    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomTypeFromMushroomType(LevelAccessor level, MushroomCow.MushroomType mushroomType) {
+        var registry = level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT);
+        return (Holder)registry.holders().filter(cowTypeReference -> cowTypeReference.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse(registry.getHolderOrThrow(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM));
     }
 
-    public static Holder<CowType<MooshroomConfiguration>> getMooshroomSpawnTypeDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
-        List<Holder<CowType<MooshroomConfiguration>>> moobloomList = new ArrayList<>();
+    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomSpawnTypeDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
+        List<Holder<CowVariant<MooshroomConfiguration>>> moobloomList = new ArrayList<>();
         int totalWeight = 0;
 
-        for (Holder.Reference<CowType<?>> cowType : level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().holders().filter(cowType -> cowType.isBound() && cowType.value().configuration() instanceof MooshroomConfiguration && cowType.value().configuration() != cowType.value().type().defaultConfig()).toList()) {
-            if (!(cowType.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+            if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
             if (biome.isPresent()) {
-                moobloomList.add((Holder) cowType);
+                moobloomList.add((Holder) cowVariant);
                 totalWeight += biome.get().weight().asInt();
             }
         }
@@ -73,14 +73,14 @@ public class MooshroomSpawnUtil {
             return moobloomList.getFirst();
         } else if (!moobloomList.isEmpty()) {
             int r = Mth.nextInt(random, 0, totalWeight - 1);
-            for (Holder<CowType<MooshroomConfiguration>> cowType : moobloomList) {
-                int max = cowType.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
+            for (Holder<CowVariant<MooshroomConfiguration>> cowVariant : moobloomList) {
+                int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                 r -= max;
                 if (r < 0.0)
-                    return cowType;
+                    return cowVariant;
             }
         }
-        return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_TYPE).orElseThrow().getHolder(BovinesCowTypes.MooshroomKeys.MISSING_MOOSHROOM).get();
+        return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM).get();
     }
 
 }

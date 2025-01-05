@@ -3,9 +3,9 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.StateDefinitionBovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -39,34 +39,34 @@ public class MooshroomDatapackMushroomLayer<T extends MushroomCow> extends Rende
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         boolean bl = Minecraft.getInstance().shouldEntityAppearGlowing(entity) && entity.isInvisible();
-        Holder<CowType<MooshroomConfiguration>> cowType = CowTypeAttachment.getCowTypeHolderFromEntity(entity, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        if (cowType == null || entity.isInvisible() && !bl
+        Holder<CowVariant<MooshroomConfiguration>> cowVariant = CowVariantAttachment.getCowVariantHolderFromEntity(entity, BovinesCowTypes.MOOSHROOM_TYPE);
+        if (cowVariant == null || entity.isInvisible() && !bl
                 || entity.isBaby()
-                || cowType.value().configuration().mushroom().blockState().isPresent() && cowType.value().configuration().vanillaType().isPresent() && cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState()))
+                || cowVariant.value().configuration().mushroom().blockState().isPresent() && cowVariant.value().configuration().vanillaType().isPresent() && cowVariant.value().configuration().mushroom().blockState().get().equals(cowVariant.value().configuration().vanillaType().get().getBlockState()))
             return;
 
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0.0f);
 
         BakedModel model = null;
-        if (cowType.value().configuration().mushroom().modelSet().isPresent()) {
-            var modelSet = BovinesModelSetRegistry.get(cowType.value().configuration().mushroom().modelSet().get());
+        if (cowVariant.value().configuration().mushroom().modelSet().isPresent()) {
+            var modelSet = BovinesModelSetRegistry.get(cowVariant.value().configuration().mushroom().modelSet().get());
             if (modelSet != null) {
                 model = modelSet.getModel();
                 if (model == null)
                     model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_mushroom")), BovinesBlocks.CUSTOM_MUSHROOM.defaultBlockState());
             }
         }
-        else if (cowType.value().configuration().mushroom().customType().isPresent() && cowType.value().configuration().mushroom().customType().orElseThrow().unwrapKey().isPresent()) {
-            var modelSet = BovinesModelSetRegistry.get(cowType.value().configuration().mushroom().customType().orElseThrow().unwrapKey().get().location());
+        else if (cowVariant.value().configuration().mushroom().customType().isPresent() && cowVariant.value().configuration().mushroom().customType().orElseThrow().unwrapKey().isPresent()) {
+            var modelSet = BovinesModelSetRegistry.get(cowVariant.value().configuration().mushroom().customType().orElseThrow().unwrapKey().get().location());
             if (modelSet != null) {
                 model = StateDefinitionBovinesModelSetType.getBlockModel(modelSet, BovinesBlocks.CUSTOM_MUSHROOM.defaultBlockState());
                 if (model == null)
                     model = StateDefinitionBovinesModelSetType.getBlockModel(BovinesModelSetRegistry.get(BovinesAndButtercups.asResource("missing_mushroom")), BovinesBlocks.CUSTOM_MUSHROOM.defaultBlockState());
             }
-        } else if (cowType.value().configuration().mushroom().blockState().isEmpty())
+        } else if (cowVariant.value().configuration().mushroom().blockState().isEmpty())
             return;
 
-        handleMooshroomRender(poseStack, buffer, packedLight, bl, m, cowType.value().configuration().mushroom().blockState(), model);
+        handleMooshroomRender(poseStack, buffer, packedLight, bl, m, cowVariant.value().configuration().mushroom().blockState(), model);
     }
 
     private void handleMooshroomRender(PoseStack poseStack, MultiBufferSource buffer, int i, boolean outlineAndInvisible, int overlay, Optional<BlockState> blockState, @Nullable BakedModel model) {

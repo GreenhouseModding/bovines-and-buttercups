@@ -57,7 +57,7 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
             if (first.isPresent())
                 return modelSet.getModel(first.get());
         }
-        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/"), () -> "Could not get edible block bovines model set for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
+        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/"), () -> "Could not get edible block bovines model set for variant \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
     }
 
     @Override

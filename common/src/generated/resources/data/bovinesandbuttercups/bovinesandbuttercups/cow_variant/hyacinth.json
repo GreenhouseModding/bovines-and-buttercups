@@ -160,6 +160,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 11175665
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "thunder_conversion_types": [
     {
       "type": "bovinesandbuttercups:chargelily"

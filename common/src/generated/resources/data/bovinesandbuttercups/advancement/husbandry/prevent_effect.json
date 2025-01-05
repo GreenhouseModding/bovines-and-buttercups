@@ -9,7 +9,6 @@
     "description": {
       "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.prevent_effect.description"
     },
-    "hidden": true,
     "icon": {
       "count": 1,
       "id": "bovinesandbuttercups:nectar_bowl"

@@ -1,18 +1,12 @@
 package house.greenhouse.bovinesandbuttercups.api.attachment;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.LivingEntity;
-
-import java.util.stream.Stream;
 
 public record MooshroomExtrasAttachment(boolean hasSnow, boolean snowLayerPersistent, boolean allowShearing, boolean allowConversion) {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("mooshroom_extras");

@@ -69,5 +69,10 @@
   "particle": {
     "type": "bovinesandbuttercups:bloom",
     "color": 6671095
-  }
+  },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ]
 }

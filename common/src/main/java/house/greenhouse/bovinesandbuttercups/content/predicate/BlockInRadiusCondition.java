@@ -41,7 +41,7 @@ public record BlockInRadiusCondition(BlockPredicate predicate, AABB radius) impl
                 if (child instanceof Moobloom moobloom) {
                     VoxelShape shape = state.getCollisionShape(context.getLevel(), pos);
                     moobloom.addParticlePosition(context.getParam(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
-                } else if (child instanceof LivingEntity living && BovinesRegistries.COW_TYPE_TYPE.stream().anyMatch(cowTypeType -> cowTypeType.isApplicable(child))) {
+                } else if (child instanceof LivingEntity living && BovinesRegistries.COW_TYPE.stream().anyMatch(cowType -> cowType.isApplicable(child))) {
                     VoxelShape shape = state.getCollisionShape(context.getLevel(), pos);
                     BovinesAndButtercups.getHelper().addParticlePosition(living, context.getParam(BovinesLootContextParams.BREEDING_TYPE), shape.isEmpty() || state.isCollisionShapeFullBlock(context.getLevel(), pos) ? pos.getCenter() : shape.bounds().getCenter().add(Vec3.atLowerCornerOf(pos)));
                 }

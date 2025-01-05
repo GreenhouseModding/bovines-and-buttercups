@@ -33,6 +33,7 @@
     "PotionContentsMixin",
     "RecipeMixin",
     "RegistryDataLoaderMixin",
+    "SculkCatalystBlockEntityMixin",
     "ServerAdvancementManagerMixin",
     "ServerLevelAccessor",
     "ShapesMixin",
@@ -47,6 +48,7 @@
     "client.ModelBakeryAccessor",
     "client.ModelBakeryMixin",
     "client.MushroomCowMushroomLayerMixin",
+    "client.MushroomCowRendererMixin",
     "client.SimpleTextureMixin",
     "client.SimpleTextureTextureImageAccessor"
   ],

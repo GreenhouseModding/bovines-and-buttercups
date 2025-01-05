@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.CustomCowModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.PlaceableEdibleItemRenderer;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.client.BovinesAccessoriesIntegrationClient;
@@ -9,12 +10,9 @@ import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomEx
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -44,7 +42,7 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.item.NectarBowlItem
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -55,8 +53,6 @@ import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -73,6 +69,10 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         BovinesModelSetTypes.init();
 
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.HIGHLAND_MODEL_LAYER, CustomCowModelLayers::createHighland);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BUFFALO_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
+        EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLAT_MODEL_LAYER, CustomCowModelLayers::createFlat);
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         EntityRendererRegistry.register(BovinesEntityTypes.MOOBLOOM, MoobloomRenderer::new);
@@ -93,8 +93,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             if (!client.isLocalServer())
-                BovinesRegistries.COW_TYPE_TYPE.forEach(cowTypeType ->
-                        cowTypeType.setFromRegistries(client.level.registryAccess()));
+                BovinesRegistries.COW_TYPE.forEach(cowType ->
+                        cowType.setFromRegistries(client.level.registryAccess()));
         });
 
         PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
@@ -103,7 +103,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         });
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(FlowerCrownItemRenderer.BASE));
         ClientTickEvents.END_WORLD_TICK.register(world -> {
-            SyncCowTypeClientboundPacket.retry(world);
+            SyncCowVariantClientboundPacket.retry(world);
             SyncLockdownEffectsClientboundPacket.retry(world);
             SyncMooshroomExtrasClientboundPacket.retry(world);
         });
@@ -117,7 +117,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
 
     public static void registerNetwork() {
         ClientPlayNetworking.registerGlobalReceiver(SyncConditionedTextureModifier.TYPE, (packet, context) -> packet.handle());
-        ClientPlayNetworking.registerGlobalReceiver(SyncCowTypeClientboundPacket.TYPE, (packet, context) -> packet.handle());
+        ClientPlayNetworking.registerGlobalReceiver(SyncCowVariantClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncLockdownEffectsClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMoobloomSnowLayerClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMooshroomExtrasClientboundPacket.TYPE, (packet, context) -> packet.handle());

@@ -20,6 +20,7 @@ public class BovinesFlowerCrownMaterials {
     public static final ResourceKey<FlowerCrownMaterial> LIMELIGHT = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("limelight"));
     public static final ResourceKey<FlowerCrownMaterial> LINGHOLM = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("lingholm"));
     public static final ResourceKey<FlowerCrownMaterial> PINK_DAISY = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("pink_daisy"));
+    public static final ResourceKey<FlowerCrownMaterial> SOMBERCUP = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("sombercup"));
     public static final ResourceKey<FlowerCrownMaterial> SNOWDROP = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("snowdrop"));
     public static final ResourceKey<FlowerCrownMaterial> TROPICAL_BLUE = ResourceKey.create(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesAndButtercups.asResource("tropical_blue"));
 
@@ -33,6 +34,7 @@ public class BovinesFlowerCrownMaterials {
         context.register(LIMELIGHT, createFromKey(BovinesItems.LIMELIGHT, LIMELIGHT, ColorConstants.LIMELIGHT));
         context.register(LINGHOLM, createFromKey(BovinesItems.LINGHOLM, LINGHOLM, ColorConstants.LINGHOLM));
         context.register(PINK_DAISY, createFromKey(BovinesItems.PINK_DAISY, PINK_DAISY, ColorConstants.PINK_DAISY));
+        context.register(SOMBERCUP, createFromKey(BovinesItems.SOMBERCUP, SOMBERCUP, ColorConstants.SOMBERCUP));
         context.register(SNOWDROP, createFromKey(BovinesItems.SNOWDROP, SNOWDROP, ColorConstants.SNOWDROP));
         context.register(TROPICAL_BLUE, createFromKey(BovinesItems.TROPICAL_BLUE, TROPICAL_BLUE, ColorConstants.TROPICAL_BLUE));
     }

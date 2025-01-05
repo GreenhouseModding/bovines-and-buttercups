@@ -8,6 +8,7 @@ import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelper
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.FlowerCrownLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MooshroomDatapackMushroomLayer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.CustomCowModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerPotBlockRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerRenderer;
@@ -73,7 +74,7 @@ public class BovinesAndButtercupsNeoForgeClient {
     public static class GameEvents {
         @SubscribeEvent
         public static void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-            BovinesRegistries.COW_TYPE_TYPE.forEach(cowType ->
+            BovinesRegistries.COW_TYPE.forEach(cowType ->
                     cowType.setFromRegistries(Minecraft.getInstance().level.registryAccess()));
         }
     }
@@ -129,6 +130,10 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
+            event.registerLayerDefinition(BovinesModelLayers.HIGHLAND_MODEL_LAYER, CustomCowModelLayers::createHighland);
+            event.registerLayerDefinition(BovinesModelLayers.BUFFALO_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
+            event.registerLayerDefinition(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
+            event.registerLayerDefinition(BovinesModelLayers.FLAT_MODEL_LAYER, CustomCowModelLayers::createFlat);
             event.registerLayerDefinition(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
             event.registerLayerDefinition(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         }

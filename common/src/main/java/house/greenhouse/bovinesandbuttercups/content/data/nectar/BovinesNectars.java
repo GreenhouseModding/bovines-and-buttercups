@@ -18,6 +18,7 @@ public class BovinesNectars {
     public static final ResourceKey<Nectar> LIMELIGHT = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("limelight"));
     public static final ResourceKey<Nectar> LINGHOLM = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("lingholm"));
     public static final ResourceKey<Nectar> PINK_DAISY = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("pink_daisy"));
+    public static final ResourceKey<Nectar> SOMBERCUP = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("sombercup"));
     public static final ResourceKey<Nectar> SNOWDROP = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("snowdrop"));
     public static final ResourceKey<Nectar> TROPICAL_BLUE = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("tropical_blue"));
 
@@ -49,6 +50,9 @@ public class BovinesNectars {
         context.register(PINK_DAISY,
                 new Nectar(BovinesAndButtercups.asResource("item/pink_daisy_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DAMAGE_BOOST, 2400)))));
+        context.register(SOMBERCUP,
+                new Nectar(BovinesAndButtercups.asResource("item/sombercup_nectar_bowl"),
+                        new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DARKNESS, 2400)))));
         context.register(SNOWDROP,
                 new Nectar(BovinesAndButtercups.asResource("item/snowdrop_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SLOWDOWN, 7200)))));

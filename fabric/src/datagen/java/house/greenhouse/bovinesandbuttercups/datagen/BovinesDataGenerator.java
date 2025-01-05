@@ -4,10 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.api.BovinesConventionalTags;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
+import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.ConvertMoobloomFromSculkTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemNectar;
@@ -32,7 +33,7 @@ import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.recipe.FlowerCrownRecipe;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.BovinesFlowerCrownMaterials;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootTables;
@@ -138,7 +139,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
     @Override
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
         registryBuilder.add(BovinesRegistryKeys.NECTAR, BovinesNectars::bootstrap);
-        registryBuilder.add(BovinesRegistryKeys.COW_TYPE, BovinesCowTypes::bootstrap);
+        registryBuilder.add(BovinesRegistryKeys.COW_VARIANT, BovinesCowVariants::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL, BovinesFlowerCrownMaterials::bootstrap);
         registryBuilder.add(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesEdibleBlockTypes::bootstrap);
     }
@@ -152,7 +153,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(HolderLookup.Provider registries, Entries entries) {
             BovinesNectars.bootstrap(createContext(registries, entries));
-            BovinesCowTypes.bootstrap(createContext(registries, entries));
+            BovinesCowVariants.bootstrap(createContext(registries, entries));
             BovinesFlowerCrownMaterials.bootstrap(createContext(registries, entries));
             BovinesEdibleBlockTypes.bootstrap(createContext(registries, entries));
         }
@@ -214,7 +215,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                             AdvancementType.TASK,
                             true,
                             true,
-                            true)
+                            false)
                     )
                     .parent(ResourceLocation.withDefaultNamespace("husbandry/root"))
                     .requirements(AdvancementRequirements.allOf(List.of("prevent_effect")))
@@ -229,14 +230,14 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                             AdvancementType.TASK,
                             true,
                             true,
-                            true)
+                            false)
                     )
                     .parent(ResourceLocation.withDefaultNamespace("husbandry/breed_an_animal"))
                     .requirements(AdvancementRequirements.allOf(List.of("breed_new_moobloom")))
-                    .addCriterion("breed_new_moobloom", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(true))))
+                    .addCriterion("breed_new_moobloom", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(true))))
                     .build(BovinesAndButtercups.asResource("husbandry/breed_new_moobloom")));
 
-            HolderLookup.RegistryLookup<CowType<?>> cowTypeRegistry = lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE);
+            HolderLookup.RegistryLookup<CowVariant<?>> cowTypeRegistry = lookup.lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
 
             consumer.accept(Advancement.Builder.advancement()
                     .display(new DisplayInfo(
@@ -252,28 +253,42 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .parent(BovinesAndButtercups.asResource("husbandry/breed_new_moobloom"))
                     .requirements(AdvancementRequirements.allOf(List.of(
                             "bovinesandbuttercups:bird_of_paradise",
-                            "bovinesandbuttercups:buttercup",
                             "bovinesandbuttercups:camellia",
                             "bovinesandbuttercups:freesia",
                             "bovinesandbuttercups:hyacinth",
                             "bovinesandbuttercups:limelight",
                             "bovinesandbuttercups:lingholm",
-                            "bovinesandbuttercups:pink_daisy",
                             "bovinesandbuttercups:snowdrop",
                             "bovinesandbuttercups:tropical_blue"
                     )))
-                    .addCriterion("bovinesandbuttercups:bird_of_paradise", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.BIRD_OF_PARADISE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:buttercup", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.BUTTERCUP)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:camellia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.CAMELLIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:freesia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.FREESIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:hyacinth", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.HYACINTH)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:limelight", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.LIMELIGHT)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:lingholm", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.LINGHOLM)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:pink_daisy", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.PINK_DAISY)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:snowdrop", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.SNOWDROP)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
-                    .addCriterion("bovinesandbuttercups:tropical_blue", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowTypeType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowTypes.MoobloomKeys.TROPICAL_BLUE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:bird_of_paradise", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.BIRD_OF_PARADISE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:camellia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.CAMELLIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:freesia", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.FREESIA)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:hyacinth", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.HYACINTH)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:limelight", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.LIMELIGHT)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:lingholm", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.LINGHOLM)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:snowdrop", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.SNOWDROP)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
+                    .addCriterion("bovinesandbuttercups:tropical_blue", BreedCowWithTypeTrigger.INSTANCE.createCriterion(new BreedCowWithTypeTrigger.TriggerInstance(Optional.empty(), (Optional<Holder<CowType<?>>>)(Optional<?>)lookup.lookupOrThrow(BovinesRegistryKeys.COW_TYPE).get(ResourceKey.create(BovinesRegistryKeys.COW_TYPE, BovinesAndButtercups.asResource("moobloom"))), HolderSet.direct(cowTypeRegistry.getOrThrow(BovinesCowVariants.MoobloomKeys.TROPICAL_BLUE)), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())))
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .build(BovinesAndButtercups.asResource("husbandry/breed_all_mooblooms")));
+            consumer.accept(Advancement.Builder.advancement()
+                    .display(new DisplayInfo(
+                            new ItemStack(BovinesItems.SOMBERCUP),
+                            Component.translatable("advancements.husbandry.bovinesandbuttercups.husbandry.convert_moobloom_from_sculk.title"),
+                            Component.translatable("advancements.husbandry.bovinesandbuttercups.husbandry.convert_moobloom_from_sculk.description"),
+                            Optional.empty(),
+                            AdvancementType.CHALLENGE,
+                            true,
+                            true,
+                            false)
+                    )
+                    .parent(BovinesAndButtercups.asResource("husbandry/breed_new_moobloom"))
+                    .requirements(AdvancementRequirements.allOf(List.of(
+                            "has_converted"
+                    )))
+                    .addCriterion("has_converted", ConvertMoobloomFromSculkTrigger.INSTANCE.createCriterion(new ConvertMoobloomFromSculkTrigger.TriggerInstance(Optional.empty())))
+                    .rewards(AdvancementRewards.Builder.experience(50))
+                    .build(BovinesAndButtercups.asResource("husbandry/convert_moobloom_from_sculk")));
             consumer.accept(Advancement.Builder.advancement()
                     .display(new DisplayInfo(
                             FlowerCrownItem.createRainbowCrown(lookup),
@@ -283,7 +298,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                             AdvancementType.TASK,
                             true,
                             true,
-                            true)
+                            false)
                     )
                     .parent(ResourceLocation.withDefaultNamespace("husbandry/root"))
                     .requirements(AdvancementRequirements.allOf(List.of("get_flower_crown")))
@@ -757,12 +772,13 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             createCupcakes(BovinesEdibleBlockTypes.LIMELIGHT_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.LINGHOLM_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE, generators);
+            createCupcakes(BovinesEdibleBlockTypes.SOMBERCUP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE, generators);
             createCupcakes(BovinesEdibleBlockTypes.TROPICAL_BLUE_CUPCAKE, generators);
             createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators);
             createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators);
-            createPuffPastries(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
-            createPuffPastries(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY, generators, "suspicious_");
+            createPuffPastries(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY, generators);
+            createPuffPastries(BovinesEdibleBlockTypes.SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY, generators);
 
             createCandles(Blocks.CANDLE, generators);
             createCandles(Blocks.WHITE_CANDLE, generators);
@@ -791,17 +807,12 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             THREE_CUPCAKES.create(type.location().withPath(s -> "block/three_" + s + "s"), mapping, generators.modelOutput);
             FOUR_CUPCAKES.create(type.location().withPath(s -> "block/four_" + s + "s"), mapping, generators.modelOutput);
         }
-
         public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators) {
-            createPuffPastries(type, generators, "");
-        }
+            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + s));
 
-        public static void createPuffPastries(ResourceKey<EdibleBlockType> type, BlockModelGenerators generators, String prefix) {
-            var mapping = new TextureMapping().put(TextureSlot.ALL, type.location().withPath(s -> "block/" + prefix + s));
+            String plural = type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
 
-            String plural = prefix + type.location().getPath().substring(0, type.location().getPath().length() - 1) + "ies";
-
-            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + prefix + s), mapping, generators.modelOutput);
+            PUFF_PASTRY.create(type.location().withPath(s -> "block/" + s), mapping, generators.modelOutput);
             TWO_PUFF_PASTRIES.create(type.location().withPath("block/two_" + plural), mapping, generators.modelOutput);
             THREE_PUFF_PASTRIES.create(type.location().withPath("block/three_" + plural), mapping, generators.modelOutput);
             FOUR_PUFF_PASTRIES.create(type.location().withPath("block/four_" + plural), mapping, generators.modelOutput);

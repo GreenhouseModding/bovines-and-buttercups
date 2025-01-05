@@ -2,9 +2,9 @@ package house.greenhouse.bovinesandbuttercups.util;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class MooshroomChildTypeUtil {
-    public static Pair<Holder<CowType<MooshroomConfiguration>>, Optional<Holder<CowType<MooshroomConfiguration>>>> chooseMooshroomBabyType(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
-        List<Holder<CowType<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
+    public static Pair<Holder<CowVariant<MooshroomConfiguration>>, Optional<Holder<CowVariant<MooshroomConfiguration>>>> chooseMooshroomBabyType(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
+        List<Holder<CowVariant<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
-        for (Holder.Reference<CowType<?>> cowType : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_TYPE).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypeTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
-            Holder<CowType<MooshroomConfiguration>> mooshroomType = (Holder) cowType;
+        for (Holder.Reference<CowVariant<?>> cowVariant : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+            Holder<CowVariant<MooshroomConfiguration>> mooshroomType = (Holder) cowVariant;
             var conditions = mooshroomType.value().configuration().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder((ServerLevel) parent.level());
@@ -41,7 +41,7 @@ public class MooshroomChildTypeUtil {
             params.withParameter(BovinesLootContextParams.PARTNER, other);
             params.withParameter(BovinesLootContextParams.CHILD, child);
             params.withParameter(LootContextParams.ORIGIN, parent.position());
-            params.withParameter(BovinesLootContextParams.BREEDING_TYPE, cowType);
+            params.withParameter(BovinesLootContextParams.BREEDING_TYPE, cowVariant);
             LootContext thisContext = new LootContext.Builder(params.create(BovinesLootContextParamSets.BREEDING)).create(Optional.empty());
 
             params.withParameter(LootContextParams.THIS_ENTITY, other);
@@ -63,28 +63,28 @@ public class MooshroomChildTypeUtil {
 
             if (parent.getLoveCause() != null)
                 BreedCowWithTypeTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowTypeAttachment(parent), BovinesAndButtercups.getHelper().getCowTypeAttachment(other));
+            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(parent), BovinesAndButtercups.getHelper().getCowVariantAttachment(other));
         }
 
         BovinesAndButtercups.getHelper().clearParticlePositions(child);
 
-        var parentType = CowTypeAttachment.getCowTypeHolderFromEntity(parent, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        var otherType = CowTypeAttachment.getCowTypeHolderFromEntity(other, BovinesCowTypeTypes.MOOSHROOM_TYPE);
+        var parentType = CowVariantAttachment.getCowVariantHolderFromEntity(parent, BovinesCowTypes.MOOSHROOM_TYPE);
+        var otherType = CowVariantAttachment.getCowVariantHolderFromEntity(other, BovinesCowTypes.MOOSHROOM_TYPE);
         if (parentType == null || otherType == null)
             return null;
 
         if (!otherType.equals(parentType) && parent.getRandom().nextBoolean()) {
             if (parent.getLoveCause() != null)
-                BreedCowWithTypeTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, false, (Holder<CowType<?>>)(Holder<?>)otherType);
-            return Pair.of(otherType, Optional.ofNullable(CowTypeAttachment.getPreviousCowTypeHolderFromEntity(other, BovinesCowTypeTypes.MOOSHROOM_TYPE)));
+                BreedCowWithTypeTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, false, (Holder<CowVariant<?>>)(Holder<?>)otherType);
+            return Pair.of(otherType, Optional.ofNullable(CowVariantAttachment.getPreviousCowVariantHolderFromEntity(other, BovinesCowTypes.MOOSHROOM_TYPE)));
         }
 
         if (parent.getLoveCause() != null)
-            BreedCowWithTypeTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, false, (Holder<CowType<?>>)(Holder<?>)parentType);
-        return Pair.of(parentType, Optional.ofNullable(CowTypeAttachment.getPreviousCowTypeHolderFromEntity(parent, BovinesCowTypeTypes.MOOSHROOM_TYPE)));
+            BreedCowWithTypeTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, false, (Holder<CowVariant<?>>)(Holder<?>)parentType);
+        return Pair.of(parentType, Optional.ofNullable(CowVariantAttachment.getPreviousCowVariantHolderFromEntity(parent, BovinesCowTypes.MOOSHROOM_TYPE)));
     }
 
-    private static void createParticles(MushroomCow child, Holder<CowType<MooshroomConfiguration>> type, Vec3 parentPos) {
+    private static void createParticles(MushroomCow child, Holder<CowVariant<MooshroomConfiguration>> type, Vec3 parentPos) {
         if (!type.isBound() || type.value().configuration().settings().particle().isEmpty())
             return;
 

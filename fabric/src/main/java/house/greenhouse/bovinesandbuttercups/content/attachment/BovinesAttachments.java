@@ -2,11 +2,11 @@ package house.greenhouse.bovinesandbuttercups.content.attachment;
 
 import com.mojang.serialization.Codec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
@@ -22,9 +22,9 @@ public class BovinesAttachments {
             .persistent(LockdownAttachment.CODEC)
             .initializer(() -> new LockdownAttachment(new HashMap<>()))
             .buildAndRegister(LockdownAttachment.ID);
-    public static final AttachmentType<CowTypeAttachment> COW_TYPE = AttachmentRegistry.<CowTypeAttachment>builder()
-            .persistent(CowTypeAttachment.CODEC)
-            .buildAndRegister(CowTypeAttachment.ID);
+    public static final AttachmentType<CowVariantAttachment> COW_VARIANT = AttachmentRegistry.<CowVariantAttachment>builder()
+            .persistent(CowVariantAttachment.CODEC)
+            .buildAndRegister(CowVariantAttachment.ID);
 
     public static final AttachmentType<MooshroomExtrasAttachment> MOOSHROOM_EXTRAS = AttachmentRegistry.<MooshroomExtrasAttachment>builder()
             .persistent(MooshroomExtrasAttachment.CODEC)
@@ -36,7 +36,7 @@ public class BovinesAttachments {
     public static final AttachmentType<UUID> POLLINATING_MOOBLOOM = AttachmentRegistry.<UUID>builder()
             .persistent(UUIDUtil.CODEC)
             .buildAndRegister(BovinesAndButtercups.asResource("pollinating_moobloom"));
-    public static final AttachmentType<Map<Holder<CowType<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentRegistry.createDefaulted(BovinesAndButtercups.asResource("baby_particle_positions"), HashMap::new);
+    public static final AttachmentType<Map<Holder<CowVariant<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentRegistry.createDefaulted(BovinesAndButtercups.asResource("baby_particle_positions"), HashMap::new);
 
     public static void init() {}
 }

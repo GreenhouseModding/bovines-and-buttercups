@@ -40,7 +40,7 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameab
 
     public void setMushroomType(@Nullable ItemCustomMushroom value) {
         if (value != null && !value.holder().value().hasHugeBlock()) {
-            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom type \"{}\" does not support huge mushroom blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
+            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom variant \"{}\" does not support huge mushroom blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
             return;
         }
         customMushroom = value;

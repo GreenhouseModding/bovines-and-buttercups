@@ -3,8 +3,8 @@ package house.greenhouse.bovinesandbuttercups.content.advancement.criterion;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -25,8 +25,8 @@ public class BreedCowWithTypeTrigger extends SimpleCriterionTrigger<BreedCowWith
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("breed_cow_with_type");
     public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(BreedCowWithTypeTrigger.TriggerInstance::player),
-            CowTypeType.CODEC.optionalFieldOf("cow_type_type").forGetter(TriggerInstance::typeType),
-            RegistryCodecs.homogeneousList(BovinesRegistryKeys.COW_TYPE).optionalFieldOf("cow_types", HolderSet.direct()).forGetter(TriggerInstance::types),
+            CowType.CODEC.optionalFieldOf("type").forGetter(TriggerInstance::type),
+            RegistryCodecs.homogeneousList(BovinesRegistryKeys.COW_VARIANT).optionalFieldOf("variants", HolderSet.direct()).forGetter(TriggerInstance::variants),
             ContextAwarePredicate.CODEC.optionalFieldOf("parent").forGetter(TriggerInstance::parent),
             ContextAwarePredicate.CODEC.optionalFieldOf("partner").forGetter(TriggerInstance::partner),
             ContextAwarePredicate.CODEC.optionalFieldOf("child").forGetter(TriggerInstance::child),
@@ -35,7 +35,7 @@ public class BreedCowWithTypeTrigger extends SimpleCriterionTrigger<BreedCowWith
 
     private BreedCowWithTypeTrigger() {}
 
-    public void trigger(ServerPlayer serverPlayer, Animal parent, Animal partner, AgeableMob child, boolean differentFromParents, Holder<CowType<?>> type) {
+    public void trigger(ServerPlayer serverPlayer, Animal parent, Animal partner, AgeableMob child, boolean differentFromParents, Holder<CowVariant<?>> type) {
         LootContext parentContext = EntityPredicate.createContext(serverPlayer, parent);
         LootContext partnerContext = EntityPredicate.createContext(serverPlayer, partner);
         LootContext childContext = child != null ? EntityPredicate.createContext(serverPlayer, child) : null;
@@ -48,15 +48,15 @@ public class BreedCowWithTypeTrigger extends SimpleCriterionTrigger<BreedCowWith
     }
 
     public record TriggerInstance(Optional<ContextAwarePredicate> player,
-                                  Optional<Holder<CowTypeType<?>>> typeType,
-                                  HolderSet<CowType<?>> types,
+                                  Optional<Holder<CowType<?>>> type,
+                                  HolderSet<CowVariant<?>> variants,
                                   Optional<ContextAwarePredicate> parent,
                                   Optional<ContextAwarePredicate> partner,
                                   Optional<ContextAwarePredicate> child,
                                   Optional<Boolean> differentFromParents) implements SimpleInstance {
 
-        public boolean matches(LootContext parentContext, LootContext partnerContext, LootContext childContext, boolean isNewType, Holder<CowType<?>> type) {
-            return type.isBound() && (typeType.isEmpty() || typeType.get().isBound() && typeType.get().value() == type.value().type()) && (types.size() == 0 || types.contains(type)) && (this.child.isEmpty() || this.child.get().matches(childContext)) && ((this.parent.isEmpty() || this.parent.get().matches(parentContext)) && (this.partner.isEmpty() || this.partner.get().matches(partnerContext)) || (this.parent.isEmpty() || this.parent.get().matches(partnerContext)) && (this.partner.isEmpty() || this.partner.get().matches(parentContext))) && (differentFromParents.isEmpty() || isNewType == differentFromParents.get());
+        public boolean matches(LootContext parentContext, LootContext partnerContext, LootContext childContext, boolean isNewType, Holder<CowVariant<?>> variant) {
+            return variant.isBound() && (type.isEmpty() || type.get().isBound() && type.get().value() == variant.value().type()) && (variants.size() == 0 || variants.contains(variant)) && (this.child.isEmpty() || this.child.get().matches(childContext)) && ((this.parent.isEmpty() || this.parent.get().matches(parentContext)) && (this.partner.isEmpty() || this.partner.get().matches(partnerContext)) || (this.parent.isEmpty() || this.parent.get().matches(partnerContext)) && (this.partner.isEmpty() || this.partner.get().matches(parentContext))) && (differentFromParents.isEmpty() || isNewType == differentFromParents.get());
         }
 
         @Override
