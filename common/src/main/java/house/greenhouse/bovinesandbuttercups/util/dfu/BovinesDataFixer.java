@@ -15,8 +15,8 @@ import net.minecraft.util.datafix.DataFixers;
 import java.util.function.BiFunction;
 
 public record BovinesDataFixer(DataFixer fixer) {
-    // Formatted as such to match the current Minecraft version, as well as having two digits after-wards for patches.
-    public static final int CURRENT_VERSION = 21400;
+    // Bump to the nearest rounded down 100 on the later version if two versions are being maintained.
+    public static final int CURRENT_VERSION = 100;
     private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
     private static BovinesDataFixer instance;
 
@@ -33,7 +33,7 @@ public record BovinesDataFixer(DataFixer fixer) {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
-        Schema schema124400 = builder.addSchema(21400, SAME);
+        Schema schema124400 = builder.addSchema(100, SAME);
         builder.addFixer(new NectarDecomponentizeFix(schema124400));
         return builder.build().fixer();
     }
