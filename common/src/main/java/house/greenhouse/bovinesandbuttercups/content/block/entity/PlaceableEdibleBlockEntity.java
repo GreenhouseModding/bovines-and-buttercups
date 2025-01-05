@@ -156,8 +156,8 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
             level.playSound(null, getBlockPos(), item.getValue().sound().get().sound().value(), SoundSource.BLOCKS, item.getValue().sound().get().volume().randomise(level.random), item.getValue().sound().get().pitch().randomise(level.random));
 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         setChanged();
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
         return InteractionResult.SUCCESS_SERVER;
     }
