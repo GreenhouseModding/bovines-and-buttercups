@@ -28,7 +28,7 @@ public class TagPlaceableFlowerBlock extends FlowerBlock {
     ).apply(inst, TagPlaceableFlowerBlock::new));
 
     @Nullable
-    private TagKey<Block> placeableOn;
+    private final TagKey<Block> placeableOn;
 
     public TagPlaceableFlowerBlock(SuspiciousStewEffects suspiciousStewEffects, Optional<TagKey<Block>> placeableOn, BlockBehaviour.Properties properties) {
         super(suspiciousStewEffects, properties);

@@ -13,8 +13,7 @@
       "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer",
       "texture_modifiers": [
         {
-          "type": "bovinesandbuttercups:translucent",
-          "id": "bovinesandbuttercups:pulsating"
+          "type": "bovinesandbuttercups:translucent"
         },
         {
           "type": "bovinesandbuttercups:emissive"

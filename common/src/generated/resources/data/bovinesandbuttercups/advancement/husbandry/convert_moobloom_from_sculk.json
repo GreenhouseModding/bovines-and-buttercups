@@ -1,0 +1,30 @@
+{
+  "parent": "bovinesandbuttercups:husbandry/breed_new_moobloom",
+  "criteria": {
+    "has_converted": {
+      "trigger": "bovinesandbuttercups:convert_moobloom_from_sculk"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.convert_moobloom_from_sculk.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "bovinesandbuttercups:sombercup"
+    },
+    "title": {
+      "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.convert_moobloom_from_sculk.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_converted"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

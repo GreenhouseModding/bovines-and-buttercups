@@ -162,6 +162,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 16745018
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/bird_of_paradise",
   "thunder_conversion_types": [
     {

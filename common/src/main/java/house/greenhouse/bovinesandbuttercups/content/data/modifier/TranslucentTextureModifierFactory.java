@@ -29,34 +29,26 @@ import java.util.WeakHashMap;
 
 public class TranslucentTextureModifierFactory extends TextureModifierFactory<TranslucentTextureModifier> {
     public static final MapCodec<TranslucentTextureModifierFactory> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            ResourceLocation.CODEC.fieldOf("id").forGetter(TranslucentTextureModifierFactory::id),
             Codec.floatRange(0.0F, 1.0F).optionalFieldOf("speed", 0.02F).forGetter(TranslucentTextureModifierFactory::speed),
             Codec.floatRange(0.0F, 1.0F).optionalFieldOf("min", 0.0F).forGetter(TranslucentTextureModifierFactory::min),
             Codec.floatRange(0.0F, 1.0F).optionalFieldOf("max", 1.0F).forGetter(TranslucentTextureModifierFactory::max)
     ).apply(inst, TranslucentTextureModifierFactory::new));
 
-    private final ResourceLocation id;
     private final float speed;
     private final float min;
     private final float max;
 
-    public TranslucentTextureModifierFactory(ResourceLocation id) {
-        this.id = id;
+    public TranslucentTextureModifierFactory() {
         this.speed = 0.02F;
         this.min = 0.0F;
         this.max = 1.0F;
     }
 
-    public TranslucentTextureModifierFactory(ResourceLocation id, float speed,
+    public TranslucentTextureModifierFactory(float speed,
                                              float min, float max) {
-        this.id = id;
         this.speed = speed;
         this.min = min;
         this.max = max;
-    }
-
-    public ResourceLocation id() {
-        return id;
     }
 
     public float speed() {
@@ -73,7 +65,7 @@ public class TranslucentTextureModifierFactory extends TextureModifierFactory<Tr
 
     @Override
     protected TranslucentTextureModifier createProvider() {
-        return new TranslucentTextureModifier(id, speed, min, max);
+        return new TranslucentTextureModifier(speed, min, max);
     }
 
     @Override

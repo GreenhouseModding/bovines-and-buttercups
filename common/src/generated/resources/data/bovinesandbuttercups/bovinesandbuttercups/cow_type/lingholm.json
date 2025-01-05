@@ -160,6 +160,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 4182750
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/lingholm",
   "thunder_conversion_types": [
     {

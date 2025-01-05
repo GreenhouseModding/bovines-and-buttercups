@@ -158,6 +158,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 9827185
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/limelight",
   "thunder_conversion_types": [
     {

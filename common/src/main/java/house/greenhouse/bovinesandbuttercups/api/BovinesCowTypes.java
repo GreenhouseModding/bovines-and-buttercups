@@ -73,6 +73,25 @@ public class BovinesCowTypes {
         var blockRegistry = context.lookup(Registries.BLOCK);
 
         // Moobloom Types
+        context.register(MoobloomKeys.SOMBERCUP, new CowType<>(BovinesCowTypeTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
+                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SOMBERCUP))),
+                new BlockReference<>(Optional.of(BovinesBlocks.SOMBERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
+                new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("sombercup_bud")), Optional.empty()),
+                BovinesCowModelTypes.OX,
+                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer"), List.of(
+                                new TranslucentTextureModifierFactory(), new EmissiveTextureModifierFactory(), new FallbackTextureModifierFactory(List.of()))),
+                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_sculk_vein_layer"), List.of(
+                                new FallbackTextureModifierFactory(List.of()))),
+                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
+                                List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
+                Optional.of(BovinesItems.SOMBERCUP_NECTAR_BOWL.getDefaultInstance()),
+                Optional.of(BovinesLootTables.SHEAR_SOMBERCUP_MOOBLOOM.location()),
+                SimpleWeightedRandomList.empty(),
+                new OffspringConditions(List.of(new BlockInRadiusCondition.Builder(BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.SOMBERCUP, BovinesBlocks.POTTED_SOMBERCUP)).withRadius(12, 6).withOffset(0, 1, 0).build()),
+                        List.of(),
+                        OffspringConditions.Inheritance.PARENT))));
+        Holder.Reference<CowType<?>> sombercupMoobloom = context.lookup(BovinesRegistryKeys.COW_TYPE).getOrThrow(MoobloomKeys.SOMBERCUP);
+
         context.register(MoobloomKeys.CHARGELILY, new CowType<>(BovinesCowTypeTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
                 new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.CHARGELILY))),
                 new BlockReference<>(Optional.of(BovinesBlocks.CHARGELILY.defaultBlockState()), Optional.empty(), Optional.empty()),
@@ -84,11 +103,12 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.CHARGELILY_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_CHARGELILY_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(new BlockInRadiusCondition.Builder(BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.CHARGELILY, BovinesBlocks.POTTED_CHARGELILY)).withRadius(12, 6).withOffset(0, 1, 0).build()),
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
-
         Holder.Reference<CowType<?>> chargelilyMoobloom = context.lookup(BovinesRegistryKeys.COW_TYPE).getOrThrow(MoobloomKeys.CHARGELILY);
+
         SimpleWeightedRandomList<HolderSet<Biome>> buttercupFlowerForestSet = SimpleWeightedRandomList.<HolderSet<Biome>>builder().add(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_MOOBLOOM_FLOWER_FOREST), 7).build();
         SimpleWeightedRandomList<HolderSet<Biome>> pinkDaisyFlowerForestSet = SimpleWeightedRandomList.<HolderSet<Biome>>builder().add(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_MOOBLOOM_FLOWER_FOREST), 1).build();
         SimpleWeightedRandomList<Holder<CowType<?>>> chargelilyWeighted = SimpleWeightedRandomList.single(chargelilyMoobloom);
@@ -104,6 +124,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.BIRD_OF_PARADISE_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_BIRD_OF_PARADISE_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.MELON, Blocks.MELON_STEM),
@@ -124,6 +145,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.BUTTERCUP_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_BUTTERCUP_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.SUNFLOWER).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)),
@@ -144,6 +166,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.CAMELLIA_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_CAMELLIA_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.CHERRY_LEAVES),
@@ -164,6 +187,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.FREESIA_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_FREESIA_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.LILY_PAD),
@@ -184,6 +208,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.HYACINTH_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_HYACINTH_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.ROSE_BUSH).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)),
@@ -203,6 +228,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.LIMELIGHT_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_LIMELIGHT_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT),
@@ -223,6 +249,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.LINGHOLM_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_LINGHOLM_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.PUMPKIN, Blocks.PUMPKIN_STEM),
@@ -243,6 +270,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.NIGHTSHADE_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_NIGHTSHADE_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.PALE_HANGING_MOSS),
@@ -263,6 +291,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.PINK_DAISY_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_PINK_DAISY_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.LILAC).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)),
@@ -283,6 +312,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_SNOWDROP_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.SNOW_BLOCK, Blocks.SNOW),
@@ -290,22 +320,6 @@ public class BovinesCowTypes {
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.SPRUCE_LOG, Blocks.SPRUCE_WOOD, Blocks.SPRUCE_SAPLING, Blocks.POTTED_SPRUCE_SAPLING)
                         ),
                         BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.SNOWDROP, BovinesBlocks.POTTED_SNOWDROP))),
-                        List.of(),
-                        OffspringConditions.Inheritance.PARENT))));
-        context.register(MoobloomKeys.SOMBERCUP, new CowType<>(BovinesCowTypeTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SOMBERCUP))),
-                new BlockReference<>(Optional.of(BovinesBlocks.SOMBERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
-                new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("sombercup_bud")), Optional.empty()),
-                BovinesCowModelTypes.OX,
-                List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/sombercup_moobloom_pulasting_layer"), List.of(
-                                new TranslucentTextureModifierFactory(BovinesAndButtercups.asResource("pulsating")), new EmissiveTextureModifierFactory(), new FallbackTextureModifierFactory(List.of()))),
-                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_sculk_vein_layer"), List.of(
-                                new FallbackTextureModifierFactory(List.of()))),
-                        new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
-                                List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
-                Optional.of(BovinesItems.SOMBERCUP_NECTAR_BOWL.getDefaultInstance()),
-                Optional.of(BovinesLootTables.SHEAR_SOMBERCUP_MOOBLOOM.location()),
-                new OffspringConditions(List.of(new BlockInRadiusCondition.Builder(BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.SOMBERCUP, BovinesBlocks.POTTED_SOMBERCUP)).withRadius(12, 6).withOffset(0, 1, 0).build()),
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.TROPICAL_BLUE, new CowType<>(BovinesCowTypeTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
@@ -319,6 +333,7 @@ public class BovinesCowTypes {
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
                 Optional.of(BovinesItems.TROPICAL_BLUE_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_TROPICAL_BLUE_MOOBLOOM.location()),
+                SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.COCOA),

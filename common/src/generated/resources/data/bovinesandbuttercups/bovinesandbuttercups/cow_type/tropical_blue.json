@@ -159,6 +159,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 5014015
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/tropical_blue",
   "thunder_conversion_types": [
     {

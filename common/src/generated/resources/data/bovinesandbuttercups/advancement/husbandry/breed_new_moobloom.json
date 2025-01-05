@@ -13,7 +13,6 @@
     "description": {
       "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.breed_new_moobloom.description"
     },
-    "hidden": true,
     "icon": {
       "count": 1,
       "id": "bovinesandbuttercups:pink_daisy"

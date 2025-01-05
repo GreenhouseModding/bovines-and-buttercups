@@ -169,6 +169,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 16494549
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/pink_daisy",
   "thunder_conversion_types": [
     {

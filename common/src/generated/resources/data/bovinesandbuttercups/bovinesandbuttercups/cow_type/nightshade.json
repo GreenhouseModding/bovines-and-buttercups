@@ -161,5 +161,10 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 13886950
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/nightshade"
 }

@@ -8,13 +8,6 @@
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
-    "bovinesandbuttercups:buttercup": {
-      "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:buttercup"
-      },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
-    },
     "bovinesandbuttercups:camellia": {
       "conditions": {
         "cow_type_type": "bovinesandbuttercups:moobloom",
@@ -50,10 +43,10 @@
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
-    "bovinesandbuttercups:pink_daisy": {
+    "bovinesandbuttercups:nightshade": {
       "conditions": {
         "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:pink_daisy"
+        "cow_types": "bovinesandbuttercups:nightshade"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
@@ -90,9 +83,6 @@
       "bovinesandbuttercups:bird_of_paradise"
     ],
     [
-      "bovinesandbuttercups:buttercup"
-    ],
-    [
       "bovinesandbuttercups:camellia"
     ],
     [
@@ -108,7 +98,7 @@
       "bovinesandbuttercups:lingholm"
     ],
     [
-      "bovinesandbuttercups:pink_daisy"
+      "bovinesandbuttercups:nightshade"
     ],
     [
       "bovinesandbuttercups:snowdrop"

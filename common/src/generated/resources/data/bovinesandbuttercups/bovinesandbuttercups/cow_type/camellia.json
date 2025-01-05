@@ -156,6 +156,11 @@
     "type": "bovinesandbuttercups:bloom",
     "color": 15157449
   },
+  "sculk_conversion_types": [
+    {
+      "type": "bovinesandbuttercups:sombercup"
+    }
+  ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/camellia",
   "thunder_conversion_types": [
     {

@@ -16,7 +16,6 @@
     "description": {
       "translate": "advancements.husbandry.bovinesandbuttercups.husbandry.obtain_flower_crown.description"
     },
-    "hidden": true,
     "icon": {
       "components": {
         "bovinesandbuttercups:flower_crown": {

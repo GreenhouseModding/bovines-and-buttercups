@@ -72,7 +72,7 @@ public interface CowTypeConfiguration {
         public static final MapCodec<Settings> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResourceLocation.CODEC.optionalFieldOf("texture_location").forGetter(Settings::cowTexture),
                 BovinesCodecs.weightedEntryCodec(RegistryCodecs.homogeneousList(Registries.BIOME), "biomes").optionalFieldOf("natural_spawns", SimpleWeightedRandomList.empty()).forGetter(Settings::biomes),
-                BovinesCodecs.weightedEntryCodec(RegistryFixedCodec.create(BovinesRegistryKeys.COW_TYPE), "type").optionalFieldOf("thunder_conversion_types", SimpleWeightedRandomList.empty()).forGetter(Settings::thunderConverts),
+                BovinesCodecs.weightedEntryCodec(CowType.CODEC, "type").optionalFieldOf("thunder_conversion_types", SimpleWeightedRandomList.empty()).forGetter(Settings::thunderConverts),
                 ParticleTypes.CODEC.optionalFieldOf("particle").forGetter(Settings::particle)
         ).apply(instance, Settings::new));
 

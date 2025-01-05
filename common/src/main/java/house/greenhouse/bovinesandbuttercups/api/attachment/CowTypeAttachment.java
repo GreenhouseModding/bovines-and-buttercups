@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.CowTypeType;
@@ -77,7 +78,9 @@ public record CowTypeAttachment(Holder<CowType<?>> cowType, Optional<Holder<CowT
 
     public static <C extends CowTypeConfiguration> void setCowType(LivingEntity entity, Holder<CowType<C>> cowType, Optional<Holder<CowType<C>>> previousCowType) {
         if (cowType.isBound() && cowType.value().type().isApplicable(entity)) {
-            BovinesAndButtercups.getHelper().setCowTypeAttachment(entity, new CowTypeAttachment((Holder) cowType, previousCowType.map(cowTypeHolder -> (Holder) cowTypeHolder)));
+            var previousAttachment = BovinesAndButtercups.getHelper().getCowTypeAttachment(entity);
+            Optional<Holder<CowType<?>>> previousType = previousAttachment == null ? Optional.empty() : previousAttachment.previousCowType().isPresent() ? BovinesAndButtercups.getHelper().getCowTypeAttachment(entity).previousCowType() : previousCowType.map(holder -> (Holder)holder);
+            BovinesAndButtercups.getHelper().setCowTypeAttachment(entity, new CowTypeAttachment((Holder) cowType, previousType));
             if (entity.getType() == EntityType.MOOSHROOM && cowType.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent())
                 ((MushroomCow)entity).setVariant(mc.vanillaType().get());
         }
