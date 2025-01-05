@@ -47,6 +47,7 @@
     "client.CustomHeadLayerMixin",
     "client.EffectsInInventoryMixin",
     "client.EntityRendererAccessor",
+    "client.EntityRendererMixin",
     "client.GuiGraphicsMixin",
     "client.HumanoidRenderStateMixin",
     "client.IllagerRenderStateMixin",
