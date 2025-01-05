@@ -117,6 +117,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         stack.consume(1, player);
 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
+        setChanged();
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
         return InteractionResult.SUCCESS_SERVER;
@@ -156,6 +157,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        setChanged();
 
         return InteractionResult.SUCCESS_SERVER;
     }
@@ -213,6 +215,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
             player.getItemInHand(hand).shrink(1);
 
         level.setBlock(getBlockPos(), getBlockState().setValue(PlaceableEdibleBlock.LIGHT, getLightValue()), Block.UPDATE_NONE);
+        setChanged();
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 
         return InteractionResult.SUCCESS_SERVER;
@@ -224,6 +227,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (tag.contains("data"))
             setEdibleType(ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("data")).getOrThrow().getFirst());
 
@@ -235,6 +239,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (getEdibleType() != null)
             tag.put("data", ItemEdible.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), getEdibleType()).getOrThrow());
 
