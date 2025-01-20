@@ -38,13 +38,12 @@ public record BovinesDataFixer(DataFixer fixer) {
         return builder.build().fixer();
     }
 
-    public <T> Dynamic<T> updateWithFixers(DataFixTypes types, Dynamic<T> dynamic) {
-        return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
+    public <T> Dynamic<T> updateWithFixers(DataFixTypes types, Dynamic<T> dynamic, int originalMinecraftVersion) {
+        return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic, originalMinecraftVersion), CURRENT_VERSION);
     }
 
-    // FIXME: Set the default value to schema version when the next Minecraft release happens.
-    public static <T> int getModDataVersion(Dynamic<T> dynamic) {
-        return dynamic.get("bovinesandbuttercups:data_version").asInt(0);
+    public static <T> int getModDataVersion(Dynamic<T> dynamic, int originalMinecraftVersion) {
+        return dynamic.get("bovinesandbuttercups:data_version").asInt((originalMinecraftVersion < 4189) ? 0 : CURRENT_VERSION); // 4189 is 1.21.4's DFU version.
     }
 
     public static void setModDataVersion(CompoundTag tag) {
