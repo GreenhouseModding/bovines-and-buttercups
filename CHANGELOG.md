@@ -5,10 +5,9 @@
 - Removed Buttercup, Chargelily and Pink Daisy from Full Bloom advancement's requirements.
 
 ## Updating Old Worlds
-- If you are coming from 1.21.1, make sure you have downloaded and loaded your affected parts of the world with at least 2.1.0+1.21.1, this will allow the DFU to activate for later versions of the mod.
-  - When updating from old worlds, nectars will be changed to a new item ID based object, any custom nectar bowls will be converted into Buttercup Nectar Bowls.
+- If you are coming from 1.21.1
+  - When updating from old worlds, Nectars will be changed to a new item ID based object, any custom nectar bowls will be converted into Buttercup Nectar Bowls.
   - There may be better options for Custom Nectar DFU in the future.
-
   
 ## Datapacking Changes
 - Removed the `bovinesandbuttercups:nectar` registry.

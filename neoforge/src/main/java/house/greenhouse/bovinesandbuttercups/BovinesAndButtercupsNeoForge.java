@@ -17,7 +17,7 @@ import house.greenhouse.bovinesandbuttercups.content.entity.goal.MoveToMoobloomG
 import house.greenhouse.bovinesandbuttercups.content.entity.goal.PollinateMoobloomGoal;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
@@ -111,12 +111,12 @@ public class BovinesAndButtercupsNeoForge {
             if (event.getTarget() instanceof LivingEntity living) {
                 if (living.hasData(BovinesAttachments.LOCKDOWN))
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
-                if (living.hasData(BovinesAttachments.COW_TYPE)) {
-                    CowTypeAttachment attachment = living.getData(BovinesAttachments.COW_TYPE);
-                    for (CowModelLayer layer : attachment.cowType().value().configuration().layers())
+                if (living.hasData(BovinesAttachments.COW_VARIANT)) {
+                    CowTypeAttachment attachment = living.getData(BovinesAttachments.COW_VARIANT);
+                    for (CowModelLayer layer : attachment.cowVariant().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowTypeClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living), true));
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowVariantClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), true));
                 }
                 if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
@@ -137,15 +137,15 @@ public class BovinesAndButtercupsNeoForge {
             if (level.isClientSide)
                 return;
 
-            Optional<CowTypeAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_TYPE);
+            Optional<CowTypeAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_VARIANT);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment.isEmpty()) {
                     if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowTypeAttachment.setCowType((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
+                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
                     } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
-                        CowTypeAttachment.setCowType((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
+                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
-                        CowTypeAttachment.setCowType((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
+                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
                     }
                     CowTypeAttachment.sync((MushroomCow)entity);
                 }
@@ -163,7 +163,7 @@ public class BovinesAndButtercupsNeoForge {
                 var pair = MooshroomChildTypeUtil.chooseMooshroomBabyType(parentACow, parentBCow, childCow, event.getCausedByPlayer());
                 if (pair == null)
                     return;
-                CowTypeAttachment.setCowType(child, pair.getFirst(), pair.getSecond());
+                CowTypeAttachment.setCowVariant(child, pair.getFirst(), pair.getSecond());
             }
         }
 
@@ -214,8 +214,8 @@ public class BovinesAndButtercupsNeoForge {
                 }
             }
 
-            if (event.getEntity().hasData(BovinesAttachments.COW_TYPE) && event.getEntity().getData(BovinesAttachments.COW_TYPE).cowType().isBound())
-                event.getEntity().getData(BovinesAttachments.COW_TYPE).cowType().value().configuration().tick(event.getEntity());
+            if (event.getEntity().hasData(BovinesAttachments.COW_VARIANT) && event.getEntity().getData(BovinesAttachments.COW_VARIANT).cowVariant().isBound())
+                event.getEntity().getData(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration().tick(event.getEntity());
 
             if (event.getEntity() instanceof Bee bee && !event.getEntity().level().isClientSide() && ((BeeGoalAccess)event.getEntity()).bovinesandbuttercups$getPollinateMoobloomGoal() != null)
                 ((BeeGoalAccess)bee).bovinesandbuttercups$getPollinateMoobloomGoal().tickCooldown();
@@ -283,26 +283,26 @@ public class BovinesAndButtercupsNeoForge {
         @SubscribeEvent
         public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
             Entity entity = event.getEntity();
-            if (entity instanceof LivingEntity living && !(entity instanceof Moobloom) && entity.hasData(BovinesAttachments.COW_TYPE)) {
-                CowTypeAttachment attachment = entity.getData(BovinesAttachments.COW_TYPE);
-                if (!attachment.cowType().isBound() || !attachment.cowType().value().configuration().allowsConversion(entity))
+            if (entity instanceof LivingEntity living && !(entity instanceof Moobloom) && entity.hasData(BovinesAttachments.COW_VARIANT)) {
+                CowTypeAttachment attachment = entity.getData(BovinesAttachments.COW_VARIANT);
+                if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
                     return;
-                if (attachment.previousCowType().isEmpty()) {
-                    if (attachment.cowType().value().configuration().settings().thunderConverts().isEmpty())
+                if (attachment.previousCowVariant().isEmpty()) {
+                    if (attachment.cowVariant().value().configuration().settings().thunderConverts().isEmpty())
                         return;
 
-                    var compatibleList = attachment.cowType().value().configuration().settings().filterThunderConverts(attachment.cowType().value().type());
+                    var compatibleList = attachment.cowVariant().value().configuration().settings().filterThunderConverts(attachment.cowVariant().value().type());
                     int totalWeight = 0;
 
                     if (compatibleList.size() == 1) {
-                        CowTypeAttachment.setCowType(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowType());
+                        CowTypeAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
                         CowTypeAttachment.sync(living);
                         BovinesAndButtercups.convertedByBovines = true;
                     } else if (!compatibleList.isEmpty()) {
                         for (var cct : compatibleList) {
                             totalWeight -= cct.weight().asInt();
                             if (totalWeight <= 0) {
-                                CowTypeAttachment.setCowType(living, (Holder) cct.data(), (Holder) attachment.cowType());
+                                CowTypeAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
                                 CowTypeAttachment.sync(living);
                                 BovinesAndButtercups.convertedByBovines = true;
                                 break;
@@ -310,7 +310,7 @@ public class BovinesAndButtercupsNeoForge {
                         }
                     }
                 } else {
-                    CowTypeAttachment.setCowType(living, (Holder) attachment.previousCowType().get());
+                    CowTypeAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
                     CowTypeAttachment.sync(living);
                     BovinesAndButtercups.convertedByBovines = true;
                 }
@@ -346,7 +346,7 @@ public class BovinesAndButtercupsNeoForge {
         public static void registerPackets(RegisterPayloadHandlersEvent event) {
             event.registrar("2.0.0")
                     .playToClient(SyncConditionedTextureModifier.TYPE, SyncConditionedTextureModifier.STREAM_CODEC, (payload, context) -> payload.handle())
-                    .playToClient(SyncCowTypeClientboundPacket.TYPE, SyncCowTypeClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle())
+                    .playToClient(SyncCowVariantClientboundPacket.TYPE, SyncCowVariantClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle())
                     .playToClient(SyncLockdownEffectsClientboundPacket.TYPE, SyncLockdownEffectsClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle())
                     .playToClient(SyncMoobloomSnowLayerClientboundPacket.TYPE, SyncMoobloomSnowLayerClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle())
                     .playToClient(SyncMooshroomExtrasClientboundPacket.TYPE, SyncMooshroomExtrasClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle());

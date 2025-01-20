@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
@@ -30,11 +30,11 @@ public record MooshroomConfiguration(Settings settings,
                                      Optional<Boolean> canEatFlowers,
                                      Optional<MushroomCow.Variant> vanillaType,
                                      Optional<ResourceLocation> lootTable,
-                                     OffspringConditions offspringConditions) implements CowTypeConfiguration {
+                                     OffspringConditions offspringConditions) implements CowConfiguration {
 
     public MooshroomConfiguration {
         if (canEatFlowers.isEmpty() && vanillaType.isEmpty())
-            throw new IllegalArgumentException("Cannot create Mooshroom Cow Type without specifying either the 'can_eat_flowers' or 'vanilla_type' fields");
+            throw new IllegalArgumentException("Cannot create Mooshroom Cow Variant without specifying either the 'can_eat_flowers' or 'vanilla_type' fields");
     }
     public static final MapCodec<MooshroomConfiguration> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Settings.CODEC.forGetter(MooshroomConfiguration::settings),

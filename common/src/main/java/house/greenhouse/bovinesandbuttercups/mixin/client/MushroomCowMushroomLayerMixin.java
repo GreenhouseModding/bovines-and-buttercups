@@ -1,8 +1,8 @@
 package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.MushroomCowMushroomLayer;
@@ -17,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MushroomCowMushroomLayerMixin {
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/state/MushroomCowRenderState;FF)V", at = @At("HEAD"), cancellable = true)
     private void bovinesandbuttercups$cancelMushroomRenderIfNotDefault(PoseStack stack, MultiBufferSource bufferSource, int light, MushroomCowRenderState state, float f, float g, CallbackInfo ci) {
-        Holder<CowType<MooshroomConfiguration>> cowType = ((CowTypeRenderState)state).getCowType();
-        if (cowType == null || !cowType.isBound())
+        Holder<CowVariant<MooshroomConfiguration>> cowVariant = ((CowVariantRenderState)state).getCowVariant();
+        if (cowVariant == null || !cowVariant.isBound())
             return;
         if (
-                cowType.value().configuration().vanillaType().isEmpty()
-                        || cowType.value().configuration().mushroom().modelSet().isPresent()
-                        || cowType.value().configuration().mushroom().customType().isPresent()
-                        || cowType.value().configuration().mushroom().blockState().isEmpty() || !cowType.value().configuration().mushroom().blockState().get().equals(cowType.value().configuration().vanillaType().get().getBlockState())
+                cowVariant.value().configuration().vanillaType().isEmpty()
+                        || cowVariant.value().configuration().mushroom().modelSet().isPresent()
+                        || cowVariant.value().configuration().mushroom().customType().isPresent()
+                        || cowVariant.value().configuration().mushroom().blockState().isEmpty() || !cowVariant.value().configuration().mushroom().blockState().get().equals(cowVariant.value().configuration().vanillaType().get().getBlockState())
         )
             ci.cancel();
     }

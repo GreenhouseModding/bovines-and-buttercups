@@ -1,12 +1,12 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifier;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
-import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
+import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -20,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Comparator;
 
-public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEntityRenderState & CowTypeRenderState<LivingEntity, C, M>, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class CowLayersLayer<C extends CowConfiguration, T extends LivingEntityRenderState & CowVariantRenderState<LivingEntity, C, M>, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     public CowLayersLayer(RenderLayerParent<T, M> context) {
         super(context);
@@ -28,8 +28,8 @@ public class CowLayersLayer<C extends CowTypeConfiguration, T extends LivingEnti
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
-        Holder<CowType<C>> attachment = renderState.getCowType();
-        if (renderState.isInvisible || attachment == null || !renderState.getCowType().isBound() || attachment.value().configuration().layers().isEmpty())
+        Holder<CowVariant<C>> attachment = renderState.getCowVariant();
+        if (renderState.isInvisible || attachment == null || !renderState.getCowVariant().isBound() || attachment.value().configuration().layers().isEmpty())
             return;
 
         loop: for (CowModelLayer cowLayer : attachment.value().configuration().layers()) {

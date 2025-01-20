@@ -3,29 +3,8 @@ package house.greenhouse.bovinesandbuttercups.content.data.modifier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
-import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.EmissiveTextureModifier;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.TranslucentTextureModifier;
-import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.WeakHashMap;
 
 public class TranslucentTextureModifierFactory extends TextureModifierFactory<TranslucentTextureModifier> {
     public static final MapCodec<TranslucentTextureModifierFactory> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(

@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.content.attachment;
 
 import com.mojang.serialization.Codec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -25,7 +25,7 @@ public class BovinesAttachments {
             .serialize(LockdownAttachment.CODEC)
             .build();
 
-    public static final AttachmentType<CowTypeAttachment> COW_TYPE = AttachmentType
+    public static final AttachmentType<CowTypeAttachment> COW_VARIANT = AttachmentType
             .builder(() -> new CowTypeAttachment(Holder.direct(null), Optional.empty()))
             .serialize(CowTypeAttachment.CODEC)
             .build();
@@ -43,12 +43,12 @@ public class BovinesAttachments {
             .builder(() -> (UUID)null)
             .serialize(UUIDUtil.CODEC)
             .build();
-    public static final AttachmentType<Map<Holder<CowType<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentType
-            .builder(() -> (Map<Holder<CowType<?>>, List<Vec3>>)new HashMap<Holder<CowType<?>>, List<Vec3>>())
+    public static final AttachmentType<Map<Holder<CowVariant<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentType
+            .builder(() -> (Map<Holder<CowVariant<?>>, List<Vec3>>)new HashMap<Holder<CowVariant<?>>, List<Vec3>>())
             .build();
 
     public static void registerAll(RegistrationCallback<AttachmentType<?>> callback) {
-        callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, CowTypeAttachment.ID, COW_TYPE);
+        callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, CowTypeAttachment.ID, COW_VARIANT);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, LockdownAttachment.ID, LOCKDOWN);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES,MooshroomExtrasAttachment.ID,MOOSHROOM_EXTRAS);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, BovinesAndButtercups.asResource("produces_rich_honey"), PRODUCES_RICH_HONEY);

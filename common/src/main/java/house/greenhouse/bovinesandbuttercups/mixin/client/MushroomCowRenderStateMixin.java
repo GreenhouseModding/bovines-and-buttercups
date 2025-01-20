@@ -2,12 +2,12 @@ package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.access.MushroomCowRenderStateLayerBakerAccess;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
-import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
+import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import house.greenhouse.bovinesandbuttercups.client.api.RenderStateObject;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import net.minecraft.client.model.CowModel;
@@ -23,13 +23,12 @@ import org.spongepowered.asm.mixin.Unique;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 @Mixin(MushroomCowRenderState.class)
-public class MushroomCowRenderStateMixin implements CowTypeRenderState<MushroomCow, MooshroomConfiguration, CowModel>, MushroomCowRenderStateLayerBakerAccess {
+public class MushroomCowRenderStateMixin implements CowVariantRenderState<MushroomCow, MooshroomConfiguration, CowModel>, MushroomCowRenderStateLayerBakerAccess {
     @Unique
-    public Holder<CowType<MooshroomConfiguration>> bovinesandbuttercups$cowType;
+    public Holder<CowVariant<MooshroomConfiguration>> bovinesandbuttercups$cowVariant;
     @Unique
     private final Map<RenderStateObject.Type<Object>, Object> bovinesandbuttercups$renderStateObject = new HashMap<>();
     @Unique
@@ -38,22 +37,22 @@ public class MushroomCowRenderStateMixin implements CowTypeRenderState<MushroomC
     private Function<ModelLayerLocation, CowModel> bovinesandbuttercups$bakeLayerFunction;
 
     @Override
-    public Holder<CowType<MooshroomConfiguration>> getCowType() {
-        return bovinesandbuttercups$cowType;
+    public Holder<CowVariant<MooshroomConfiguration>> getCowVariant() {
+        return bovinesandbuttercups$cowVariant;
     }
 
     @Override
     public void extractDefaultRenderStates(MushroomCow mushroomCow) {
-        bovinesandbuttercups$cowType = CowTypeAttachment.getCowTypeHolderFromEntity(mushroomCow, BovinesCowTypeTypes.MOOSHROOM_TYPE);
+        bovinesandbuttercups$cowVariant = CowTypeAttachment.getCowVariantHolderFromEntity(mushroomCow, BovinesCowTypes.MOOSHROOM_TYPE);
         RenderStateObject.setupGlobalObjects(bovinesandbuttercups$renderStateObject, mushroomCow);
     }
 
     @Override
     public void extractModel(LivingEntityRenderer<MushroomCow, ?, CowModel> renderer, MushroomCow entity) {
-        bovinesandbuttercups$cowType = CowTypeAttachment.getCowTypeHolderFromEntity(entity, BovinesCowTypeTypes.MOOSHROOM_TYPE);
-        if (renderer instanceof AgeableMobRendererAccessor accessor && bovinesandbuttercups$cowType != null) {
-            CowModelType cowModel = bovinesandbuttercups$cowType.value().configuration().model();
-            if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowType.value().configuration().model())) {
+        bovinesandbuttercups$cowVariant = CowTypeAttachment.getCowVariantHolderFromEntity(entity, BovinesCowTypes.MOOSHROOM_TYPE);
+        if (renderer instanceof AgeableMobRendererAccessor accessor && bovinesandbuttercups$cowVariant != null) {
+            CowModelType cowModel = bovinesandbuttercups$cowVariant.value().configuration().model();
+            if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowVariant.value().configuration().model())) {
                 ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
                 if (cowModel != null && cowModel.namespaceOverride() != null)
                     namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());

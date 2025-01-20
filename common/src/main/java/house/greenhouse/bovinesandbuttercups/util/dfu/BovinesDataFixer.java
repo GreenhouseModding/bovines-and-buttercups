@@ -33,8 +33,8 @@ public record BovinesDataFixer(DataFixer fixer) {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
-        Schema schema124400 = builder.addSchema(100, SAME);
-        builder.addFixer(new NectarDecomponentizeFix(schema124400));
+        Schema schema100 = builder.addSchema(100, SAME);
+        builder.addFixer(new NectarDecomponentizeFix(schema100));
         return builder.build().fixer();
     }
 
@@ -42,8 +42,9 @@ public record BovinesDataFixer(DataFixer fixer) {
         return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
     }
 
+    // FIXME: Set the default value to schema version when the next Minecraft release happens.
     public static <T> int getModDataVersion(Dynamic<T> dynamic) {
-        return dynamic.get("bovinesandbuttercups:data_version").asInt(CURRENT_VERSION);
+        return dynamic.get("bovinesandbuttercups:data_version").asInt(0);
     }
 
     public static void setModDataVersion(CompoundTag tag) {

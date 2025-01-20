@@ -3,7 +3,7 @@ package house.greenhouse.bovinesandbuttercups.mixin.client;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import house.greenhouse.bovinesandbuttercups.access.EntityRendererLayerBakerAccess;
 import house.greenhouse.bovinesandbuttercups.access.MushroomCowRenderStateLayerBakerAccess;
-import house.greenhouse.bovinesandbuttercups.client.api.CowTypeRenderState;
+import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -25,8 +25,8 @@ public abstract class MushroomCowRendererMixin extends MobRenderer<MushroomCow, 
 
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/animal/MushroomCow;Lnet/minecraft/client/renderer/entity/state/MushroomCowRenderState;F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getVariant()Lnet/minecraft/world/entity/animal/MushroomCow$Variant;"))
     private void bovinesandbuttercups$extractMooshroomRenderState(MushroomCow entity, MushroomCowRenderState state, float partialTick, CallbackInfo ci) {
-        ((CowTypeRenderState)state).extractModel((MushroomCowRenderer)(Object)this, entity);
-        ((CowTypeRenderState)state).extractDefaultRenderStates(entity);
+        ((CowVariantRenderState)state).extractModel((MushroomCowRenderer)(Object)this, entity);
+        ((CowVariantRenderState)state).extractDefaultRenderStates(entity);
     }
 
     @ModifyReturnValue(method = "createRenderState()Lnet/minecraft/client/renderer/entity/state/EntityRenderState;", at = @At("RETURN"))

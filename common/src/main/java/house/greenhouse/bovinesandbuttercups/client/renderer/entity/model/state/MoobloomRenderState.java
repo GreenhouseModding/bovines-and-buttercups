@@ -5,7 +5,6 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.Mooblo
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.AnimationState;
 
 import java.util.function.Function;
@@ -20,7 +19,7 @@ public class MoobloomRenderState extends AbstractCowTypeRenderState<Moobloom, Mo
 
     @Override
     public void extractDefaultRenderStates(Moobloom moobloom) {
-        cowType = moobloom.getCowType();
+        cowVariant = moobloom.getCowVariant();
         super.extractDefaultRenderStates(moobloom);
         layDownAnimationState.copyFrom(moobloom.layDownAnimationState);
         getUpAnimationState.copyFrom(moobloom.getUpAnimationState);

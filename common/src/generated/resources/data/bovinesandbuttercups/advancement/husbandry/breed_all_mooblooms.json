@@ -3,64 +3,64 @@
   "criteria": {
     "bovinesandbuttercups:bird_of_paradise": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:bird_of_paradise"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:bird_of_paradise"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:camellia": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:camellia"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:camellia"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:freesia": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:freesia"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:freesia"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:hyacinth": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:hyacinth"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:hyacinth"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:limelight": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:limelight"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:limelight"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:lingholm": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:lingholm"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:lingholm"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:nightshade": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:nightshade"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:nightshade"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:snowdrop": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:snowdrop"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:snowdrop"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     },
     "bovinesandbuttercups:tropical_blue": {
       "conditions": {
-        "cow_type_type": "bovinesandbuttercups:moobloom",
-        "cow_types": "bovinesandbuttercups:tropical_blue"
+        "type": "bovinesandbuttercups:moobloom",
+        "variants": "bovinesandbuttercups:tropical_blue"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_type"
     }

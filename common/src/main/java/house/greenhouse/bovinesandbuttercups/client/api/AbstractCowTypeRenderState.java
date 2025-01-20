@@ -2,8 +2,8 @@ package house.greenhouse.bovinesandbuttercups.client.api;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C extends CowTypeConfiguration, M extends EntityModel<?>> extends LivingEntityRenderState implements CowTypeRenderState<T, C, M> {
-    public Holder<CowType<C>> cowType;
+public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C extends CowConfiguration, M extends EntityModel<?>> extends LivingEntityRenderState implements CowVariantRenderState<T, C, M> {
+    public Holder<CowVariant<C>> cowVariant;
     private final Map<RenderStateObject.Type<Object>, Object> renderStateObject = new HashMap<>();
     private final Map<CowModelType, Pair<M, M>> models = new HashMap<>();
     private final Function<ModelLayerLocation, M> bakeLayerFunction;
@@ -37,10 +37,10 @@ public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C exten
 
     public void extractModel(LivingEntityRenderer<T, ?, M> renderer, T entity) {
         if (renderer instanceof AgeableMobRendererAccessor accessor) {
-            CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowTypeAttachment(entity);
+            CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
             CowModelType cowModel = null;
             if (attachment != null)
-                cowModel = attachment.cowType().value().configuration().model();
+                cowModel = attachment.cowVariant().value().configuration().model();
             if (cowModel == null)
                 cowModel = BovinesCowModelTypes.DEFAULT;
             ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
@@ -59,8 +59,8 @@ public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C exten
     }
 
     @Override
-    public Holder<CowType<C>> getCowType() {
-        return cowType;
+    public Holder<CowVariant<C>> getCowVariant() {
+        return cowVariant;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class MoobloomFlowerLayer extends RenderLayer<MoobloomRenderState, Mooblo
         boolean bl = renderState.appearsGlowing && renderState.isInvisible;
         if (renderState.isInvisible && !bl) return;
 
-        MoobloomConfiguration configuration = renderState.cowType.value().configuration();
+        MoobloomConfiguration configuration = renderState.cowVariant.value().configuration();
 
         int m = LivingEntityRenderer.getOverlayCoords(renderState, 0.0f);
 

@@ -29,9 +29,9 @@ public class MoobloomNeoForge extends Moobloom implements IShearable {
             level().playSound(null, this, BovinesSoundEvents.MOOBLOOM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0f, 1.0f);
             convertTo(EntityType.COW, ConversionParams.single(this, false, false), (cow) -> {
                 ((ServerLevel) level()).sendParticles(ParticleTypes.EXPLOSION, getX(), getY(0.5), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
-                if (getCowType().value().configuration().lootTable().isEmpty())
+                if (getCowVariant().value().configuration().lootTable().isEmpty())
                     return;
-                dropFromShearingLootTable((ServerLevel) level, ResourceKey.create(Registries.LOOT_TABLE, getCowType().value().configuration().lootTable().orElseThrow()), shears, (p_390218_, p_390219_) -> {
+                dropFromShearingLootTable((ServerLevel) level, ResourceKey.create(Registries.LOOT_TABLE, getCowVariant().value().configuration().lootTable().orElseThrow()), shears, (p_390218_, p_390219_) -> {
                     for (int i = 0; i < p_390219_.getCount(); i++) {
                         p_390218_.addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(1.0), this.getZ(), p_390219_.copyWithCount(1)));
                     }

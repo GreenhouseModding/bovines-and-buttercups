@@ -22,10 +22,10 @@ public class RenderStateObject {
     public static void registerAll() {
         registerGlobalRenderStateObject(ACTIVE_CONDITIONS, entity -> {
             if (entity instanceof LivingEntity living) {
-                var attachment = BovinesAndButtercups.getHelper().getCowTypeAttachment(living);
+                var attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
                 if (attachment == null)
                     return List.of();
-                return attachment.cowType().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream().map(textureModifierFactory -> {
+                return attachment.cowVariant().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream().map(textureModifierFactory -> {
                     if (textureModifierFactory instanceof ConditionedTextureModifierFactory conditioned && conditioned.getConditionValue(entity))
                         return conditioned.getConditionId();
                     return null;

@@ -35,7 +35,7 @@ import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownIte
 import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -106,8 +106,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             if (!client.isLocalServer())
-                BovinesRegistries.COW_TYPE_TYPE.forEach(cowTypeType ->
-                        cowTypeType.setFromRegistries(client.level.registryAccess()));
+                BovinesRegistries.COW_TYPE.forEach(cowType ->
+                        cowType.setFromRegistries(client.level.registryAccess()));
         });
 
 
@@ -139,7 +139,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
         ModelLoadingPlugin.register(pluginContext ->
                 pluginContext.addModels(FlowerCrownItemRenderer.BASE));
         ClientTickEvents.END_WORLD_TICK.register(world -> {
-            SyncCowTypeClientboundPacket.retry(world);
+            SyncCowVariantClientboundPacket.retry(world);
             SyncLockdownEffectsClientboundPacket.retry(world);
             SyncMooshroomExtrasClientboundPacket.retry(world);
         });
@@ -177,7 +177,7 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
 
     public static void registerNetwork() {
         ClientPlayNetworking.registerGlobalReceiver(SyncConditionedTextureModifier.TYPE, (packet, context) -> packet.handle());
-        ClientPlayNetworking.registerGlobalReceiver(SyncCowTypeClientboundPacket.TYPE, (packet, context) -> packet.handle());
+        ClientPlayNetworking.registerGlobalReceiver(SyncCowVariantClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncLockdownEffectsClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMoobloomSnowLayerClientboundPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(SyncMooshroomExtrasClientboundPacket.TYPE, (packet, context) -> packet.handle());

@@ -31,10 +31,10 @@ public record SyncConditionedTextureModifier(int entityId, ResourceLocation cond
             Entity entity = Minecraft.getInstance().level.getEntity(entityId);
             if (!(entity instanceof LivingEntity living))
                 return;
-            CowTypeAttachment cowType = BovinesAndButtercups.getHelper().getCowTypeAttachment(living);
-            if (cowType == null || !cowType.cowType().isBound())
+            CowTypeAttachment cowVariant = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+            if (cowVariant == null || !cowVariant.cowVariant().isBound())
                 return;
-            cowType.cowType().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream()).filter(textureModifierFactory -> {
+            cowVariant.cowVariant().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream()).filter(textureModifierFactory -> {
                 if (textureModifierFactory instanceof ConditionedTextureModifierFactory conditioned)
                     return conditioned.getConditionId().equals(conditionId);
                 return false;

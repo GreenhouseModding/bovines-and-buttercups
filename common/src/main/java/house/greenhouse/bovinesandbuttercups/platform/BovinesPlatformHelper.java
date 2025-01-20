@@ -1,6 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -49,9 +48,9 @@ public interface BovinesPlatformHelper {
 
     LockdownAttachment getLockdownAttachment(LivingEntity entity);
 
-    CowTypeAttachment getCowTypeAttachment(LivingEntity entity);
+    CowTypeAttachment getCowVariantAttachment(LivingEntity entity);
 
-    void setCowTypeAttachment(LivingEntity entity, CowTypeAttachment attachment);
+    void setCowVariantAttachment(LivingEntity entity, CowTypeAttachment attachment);
 
     boolean hasMooshroomExtrasAttachment(LivingEntity entity);
 
@@ -77,9 +76,9 @@ public interface BovinesPlatformHelper {
 
     void setPollinatingMoobloom(Bee bee, @Nullable UUID uuid);
 
-    Map<Holder<CowType<?>>, List<Vec3>> getParticlePositions(LivingEntity entity);
+    Map<Holder<CowVariant<?>>, List<Vec3>> getParticlePositions(LivingEntity entity);
 
-    void addParticlePosition(LivingEntity entity, Holder<CowType<?>> type, Vec3 pos);
+    void addParticlePosition(LivingEntity entity, Holder<CowVariant<?>> type, Vec3 pos);
 
     void clearParticlePositions(LivingEntity entity);
 

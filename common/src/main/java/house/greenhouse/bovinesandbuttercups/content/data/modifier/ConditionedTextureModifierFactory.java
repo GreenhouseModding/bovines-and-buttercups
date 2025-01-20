@@ -5,11 +5,10 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.NoOpTextureModifier;
 import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.ConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowTypeClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -83,9 +82,9 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<Co
         LootContext context = new LootContext.Builder(params.create(BovinesLootContextParamSets.ENTITY)).create(Optional.empty());
         boolean conditionValue = condition.stream().allMatch(condition1 -> condition1.test(context));
         setConditionValue(entity, conditionValue);
-        if (entity instanceof LivingEntity living && BovinesAndButtercups.getHelper().getCowTypeAttachment(living) != null)
+        if (entity instanceof LivingEntity living && BovinesAndButtercups.getHelper().getCowVariantAttachment(living) != null)
             // This guarantees that the cow type will be synced to the client before running this modifier's sync code.
-            BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowTypeClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowTypeAttachment(living), false), new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
+            BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowVariantClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), false), new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
         else
             BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
     }

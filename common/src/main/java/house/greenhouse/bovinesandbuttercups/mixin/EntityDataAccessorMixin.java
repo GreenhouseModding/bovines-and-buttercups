@@ -22,7 +22,7 @@ public class EntityDataAccessorMixin {
     @Inject(method = "setData", at = @At("TAIL"))
     private void bovinesandbuttercups$setData(CompoundTag other, CallbackInfo ci) {
         if (this.entity instanceof LivingEntity living) {
-            if (BovinesAndButtercups.getHelper().getCowTypeAttachment(living) != null)
+            if (BovinesAndButtercups.getHelper().getCowVariantAttachment(living) != null)
                 CowTypeAttachment.sync(living);
             if (BovinesAndButtercups.getHelper().getLockdownAttachment(living) != null)
                 LockdownAttachment.sync(living);

@@ -19,17 +19,17 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Map;
 
-public record SyncCowTypeClientboundPacket(int entityId, CowTypeAttachment attachment, boolean onTracking) implements CustomPacketPayload {
-    public static final ResourceLocation ID = BovinesAndButtercups.asResource("sync_cow_type");
-    public static final Type<SyncCowTypeClientboundPacket> TYPE = new Type<>(ID);
-    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCowTypeClientboundPacket> STREAM_CODEC = StreamCodec.of(SyncCowTypeClientboundPacket::write, SyncCowTypeClientboundPacket::new);
+public record SyncCowVariantClientboundPacket(int entityId, CowTypeAttachment attachment, boolean onTracking) implements CustomPacketPayload {
+    public static final ResourceLocation ID = BovinesAndButtercups.asResource("sync_cow_variant");
+    public static final Type<SyncCowVariantClientboundPacket> TYPE = new Type<>(ID);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCowVariantClientboundPacket> STREAM_CODEC = StreamCodec.of(SyncCowVariantClientboundPacket::write, SyncCowVariantClientboundPacket::new);
 
 
-    public SyncCowTypeClientboundPacket(RegistryFriendlyByteBuf buf) {
+    public SyncCowVariantClientboundPacket(RegistryFriendlyByteBuf buf) {
         this(buf.readInt(), CowTypeAttachment.DIRECT_CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), buf.readNbt()).getOrThrow().getFirst(), buf.readBoolean());
     }
 
-    public static void write(RegistryFriendlyByteBuf buf, SyncCowTypeClientboundPacket packet) {
+    public static void write(RegistryFriendlyByteBuf buf, SyncCowVariantClientboundPacket packet) {
         buf.writeInt(packet.entityId);
         buf.writeNbt(CowTypeAttachment.DIRECT_CODEC.encodeStart(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), packet.attachment).getOrThrow());
         buf.writeBoolean(packet.onTracking);
@@ -43,8 +43,8 @@ public record SyncCowTypeClientboundPacket(int entityId, CowTypeAttachment attac
                     RETRIES.put(Pair.of(entityId, attachment), 0);
                 return;
             }
-            BovinesAndButtercups.getHelper().setCowTypeAttachment(living, attachment);
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowTypeAttachment(living).cowType().value().configuration().layers())
+            BovinesAndButtercups.getHelper().setCowVariantAttachment(living, attachment);
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
                 for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                     modifier.init(living);
         });
@@ -62,8 +62,8 @@ public record SyncCowTypeClientboundPacket(int entityId, CowTypeAttachment attac
                 RETRIES.put(pair.getKey(), pair.getValue() + 1);
                 continue;
             }
-            BovinesAndButtercups.getHelper().setCowTypeAttachment(living, pair.getKey().getSecond());
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowTypeAttachment(living).cowType().value().configuration().layers())
+            BovinesAndButtercups.getHelper().setCowVariantAttachment(living, pair.getKey().getSecond());
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
                 for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                     modifier.init(living);
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());
@@ -71,7 +71,7 @@ public record SyncCowTypeClientboundPacket(int entityId, CowTypeAttachment attac
         RETRIES.values().removeIf(integer -> {
             boolean bl = integer > 5;
             if (bl)
-                BovinesAndButtercups.LOG.warn("Failed to sync Cow Type Attachment on entity.");
+                BovinesAndButtercups.LOG.warn("Failed to sync Cow Variant Attachment on entity.");
             return bl;
         });
     }

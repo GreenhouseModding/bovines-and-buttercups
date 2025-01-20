@@ -59,8 +59,8 @@ public abstract class LivingEntityMixin extends Entity {
             LockdownAttachment.sync(entity);
         }
 
-        if (entity.hasAttached(BovinesAttachments.COW_TYPE) && entity.getAttached(BovinesAttachments.COW_TYPE).cowType().isBound())
-            entity.getAttached(BovinesAttachments.COW_TYPE).cowType().value().configuration().tick(this);
+        if (entity.hasAttached(BovinesAttachments.COW_VARIANT) && entity.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().isBound())
+            entity.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration().tick(this);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

@@ -3,15 +3,12 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
 import house.greenhouse.bovinesandbuttercups.mixin.CowSuperMixin;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
-import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -54,7 +51,7 @@ public abstract class MushroomCowMixin extends CowSuperMixin {
     @Inject(method = "thunderHit", at = @At(value = "HEAD"), cancellable = true)
     private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
         boolean bl = BovinesAndButtercups.convertedByBovines;
-        if (!bl && CowTypeAttachment.getCowTypeFromEntity(this, BovinesCowTypeTypes.MOOSHROOM_TYPE) != null && CowTypeAttachment.getCowTypeFromEntity(this, BovinesCowTypeTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
+        if (!bl && CowTypeAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowTypeAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
             bovinesandbuttercups$thunderHit(level, lightning);
             ci.cancel();
         }
@@ -73,14 +70,14 @@ public abstract class MushroomCowMixin extends CowSuperMixin {
     @Inject(method = "method_63648", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;dropFromShearingLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/BiConsumer;)V"), cancellable = true)
     private void bovinesandbuttercups$cancelItemDroppingIfUnnecessary(ServerLevel serverLevel, ItemStack itemStack, Cow cow, CallbackInfo ci) {
         MushroomCow mushroomCow = (MushroomCow)(Object)this;
-        if (mushroomCow.hasAttached(BovinesAttachments.COW_TYPE) && mushroomCow.getAttached(BovinesAttachments.COW_TYPE).cowType().value().configuration() instanceof MooshroomConfiguration mc && mc.mushroom().blockState().isEmpty() && mc.mushroom().customType().isEmpty())
+        if (mushroomCow.hasAttached(BovinesAttachments.COW_VARIANT) && mushroomCow.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration() instanceof MooshroomConfiguration mc && mc.mushroom().blockState().isEmpty() && mc.mushroom().customType().isEmpty())
             ci.cancel();
     }
 
     @ModifyArg(method = "method_63648", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;dropFromShearingLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/BiConsumer;)V"))
     private ResourceKey<LootTable> bovinesandbuttercups$modifyShearItem(ResourceKey<LootTable> original) {
         MushroomCow cow = (MushroomCow)(Object)this;
-        if (cow.hasAttached(BovinesAttachments.COW_TYPE) && cow.getAttached(BovinesAttachments.COW_TYPE).cowType().value().configuration() instanceof MooshroomConfiguration mc && mc.lootTable().isPresent()) {
+        if (cow.hasAttached(BovinesAttachments.COW_VARIANT) && cow.getAttached(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration() instanceof MooshroomConfiguration mc && mc.lootTable().isPresent()) {
             return ResourceKey.create(Registries.LOOT_TABLE, mc.lootTable().get());
         }
         return original;

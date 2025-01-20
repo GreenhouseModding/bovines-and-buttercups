@@ -29,7 +29,7 @@ public class NectarDecomponentizeFix extends DataFix {
         Type<?> type = getInputSchema().getType(References.ITEM_STACK);
         OpticFinder<Pair<String, String>> idFinder = DSL.fieldFinder("id", DSL.named(References.ITEM_NAME.typeName(), NamespacedSchema.namespacedString()));
         OpticFinder<?> componentsFinder = type.findField("components");
-        return fixTypeEverywhereTyped("Decomponentize nectar fix", type, typed -> {
+        return fixTypeEverywhereTyped("Decomponentize Nectar fixer", type, typed -> {
             Optional<Pair<String, String>> optional = typed.getOptional(idFinder);
             if (optional.isPresent() && Objects.equals(optional.get().getSecond(), "bovinesandbuttercups:nectar_bowl")) {
                 Optional<? extends Typed<?>> componentTyped = typed.getOptionalTyped(componentsFinder);

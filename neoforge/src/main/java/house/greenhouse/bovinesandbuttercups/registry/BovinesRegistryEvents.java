@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.registry;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
@@ -12,7 +12,7 @@ import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypeTypes;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.BovinesTextureModifierFactories;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
@@ -44,7 +44,7 @@ public class BovinesRegistryEvents {
         register(event, BovinesBiomeModifierSerializers::registerAll);
         register(event, BovinesBlockEntityTypes::registerAll);
         register(event, BovinesBlocks::registerAll);
-        register(event, BovinesCowTypeTypes::registerAll);
+        register(event, BovinesCowTypes::registerAll);
         register(event, BovinesCriteriaTriggers::registerAll);
         register(event, BovinesDataComponents::registerAll);
         register(event, BovinesEntitySubPredicateTypes::registerAll);
@@ -81,14 +81,14 @@ public class BovinesRegistryEvents {
 
     @SubscribeEvent
     public static void createNewRegistries(NewRegistryEvent event) {
-        event.register(BovinesRegistries.COW_TYPE_TYPE);
+        event.register(BovinesRegistries.COW_TYPE);
         event.register(BovinesRegistries.MODEL_TYPE);
         event.register(BovinesRegistries.TEXTURE_MODIFIER);
     }
 
     @SubscribeEvent
     public static void createNewDataPackRegistry(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(BovinesRegistryKeys.COW_TYPE, CowType.DIRECT_CODEC, CowType.DIRECT_CODEC);
+        event.dataPackRegistry(BovinesRegistryKeys.COW_VARIANT, CowVariant.DIRECT_CODEC, CowVariant.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE, CustomFlowerType.DIRECT_CODEC, CustomFlowerType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE, CustomMushroomType.DIRECT_CODEC, CustomMushroomType.DIRECT_CODEC);
         event.dataPackRegistry(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, EdibleBlockType.DIRECT_CODEC, EdibleBlockType.DIRECT_CODEC);

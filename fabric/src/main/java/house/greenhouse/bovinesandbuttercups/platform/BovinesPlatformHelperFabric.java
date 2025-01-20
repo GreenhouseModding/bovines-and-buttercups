@@ -1,6 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
-import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomFabric;
@@ -74,13 +74,13 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public CowTypeAttachment getCowTypeAttachment(LivingEntity entity) {
-        return entity.getAttached(BovinesAttachments.COW_TYPE);
+    public CowTypeAttachment getCowVariantAttachment(LivingEntity entity) {
+        return entity.getAttached(BovinesAttachments.COW_VARIANT);
     }
 
     @Override
-    public void setCowTypeAttachment(LivingEntity entity, CowTypeAttachment attachment) {
-        entity.setAttached(BovinesAttachments.COW_TYPE, attachment);
+    public void setCowVariantAttachment(LivingEntity entity, CowTypeAttachment attachment) {
+        entity.setAttached(BovinesAttachments.COW_VARIANT, attachment);
     }
 
     @Override
@@ -165,12 +165,12 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public Map<Holder<CowType<?>>, List<Vec3>> getParticlePositions(LivingEntity entity) {
+    public Map<Holder<CowVariant<?>>, List<Vec3>> getParticlePositions(LivingEntity entity) {
         return entity.getAttachedOrElse(BovinesAttachments.BABY_PARTICLE_POSITIONS, Map.of());
     }
 
     @Override
-    public void addParticlePosition(LivingEntity entity, Holder<CowType<?>> type, Vec3 pos) {
+    public void addParticlePosition(LivingEntity entity, Holder<CowVariant<?>> type, Vec3 pos) {
         entity.getAttachedOrCreate(BovinesAttachments.BABY_PARTICLE_POSITIONS).computeIfAbsent(type, holder -> new ArrayList<>()).add(pos);
     }
 
