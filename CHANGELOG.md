@@ -1,5 +1,6 @@
 ## Changes
 - Ported to 1.21.4.
+- Added Nightshade Mooblooms, a new light gray Moobloom bred whilst near Pale Garden blocks.
 
 ## Updating Old Worlds
 - If you are coming from 1.21.1...
