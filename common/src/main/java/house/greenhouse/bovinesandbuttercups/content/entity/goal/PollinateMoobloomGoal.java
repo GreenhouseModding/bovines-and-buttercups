@@ -224,7 +224,7 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
     }
 
     private Optional<Moobloom> findMoobloom() {
-        Moobloom moobloom = ((ServerLevel)this.bee.level()).getNearestEntity(Moobloom.class, TargetingConditions.forNonCombat().selector((entity, serverLevel) -> entity.getLastHurtByMobTimestamp() <= entity.tickCount - 100 && serverLevel.getBlockState(entity.blockPosition().above(2)).isAir() && !entity.isBaby() && ((Moobloom)entity).bee == null), null, bee.getX(), bee.getY(), bee.getZ(), bee.getBoundingBox().inflate(32.0F, 16.0, 32.0F));
+        Moobloom moobloom = ((ServerLevel)this.bee.level()).getNearestEntity(Moobloom.class, TargetingConditions.forNonCombat().selector((entity, serverLevel) -> entity.getLastHurtByMobTimestamp() <= entity.tickCount - 100 && serverLevel.getBlockState(entity.blockPosition().above(2)).isAir() && !entity.isBaby() && ((Moobloom)entity).bee == null), null, bee.getX(), bee.getY(), bee.getZ(), bee.getBoundingBox().inflate(12.0F, 8.0F, 12.0F));
         return Optional.ofNullable(moobloom);
     }
 }

@@ -1,8 +1,5 @@
 ## Changes
 - Ported to 1.21.4.
-- Lowered the search area for Mooblooms on bees.
-- Bovines and Buttercups advancements are no longer hidden.
-- Removed Buttercup, Chargelily and Pink Daisy from Full Bloom advancement's requirements.
 
 ## Updating Old Worlds
 - If you are coming from 1.21.1...
