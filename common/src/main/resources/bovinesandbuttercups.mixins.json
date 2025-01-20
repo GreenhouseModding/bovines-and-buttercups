@@ -19,6 +19,7 @@
     "DefaultDispenseItemBehaviorAccessor",
     "EntityAccessor",
     "EntityDataAccessorMixin",
+    "EntityMixin",
     "FarmBlockMixin",
     "FlowerPotBlockMixin",
     "HoneyBlockAccessor",

@@ -40,7 +40,8 @@ public record BovinesDataFixer(DataFixer fixer) {
         return dynamic.get("bovinesandbuttercups:data_version").asInt(CURRENT_VERSION);
     }
 
-    public static void setModDataVersion(CompoundTag tag) {
+    public static CompoundTag setModDataVersion(CompoundTag tag) {
         tag.putInt("bovinesandbuttercups:data_version", CURRENT_VERSION);
+        return tag;
     }
 }

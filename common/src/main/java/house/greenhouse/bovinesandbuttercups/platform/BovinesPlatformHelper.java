@@ -43,7 +43,7 @@ public interface BovinesPlatformHelper {
 
     <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey);
 
-    Map<Block, Block> getPottedBlockMap();
+    String getAttachmentKey();
 
     LockdownAttachment getLockdownAttachment(LivingEntity entity);
 

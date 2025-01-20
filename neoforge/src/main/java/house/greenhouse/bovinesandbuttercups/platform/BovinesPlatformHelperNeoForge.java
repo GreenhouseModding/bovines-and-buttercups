@@ -68,8 +68,8 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     }
 
     @Override
-    public Map<Block, Block> getPottedBlockMap() {
-        return PottedBlockMapUtil.getPottedContentMap();
+    public String getAttachmentKey() {
+        return "neoforge:attachments";
     }
 
     @Override
