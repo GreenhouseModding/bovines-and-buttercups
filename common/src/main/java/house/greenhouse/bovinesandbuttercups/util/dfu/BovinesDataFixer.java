@@ -46,7 +46,8 @@ public record BovinesDataFixer(DataFixer fixer) {
         return dynamic.get("bovinesandbuttercups:data_version").asInt((originalMinecraftVersion < 4189) ? 0 : CURRENT_VERSION); // 4189 is 1.21.4's DFU version.
     }
 
-    public static void setModDataVersion(CompoundTag tag) {
+    public static CompoundTag setModDataVersion(CompoundTag tag) {
         tag.putInt("bovinesandbuttercups:data_version", CURRENT_VERSION);
+        return tag;
     }
 }

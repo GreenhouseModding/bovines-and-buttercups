@@ -64,8 +64,8 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public Map<Block, Block> getPottedBlockMap() {
-        return FlowerPotBlock.POTTED_BY_CONTENT;
+    public String getAttachmentKey() {
+        return "fabric:attachments";
     }
 
     @Override
