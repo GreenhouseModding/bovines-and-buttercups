@@ -6,7 +6,7 @@
         "type": "bovinesandbuttercups:moobloom",
         "different_from_parents": true
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     }
   },
   "display": {

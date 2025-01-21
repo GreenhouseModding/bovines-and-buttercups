@@ -6,63 +6,63 @@
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:bird_of_paradise"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:camellia": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:camellia"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:freesia": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:freesia"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:hyacinth": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:hyacinth"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:limelight": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:limelight"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:lingholm": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:lingholm"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:nightshade": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:nightshade"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:snowdrop": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:snowdrop"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
     "bovinesandbuttercups:tropical_blue": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
         "variants": "bovinesandbuttercups:tropical_blue"
       },
-      "trigger": "bovinesandbuttercups:breed_cow_with_type"
+      "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     }
   },
   "display": {

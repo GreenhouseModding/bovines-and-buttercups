@@ -6,7 +6,7 @@ import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
-import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
+import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithVariantTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
@@ -482,7 +482,7 @@ public class Moobloom extends Cow {
             child.createParticles(randomType, position());
 
             if (getLoveCause() != null)
-                BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, true, (Holder) randomType);
+                BreedCowWithVariantTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, true, (Holder) randomType);
             return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
         }
 
@@ -490,12 +490,12 @@ public class Moobloom extends Cow {
 
         if (!otherParent.getCowVariant().equals(getCowVariant()) && getRandom().nextBoolean()) {
             if (getLoveCause() != null)
-                BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>)otherParent.getCowVariant());
+                BreedCowWithVariantTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>)otherParent.getCowVariant());
             return Pair.of(otherParent.getCowVariant(), Optional.ofNullable(otherParent.getPreviousCowVariant()));
         }
 
         if (getLoveCause() != null)
-            BreedCowWithTypeTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>) getCowVariant());
+            BreedCowWithVariantTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, false, (Holder<CowVariant<?>>)(Holder<?>) getCowVariant());
         return Pair.of(getCowVariant(), Optional.ofNullable(getPreviousCowVariant()));
     }
 

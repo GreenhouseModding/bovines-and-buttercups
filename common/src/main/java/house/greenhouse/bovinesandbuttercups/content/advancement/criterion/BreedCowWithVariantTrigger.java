@@ -20,11 +20,11 @@ import net.minecraft.world.level.storage.loot.LootContext;
 
 import java.util.Optional;
 
-public class BreedCowWithTypeTrigger extends SimpleCriterionTrigger<BreedCowWithTypeTrigger.TriggerInstance> {
-    public static final BreedCowWithTypeTrigger INSTANCE = new BreedCowWithTypeTrigger();
-    public static final ResourceLocation ID = BovinesAndButtercups.asResource("breed_cow_with_type");
+public class BreedCowWithVariantTrigger extends SimpleCriterionTrigger<BreedCowWithVariantTrigger.TriggerInstance> {
+    public static final BreedCowWithVariantTrigger INSTANCE = new BreedCowWithVariantTrigger();
+    public static final ResourceLocation ID = BovinesAndButtercups.asResource("breed_cow_with_variant");
     public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(BreedCowWithTypeTrigger.TriggerInstance::player),
+            ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(BreedCowWithVariantTrigger.TriggerInstance::player),
             CowType.CODEC.optionalFieldOf("type").forGetter(TriggerInstance::type),
             RegistryCodecs.homogeneousList(BovinesRegistryKeys.COW_VARIANT).optionalFieldOf("variants", HolderSet.direct()).forGetter(TriggerInstance::variants),
             ContextAwarePredicate.CODEC.optionalFieldOf("parent").forGetter(TriggerInstance::parent),
@@ -33,7 +33,7 @@ public class BreedCowWithTypeTrigger extends SimpleCriterionTrigger<BreedCowWith
             Codec.BOOL.optionalFieldOf("different_from_parents").forGetter(TriggerInstance::differentFromParents)
     ).apply(inst, TriggerInstance::new));
 
-    private BreedCowWithTypeTrigger() {}
+    private BreedCowWithVariantTrigger() {}
 
     public void trigger(ServerPlayer serverPlayer, Animal parent, Animal partner, AgeableMob child, boolean differentFromParents, Holder<CowVariant<?>> type) {
         LootContext parentContext = EntityPredicate.createContext(serverPlayer, parent);
