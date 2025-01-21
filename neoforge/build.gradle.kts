@@ -110,10 +110,10 @@ publishMods {
         clientRequired = true
         serverRequired = true
 
-        optional("jei")
-        optional("emi")
-        optional("accessories")
-        optional("curios-continuation")
+//        optional("jei")
+//        optional("emi")
+//        optional("accessories")
+//        optional("curios-continuation")
     }
 
     modrinth {
@@ -122,10 +122,10 @@ publishMods {
 
         minecraftVersions.add(Versions.MINECRAFT)
 
-        optional("jei")
-        optional("emi")
-        optional("accessories")
-        optional("curios-continuation")
+//        optional("jei")
+//        optional("emi")
+//        optional("accessories")
+//        optional("curios-continuation")
     }
 
     github {

@@ -124,11 +124,11 @@ publishMods {
         serverRequired = true
 
         requires("fabric-api")
-        optional("jei")
-        optional("emi")
-        optional("accessories")
-        optional("trinkets")
-        optional("loading-screen-tips")
+//        optional("jei")
+//        optional("emi")
+//        optional("accessories")
+//        optional("trinkets")
+//        optional("loading-screen-tips")
     }
 
     modrinth {
@@ -138,11 +138,11 @@ publishMods {
         minecraftVersions.add(Versions.MINECRAFT)
 
         requires("fabric-api")
-        optional("jei")
-        optional("emi")
-        optional("accessories")
-        optional("trinkets")
-        optional("loadingscreentips")
+//        optional("jei")
+//        optional("emi")
+//        optional("accessories")
+//        optional("trinkets")
+//        optional("loadingscreentips")
     }
 
     github {
