@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ public class EntityDataAccessorMixin {
     private void bovinesandbuttercups$setData(CompoundTag other, CallbackInfo ci) {
         if (this.entity instanceof LivingEntity living) {
             if (BovinesAndButtercups.getHelper().getCowVariantAttachment(living) != null)
-                CowTypeAttachment.sync(living);
+                CowVariantAttachment.sync(living);
             if (BovinesAndButtercups.getHelper().getLockdownAttachment(living) != null)
                 LockdownAttachment.sync(living);
             if (BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment(living))

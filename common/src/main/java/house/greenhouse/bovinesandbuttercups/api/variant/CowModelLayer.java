@@ -1,8 +1,8 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype;
+package house.greenhouse.bovinesandbuttercups.api.variant;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 

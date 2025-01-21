@@ -1,6 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.modifier;
 
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifier;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifier;
 import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;

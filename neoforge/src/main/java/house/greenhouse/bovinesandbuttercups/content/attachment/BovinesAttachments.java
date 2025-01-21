@@ -3,7 +3,7 @@ package house.greenhouse.bovinesandbuttercups.content.attachment;
 import com.mojang.serialization.Codec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
@@ -25,9 +25,9 @@ public class BovinesAttachments {
             .serialize(LockdownAttachment.CODEC)
             .build();
 
-    public static final AttachmentType<CowTypeAttachment> COW_VARIANT = AttachmentType
-            .builder(() -> new CowTypeAttachment(Holder.direct(null), Optional.empty()))
-            .serialize(CowTypeAttachment.CODEC)
+    public static final AttachmentType<CowVariantAttachment> COW_VARIANT = AttachmentType
+            .builder(() -> new CowVariantAttachment(Holder.direct(null), Optional.empty()))
+            .serialize(CowVariantAttachment.CODEC)
             .build();
 
     public static final AttachmentType<MooshroomExtrasAttachment> MOOSHROOM_EXTRAS = AttachmentType
@@ -48,7 +48,7 @@ public class BovinesAttachments {
             .build();
 
     public static void registerAll(RegistrationCallback<AttachmentType<?>> callback) {
-        callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, CowTypeAttachment.ID, COW_VARIANT);
+        callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, CowVariantAttachment.ID, COW_VARIANT);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, LockdownAttachment.ID, LOCKDOWN);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES,MooshroomExtrasAttachment.ID,MOOSHROOM_EXTRAS);
         callback.register(NeoForgeRegistries.ATTACHMENT_TYPES, BovinesAndButtercups.asResource("produces_rich_honey"), PRODUCES_RICH_HONEY);

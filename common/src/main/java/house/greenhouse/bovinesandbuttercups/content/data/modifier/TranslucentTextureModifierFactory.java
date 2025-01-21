@@ -3,7 +3,7 @@ package house.greenhouse.bovinesandbuttercups.content.data.modifier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.TranslucentTextureModifier;
 
 public class TranslucentTextureModifierFactory extends TextureModifierFactory<TranslucentTextureModifier> {

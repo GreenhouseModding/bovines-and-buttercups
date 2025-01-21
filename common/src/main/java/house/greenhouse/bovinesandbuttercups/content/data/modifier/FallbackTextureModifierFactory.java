@@ -2,11 +2,9 @@ package house.greenhouse.bovinesandbuttercups.content.data.modifier;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.NoOpTextureModifier;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.FallbackTextureModifier;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 
 import java.util.List;
 

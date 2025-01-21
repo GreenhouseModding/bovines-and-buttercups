@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.advancements.critereon.EntitySubPredicate;
 import net.minecraft.core.Holder;
@@ -38,7 +38,7 @@ public record CowSubPredicate(Optional<Holder<CowVariant<?>>> type, Optional<Boo
             return false;
 
         if (type.isPresent()) {
-            CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+            CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (attachment == null)
                 return false;
             if (attachment.cowVariant().isBound() && attachment.cowVariant().value().type().isApplicable(entity) && attachment.cowVariant().is(type.get()))
@@ -46,7 +46,7 @@ public record CowSubPredicate(Optional<Holder<CowVariant<?>>> type, Optional<Boo
         }
 
         if (hasSnow.isPresent()) {
-            CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+            CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (attachment == null)
                 return false;
             if (attachment.cowVariant().isBound() && !attachment.cowVariant().value().configuration().hasSnow(entity))

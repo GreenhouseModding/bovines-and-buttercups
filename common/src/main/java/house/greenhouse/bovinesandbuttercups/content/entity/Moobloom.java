@@ -4,8 +4,8 @@ import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithTypeTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
@@ -187,11 +187,11 @@ public class Moobloom extends Cow {
                     BovinesAndButtercups.LOG.error("Previous Cow Variant \"{}\" is not bound or is not a moobloom.", cowVariant);
                     return;
                 }
-                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, new CowTypeAttachment(cowVariant.get(), previousCowType.map(cowVariantReference -> cowVariantReference)));
-                CowTypeAttachment.sync(this);
+                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, new CowVariantAttachment(cowVariant.get(), previousCowType.map(cowVariantReference -> cowVariantReference)));
+                CowVariantAttachment.sync(this);
             } else {
                 setCowVariant((Holder) cowVariant.get());
-                CowTypeAttachment.sync(this);
+                CowVariantAttachment.sync(this);
             }
         }
         if (tag.contains("PollinatedResetTicks", Tag.TAG_INT))
@@ -225,21 +225,21 @@ public class Moobloom extends Cow {
                     return;
                 } else if (compatibleList.size() == 1) {
                     setCurrentWithPreviousCowType(compatibleList.getFirst().data());
-                    CowTypeAttachment.sync(this);
+                    CowVariantAttachment.sync(this);
                 } else {
                     int totalWeight = level.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
                     for (WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>> cct : compatibleList) {
                         totalWeight -= cct.weight().asInt();
                         if (totalWeight < 0) {
                             setCurrentWithPreviousCowType(cct.data());
-                            CowTypeAttachment.sync(this);
+                            CowVariantAttachment.sync(this);
                             break;
                         }
                     }
                 }
             } else {
                 setCowVariant(getPreviousCowVariant());
-                CowTypeAttachment.sync(this);
+                CowVariantAttachment.sync(this);
             }
             lastLightningBoltUUID = uuid;
             playSound(BovinesSoundEvents.MOOBLOOM_CONVERT, 2.0F, 1.0F);
@@ -527,29 +527,29 @@ public class Moobloom extends Cow {
     public Moobloom getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         Moobloom moobloom = BovinesEntityTypes.MOOBLOOM.create(level, EntitySpawnReason.BREEDING);
         var pair = chooseBabyType(level, (Moobloom)otherParent, moobloom);
-        CowTypeAttachment.setCowVariant(moobloom, pair.getFirst(), pair.getSecond());
+        CowVariantAttachment.setCowVariant(moobloom, pair.getFirst(), pair.getSecond());
         return moobloom;
     }
 
     public Holder<CowVariant<MoobloomConfiguration>> getCowVariant() {
-        return Optional.ofNullable(CowTypeAttachment.getCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM));
+        return Optional.ofNullable(CowVariantAttachment.getCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM));
     }
 
     @Nullable
     public Holder<CowVariant<MoobloomConfiguration>> getPreviousCowVariant() {
-        return CowTypeAttachment.getPreviousCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE);
+        return CowVariantAttachment.getPreviousCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE);
     }
 
     public void setCowVariant(Holder<CowVariant<MoobloomConfiguration>> value) {
-        CowTypeAttachment.setCowVariant(this, value);
+        CowVariantAttachment.setCowVariant(this, value);
     }
 
     public void setCowVariant(Holder<CowVariant<MoobloomConfiguration>> value, Holder<CowVariant<MoobloomConfiguration>> previous) {
-        CowTypeAttachment.setCowVariant(this, value, previous);
+        CowVariantAttachment.setCowVariant(this, value, previous);
     }
 
     public void setCurrentWithPreviousCowType(Holder<CowVariant<MoobloomConfiguration>> value) {
-        CowTypeAttachment.setCowVariant(this, value, getCowVariant());
+        CowVariantAttachment.setCowVariant(this, value, getCowVariant());
     }
 
     public int getFlowerSpreadAttempts() {
@@ -631,7 +631,7 @@ public class Moobloom extends Cow {
             }
             setCowVariant(((MoobloomGroupData)data).getSpawnType(blockPosition(), level, level.getRandom()));
         }
-        CowTypeAttachment.sync(this);
+        CowVariantAttachment.sync(this);
         return super.finalizeSpawn(level, difficulty, spawnType, data);
     }
 

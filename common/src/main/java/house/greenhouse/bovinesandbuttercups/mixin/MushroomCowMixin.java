@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
@@ -49,12 +49,12 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
         var pair = MooshroomChildTypeUtil.chooseMooshroomBabyType((MushroomCow)(Object)this, (MushroomCow)ageableMob, baby, ((Animal)(Object)this).getLoveCause());
         if (pair == null)
             return;
-        CowTypeAttachment.setCowVariant(baby, pair.getFirst(), pair.getSecond());
+        CowVariantAttachment.setCowVariant(baby, pair.getFirst(), pair.getSecond());
     }
 
     @ModifyExpressionValue(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;getVariant()Lnet/minecraft/world/entity/animal/MushroomCow$Variant;"))
     private MushroomCow.Variant bovinesandbuttercups$allowMooshroomToEatFlowers(MushroomCow.Variant original) {
-        @Nullable CowVariant<MooshroomConfiguration> cowVariant = CowTypeAttachment.getCowVariantFromEntity((MushroomCow)(Object)this, BovinesCowTypes.MOOSHROOM_TYPE);
+        @Nullable CowVariant<MooshroomConfiguration> cowVariant = CowVariantAttachment.getCowVariantFromEntity((MushroomCow)(Object)this, BovinesCowTypes.MOOSHROOM_TYPE);
         if (cowVariant != null) {
             if (cowVariant.configuration().canEatFlowers().isPresent() && cowVariant.configuration().canEatFlowers().get() && original == MushroomCow.Variant.RED)
                 return MushroomCow.Variant.BROWN;

@@ -5,7 +5,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.ConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;

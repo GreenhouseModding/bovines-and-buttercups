@@ -6,7 +6,7 @@ import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
@@ -22,9 +22,9 @@ public class BovinesAttachments {
             .persistent(LockdownAttachment.CODEC)
             .initializer(() -> new LockdownAttachment(new HashMap<>()))
             .buildAndRegister(LockdownAttachment.ID);
-    public static final AttachmentType<CowTypeAttachment> COW_VARIANT = AttachmentRegistry.<CowTypeAttachment>builder()
-            .persistent(CowTypeAttachment.CODEC)
-            .buildAndRegister(CowTypeAttachment.ID);
+    public static final AttachmentType<CowVariantAttachment> COW_VARIANT = AttachmentRegistry.<CowVariantAttachment>builder()
+            .persistent(CowVariantAttachment.CODEC)
+            .buildAndRegister(CowVariantAttachment.ID);
 
     public static final AttachmentType<MooshroomExtrasAttachment> MOOSHROOM_EXTRAS = AttachmentRegistry.<MooshroomExtrasAttachment>builder()
             .persistent(MooshroomExtrasAttachment.CODEC)

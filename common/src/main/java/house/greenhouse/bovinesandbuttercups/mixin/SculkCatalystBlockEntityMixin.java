@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.ConvertMoobloomFromSculkTrigger;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
@@ -32,14 +32,14 @@ public class SculkCatalystBlockEntityMixin {
 
                 if (compatibleList.size() == 1) {
                     moobloom.setCurrentWithPreviousCowType(compatibleList.getFirst().data());
-                    CowTypeAttachment.sync(moobloom);
+                    CowVariantAttachment.sync(moobloom);
                 } else {
                     int totalWeight = moobloom.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
                     for (var cct : compatibleList) {
                         totalWeight -= cct.weight().asInt();
                         if (totalWeight < 0) {
                             moobloom.setCurrentWithPreviousCowType(cct.data());
-                            CowTypeAttachment.sync(moobloom);
+                            CowVariantAttachment.sync(moobloom);
                             break;
                         }
                     }

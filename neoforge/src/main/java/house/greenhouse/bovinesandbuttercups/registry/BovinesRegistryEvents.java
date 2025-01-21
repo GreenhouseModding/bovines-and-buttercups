@@ -5,7 +5,7 @@ import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BovinesCriteriaTriggers;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;

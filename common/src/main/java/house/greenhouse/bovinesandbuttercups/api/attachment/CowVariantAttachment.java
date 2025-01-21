@@ -21,13 +21,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.function.Function;
 
-public record CowTypeAttachment(Holder<CowVariant<?>> cowVariant, Optional<Holder<CowVariant<?>>> previousCowVariant) {
+public record CowVariantAttachment(Holder<CowVariant<?>> cowVariant, Optional<Holder<CowVariant<?>>> previousCowVariant) {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("cow_variant");
-    public static final Codec<CowTypeAttachment> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            CowVariant.CODEC.fieldOf("current").forGetter(CowTypeAttachment::cowVariant),
-            CowVariant.CODEC.optionalFieldOf("previous").forGetter(CowTypeAttachment::previousCowVariant)
-    ).apply(inst, CowTypeAttachment::new));
-    public static final Codec<CowTypeAttachment> CODEC = Codec.either(CowVariant.CODEC, DIRECT_CODEC).flatComapMap(either -> either.map(current -> new CowTypeAttachment(current, Optional.empty()), Function.identity()), attachment -> {
+    public static final Codec<CowVariantAttachment> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            CowVariant.CODEC.fieldOf("current").forGetter(CowVariantAttachment::cowVariant),
+            CowVariant.CODEC.optionalFieldOf("previous").forGetter(CowVariantAttachment::previousCowVariant)
+    ).apply(inst, CowVariantAttachment::new));
+    public static final Codec<CowVariantAttachment> CODEC = Codec.either(CowVariant.CODEC, DIRECT_CODEC).flatComapMap(either -> either.map(current -> new CowVariantAttachment(current, Optional.empty()), Function.identity()), attachment -> {
         if (attachment.previousCowVariant().isEmpty())
             return DataResult.success(Either.left(attachment.cowVariant()));
         return DataResult.success(Either.right(attachment));
@@ -43,7 +43,7 @@ public record CowTypeAttachment(Holder<CowVariant<?>> cowVariant, Optional<Holde
 
     @Nullable
     public static <C extends CowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getCowVariantHolderFromEntity(LivingEntity living, T cowVariant) {
-        CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+        CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
         if (attachment != null && attachment.cowVariant.isBound() && attachment.cowVariant.value().type() == cowVariant) {
             return (Holder)attachment.cowVariant;
         }
@@ -60,7 +60,7 @@ public record CowTypeAttachment(Holder<CowVariant<?>> cowVariant, Optional<Holde
 
     @Nullable
     public static <C extends CowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getPreviousCowVariantHolderFromEntity(LivingEntity living, T cowVariant) {
-        CowTypeAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+        CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
         if (attachment != null && attachment.previousCowVariant.isPresent() && attachment.previousCowVariant.get().isBound() && attachment.previousCowVariant.get().value().type() == cowVariant) {
             return (Holder)attachment.previousCowVariant.get();
         }
@@ -79,7 +79,7 @@ public record CowTypeAttachment(Holder<CowVariant<?>> cowVariant, Optional<Holde
         if (cowVariant.isBound() && cowVariant.value().type().isApplicable(entity)) {
             var previousAttachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
             Optional<Holder<CowVariant<?>>> previousVariant = previousAttachment != null && previousAttachment.previousCowVariant().isPresent() ? BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).previousCowVariant() : previousCowVariant.map(holder -> (Holder)holder);
-            BovinesAndButtercups.getHelper().setCowVariantAttachment(entity, new CowTypeAttachment((Holder) cowVariant, previousVariant));
+            BovinesAndButtercups.getHelper().setCowVariantAttachment(entity, new CowVariantAttachment((Holder) cowVariant, previousVariant));
             if (entity.getType() == EntityType.MOOSHROOM && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent())
                 ((MushroomCow)entity).setVariant(mc.vanillaType().get());
         }

@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.content.data.modifier;
 
 import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 

@@ -2,9 +2,9 @@ package house.greenhouse.bovinesandbuttercups.api;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.ConditionedTextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.EmissiveTextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.FallbackTextureModifierFactory;

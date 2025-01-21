@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.loader.api.FabricLoader;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import net.minecraft.core.Holder;
@@ -24,8 +24,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -74,12 +72,12 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public CowTypeAttachment getCowVariantAttachment(LivingEntity entity) {
+    public CowVariantAttachment getCowVariantAttachment(LivingEntity entity) {
         return entity.getAttached(BovinesAttachments.COW_VARIANT);
     }
 
     @Override
-    public void setCowVariantAttachment(LivingEntity entity, CowTypeAttachment attachment) {
+    public void setCowVariantAttachment(LivingEntity entity, CowVariantAttachment attachment) {
         entity.setAttached(BovinesAttachments.COW_VARIANT, attachment);
     }
 

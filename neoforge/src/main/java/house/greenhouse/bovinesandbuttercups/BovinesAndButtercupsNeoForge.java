@@ -3,11 +3,11 @@ package house.greenhouse.bovinesandbuttercups;
 import house.greenhouse.bovinesandbuttercups.access.BeeGoalAccess;
 import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.PreventEffectTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
@@ -112,7 +112,7 @@ public class BovinesAndButtercupsNeoForge {
                 if (living.hasData(BovinesAttachments.LOCKDOWN))
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (living.hasData(BovinesAttachments.COW_VARIANT)) {
-                    CowTypeAttachment attachment = living.getData(BovinesAttachments.COW_VARIANT);
+                    CowVariantAttachment attachment = living.getData(BovinesAttachments.COW_VARIANT);
                     for (CowModelLayer layer : attachment.cowVariant().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
@@ -137,17 +137,17 @@ public class BovinesAndButtercupsNeoForge {
             if (level.isClientSide)
                 return;
 
-            Optional<CowTypeAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_VARIANT);
+            Optional<CowVariantAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_VARIANT);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment.isEmpty()) {
                     if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
                     } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
                     }
-                    CowTypeAttachment.sync((MushroomCow)entity);
+                    CowVariantAttachment.sync((MushroomCow)entity);
                 }
                 ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
             }
@@ -163,7 +163,7 @@ public class BovinesAndButtercupsNeoForge {
                 var pair = MooshroomChildTypeUtil.chooseMooshroomBabyType(parentACow, parentBCow, childCow, event.getCausedByPlayer());
                 if (pair == null)
                     return;
-                CowTypeAttachment.setCowVariant(child, pair.getFirst(), pair.getSecond());
+                CowVariantAttachment.setCowVariant(child, pair.getFirst(), pair.getSecond());
             }
         }
 
@@ -284,7 +284,7 @@ public class BovinesAndButtercupsNeoForge {
         public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
             Entity entity = event.getEntity();
             if (entity instanceof LivingEntity living && !(entity instanceof Moobloom) && entity.hasData(BovinesAttachments.COW_VARIANT)) {
-                CowTypeAttachment attachment = entity.getData(BovinesAttachments.COW_VARIANT);
+                CowVariantAttachment attachment = entity.getData(BovinesAttachments.COW_VARIANT);
                 if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
                     return;
                 if (attachment.previousCowVariant().isEmpty()) {
@@ -295,23 +295,23 @@ public class BovinesAndButtercupsNeoForge {
                     int totalWeight = 0;
 
                     if (compatibleList.size() == 1) {
-                        CowTypeAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
-                        CowTypeAttachment.sync(living);
+                        CowVariantAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
+                        CowVariantAttachment.sync(living);
                         BovinesAndButtercups.convertedByBovines = true;
                     } else if (!compatibleList.isEmpty()) {
                         for (var cct : compatibleList) {
                             totalWeight -= cct.weight().asInt();
                             if (totalWeight <= 0) {
-                                CowTypeAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
-                                CowTypeAttachment.sync(living);
+                                CowVariantAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
+                                CowVariantAttachment.sync(living);
                                 BovinesAndButtercups.convertedByBovines = true;
                                 break;
                             }
                         }
                     }
                 } else {
-                    CowTypeAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
-                    CowTypeAttachment.sync(living);
+                    CowVariantAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
+                    CowVariantAttachment.sync(living);
                     BovinesAndButtercups.convertedByBovines = true;
                 }
             }

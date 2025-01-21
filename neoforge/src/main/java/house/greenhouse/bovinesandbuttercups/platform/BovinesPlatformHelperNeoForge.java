@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
@@ -10,7 +10,6 @@ import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomNeoForge;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
-import house.greenhouse.bovinesandbuttercups.util.PottedBlockMapUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -78,12 +76,12 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     }
 
     @Override
-    public CowTypeAttachment getCowVariantAttachment(LivingEntity entity) {
+    public CowVariantAttachment getCowVariantAttachment(LivingEntity entity) {
         return entity.getExistingData(BovinesAttachments.COW_VARIANT).orElse(null);
     }
 
     @Override
-    public void setCowVariantAttachment(LivingEntity entity, CowTypeAttachment attachment) {
+    public void setCowVariantAttachment(LivingEntity entity, CowVariantAttachment attachment) {
         entity.setData(BovinesAttachments.COW_VARIANT, attachment);
     }
 

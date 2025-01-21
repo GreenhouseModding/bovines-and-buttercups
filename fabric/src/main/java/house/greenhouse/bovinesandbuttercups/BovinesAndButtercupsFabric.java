@@ -1,9 +1,9 @@
 package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
@@ -26,7 +26,7 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
@@ -94,7 +94,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                 if (entity.hasAttached(BovinesAttachments.LOCKDOWN))
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (entity.hasAttached(BovinesAttachments.COW_VARIANT)) {
-                    CowTypeAttachment attachment = living.getAttached(BovinesAttachments.COW_VARIANT);
+                    CowVariantAttachment attachment = living.getAttached(BovinesAttachments.COW_VARIANT);
                     for (CowModelLayer layer : attachment.cowVariant().value().configuration().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
@@ -105,17 +105,17 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
-            CowTypeAttachment attachment = entity.getAttached(BovinesAttachments.COW_VARIANT);
+            CowVariantAttachment attachment = entity.getAttached(BovinesAttachments.COW_VARIANT);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment == null) {
                     if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
                     } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
-                        CowTypeAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
                     }
-                    CowTypeAttachment.sync((MushroomCow)entity);
+                    CowVariantAttachment.sync((MushroomCow)entity);
                 }
                 ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
             }

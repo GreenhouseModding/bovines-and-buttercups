@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.network.clientbound;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.ConditionedTextureModifierFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -31,7 +31,7 @@ public record SyncConditionedTextureModifier(int entityId, ResourceLocation cond
             Entity entity = Minecraft.getInstance().level.getEntity(entityId);
             if (!(entity instanceof LivingEntity living))
                 return;
-            CowTypeAttachment cowVariant = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
+            CowVariantAttachment cowVariant = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (cowVariant == null || !cowVariant.cowVariant().isBound())
                 return;
             cowVariant.cowVariant().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream()).filter(textureModifierFactory -> {

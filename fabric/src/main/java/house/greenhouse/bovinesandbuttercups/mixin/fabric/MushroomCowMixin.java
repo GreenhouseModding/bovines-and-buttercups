@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
 import house.greenhouse.bovinesandbuttercups.mixin.CowSuperMixin;
@@ -51,7 +51,7 @@ public abstract class MushroomCowMixin extends CowSuperMixin {
     @Inject(method = "thunderHit", at = @At(value = "HEAD"), cancellable = true)
     private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
         boolean bl = BovinesAndButtercups.convertedByBovines;
-        if (!bl && CowTypeAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowTypeAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
+        if (!bl && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
             bovinesandbuttercups$thunderHit(level, lightning);
             ci.cancel();
         }

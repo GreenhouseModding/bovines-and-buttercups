@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,9 +47,9 @@ public interface BovinesPlatformHelper {
 
     LockdownAttachment getLockdownAttachment(LivingEntity entity);
 
-    CowTypeAttachment getCowVariantAttachment(LivingEntity entity);
+    CowVariantAttachment getCowVariantAttachment(LivingEntity entity);
 
-    void setCowVariantAttachment(LivingEntity entity, CowTypeAttachment attachment);
+    void setCowVariantAttachment(LivingEntity entity, CowVariantAttachment attachment);
 
     boolean hasMooshroomExtrasAttachment(LivingEntity entity);
 

@@ -4,9 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.access.MushroomCowRenderStateLayerBakerAccess;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import house.greenhouse.bovinesandbuttercups.client.api.RenderStateObject;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
@@ -43,13 +43,13 @@ public class MushroomCowRenderStateMixin implements CowVariantRenderState<Mushro
 
     @Override
     public void extractDefaultRenderStates(MushroomCow mushroomCow) {
-        bovinesandbuttercups$cowVariant = CowTypeAttachment.getCowVariantHolderFromEntity(mushroomCow, BovinesCowTypes.MOOSHROOM_TYPE);
+        bovinesandbuttercups$cowVariant = CowVariantAttachment.getCowVariantHolderFromEntity(mushroomCow, BovinesCowTypes.MOOSHROOM_TYPE);
         RenderStateObject.setupGlobalObjects(bovinesandbuttercups$renderStateObject, mushroomCow);
     }
 
     @Override
     public void extractModel(LivingEntityRenderer<MushroomCow, ?, CowModel> renderer, MushroomCow entity) {
-        bovinesandbuttercups$cowVariant = CowTypeAttachment.getCowVariantHolderFromEntity(entity, BovinesCowTypes.MOOSHROOM_TYPE);
+        bovinesandbuttercups$cowVariant = CowVariantAttachment.getCowVariantHolderFromEntity(entity, BovinesCowTypes.MOOSHROOM_TYPE);
         if (renderer instanceof AgeableMobRendererAccessor accessor && bovinesandbuttercups$cowVariant != null) {
             CowModelType cowModel = bovinesandbuttercups$cowVariant.value().configuration().model();
             if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowVariant.value().configuration().model())) {

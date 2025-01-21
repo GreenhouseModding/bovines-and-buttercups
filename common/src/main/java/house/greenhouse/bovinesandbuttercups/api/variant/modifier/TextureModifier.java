@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype.modifier;
+package house.greenhouse.bovinesandbuttercups.api.variant.modifier;
 
 import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import net.minecraft.client.renderer.RenderType;

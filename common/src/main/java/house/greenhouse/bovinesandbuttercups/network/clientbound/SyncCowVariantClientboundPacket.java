@@ -2,9 +2,9 @@ package house.greenhouse.bovinesandbuttercups.network.clientbound;
 
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowTypeAttachment;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -19,19 +19,19 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Map;
 
-public record SyncCowVariantClientboundPacket(int entityId, CowTypeAttachment attachment, boolean onTracking) implements CustomPacketPayload {
+public record SyncCowVariantClientboundPacket(int entityId, CowVariantAttachment attachment, boolean onTracking) implements CustomPacketPayload {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("sync_cow_variant");
     public static final Type<SyncCowVariantClientboundPacket> TYPE = new Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncCowVariantClientboundPacket> STREAM_CODEC = StreamCodec.of(SyncCowVariantClientboundPacket::write, SyncCowVariantClientboundPacket::new);
 
 
     public SyncCowVariantClientboundPacket(RegistryFriendlyByteBuf buf) {
-        this(buf.readInt(), CowTypeAttachment.DIRECT_CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), buf.readNbt()).getOrThrow().getFirst(), buf.readBoolean());
+        this(buf.readInt(), CowVariantAttachment.DIRECT_CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), buf.readNbt()).getOrThrow().getFirst(), buf.readBoolean());
     }
 
     public static void write(RegistryFriendlyByteBuf buf, SyncCowVariantClientboundPacket packet) {
         buf.writeInt(packet.entityId);
-        buf.writeNbt(CowTypeAttachment.DIRECT_CODEC.encodeStart(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), packet.attachment).getOrThrow());
+        buf.writeNbt(CowVariantAttachment.DIRECT_CODEC.encodeStart(RegistryOps.create(NbtOps.INSTANCE, buf.registryAccess()), packet.attachment).getOrThrow());
         buf.writeBoolean(packet.onTracking);
     }
 
@@ -50,13 +50,13 @@ public record SyncCowVariantClientboundPacket(int entityId, CowTypeAttachment at
         });
     }
 
-    private static final Object2IntArrayMap<Pair<Integer, CowTypeAttachment>> RETRIES = new Object2IntArrayMap<>();
+    private static final Object2IntArrayMap<Pair<Integer, CowVariantAttachment>> RETRIES = new Object2IntArrayMap<>();
 
     public static void retry(ClientLevel level) {
         if (RETRIES.isEmpty() || level.getLevelData().getGameTime() % 5 != 0)
             return;
 
-        for (Map.Entry<Pair<Integer, CowTypeAttachment>, Integer> pair : RETRIES.object2IntEntrySet()) {
+        for (Map.Entry<Pair<Integer, CowVariantAttachment>, Integer> pair : RETRIES.object2IntEntrySet()) {
             Entity entity = Minecraft.getInstance().level.getEntity(pair.getKey().getFirst());
             if (!(entity instanceof LivingEntity living)) {
                 RETRIES.put(pair.getKey(), pair.getValue() + 1);
