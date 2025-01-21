@@ -17,12 +17,12 @@ object Versions {
     const val FABRIC_LOADER = "0.16.9"
     const val MOD_MENU = "11.0.3"
     const val FABRIC_LOADER_RANGE = ">=0.16"
-    const val FABRIC_MINECRAFT_RANGE = ">=1.21-"
+    const val FABRIC_MINECRAFT_RANGE = ">=1.21 <=1.21.1"
 
     // NeoForge
     const val NEOFORGE = "21.1.73"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
-    const val NEOFORGE_MINECRAFT_RANGE = "[1.21,)"
+    const val NEOFORGE_MINECRAFT_RANGE = "[1.21,1.21.2)"
 
     // Misc
     const val FABRIC_MIXIN = "0.15.3+mixin.0.8.7"
