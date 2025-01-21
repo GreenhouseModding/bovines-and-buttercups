@@ -18,6 +18,7 @@ public class BovinesTags {
     public static class BiomeTags {
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BIRD_OF_PARADISE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/bird_of_paradise"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BUTTERCUP  = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/buttercup"));
+        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CAMELLIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/camellia"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CHARGELILY = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/chargelily"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_FREESIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/freesia"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_HYACINTH = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/hyacinth"));

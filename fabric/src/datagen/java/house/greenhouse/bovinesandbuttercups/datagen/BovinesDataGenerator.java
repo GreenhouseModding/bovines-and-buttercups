@@ -535,6 +535,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .forceAddTag(ConventionalBiomeTags.IS_SAVANNA);
             ((FabricTagBuilder)tag(BovinesTags.BiomeTags.HAS_RANCH_STRUCTURE_BUTTERCUP))
                     .forceAddTag(ConventionalBiomeTags.IS_FLOWER_FOREST);
+            ((FabricTagBuilder)tag(BovinesTags.BiomeTags.HAS_RANCH_STRUCTURE_CAMELLIA))
+                    .add(Biomes.CHERRY_GROVE);
             ((FabricTagBuilder)tag(BovinesTags.BiomeTags.HAS_RANCH_STRUCTURE_CHARGELILY))
                     .add(Biomes.STONY_PEAKS);
             ((FabricTagBuilder)tag(BovinesTags.BiomeTags.HAS_RANCH_STRUCTURE_FREESIA))
