@@ -59,9 +59,6 @@ public record SyncLockdownEffectsClientboundPacket(int entityId, LockdownAttachm
                 continue;
             }
             BovinesAndButtercups.getHelper().getLockdownAttachment(living).setLockdownMobEffects(pair.getKey().getSecond().effects());
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
-                for (TextureModifierFactory<?> modifier : layer.textureModifiers())
-                    modifier.init(living);
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());
         }
         RETRIES.values().removeIf(integer -> {

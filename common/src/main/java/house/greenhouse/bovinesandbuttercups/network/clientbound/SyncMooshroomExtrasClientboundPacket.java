@@ -61,9 +61,6 @@ public record SyncMooshroomExtrasClientboundPacket(int entityId, MooshroomExtras
                 continue;
             }
             BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(living, pair.getKey().getSecond());
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
-                for (TextureModifierFactory<?> modifier : layer.textureModifiers())
-                    modifier.init(living);
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());
         }
         RETRIES.values().removeIf(integer -> {
