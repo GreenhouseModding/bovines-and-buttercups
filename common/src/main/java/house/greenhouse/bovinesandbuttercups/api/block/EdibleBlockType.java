@@ -14,14 +14,13 @@ import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibl
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
 import house.greenhouse.bovinesandbuttercups.content.data.nectar.NectarEffects;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import house.greenhouse.bovinesandbuttercups.util.CreativeModeTabEntry;
 import house.greenhouse.bovinesandbuttercups.util.FloatRange;
 import house.greenhouse.bovinesandbuttercups.util.IntRange;
 import house.greenhouse.bovinesandbuttercups.util.LockdownData;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.advancements.critereon.FluidPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
@@ -86,9 +85,9 @@ public record EdibleBlockType(
     public static final Codec<EdibleBlockType> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.intRange(1, 16).fieldOf("bites").forGetter(EdibleBlockType::bites),
             Codec.intRange(1, 99).fieldOf("stack_size").forGetter(EdibleBlockType::maxStackSize),
-            SHAPE_CODEC.listOf().fieldOf("shapes").xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).forGetter(EdibleBlockType::shapes),
+            SHAPE_CODEC.listOf().fieldOf("shapes").xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (object, object2) -> object, () -> (Map<BlockValuesEntry, VoxelShape>) new Object2ObjectLinkedOpenHashMap())), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).forGetter(EdibleBlockType::shapes),
             Codec.simpleMap(RegistryCodecs.homogeneousList(Registries.ITEM), AttachmentEntry.CODEC, Keyable.forStrings(() -> Stream.of("items", "values"))).codec().optionalFieldOf("attachments", Map.of()).forGetter(EdibleBlockType::attachable),
-            PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).forGetter(EdibleBlockType::particlePositions),
+            PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (object, object2) -> object, () -> (Map<BlockValuesEntry, List<ParticleEntry>>) new Object2ObjectLinkedOpenHashMap())), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).forGetter(EdibleBlockType::particlePositions),
             CreativeModeTabEntry.CODEC.listOf().optionalFieldOf("creative_mode_tabs", List.of()).forGetter(EdibleBlockType::creativeModeTabs)
     ).apply(inst, EdibleBlockType::new));
 
@@ -125,7 +124,7 @@ public record EdibleBlockType(
     }
 
     private static Map<BlockValuesEntry, VoxelShape> createPuffPastryShapeMap(BootstrapContext<EdibleBlockType> context) {
-        Object2ObjectOpenHashMap<BlockValuesEntry, VoxelShape> map = new Object2ObjectOpenHashMap<>();
+        Map<BlockValuesEntry, VoxelShape> map = new Object2ObjectLinkedOpenHashMap<>();
 
         var oneEntry = BlockValuesEntry.builder();
         oneEntry.exactBiteCount(1);
@@ -147,11 +146,11 @@ public record EdibleBlockType(
         var four = Block.box(3.0, 0.0, 2.5, 13.5, 4.0, 13.3);
         map.put(fourEntry.build(), four);
 
-        return ImmutableMap.copyOf(map);
+        return map;
     }
 
     private static Map<BlockValuesEntry, VoxelShape> createCupcakeShapeMap(BootstrapContext<EdibleBlockType> context) {
-        Object2ObjectOpenHashMap<BlockValuesEntry, VoxelShape> map = new Object2ObjectOpenHashMap<>();
+        Map<BlockValuesEntry, VoxelShape> map = new Object2ObjectLinkedOpenHashMap<>();
 
         HolderSet<Item> candles = context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES);
 
@@ -242,12 +241,12 @@ public record EdibleBlockType(
         map.put(fourThreeCandlesEntry.build(), fourThreeCandles);
         map.put(fourFourCandlesEntry.build(), fourFourCandles);
 
-        return ImmutableMap.copyOf(map);
+        return map;
     }
 
     private static Map<BlockValuesEntry, List<ParticleEntry>> createParticlePositionMap(BootstrapContext<EdibleBlockType> context) {
         Holder.Reference<SoundEvent> candleAmbient = context.lookup(Registries.SOUND_EVENT).getOrThrow(ResourceKey.create(Registries.SOUND_EVENT, SoundEvents.CANDLE_AMBIENT.getLocation()));
-        Object2ObjectOpenHashMap<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectOpenHashMap<>();
+        Map<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectLinkedOpenHashMap<>();
 
         HolderSet<Item> candles = context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES);
 
@@ -366,7 +365,7 @@ public record EdibleBlockType(
         map.put(fourThreeCandlesEntry.build(), fourThreeCandles);
         map.put(fourFourCandlesEntry.build(), fourFourCandles);
 
-        return Map.copyOf(map);
+        return map;
     }
 
     @Override
@@ -384,7 +383,7 @@ public record EdibleBlockType(
     }
 
     private static Map<BlockValuesEntry, List<ParticleEntry>> createEmptyActivationParticles(BootstrapContext<EdibleBlockType> context) {
-        Map<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectOpenHashMap<>();
+        Map<BlockValuesEntry, List<ParticleEntry>> map = new Object2ObjectLinkedOpenHashMap<>();
 
         HolderSet<Item> candles = context.lookup(Registries.ITEM).getOrThrow(ItemTags.CANDLES);
 
@@ -483,7 +482,7 @@ public record EdibleBlockType(
         map.put(fourThreeCandlesEntry.build(), fourThreeCandles);
         map.put(fourFourCandlesEntry.build(), fourFourCandles);
 
-        return ImmutableMap.copyOf(map);
+        return map;
     }
 
     @ApiStatus.Internal
@@ -496,7 +495,7 @@ public record EdibleBlockType(
                 Ingredient.CODEC.fieldOf("ingredient").forGetter(ActivationEntry::ingredient),
                 Codec.BOOL.fieldOf("set_to").forGetter(ActivationEntry::setTo),
                 SoundSettings.CODEC.optionalFieldOf("sound").forGetter(ActivationEntry::sound),
-                PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).collect(Collectors.toList())).forGetter(ActivationEntry::particles),
+                PARTICLE_CODEC.listOf().optionalFieldOf("particles", List.of()).xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (object, object2) -> object, () -> (Map<BlockValuesEntry, List<ParticleEntry>>) new Object2ObjectLinkedOpenHashMap())), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).collect(Collectors.toList())).forGetter(ActivationEntry::particles),
                 LootItemCondition.DIRECT_CODEC.listOf().optionalFieldOf("condition", List.of()).forGetter(ActivationEntry::condition)
         ).apply(inst, ActivationEntry::new));
 
@@ -665,7 +664,7 @@ public record EdibleBlockType(
     public record AttachmentEntry(int maxCount, Map<BlockValuesEntry, Integer> lightLevel, List<ActivationEntry> activations, Optional<SoundSettings> sound) {
         public static final Codec<AttachmentEntry> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 Codec.intRange(1, 16).fieldOf("max_count").forGetter(AttachmentEntry::maxCount),
-                LIGHT_CODEC.listOf().xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).optionalFieldOf("light", Map.of()).forGetter(AttachmentEntry::lightLevel),
+                LIGHT_CODEC.listOf().xmap(pairs -> pairs.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (object, object2) -> object, () -> (Map<BlockValuesEntry, Integer>) new Object2ObjectLinkedOpenHashMap())), map -> map.entrySet().stream().map(entry -> Pair.of(entry.getKey(), entry.getValue())).toList()).optionalFieldOf("light", new Object2ObjectLinkedOpenHashMap<>()).forGetter(AttachmentEntry::lightLevel),
                 ActivationEntry.CODEC.listOf().fieldOf("activations").forGetter(AttachmentEntry::activations),
                 SoundSettings.CODEC.optionalFieldOf("sound").forGetter(AttachmentEntry::sound)
         ).apply(inst, AttachmentEntry::new));

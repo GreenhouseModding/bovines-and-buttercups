@@ -16,3 +16,17 @@
 
 ## Bugfixes
 - Fixed potential ConcurrentModificationException when applying nectar.
+- Fixed certain ranch structures having poorly placed fence gates. This affects:
+  - Lingholm Ranches
+  - Freesia Ranches
+- Fixed NeoForge structure based Mooblooms spawning in as the missing moobloom type.
+
+## Datapacking Changes
+- Renamed `cow_type` directory to `cow_variant`.
+- Renamed `cow_type_type` registry to `cow_type`.
+- There's been a few renames across the board to accommodate these changes.
+  - `bovinesandbuttercups:breed_cow_with_type` advancement trigger -> `bovinesandbuttercups:breed_cow_with_variant`
+    - `cow_type_type` -> `type`
+    - `cow_types` -> `variants`
+  - `bovinesandbuttercups:cow` subpredicate.
+    - `cow_type` -> `variant`
