@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "bovinesandbuttercups:ranch/nightshade",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 24,
+    "separation": 20,
+    "salt": 156892344
+  }
+}

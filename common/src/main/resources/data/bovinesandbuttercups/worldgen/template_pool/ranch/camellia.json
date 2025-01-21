@@ -3,13 +3,13 @@
     {
       "weight": 1,
       "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "bovinesandbuttercups:ranch/moobloom/pink_daisy",
+        "element_type": "minecraft:single_pool_element",
+        "location": "bovinesandbuttercups:ranch/camellia",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "override_liquid_settings": "ignore_waterlogging"
       }
     }
   ],
-  "fallback": "bovinesandbuttercups:ranch/moobloom/pink_daisy"
+  "fallback": "bovinesandbuttercups:ranch/camellia"
 }

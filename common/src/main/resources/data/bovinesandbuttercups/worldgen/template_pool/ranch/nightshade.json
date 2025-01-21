@@ -3,13 +3,13 @@
     {
       "weight": 1,
       "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "bovinesandbuttercups:ranch/moobloom/buttercup",
+        "element_type": "minecraft:single_pool_element",
+        "location": "bovinesandbuttercups:ranch/nightshade",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "override_liquid_settings": "ignore_waterlogging"
       }
     }
   ],
-  "fallback": "bovinesandbuttercups:ranch/moobloom/buttercup"
+  "fallback": "bovinesandbuttercups:ranch/nightshade"
 }

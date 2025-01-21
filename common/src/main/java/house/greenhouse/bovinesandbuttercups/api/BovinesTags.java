@@ -16,12 +16,14 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 public class BovinesTags {
     public static class BiomeTags {
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BIRD_OF_PARADISE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/bird_of_paradise"));
-        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BUTTERCUP  = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/buttercup"));
+        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BUTTERCUP = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/buttercup"));
+        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CAMELLIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/camellia"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CHARGELILY = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/chargelily"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_FREESIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/freesia"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_HYACINTH = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/hyacinth"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_LIMELIGHT = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/limelight"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_LINGHOLM = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/lingholm"));
+        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_NIGHTSHADE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/nightshade"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_PINK_DAISY = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/pink_daisy"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_SNOWDROP = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/snowdrop"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_TROPICAL_BLUE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/tropical_blue"));
