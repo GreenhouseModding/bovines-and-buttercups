@@ -3,8 +3,8 @@ package house.greenhouse.bovinesandbuttercups.registry;
 import com.mojang.serialization.MapCodec;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import net.minecraft.core.Registry;
 
 public class BovinesRegistries {

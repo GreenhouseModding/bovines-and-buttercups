@@ -1,9 +1,9 @@
 package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifierFactory;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;

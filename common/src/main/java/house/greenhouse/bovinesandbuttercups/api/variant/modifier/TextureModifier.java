@@ -1,8 +1,7 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype.modifier;
+package house.greenhouse.bovinesandbuttercups.api.variant.modifier;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface TextureModifier {

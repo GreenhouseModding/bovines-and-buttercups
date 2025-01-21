@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype.model;
+package house.greenhouse.bovinesandbuttercups.api.variant.model;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;

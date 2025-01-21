@@ -4,14 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
-import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
@@ -29,7 +28,7 @@ public record MooshroomConfiguration(Settings settings,
                                      List<CowModelLayer> layers,
                                      Optional<Boolean> canEatFlowers,
                                      Optional<MushroomCow.MushroomType> vanillaType,
-                                     OffspringConditions offspringConditions) implements CowTypeConfiguration {
+                                     OffspringConditions offspringConditions) implements CowConfiguration {
 
     public MooshroomConfiguration {
         if (canEatFlowers.isEmpty() && vanillaType.isEmpty())

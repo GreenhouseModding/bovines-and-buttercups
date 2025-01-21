@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.function.Function;
 
 // TODO: Document me.
-public class CowType<C extends CowTypeConfiguration> {
+public class CowType<C extends CowConfiguration> {
     public static final Codec<Holder<CowType<?>>> CODEC = RegistryFixedCodec.create(BovinesRegistryKeys.COW_TYPE);
 
     private final MapCodec<CowVariant<C>> configuredCodec;

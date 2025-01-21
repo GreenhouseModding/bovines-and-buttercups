@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype.modifier;
+package house.greenhouse.bovinesandbuttercups.api.variant.modifier;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

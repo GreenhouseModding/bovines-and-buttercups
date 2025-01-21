@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.access.EntityRendererLayerBakerAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.EntityModel;

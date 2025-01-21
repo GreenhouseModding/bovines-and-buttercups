@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.access.SimpleTextureExceptionAccess;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -58,7 +58,7 @@ public class BovinesAndButtercupsClient {
         return getTextureFromCowType(cowVariant.value().type().defaultConfig(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
     }
 
-    private static ResourceLocation getTextureFromCowType(CowTypeConfiguration configuration, String fallbackTexturePath, ResourceLocation originalLocation) {
+    private static ResourceLocation getTextureFromCowType(CowConfiguration configuration, String fallbackTexturePath, ResourceLocation originalLocation) {
         return configuration.settings().cowTexture().map(texture -> texture.withPath(s -> "textures/entity/" + s + ".png")).orElseGet(() -> originalLocation.withPath(str -> "textures/entity/" + fallbackTexturePath.replace("%s", str) + ".png"));
     }
 

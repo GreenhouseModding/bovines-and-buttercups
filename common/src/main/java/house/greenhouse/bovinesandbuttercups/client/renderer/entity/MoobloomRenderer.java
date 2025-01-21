@@ -2,7 +2,7 @@ package house.greenhouse.bovinesandbuttercups.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.MoobloomModel;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MoobloomFlowerLayer;

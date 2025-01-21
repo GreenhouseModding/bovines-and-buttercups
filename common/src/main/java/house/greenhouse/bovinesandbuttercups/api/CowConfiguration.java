@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.codec.BovinesCodecs;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.CowModelType;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
@@ -29,7 +29,7 @@ import java.util.Optional;
  * The generic cow variant interface, it's mostly here to make sure that
  * the game knows that your cow variants are cow variants.
  */
-public interface CowTypeConfiguration {
+public interface CowConfiguration {
     default void tick(Entity entity) {}
 
     default CowModelType model() {
@@ -76,7 +76,7 @@ public interface CowTypeConfiguration {
                 ParticleTypes.CODEC.optionalFieldOf("particle").forGetter(Settings::particle)
         ).apply(instance, Settings::new));
 
-        public <C extends CowTypeConfiguration, T extends CowType<C>> List<WeightedEntry.Wrapper<Holder<CowVariant<C>>>> filterThunderConverts(T type) {
+        public <C extends CowConfiguration, T extends CowType<C>> List<WeightedEntry.Wrapper<Holder<CowVariant<C>>>> filterThunderConverts(T type) {
             return (List)thunderConverts.unwrap().stream().filter(holderWrapper -> {
                 boolean bl = holderWrapper.data().isBound() && holderWrapper.data().value().type() == type;
                 if (!bl)

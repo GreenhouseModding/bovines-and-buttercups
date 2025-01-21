@@ -2,9 +2,9 @@ package house.greenhouse.bovinesandbuttercups.api;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.BlockReference;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.CowModelLayer;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.OffspringConditions;
-import house.greenhouse.bovinesandbuttercups.api.cowtype.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
+import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.ConditionedTextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.EmissiveTextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.data.modifier.FallbackTextureModifierFactory;
@@ -72,7 +72,7 @@ public class BovinesCowVariants {
 
         // Moobloom Types
         context.register(MoobloomKeys.SOMBERCUP, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SOMBERCUP))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SOMBERCUP))),
                 new BlockReference<>(Optional.of(BovinesBlocks.SOMBERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("sombercup_bud")), Optional.empty()),
                 BovinesCowModelTypes.FLAT,
@@ -90,7 +90,7 @@ public class BovinesCowVariants {
         Holder.Reference<CowVariant<?>> sombercupMoobloom = context.lookup(BovinesRegistryKeys.COW_VARIANT).getOrThrow(MoobloomKeys.SOMBERCUP);
 
         context.register(MoobloomKeys.CHARGELILY, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.CHARGELILY))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.CHARGELILY))),
                 new BlockReference<>(Optional.of(BovinesBlocks.CHARGELILY.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("chargelily_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -110,7 +110,7 @@ public class BovinesCowVariants {
         SimpleWeightedRandomList<Holder<CowVariant<?>>> chargelilyWeighted = SimpleWeightedRandomList.single(chargelilyMoobloom);
 
         context.register(MoobloomKeys.BIRD_OF_PARADISE, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.BIRD_OF_PARADISE))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.BIRD_OF_PARADISE))),
                 new BlockReference<>(Optional.of(BovinesBlocks.BIRD_OF_PARADISE.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("bird_of_paradise_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -130,7 +130,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.BUTTERCUP, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), buttercupFlowerForestSet, chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.BUTTERCUP))),
+                new CowConfiguration.Settings(Optional.empty(), buttercupFlowerForestSet, chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.BUTTERCUP))),
                 new BlockReference<>(Optional.of(BovinesBlocks.BUTTERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("buttercup_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -150,7 +150,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.CAMELLIA, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.CAMELLIA))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.CAMELLIA))),
                 new BlockReference<>(Optional.of(BovinesBlocks.CAMELLIA.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("camellia_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -170,7 +170,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.FREESIA, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.FREESIA))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.FREESIA))),
                 new BlockReference<>(Optional.of(BovinesBlocks.FREESIA.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("freesia_bud")), Optional.empty()),
                 BovinesCowModelTypes.BUFFALO,
@@ -190,7 +190,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.HYACINTH, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.HYACINTH))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.HYACINTH))),
                 new BlockReference<>(Optional.of(BovinesBlocks.HYACINTH.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("hyacinth_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -210,7 +210,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.LIMELIGHT, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.LIMELIGHT))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.LIMELIGHT))),
                 new BlockReference<>(Optional.of(BovinesBlocks.LIMELIGHT.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("limelight_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -229,7 +229,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.LINGHOLM, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.LINGHOLM))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.LINGHOLM))),
                 new BlockReference<>(Optional.of(BovinesBlocks.LINGHOLM.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("lingholm_bud")), Optional.empty()),
                 BovinesCowModelTypes.HIGHLAND,
@@ -249,7 +249,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.PINK_DAISY, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), pinkDaisyFlowerForestSet, chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.PINK_DAISY))),
+                new CowConfiguration.Settings(Optional.empty(), pinkDaisyFlowerForestSet, chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.PINK_DAISY))),
                 new BlockReference<>(Optional.of(BovinesBlocks.PINK_DAISY.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("pink_daisy_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -269,7 +269,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.SNOWDROP, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SNOWDROP))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.SNOWDROP))),
                 new BlockReference<>(Optional.of(BovinesBlocks.SNOWDROP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("snowdrop_bud")), Optional.empty()),
                 BovinesCowModelTypes.HIGHLAND,
@@ -289,7 +289,7 @@ public class BovinesCowVariants {
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.TROPICAL_BLUE, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.TROPICAL_BLUE))),
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.TROPICAL_BLUE))),
                 new BlockReference<>(Optional.of(BovinesBlocks.TROPICAL_BLUE.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("tropical_blue_bud")), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
@@ -311,7 +311,7 @@ public class BovinesCowVariants {
 
         // Mooshroom Types
         context.register(MooshroomKeys.RED_MUSHROOM, new CowVariant<>(BovinesCowTypes.MOOSHROOM_TYPE, new MooshroomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.of(ResourceLocation.parse("cow/red_mooshroom")), SimpleWeightedRandomList.single(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_MOOSHROOM_MUSHROOM)), SimpleWeightedRandomList.single(context.lookup(BovinesRegistryKeys.COW_VARIANT).getOrThrow(MooshroomKeys.BROWN_MUSHROOM)), Optional.of(ColorParticleOption.create(BovinesParticleTypes.SHROOM, ColorConstants.RED_MUSHROOM))),
+                new CowConfiguration.Settings(Optional.of(ResourceLocation.parse("cow/red_mooshroom")), SimpleWeightedRandomList.single(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_MOOSHROOM_MUSHROOM)), SimpleWeightedRandomList.single(context.lookup(BovinesRegistryKeys.COW_VARIANT).getOrThrow(MooshroomKeys.BROWN_MUSHROOM)), Optional.of(ColorParticleOption.create(BovinesParticleTypes.SHROOM, ColorConstants.RED_MUSHROOM))),
                 new BlockReference<>(Optional.of(Blocks.RED_MUSHROOM.defaultBlockState()), Optional.empty(), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
                 List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/mooshroom/mooshroom_mycelium_layer"), List.of(new FallbackTextureModifierFactory(List.of()))),
@@ -323,7 +323,7 @@ public class BovinesCowVariants {
                 OffspringConditions.EMPTY
         )));
         context.register(MooshroomKeys.BROWN_MUSHROOM, new CowVariant<>(BovinesCowTypes.MOOSHROOM_TYPE, new MooshroomConfiguration(
-                new CowTypeConfiguration.Settings(Optional.of(ResourceLocation.parse("cow/brown_mooshroom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.single(context.lookup(BovinesRegistryKeys.COW_VARIANT).getOrThrow(MooshroomKeys.RED_MUSHROOM)), Optional.of(ColorParticleOption.create(BovinesParticleTypes.SHROOM, ColorConstants.BROWN_MUSHROOM))),
+                new CowConfiguration.Settings(Optional.of(ResourceLocation.parse("cow/brown_mooshroom")), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.single(context.lookup(BovinesRegistryKeys.COW_VARIANT).getOrThrow(MooshroomKeys.RED_MUSHROOM)), Optional.of(ColorParticleOption.create(BovinesParticleTypes.SHROOM, ColorConstants.BROWN_MUSHROOM))),
                 new BlockReference<>(Optional.of(Blocks.BROWN_MUSHROOM.defaultBlockState()), Optional.empty(), Optional.empty()),
                 BovinesCowModelTypes.DEFAULT,
                 List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/mooshroom/mooshroom_mycelium_layer"), List.of(new FallbackTextureModifierFactory(List.of()))),

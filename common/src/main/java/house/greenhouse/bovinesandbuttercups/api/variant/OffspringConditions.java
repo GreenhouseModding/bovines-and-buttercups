@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.api.cowtype;
+package house.greenhouse.bovinesandbuttercups.api.variant;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.CowTypeConfiguration;
+import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import net.minecraft.core.Holder;
 import net.minecraft.util.StringRepresentable;
@@ -50,7 +50,7 @@ public record OffspringConditions(List<LootItemCondition> thisConditions, List<L
             this.operation = operation;
         }
 
-        public <C extends CowTypeConfiguration> Pair<Holder<CowVariant<C>>, Optional<Holder<CowVariant<C>>>> handleInheritance(Holder<CowVariant<C>> baby, CowVariantAttachment parent, CowVariantAttachment other) {
+        public <C extends CowConfiguration> Pair<Holder<CowVariant<C>>, Optional<Holder<CowVariant<C>>>> handleInheritance(Holder<CowVariant<C>> baby, CowVariantAttachment parent, CowVariantAttachment other) {
             return (Pair<Holder<CowVariant<C>>, Optional<Holder<CowVariant<C>>>>) operation.handleInheritance((Holder) baby, parent, other);
         }
 

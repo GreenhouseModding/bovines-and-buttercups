@@ -1,8 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.modifier;
 
-import house.greenhouse.bovinesandbuttercups.api.cowtype.modifier.TextureModifier;
+import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifier;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public class GrassTintTextureModifier implements TextureModifier {
