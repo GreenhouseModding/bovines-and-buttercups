@@ -71,14 +71,14 @@ public record CowVariantAttachment(Holder<CowVariant<?>> cowVariant, Optional<Ho
         setCowVariant(entity, cowVariant, Optional.empty());
     }
 
-    public static <C extends CowConfiguration> void setCowVariant(LivingEntity entity, Holder<CowVariant<C>> cowVariant, Holder<CowVariant<C>> previousCowType) {
-        setCowVariant(entity, cowVariant, Optional.of(previousCowType));
+    public static <C extends CowConfiguration> void setCowVariant(LivingEntity entity, Holder<CowVariant<C>> cowVariant, Holder<CowVariant<C>> previousCowVariant) {
+        setCowVariant(entity, cowVariant, Optional.of(previousCowVariant));
     }
 
-    public static <C extends CowConfiguration> void setCowVariant(LivingEntity entity, Holder<CowVariant<C>> cowVariant, Optional<Holder<CowVariant<C>>> previousCowType) {
+    public static <C extends CowConfiguration> void setCowVariant(LivingEntity entity, Holder<CowVariant<C>> cowVariant, Optional<Holder<CowVariant<C>>> previousCowVariant) {
         if (cowVariant.isBound() && cowVariant.value().type().isApplicable(entity)) {
             var previousAttachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
-            Optional<Holder<CowVariant<?>>> previousType = previousAttachment != null && previousAttachment.previousCowVariant().isPresent() ? BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).previousCowVariant() : previousCowType.map(holder -> (Holder)holder);
+            Optional<Holder<CowVariant<?>>> previousType = previousAttachment != null && previousAttachment.previousCowVariant().isPresent() ? BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).previousCowVariant() : previousCowVariant.map(holder -> (Holder)holder);
             BovinesAndButtercups.getHelper().setCowVariantAttachment(entity, new CowVariantAttachment((Holder) cowVariant, previousType));
             if (entity.getType() == EntityType.MOOSHROOM && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent())
                 ((MushroomCow)entity).setVariant(mc.vanillaType().get());

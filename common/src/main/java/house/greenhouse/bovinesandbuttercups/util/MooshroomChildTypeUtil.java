@@ -29,12 +29,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class MooshroomChildTypeUtil {
-    public static Pair<Holder<CowVariant<MooshroomConfiguration>>, Optional<Holder<CowVariant<MooshroomConfiguration>>>> chooseMooshroomBabyType(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
+    public static Pair<Holder<CowVariant<MooshroomConfiguration>>, Optional<Holder<CowVariant<MooshroomConfiguration>>>> chooseMooshroomBabyVariant(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
         List<Holder<CowVariant<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
         for (Holder.Reference<CowVariant<?>> cowVariant : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
-            Holder<CowVariant<MooshroomConfiguration>> mooshroomType = (Holder) cowVariant;
-            var conditions = mooshroomType.value().configuration().offspringConditions();
+            Holder<CowVariant<MooshroomConfiguration>> mooshroomVariant = (Holder) cowVariant;
+            var conditions = mooshroomVariant.value().configuration().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder((ServerLevel) parent.level());
             params.withParameter(LootContextParams.THIS_ENTITY, parent);
@@ -52,7 +52,7 @@ public class MooshroomChildTypeUtil {
                     && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext))
                     || (conditions.thisConditions().stream().allMatch(condition -> condition.test(otherContext))
                     && conditions.otherConditions().stream().allMatch(condition -> condition.test(thisContext))))
-                eligibleCowTypes.add(mooshroomType);
+                eligibleCowTypes.add(mooshroomVariant);
         }
 
         if (!eligibleCowTypes.isEmpty()) {

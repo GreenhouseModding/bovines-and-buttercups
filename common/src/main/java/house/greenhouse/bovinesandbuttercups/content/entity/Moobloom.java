@@ -454,8 +454,8 @@ public class Moobloom extends Cow {
         List<Holder<CowVariant<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
         for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
-            Holder.Reference<CowVariant<MoobloomConfiguration>> moobloomType = (Holder.Reference) cowVariant;
-            var conditions = moobloomType.value().configuration().offspringConditions();
+            Holder.Reference<CowVariant<MoobloomConfiguration>> moobloomVariant = (Holder.Reference) cowVariant;
+            var conditions = moobloomVariant.value().configuration().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder(level);
             params.withParameter(LootContextParams.THIS_ENTITY, this);
@@ -474,7 +474,7 @@ public class Moobloom extends Cow {
                     && conditions.otherConditions().stream().allMatch(condition -> condition.test(otherContext)))
                     || (conditions.thisConditions().stream().allMatch(condition -> condition.test(otherContext))
                     && conditions.otherConditions().stream().allMatch(condition -> condition.test(thisContext))))
-                eligibleCowTypes.add(moobloomType);
+                eligibleCowTypes.add(moobloomVariant);
         }
 
         if (!eligibleCowTypes.isEmpty()) {

@@ -143,11 +143,11 @@ public class BovinesAndButtercupsNeoForge {
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment.isEmpty()) {
                     if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomVariantFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
                     } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
-                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
+                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnVariant(level, ((MushroomCow)entity).getVariant()));
                     }
                     CowVariantAttachment.sync((MushroomCow)entity);
                 }
@@ -162,7 +162,7 @@ public class BovinesAndButtercupsNeoForge {
             AgeableMob child = event.getChild();
 
             if (parentA instanceof MushroomCow parentACow && parentB instanceof MushroomCow parentBCow && child instanceof MushroomCow childCow) {
-                var pair = MooshroomChildTypeUtil.chooseMooshroomBabyType(parentACow, parentBCow, childCow, event.getCausedByPlayer());
+                var pair = MooshroomChildTypeUtil.chooseMooshroomBabyVariant(parentACow, parentBCow, childCow, event.getCausedByPlayer());
                 if (pair == null)
                     return;
                 CowVariantAttachment.setCowVariant(child, pair.getFirst(), pair.getSecond());
