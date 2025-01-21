@@ -85,9 +85,11 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
@@ -456,6 +458,14 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+            biConsumer.accept(BovinesLootTables.NIGHTSHADE_RANCH, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0F))
+                            .add(NestedLootTable.lootTableReference(BovinesLootTables.RANCH)))
+                    .withPool(LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0F))
+                            .add(LootItem.lootTableItem(Items.STONE_AXE)
+                                    .apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.15F, 0.8F))))));
             biConsumer.accept(BovinesLootTables.RANCH, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(2.0F))

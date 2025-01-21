@@ -21,4 +21,5 @@ public class BovinesLootTables {
     public static final ResourceKey<LootTable> SHEAR_SOMBERCUP_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/sombercup"));
     public static final ResourceKey<LootTable> SHEAR_TROPICAL_BLUE_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/tropical_blue"));
     public static final ResourceKey<LootTable> RANCH = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("chests/ranch"));
+    public static final ResourceKey<LootTable> NIGHTSHADE_RANCH = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("chests/ranch/nightshade"));
 }
