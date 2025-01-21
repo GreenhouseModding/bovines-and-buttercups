@@ -35,19 +35,19 @@ public class MooshroomSpawnUtil {
 
     public static Holder<CowVariant<MooshroomConfiguration>> getMostCommonMooshroomSpawnType(LevelAccessor level, MushroomCow.Variant mushroomType) {
         int largestWeight = 0;
-        Holder<CowVariant<MooshroomConfiguration>> finalCowType = getMooshroomTypeFromMushroomType(level, mushroomType);
+        Holder<CowVariant<MooshroomConfiguration>> finalCowVariant = getMooshroomTypeFromMushroomType(level, mushroomType);
 
         for (Holder<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && !mc.settings().biomes().isEmpty()).toList()) {
             if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
             if (max > largestWeight) {
-                finalCowType = (Holder)cowVariant;
+                finalCowVariant = (Holder)cowVariant;
                 largestWeight = max;
             }
         }
 
-        return finalCowType;
+        return finalCowVariant;
     }
 
     public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomTypeFromMushroomType(LevelAccessor level, MushroomCow.Variant mushroomType) {

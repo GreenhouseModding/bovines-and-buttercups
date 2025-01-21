@@ -660,25 +660,25 @@ public class Moobloom extends Cow {
             if (getTotalSpawnWeight(level, pos) > 0)
                 return getMoobloomSpawnTypeDependingOnBiome(level, pos, random);
             else
-                return getMostCommonMoobloomSpawnType(level, random);
+                return getMostCommonMoobloomSpawnVariant(level, random);
         }
 
-        public Holder<CowVariant<MoobloomConfiguration>> getMostCommonMoobloomSpawnType(ServerLevelAccessor level, RandomSource random) {
+        public Holder<CowVariant<MoobloomConfiguration>> getMostCommonMoobloomSpawnVariant(ServerLevelAccessor level, RandomSource random) {
             var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
             int largestWeight = 0;
-            Holder<CowVariant<?>> finalCowType = registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
+            Holder<CowVariant<?>> finalCowVariant = registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
 
             for (Holder<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
                 if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                 if (max > largestWeight) {
-                    finalCowType = cowVariant;
+                    finalCowVariant = cowVariant;
                     largestWeight = max;
                 }
             }
 
-            return (Holder)finalCowType;
+            return (Holder)finalCowVariant;
         }
 
         public Holder<CowVariant<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
