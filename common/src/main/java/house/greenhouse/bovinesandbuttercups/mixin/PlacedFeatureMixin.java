@@ -35,7 +35,7 @@ public abstract class PlacedFeatureMixin {
 
         List<StructureSet.StructureSelectionEntry> blockingStructures = new ArrayList<>();
         ((ServerChunkCache)context.getLevel().getChunkSource()).getGeneratorState().possibleStructureSets().forEach(holder -> holder.value().structures().forEach(entry -> {
-            if (entry.structure().value().type() == BovinesStructureTypes.RANCH && (((RanchStructure)entry.structure().value()).getAllowedFeatures().isEmpty() || !((RanchStructure)entry.structure().value()).getAllowedFeatures().get().contains(this.feature())) && entry.structure().value().biomes().contains(level.getBiome(pos))) {
+            if (entry.structure().value().type() == BovinesStructureTypes.RANCH && (((RanchStructure)entry.structure().value()).getAllowedFeatures().isPresent() && !((RanchStructure)entry.structure().value()).getAllowedFeatures().get().contains(this.feature())) && entry.structure().value().biomes().contains(level.getBiome(pos))) {
                 blockingStructures.add(entry);
             }
         }));
