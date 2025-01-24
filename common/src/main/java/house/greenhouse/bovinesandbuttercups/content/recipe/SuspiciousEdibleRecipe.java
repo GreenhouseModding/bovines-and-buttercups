@@ -75,7 +75,8 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float) entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
 
         ItemEdible.apply(returnStack, new ItemEdible(edibleType, entries));
-        return returnStack;
+        // TODO: Unhardcode result count.
+        return returnStack.copyWithCount(4);
     }
 
     public ShapedRecipePattern getPattern() {
