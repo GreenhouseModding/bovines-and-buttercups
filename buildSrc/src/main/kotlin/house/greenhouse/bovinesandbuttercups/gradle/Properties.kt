@@ -14,5 +14,5 @@ object Properties {
     const val MODRINTH_PAGE = "https://modrinth.com/project/bovines-and-buttercups"
     const val MODRINTH_PROJECT_ID = "BDg6nMn3"
     const val GITHUB_REPO = "GreenhouseModding/bovines-and-buttercups"
-    const val GITHUB_COMMITISH = "1.21"
+    const val GITHUB_COMMITISH = "1.21.4"
 }
