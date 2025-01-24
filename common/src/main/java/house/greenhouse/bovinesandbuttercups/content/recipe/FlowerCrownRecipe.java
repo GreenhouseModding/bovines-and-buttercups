@@ -40,9 +40,8 @@ public class FlowerCrownRecipe extends CustomRecipe {
             for (int j = 0; j < input.width(); j++) {
                 Optional<Unit> hasItem = SHAPE.get(j + i * input.width());
                 ItemStack stack = input.getItem(j, i);
-                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().lookupOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).stream().noneMatch(petal -> ItemStack.isSameItemSameComponents(petal.ingredient(), stack))) {
+                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().lookupOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).stream().noneMatch(petal -> ItemStack.isSameItemSameComponents(petal.ingredient(), stack)))
                     return false;
-                }
                 if (hasItem.isEmpty())
                     continue;
                 list.add(stack);
