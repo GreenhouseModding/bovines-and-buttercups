@@ -1,7 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.gradle
 
 object Versions {
-    const val MOD = "2.1.1"
+    const val MOD = "2.1.2"
 
     // Minecraft
     const val MINECRAFT = "1.21.4"
