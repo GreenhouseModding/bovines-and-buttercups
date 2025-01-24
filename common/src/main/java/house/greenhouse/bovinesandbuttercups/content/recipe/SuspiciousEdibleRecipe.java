@@ -79,7 +79,7 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float) entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
 
         returnStack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, entries));
-        // TODO: Unhardcode recipe count.
+        // TODO: Unhardcode result count.
         return returnStack.copyWithCount(4);
     }
 
