@@ -1,15 +1,3 @@
-## Changes
-- Ported to 1.21.4.
-- Added Nightshade Mooblooms, a new light gray Moobloom bred whilst near Pale Garden blocks.
-
-## Updating Old Worlds
-- If you are coming from 1.21.1...
-  - When updating from old worlds, Nectars will be changed to a new item ID based object, any custom nectar bowls will be converted into Buttercup Nectar Bowls.
-  - There may be better options for Custom Nectar DFU in the future.
-  
-## Datapacking Changes
-- Removed the `bovinesandbuttercups:nectar` registry.
-  - This registry's functionality has been replaced with the `minecraft:consumable` data component.
-  - Each nectar is now an individual item, you may edit an item's components to create your own nectars.
-- Added `item_model` fields to custom flower, custom mushroom and edible block data types.
-  - This will define an `items` file to use as the component for these items.
+## Bugfixes
+- Fixed an exception being thrown regarding faulty recipe code.
+- Fixed `bovinesandbuttercups:remainder` ingredient type inserting remainder ingredients into the wrong slot.

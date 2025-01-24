@@ -17,9 +17,10 @@ public interface CraftingRecipeMixin extends Recipe<CraftingInput> {
     @ModifyReturnValue(method = "getRemainingItems", at = @At("RETURN"))
     private NonNullList<ItemStack> bovinesandbuttercups$handleRemainderIngredients(NonNullList<ItemStack> original, @Local(argsOnly = true) CraftingInput input) {
         for (int i = 0; i < original.size(); i++) {
-            if (placementInfo().ingredients().size() - 1 < i)
+            int ingredientIndex = placementInfo().slotsToIngredientIndex().getInt(i);
+            if (ingredientIndex == -1)
                 continue;
-            RemainderIngredient ingredient = BovinesAndButtercups.getHelper().getRemainderIngredient(placementInfo().ingredients().get(i));
+            RemainderIngredient ingredient = BovinesAndButtercups.getHelper().getRemainderIngredient(placementInfo().ingredients().get(ingredientIndex));
             if (ingredient != null)
                 original.set(i, ingredient.remainder().copy());
         }

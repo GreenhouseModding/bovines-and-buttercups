@@ -52,22 +52,21 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput input, Level level) {
+        if (input.ingredientCount() != pattern.ingredients().stream().flatMap(Optional::stream).count())
+            return false;
         for (int i = 0; i < pattern.height(); i++) {
             for (int j = 0; j < pattern.width(); j++) {
-                Optional<Ingredient> ingredient = Optional.empty();
-                if (symmetrical && pattern.ingredients().size() >= pattern.width() - j - 1 + i * pattern.width()) {
+                Optional<Ingredient> ingredient;
+                if (symmetrical)
                     ingredient = pattern.ingredients().get(pattern.width() - j - 1 + i * pattern.width());
-                } else if (pattern.ingredients().size() >= j + i * pattern.width()) {
+                else
                     ingredient = pattern.ingredients().get(j + i * pattern.width());
-                }
 
                 ItemStack stack = input.getItem(j, i);
-                if (ingredient.isPresent() && (!ingredient.get().test(stack) && (!stack.is(Items.SUSPICIOUS_STEW) || !ingredient.get().test(new ItemStack(Items.SUSPICIOUS_STEW))))) {
+                if (!Ingredient.testOptionalIngredient(ingredient, stack) && (!stack.is(Items.SUSPICIOUS_STEW) || !Ingredient.testOptionalIngredient(ingredient, new ItemStack(Items.SUSPICIOUS_STEW))))
                     return false;
-                }
             }
         }
-
         return true;
     }
 
@@ -80,7 +79,8 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
                 new ItemEdible.MobEffectEntry(new MobEffectInstance(entry.effect(), Mth.ceil((float) entry.duration() / 4)), entry.duration(), ItemEdible.MobEffectEntry.ShowTooltip.CREATIVE_MENU_ONLY)).toList();
 
         returnStack.set(BovinesDataComponents.EDIBLE_TYPE, new ItemEdible(edibleType, entries));
-        return returnStack;
+        // TODO: Unhardcode recipe count.
+        return returnStack.copyWithCount(4);
     }
 
     public ShapedRecipePattern getPattern() {
