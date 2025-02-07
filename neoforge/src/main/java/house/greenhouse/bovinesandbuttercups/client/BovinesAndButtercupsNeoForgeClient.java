@@ -154,14 +154,22 @@ public class BovinesAndButtercupsNeoForgeClient {
         public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
             event.registerLayerDefinition(BovinesModelLayers.BABY_MOOBLOOM_MODEL_LAYER, () -> CowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
-            event.registerLayerDefinition(BovinesModelLayers.HIGHLAND_MODEL_LAYER, CustomCowModelLayers::createHighland);
-            event.registerLayerDefinition(BovinesModelLayers.BABY_HIGHLAND_MODEL_LAYER, () -> CustomCowModelLayers.createHighland().apply(CowModel.BABY_TRANSFORMER));
-            event.registerLayerDefinition(BovinesModelLayers.BUFFALO_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
-            event.registerLayerDefinition(BovinesModelLayers.BABY_BUFFALO_MODEL_LAYER, () -> CustomCowModelLayers.createBuffalo().apply(CowModel.BABY_TRANSFORMER));
-            event.registerLayerDefinition(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
-            event.registerLayerDefinition(BovinesModelLayers.BABY_OX_MODEL_LAYER, () -> CustomCowModelLayers.createOx().apply(CowModel.BABY_TRANSFORMER));
-            event.registerLayerDefinition(BovinesModelLayers.FLAT_MODEL_LAYER, CustomCowModelLayers::createFlat);
-            event.registerLayerDefinition(BovinesModelLayers.BABY_FLAT_MODEL_LAYER, () -> CustomCowModelLayers.createFlat().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.WARM_COW_MODEL_LAYER, CustomCowModelLayers::createWarm);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_WARM_COW_MODEL_LAYER, () -> CustomCowModelLayers.createWarm().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.COLD_COW_MODEL_LAYER, CustomCowModelLayers::createCold);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_COLD_COW_MODEL_LAYER, () -> CustomCowModelLayers.createCold().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.LUSH_COW_MODEL_LAYER, CustomCowModelLayers::createLush);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_LUSH_COW_MODEL_LAYER, () -> CustomCowModelLayers.createLush().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.SCULK_COW_MODEL_LAYER, CustomCowModelLayers::createSculk);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_SCULK_COW_MODEL_LAYER, () -> CustomCowModelLayers.createSculk().apply(CowModel.BABY_TRANSFORMER));
+
+            event.registerLayerDefinition(BovinesModelLayers.BUFFALO_COW_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_BUFFALO_COW_MODEL_LAYER, () -> CustomCowModelLayers.createBuffalo().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.HIGHLAND_COW_MODEL_LAYER, CustomCowModelLayers::createHighland);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_HIGHLAND_COW_MODEL_LAYER, () -> CustomCowModelLayers.createHighland().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.OX_COW_MODEL_LAYER, CustomCowModelLayers::createOx);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_OX_COW_MODEL_LAYER, () -> CustomCowModelLayers.createOx().apply(CowModel.BABY_TRANSFORMER));
+
             event.registerLayerDefinition(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
             event.registerLayerDefinition(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         }

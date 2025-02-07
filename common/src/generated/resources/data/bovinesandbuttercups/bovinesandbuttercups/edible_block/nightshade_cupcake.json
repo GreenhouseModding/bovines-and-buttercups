@@ -547,7 +547,7 @@
               "#minecraft:candles": {
                 "active": true,
                 "count": {
-                  "min": 4
+                  "min": 2
                 },
                 "item": []
               }
@@ -561,7 +561,7 @@
               "#minecraft:candles": {
                 "active": true,
                 "count": {
-                  "min": 2
+                  "min": 4
                 },
                 "item": []
               }

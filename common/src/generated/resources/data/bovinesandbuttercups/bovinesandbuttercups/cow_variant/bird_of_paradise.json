@@ -42,6 +42,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:warm",
   "nectar": {
     "id": "bovinesandbuttercups:bird_of_paradise_nectar_bowl"
   },

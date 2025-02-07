@@ -39,6 +39,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:lush",
   "nectar": {
     "id": "bovinesandbuttercups:nightshade_nectar_bowl"
   },

@@ -10,7 +10,8 @@ import net.minecraft.world.entity.EntityType;
 
 import java.util.List;
 
-public class BovinesCowTypes {
+public class
+BovinesCowTypes {
     public static final CowType<MoobloomConfiguration> MOOBLOOM_TYPE = new CowType<>(MoobloomConfiguration.CODEC, List.of(BovinesEntityTypes.MOOBLOOM), BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM, "bovinesandbuttercups/moobloom/%s_moobloom", MoobloomConfiguration::createMissing);
     public static final CowType<MooshroomConfiguration> MOOSHROOM_TYPE = new CowType<>(MooshroomConfiguration.CODEC, List.of(EntityType.MOOSHROOM), BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM,"bovinesandbuttercups/mooshroom/%s_mooshroom", MooshroomConfiguration::createMissing);
 

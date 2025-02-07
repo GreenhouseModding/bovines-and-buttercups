@@ -67,6 +67,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.CaveFeatures;
+import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -81,6 +82,7 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -687,12 +689,51 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider lookup) {
             tag(BovinesTags.ConfiguredFeatureTags.RANCH_ALLOWED)
+                    .add(TreeFeatures.ACACIA)
+                    .add(TreeFeatures.AZALEA_TREE)
+                    .add(TreeFeatures.BIRCH)
+                    .add(TreeFeatures.BIRCH_BEES_0002)
+                    .add(TreeFeatures.BIRCH_BEES_002)
+                    .add(TreeFeatures.BIRCH_BEES_005)
+                    .add(TreeFeatures.CHERRY)
+                    .add(TreeFeatures.CHERRY_BEES_005)
+                    .add(TreeFeatures.CRIMSON_FUNGUS)
+                    .add(TreeFeatures.CRIMSON_FUNGUS_PLANTED)
+                    .add(TreeFeatures.DARK_OAK)
+                    .add(TreeFeatures.FANCY_OAK)
+                    .add(TreeFeatures.FANCY_OAK_BEES)
+                    .add(TreeFeatures.FANCY_OAK_BEES_002)
+                    .add(TreeFeatures.FANCY_OAK_BEES_0002)
+                    .add(TreeFeatures.FANCY_OAK_BEES_005)
                     .add(CaveFeatures.GLOW_LICHEN)
-                    .add(VegetationFeatures.SINGLE_PIECE_OF_GRASS)
+                    .add(TreeFeatures.HUGE_BROWN_MUSHROOM)
+                    .add(TreeFeatures.HUGE_RED_MUSHROOM)
+                    .add(TreeFeatures.JUNGLE_BUSH)
+                    .add(TreeFeatures.JUNGLE_TREE)
+                    .add(TreeFeatures.JUNGLE_TREE_NO_VINE)
+                    .add(TreeFeatures.MANGROVE)
+                    .add(TreeFeatures.MEGA_JUNGLE_TREE)
+                    .add(TreeFeatures.MEGA_SPRUCE)
+                    .add(TreeFeatures.MEGA_PINE)
+                    .add(TreeFeatures.OAK)
+                    .add(TreeFeatures.OAK_BEES_002)
+                    .add(TreeFeatures.OAK_BEES_0002)
+                    .add(TreeFeatures.OAK_BEES_005)
                     .add(VegetationFeatures.PATCH_GRASS)
                     .add(VegetationFeatures.PATCH_GRASS_JUNGLE)
                     .add(VegetationFeatures.PATCH_TAIGA_GRASS)
-                    .add(VegetationFeatures.PATCH_TALL_GRASS);
+                    .add(VegetationFeatures.PATCH_TALL_GRASS)
+                    .add(TreeFeatures.PALE_OAK)
+                    .add(TreeFeatures.PALE_OAK_BONEMEAL)
+                    .add(TreeFeatures.PINE)
+                    .add(VegetationFeatures.SINGLE_PIECE_OF_GRASS)
+                    .add(TreeFeatures.SPRUCE)
+                    .add(TreeFeatures.SUPER_BIRCH_BEES)
+                    .add(TreeFeatures.SUPER_BIRCH_BEES_0002)
+                    .add(TreeFeatures.SWAMP_OAK)
+                    .add(TreeFeatures.TALL_MANGROVE)
+                    .add(TreeFeatures.WARPED_FUNGUS)
+                    .add(TreeFeatures.WARPED_FUNGUS_PLANTED);
         }
     }
 
