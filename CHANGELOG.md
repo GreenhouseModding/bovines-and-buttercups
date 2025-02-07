@@ -8,6 +8,9 @@
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
 
+### Bugfixes
+- Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
+
 ### Datapacking Changes
 - Deprecated old model type ids, these will be removed when the mod updates to 1.21.5 or above.
   - A list of the model type ids can be found below;
