@@ -11,6 +11,7 @@
 
 ### Bugfixes
 - Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
+- Fixed special recipes causing an exception and returning items whilst crafting.
 
 ### Datapacking Changes
 - Deprecated old model type ids, these will be removed when the mod updates to 1.21.5 or above.
