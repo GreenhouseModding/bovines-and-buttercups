@@ -30,6 +30,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -148,6 +149,13 @@ public class Moobloom extends Cow {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         backwardsCompat(tag);
+        if (tag.contains("variant")) {
+            var variantDataResult = CowVariantAttachment.CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, level().registryAccess()), tag.get("variant"));
+            if (!variantDataResult.hasResultOrPartial())
+                BovinesAndButtercups.LOG.error(variantDataResult.error().get().message());
+            else
+                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, variantDataResult.getOrThrow().getFirst());
+        }
         if (tag.contains("flower_spread_attempts", Tag.TAG_INT))
             setFlowerSpreadAttempts(tag.getInt("flower_spread_attempts"));
         if (tag.contains("previous_flower_pos", Tag.TAG_INT_ARRAY))
@@ -199,7 +207,7 @@ public class Moobloom extends Cow {
         if (tag.contains("AllowShearing", Tag.TAG_BYTE))
             setAllowShearing(tag.getBoolean("AllowShearing"));
     }
-    
+
     public void setBee(@Nullable Bee value) {
         bee = value;
     }

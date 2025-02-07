@@ -7,6 +7,7 @@
 
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
+- Moobloom's variant may now be set with the `variant` NBT tag. This tag follows the same rules as the Fabric/NeoForge attacHment.
 
 ### Bugfixes
 - Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
