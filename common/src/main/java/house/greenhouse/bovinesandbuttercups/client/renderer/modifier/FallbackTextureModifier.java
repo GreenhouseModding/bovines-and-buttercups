@@ -17,6 +17,6 @@ public class FallbackTextureModifier implements TextureModifier {
     @Override
     public boolean canDisplay(CowVariantRenderState<?, ?, ?> entity) {
         List<ResourceLocation> activeConditions = entity.getRenderStateObject(RenderStateObject.ACTIVE_CONDITIONS);
-        return activeConditions.stream().noneMatch(conditions::contains);
+        return activeConditions.isEmpty() && conditions.isEmpty() || !conditions.isEmpty() && activeConditions.stream().noneMatch(conditions::contains);
     }
 }
