@@ -4,6 +4,7 @@
 - Updated the model of the Lingholm and Snowdrop Mooblooms to match the upcoming Cold cow variant's model.
 - Updated the model of the Limelight and Nightshade Mooblooms to more closely resemble a Zebu.
 - Refreshed the textures of every Moobloom added by the mod to be closer to the upcoming 1.21.5 cow variant textures.
+- Updated the textures of certain Moobloom linked blocks/items (Flowers, Cupcakes, Flower Crowns) to match the new variant textures.
 
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
