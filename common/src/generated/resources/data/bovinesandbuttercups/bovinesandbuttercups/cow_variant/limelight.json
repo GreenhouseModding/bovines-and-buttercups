@@ -10,7 +10,7 @@
   },
   "layers": [
     {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_moss_layer",
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_moss_layer",
       "texture_modifiers": [
         {
           "type": "bovinesandbuttercups:fallback"
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/snow_layer",
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/lush_snow_layer",
       "texture_modifiers": [
         {
           "type": "bovinesandbuttercups:conditioned",

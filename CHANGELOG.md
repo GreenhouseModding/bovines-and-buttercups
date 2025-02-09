@@ -4,7 +4,8 @@
 - Updated the model of the Lingholm and Snowdrop Mooblooms to match the upcoming Cold cow variant's model.
 - Updated the model of the Limelight and Nightshade Mooblooms to more closely resemble a Zebu.
 - Refreshed the textures of every Moobloom added by the mod to be closer to the upcoming 1.21.5 cow variant textures.
-- Updated the textures of certain Moobloom linked blocks/items (Flowers, Cupcakes, Flower Crowns) to match the new variant textures.
+- Updated the textures of certain Moobloom linked blocks/items (Flowers, Cupcakes, Flower Crowns) to match the new variant textures' colors.
+- Updated Lingholm flower texture.
 
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
@@ -19,10 +20,10 @@
 - Deprecated old model type ids, these will be removed when the mod updates to 1.21.5 or above.
   - A list of the model type ids can be found below;
   - `bovinesandbuttercups:default` -> `bovinesandbuttercups:temperate`
-  - Not Applicable -> `bovinesandbuttercups:warm`
-  - Not Applicable -> `bovinesandbuttercups:cold`
-  - Not Applicable -> `bovinesandbuttercups:lush`
-  - `bovinesandbuttercups:flat` -> `sbovinesandbuttercups:sculk`
+  - Not Applicable -> `bovinesandbuttercups:warm` (Used by Freesia and Bird of Paradise)
+  - Not Applicable -> `bovinesandbuttercups:cold` (Used by Lingholm and Snowdrop)
+  - Not Applicable -> `bovinesandbuttercups:lush` (Used by Limelight and Nightshade)
+  - `bovinesandbuttercups:flat` -> `sbovinesandbuttercups:sculk` (Used by Sombercup)
   - `bovinesandbuttercups:buffalo` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:warm` instead).
   - `bovinesandbuttercups:highland` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
   - `bovinesandbuttercups:ox` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
