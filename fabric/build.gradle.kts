@@ -65,7 +65,7 @@ dependencies {
 }
 
 loom {
-    val aw = file("src/main/resources/${Properties.MOD_ID}.accesswidener");
+    val aw = file("src/main/resources/${Properties.MOD_ID}.accesswidener")
     if (aw.exists())
         accessWidenerPath.set(aw)
     mixin {
