@@ -14,7 +14,7 @@ object Versions {
 
     // Fabric
     const val FABRIC_API = "0.111.0+1.21.4"
-    const val FABRIC_LOADER = "0.16.9"
+    const val FABRIC_LOADER = "0.16.10"
     const val MOD_MENU = "13.0.0-beta.1"
     const val FABRIC_LOADER_RANGE = ">=0.16"
     const val FABRIC_MINECRAFT_RANGE = ">=1.21.4"
