@@ -10,7 +10,7 @@ object Versions {
     const val PARCHMENT = "2024.12.07"
 
     // Resource Packs
-    const val RESOURCE_PACK_FORMAT = 34
+    const val RESOURCE_PACK_FORMAT = 46
 
     // Fabric
     const val FABRIC_API = "0.111.0+1.21.4"
