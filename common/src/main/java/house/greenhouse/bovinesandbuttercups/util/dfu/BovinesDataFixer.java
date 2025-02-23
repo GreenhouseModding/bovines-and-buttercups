@@ -1,13 +1,16 @@
 package house.greenhouse.bovinesandbuttercups.util.dfu;
 
 import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
+import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
 import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.*;
+import house.greenhouse.bovinesandbuttercups.util.dfu.schema.BovinesSchemaV1;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -20,7 +23,7 @@ import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 public record BovinesDataFixer(DataFixer fixer) {
-    // Bump to the nearest rounded down 100 on the later version if two versions are being maintained.
+    // Bump this up by 100 for each new Minecraft version. If you're exceeding 99 schemas in the same version, you're doing something wrong.
     public static final int CURRENT_VERSION = 101;
     private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
     private static final BiFunction<Integer, Schema, Schema> SAME_NAMESPACED = NamespacedSchema::new;
@@ -51,26 +54,31 @@ public record BovinesDataFixer(DataFixer fixer) {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
+
+        // Bovines 2.1.0
+        Schema schema1 = builder.addSchema(2, BovinesSchemaV1::new);
+        builder.addFixer(new RenameToCowVariantAttachment(schema1));
+
+        // MC 1.21.4
         Schema schema100 = builder.addSchema(100, SAME_NAMESPACED);
-        builder.addFixer(new NectarDecomponentizeFix(schema100));;
+        builder.addFixer(new MoobloomAttributeIdPrefixFix(schema100)); // Implemented to make sure that Mooblooms have their attributes converted just like everything else.
         Schema schema100_1 = builder.addSchema(100, 1, SAME_NAMESPACED);
+        builder.addFixer(new NectarDecomponentizeFix(schema100_1));
         builder.addFixer(new NectarDecomponentizeEquipmentFix(schema100_1));
+
+        // Bovines 2.2.0
         Schema schema101 = builder.addSchema(101, SAME_NAMESPACED);
         builder.addFixer(BlockRenameFix.create(schema101, "Rename Bird of Paradise blocks", createRenamer(RENAMED_BIRD_OF_PARADISE_BLOCKS)));
-        Schema schema101_1 = builder.addSchema(101, 1, SAME_NAMESPACED);
-        builder.addFixer(ItemRenameFix.create(schema101_1, "Rename Bird of Paradise items", createRenamer(RENAMED_BIRD_OF_PARADISE_ITEMS)));
-        Schema schema101_2 = builder.addSchema(101, 2, SAME_NAMESPACED);
-        builder.addFixer(new RenameToAlstroemeriaCupcakeComponentFix(schema101_2));
-        Schema schema101_3 = builder.addSchema(101, 3, SAME_NAMESPACED);
-        builder.addFixer(new RenameToAlstroemeriaFlowerCrownComponentFix(schema101_3));
-        Schema schema101_4 = builder.addSchema(101, 4, SAME_NAMESPACED);
-        builder.addFixer(new VanillaEntityEquipmentFix(schema101_4, "Fix Bird of Paradise Flower Crown equipment", "bovinesandbuttercups:flower_crown", RenameToAlstroemeriaFlowerCrownComponentFix::updateDynamic));
-        Schema schema101_5 = builder.addSchema(101, 5, SAME_NAMESPACED);
-        builder.addFixer(new VanillaEntityEquipmentFix(schema101_5, "Fix Bird of Paradise Cupcake equipment", "bovinesandbuttercups:edible_type", RenameToAlstroemeriaCupcakeComponentFix::updateDynamic));
-        Schema schema101_6 = builder.addSchema(101, 6, SAME_NAMESPACED);
-        builder.addFixer(new NamespacedTypeRenameFix(schema101_6, "Rename Bird of Paradise Cupcake recipe", References.RECIPE, createRenamer(RENAMED_EDIBLE_TYPE_RECIPES)));
-        Schema schema101_8 = builder.addSchema(101, 8, SAME_NAMESPACED);
-        builder.addFixer(new RenameToAlstroemeriaRanchChunkFix(schema101_8));
+        builder.addFixer(ItemRenameFix.create(schema101, "Rename Bird of Paradise items", createRenamer(RENAMED_BIRD_OF_PARADISE_ITEMS)));
+        builder.addFixer(new RenameToAlstroemeriaCowVariantAttachment(schema101));
+        builder.addFixer(new RenameToAlstroemeriaPlaceableEdibleFix(schema101));
+        builder.addFixer(new RenameToAlstroemeriaCupcakeComponentFix(schema101));
+        builder.addFixer(new RenameToAlstroemeriaFlowerCrownComponentFix(schema101));
+        builder.addFixer(new RenameToAlstroemeriaRanchChunkFix(schema101));
+        builder.addFixer(new VanillaEntityEquipmentFix(schema101, "Fix Bird of Paradise Flower Crown equipment", "bovinesandbuttercups:flower_crown", RenameToAlstroemeriaFlowerCrownComponentFix::updateDynamic));
+        builder.addFixer(new VanillaEntityEquipmentFix(schema101, "Fix Bird of Paradise Cupcake equipment", "bovinesandbuttercups:edible_type", RenameToAlstroemeriaCupcakeComponentFix::updateDynamic));
+        builder.addFixer(new NamespacedTypeRenameFix(schema101, "Rename Bird of Paradise Cupcake recipe", References.RECIPE, createRenamer(RENAMED_EDIBLE_TYPE_RECIPES)));
+
         return builder.build().fixer();
     }
 
@@ -104,4 +112,16 @@ public record BovinesDataFixer(DataFixer fixer) {
     private static UnaryOperator<String> createRenamer(Map<String, String> renameMap) {
         return name -> renameMap.getOrDefault(NamespacedSchema.ensureNamespaced(name), name);
     }
+
+    public static TypeTemplate equipment(Schema schema) {
+        return DSL.optionalFields(
+                "ArmorItems",
+                DSL.list(References.ITEM_STACK.in(schema)),
+                "HandItems",
+                DSL.list(References.ITEM_STACK.in(schema)),
+                "body_armor_item",
+                References.ITEM_STACK.in(schema)
+        );
+    }
+
 }

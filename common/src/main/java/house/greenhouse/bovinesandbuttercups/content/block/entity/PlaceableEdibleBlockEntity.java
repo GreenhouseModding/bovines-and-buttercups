@@ -231,7 +231,7 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains("data")) {
-            ItemEdible edible = ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), createRemappedTag(tag.get("data"), registries)).getOrThrow().getFirst();
+            ItemEdible edible = ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("data")).getOrThrow().getFirst();
             setEdibleType(edible);
         }
 
@@ -239,20 +239,6 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
         if (tag.contains("attachments"))
             attachments.putAll(ATTACHMENTS_CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("attachments")).getOrThrow().getFirst());
         resetParticles();
-    }
-
-    private static Tag createRemappedTag(Tag oldTag, HolderLookup.Provider registries) {
-        Tag newTag = oldTag;
-
-        DataResult<Pair<ItemEdible, Tag>> dataResult = ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), oldTag);
-        if (dataResult.isError() && newTag.getAsString().equals("bovinesandbuttercups:bird_of_paradise_cupcake")) {
-            newTag = NbtOps.INSTANCE.createString("bovinesandbuttercups:alstroemeria_cupcake");
-        } else if (dataResult.isError() && newTag instanceof CompoundTag compoundTag && compoundTag.contains("type") && compoundTag.getString("type").equals("bovinesandbuttercups:bird_of_paradise_cupcake")) {
-            newTag = oldTag.copy();
-            ((CompoundTag)newTag).putString("type", "bovinesandbuttercups:alstroemeria_cupcake");
-        }
-
-        return newTag;
     }
 
     @Override
@@ -263,8 +249,6 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
         if (!attachments.isEmpty())
             tag.put("attachments", ATTACHMENTS_CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), attachments).getOrThrow());
-
-        tag.putInt("bovinesandbuttercups:data_version", BovinesDataFixer.CURRENT_VERSION);
     }
 
     @Override
