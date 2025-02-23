@@ -5,9 +5,9 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "bovinesandbuttercups:item/bird_of_paradise_cupcake"
+          "model": "bovinesandbuttercups:item/alstroemeria_cupcake"
         },
-        "when": "bovinesandbuttercups:bird_of_paradise_cupcake"
+        "when": "bovinesandbuttercups:alstroemeria_cupcake"
       },
       {
         "model": {

@@ -7,7 +7,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 
 public class BovinesLootTables {
     public static final ResourceKey<LootTable> MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("entities/moobloom"));
-    public static final ResourceKey<LootTable> SHEAR_BIRD_OF_PARADISE_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/bird_of_paradise"));
+    public static final ResourceKey<LootTable> SHEAR_ALSTROEMERIA_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/alstroemeria"));
     public static final ResourceKey<LootTable> SHEAR_BUTTERCUP_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/buttercup"));
     public static final ResourceKey<LootTable> SHEAR_CAMELLIA_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/camellia"));
     public static final ResourceKey<LootTable> SHEAR_CHARGELILY_MOOBLOOM = ResourceKey.create(Registries.LOOT_TABLE, BovinesAndButtercups.asResource("shearing/moobloom/chargelily"));

@@ -25,7 +25,7 @@ public class BovinesRecipeViewerUtil {
             List.of(RANDOM_FOUR),
             List.of(
                     BovinesFlowerCrownMaterials.FREESIA,
-                    BovinesFlowerCrownMaterials.BIRD_OF_PARADISE,
+                    BovinesFlowerCrownMaterials.ALSTROEMERIA,
                     BovinesFlowerCrownMaterials.BUTTERCUP,
                     BovinesFlowerCrownMaterials.LIMELIGHT,
                     BovinesFlowerCrownMaterials.CHARGELILY,

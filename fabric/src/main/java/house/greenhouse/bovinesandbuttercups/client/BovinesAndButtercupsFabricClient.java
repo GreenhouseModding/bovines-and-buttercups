@@ -73,8 +73,9 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BovinesAndButtercupsClient.init(new BovinesClientHelperFabric());
-//        BovinesAccessoriesIntegrationClient.init();
+        BovinesAndButtercupsClient.registerItemRenderers();
         BovinesModelSetTypes.init();
+//        BovinesAccessoriesIntegrationClient.init();
 
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BovinesModelLayers.BABY_MOOBLOOM_MODEL_LAYER, () -> CowModel.createBodyLayer().apply(CowModel.BABY_TRANSFORMER));
@@ -208,8 +209,8 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
     }
 
     public static void registerBlockLayers() {
-        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.BIRD_OF_PARADISE, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_BIRD_OF_PARADISE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.ALSTROEMERIA, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_ALSTROEMERIA, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.BUTTERCUP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.POTTED_BUTTERCUP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BovinesBlocks.CAMELLIA, RenderType.cutout());

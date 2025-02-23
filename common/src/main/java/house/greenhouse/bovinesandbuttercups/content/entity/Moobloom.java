@@ -19,6 +19,7 @@ import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextPara
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
+import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -143,6 +144,7 @@ public class Moobloom extends Cow {
         tag.putBoolean("has_snow", hasSnow());
         if (isSnowLayerPersistent())
             tag.putBoolean("snow_layer_persistent", true);
+        tag.putInt("bovinesandbuttercups:data_version", BovinesDataFixer.CURRENT_VERSION);
     }
 
     @Override

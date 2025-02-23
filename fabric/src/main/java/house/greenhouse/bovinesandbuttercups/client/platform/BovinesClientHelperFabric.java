@@ -5,7 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsFabricClient;
 import house.greenhouse.bovinesandbuttercups.client.api.model.condition.PlaceableEdibleSelector;
 import house.greenhouse.bovinesandbuttercups.client.model.PlaceableEdibleMultiPartBakedModel;
-import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -57,7 +57,7 @@ public class BovinesClientHelperFabric implements BovinesClientHelper {
 //            }
 //        }
 
-        if (entity.getItemBySlot(EquipmentSlot.HEAD).has(BovinesDataComponents.FLOWER_CROWN))
+        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(BovinesItems.FLOWER_CROWN))
             return entity.getItemBySlot(EquipmentSlot.HEAD);
 
         return ItemStack.EMPTY;

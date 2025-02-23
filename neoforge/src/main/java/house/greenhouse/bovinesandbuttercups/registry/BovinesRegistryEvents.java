@@ -27,12 +27,11 @@ import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesBiomeModifi
 import house.greenhouse.bovinesandbuttercups.content.worldgen.BovinesStructureTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.neoforged.neoforge.registries.RegisterEvent;
+import net.neoforged.neoforge.registries.*;
 
 import java.util.function.Consumer;
 
@@ -40,43 +39,30 @@ import java.util.function.Consumer;
 public class BovinesRegistryEvents {
     @SubscribeEvent
     public static void registerContent(RegisterEvent event) {
-        register(event, BovinesAttachments::registerAll);
-        register(event, BovinesBiomeModifierSerializers::registerAll);
-        register(event, BovinesBlockEntityTypes::registerAll);
-        register(event, BovinesBlocks::registerAll);
-        register(event, BovinesCowTypes::registerAll);
-        register(event, BovinesCriteriaTriggers::registerAll);
-        register(event, BovinesDataComponents::registerAll);
-        register(event, BovinesEntitySubPredicateTypes::registerAll);
-        register(event, BovinesEntityTypes::registerAll);
-        register(event, BovinesIngredients::registerAll);
-        register(event, BovinesLootItemConditionTypes::registerAll);
-        register(event, BovinesParticleTypes::registerAll);
-        register(event, BovinesRecipeSerializers::registerAll);
-        register(event, BovinesSoundEvents::registerAll);
-        register(event, BovinesStructureTypes::registerAll);
-        register(event, BovinesTextureModifierFactories::registerAll);
-        register(event, BovinesCowModelTypes::registerAll);
-
-        if (event.getRegistryKey() == Registries.SOUND_EVENT) {
-            registerHolders(BovinesSoundEvents::registerHolders);
-            BovinesItems.registerAll(Registry::register);
-        }
-
-        if (event.getRegistryKey() == Registries.MOB_EFFECT)
-            registerHolders(BovinesEffects::registerAll);
+        register(event, NeoForgeRegistries.Keys.ATTACHMENT_TYPES, BovinesAttachments::registerAll);
+        register(event, NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, BovinesBiomeModifierSerializers::registerAll);
+        register(event, Registries.BLOCK_ENTITY_TYPE, BovinesBlockEntityTypes::registerAll);
+        register(event, Registries.BLOCK, BovinesBlocks::registerAll);
+        register(event, BovinesRegistryKeys.COW_TYPE, BovinesCowTypes::registerAll);
+        register(event, Registries.TRIGGER_TYPE, BovinesCriteriaTriggers::registerAll);
+        register(event, Registries.DATA_COMPONENT_TYPE, BovinesDataComponents::registerAll);
+        register(event, Registries.ENTITY_SUB_PREDICATE_TYPE, BovinesEntitySubPredicateTypes::registerAll);
+        register(event, Registries.ENTITY_TYPE, BovinesEntityTypes::registerAll);
+        register(event, NeoForgeRegistries.Keys.INGREDIENT_TYPES, BovinesIngredients::registerAll);
+        register(event, Registries.ITEM, BovinesSoundEvents::registerAll);
+        register(event, Registries.ITEM, BovinesEffects::registerAll);
+        register(event, Registries.ITEM, BovinesItems::registerAll);
+        register(event, Registries.LOOT_CONDITION_TYPE, BovinesLootItemConditionTypes::registerAll);
+        register(event, Registries.PARTICLE_TYPE, BovinesParticleTypes::registerAll);
+        register(event, Registries.RECIPE_SERIALIZER, BovinesRecipeSerializers::registerAll);
+        register(event, Registries.STRUCTURE_TYPE, BovinesStructureTypes::registerAll);
+        register(event, BovinesRegistryKeys.TEXTURE_MODIFIER, BovinesTextureModifierFactories::registerAll);
+        register(event, BovinesRegistryKeys.MODEL_TYPE, BovinesCowModelTypes::registerAll);
     }
 
-    private static <T> void register(RegisterEvent event, Consumer<RegistrationCallback<T>> consumer) {
-        consumer.accept((registry, id, value) ->
-                event.register(registry.key(), id, () -> value));
-    }
-
-    private static <T> void registerHolders(Consumer<HolderRegistrationCallback<T>> consumer) {
-        consumer.accept((registry, id, value) -> {
-            Registry.register(registry, id, value);
-            return DeferredHolder.create(registry.key(), id);
-        });
+    private static <T> void register(RegisterEvent event, ResourceKey<T> registerAt, Runnable runnable) {
+        if (event.getRegistryKey() == registerAt)
+            runnable.run();
     }
 
     @SubscribeEvent

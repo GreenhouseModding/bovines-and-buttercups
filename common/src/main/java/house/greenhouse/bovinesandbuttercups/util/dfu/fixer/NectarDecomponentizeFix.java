@@ -26,10 +26,9 @@ public class NectarDecomponentizeFix extends DataFix {
 
     @Override
     protected TypeRewriteRule makeRule() {
-        Type<?> type = getInputSchema().getType(References.ITEM_STACK);
         OpticFinder<Pair<String, String>> idFinder = DSL.fieldFinder("id", DSL.named(References.ITEM_NAME.typeName(), NamespacedSchema.namespacedString()));
-        OpticFinder<?> componentsFinder = type.findField("components");
-        return fixTypeEverywhereTyped("Decomponentize Nectar fixer", type, typed -> {
+        OpticFinder<?> componentsFinder = getInputSchema().getType(References.ITEM_STACK).findField("components");
+        return fixTypeEverywhereTyped("Decomponentize Nectar fixer", getInputSchema().getType(References.ITEM_STACK), typed -> {
             Optional<Pair<String, String>> optional = typed.getOptional(idFinder);
             if (optional.isPresent() && Objects.equals(optional.get().getSecond(), "bovinesandbuttercups:nectar_bowl")) {
                 Optional<? extends Typed<?>> componentTyped = typed.getOptionalTyped(componentsFinder);
@@ -49,7 +48,8 @@ public class NectarDecomponentizeFix extends DataFix {
 
     static {
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-        builder.put("bovinesandbuttercups:bird_of_paradise", "bovinesandbuttercups:bird_of_paradise_nectar_bowl");
+        builder.put("bovinesandbuttercups:alstoemeria", "bovinesandbuttercups:alstroemeria_nectar_bowl");
+        builder.put("bovinesandbuttercups:bird_of_paradise", "bovinesandbuttercups:alstroemeria_nectar_bowl");
         builder.put("bovinesandbuttercups:buttercup", "bovinesandbuttercups:buttercup_nectar_bowl");
         builder.put("bovinesandbuttercups:camellia", "bovinesandbuttercups:camellia_nectar_bowl");
         builder.put("bovinesandbuttercups:chargelily", "bovinesandbuttercups:chargelily_nectar_bowl");

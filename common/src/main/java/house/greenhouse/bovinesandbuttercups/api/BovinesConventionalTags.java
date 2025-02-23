@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 
 public class BovinesConventionalTags {
     public static class ConventionalItemTags {
+        @Deprecated(forRemoval = true, since = "2.2.0")
         public static final TagKey<Item> HONEY_FOODS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "foods/honey"));
     }
 }

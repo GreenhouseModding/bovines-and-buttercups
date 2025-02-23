@@ -57,11 +57,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 import java.util.ArrayList;
@@ -89,13 +85,14 @@ public class BovinesAndButtercupsNeoForgeClient {
     public static class ModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-//            BovinesAccessoriesIntegrationClient.init();
+            BovinesAndButtercupsClient.registerItemRenderers();
             BovinesModelSetTypes.init();
+//            BovinesAccessoriesIntegrationClient.init();
         }
 
         @SubscribeEvent
-        public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
-            event.registerReloadListener(new ClearTextureCacheReloadListener());
+        public static void registerClientReloadListeners(AddClientReloadListenersEvent event) {
+            event.addListener(BovinesAndButtercups.asResource("clear_texture_cache"), new ClearTextureCacheReloadListener());
         }
 
         @SubscribeEvent

@@ -7,12 +7,9 @@ import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.BovinesFlo
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.equipment.ArmorType;
 
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class FlowerCrownItem extends Item {
     public static ItemStack createRainbowCrown(HolderLookup.Provider lookup) {
         HolderLookup.RegistryLookup<FlowerCrownMaterial> registry = lookup.lookupOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL);
         ItemStack rainbowCrown = new ItemStack(BovinesItems.FLOWER_CROWN);
-        rainbowCrown.set(BovinesDataComponents.FLOWER_CROWN, new FlowerCrown(registry.getOrThrow(BovinesFlowerCrownMaterials.BIRD_OF_PARADISE), registry.getOrThrow(BovinesFlowerCrownMaterials.BUTTERCUP), registry.getOrThrow(BovinesFlowerCrownMaterials.LIMELIGHT), registry.getOrThrow(BovinesFlowerCrownMaterials.FREESIA), registry.getOrThrow(BovinesFlowerCrownMaterials.CHARGELILY), registry.getOrThrow(BovinesFlowerCrownMaterials.PINK_DAISY), registry.getOrThrow(BovinesFlowerCrownMaterials.HYACINTH), registry.getOrThrow(BovinesFlowerCrownMaterials.TROPICAL_BLUE)));
+        rainbowCrown.set(BovinesDataComponents.FLOWER_CROWN, new FlowerCrown(registry.getOrThrow(BovinesFlowerCrownMaterials.ALSTROEMERIA), registry.getOrThrow(BovinesFlowerCrownMaterials.BUTTERCUP), registry.getOrThrow(BovinesFlowerCrownMaterials.LIMELIGHT), registry.getOrThrow(BovinesFlowerCrownMaterials.FREESIA), registry.getOrThrow(BovinesFlowerCrownMaterials.CHARGELILY), registry.getOrThrow(BovinesFlowerCrownMaterials.PINK_DAISY), registry.getOrThrow(BovinesFlowerCrownMaterials.HYACINTH), registry.getOrThrow(BovinesFlowerCrownMaterials.TROPICAL_BLUE)));
         return rainbowCrown;
     }
 }

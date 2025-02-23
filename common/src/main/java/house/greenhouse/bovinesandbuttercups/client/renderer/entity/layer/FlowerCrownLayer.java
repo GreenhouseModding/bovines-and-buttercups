@@ -7,6 +7,7 @@ import house.greenhouse.bovinesandbuttercups.client.access.FlowerCrownRenderStat
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesAtlases;
+import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -23,8 +24,10 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class FlowerCrownLayer<T extends LivingEntityRenderState, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
@@ -43,13 +46,13 @@ public class FlowerCrownLayer<T extends LivingEntityRenderState, M extends Entit
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
-        FlowerCrown flowerCrown = ((FlowerCrownRenderStateAccess)renderState).bovinesandbuttercups$getFlowerCrown();
+        @Nullable ItemStack flowerCrown = ((FlowerCrownRenderStateAccess)renderState).bovinesandbuttercups$getFlowerCrown();
         if (flowerCrown == null)
             return;
 
         model.getHead().copyFrom(getParentModel().getHead());
         for (int i = 0; i < 8; ++i) {
-            renderPart(model, poseStack, bufferSource, packedLight, i, flowerCrown);
+            renderPart(model, poseStack, bufferSource, packedLight, i, flowerCrown.get(BovinesDataComponents.FLOWER_CROWN));
         }
     }
 

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "H": "#c:foods/honey",
+    "H": "#c:drinks/honey",
     "N": "bovinesandbuttercups:lingholm_nectar_bowl",
     "P": "minecraft:paper",
     "W": "minecraft:wheat"

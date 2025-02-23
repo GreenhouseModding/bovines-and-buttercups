@@ -47,7 +47,7 @@ import java.util.Optional;
 
 public class BovinesCowVariants {
     public static class MoobloomKeys {
-        public static final ResourceKey<CowVariant<?>> BIRD_OF_PARADISE = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("bird_of_paradise"));
+        public static final ResourceKey<CowVariant<?>> ALSTROEMERIA = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("alstroemeria"));
         public static final ResourceKey<CowVariant<?>> BUTTERCUP = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("buttercup"));
         public static final ResourceKey<CowVariant<?>> CAMELLIA = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("camellia"));
         public static final ResourceKey<CowVariant<?>> CHARGELILY = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("chargelily"));
@@ -113,17 +113,17 @@ public class BovinesCowVariants {
         SimpleWeightedRandomList<HolderSet<Biome>> pinkDaisyFlowerForestSet = SimpleWeightedRandomList.<HolderSet<Biome>>builder().add(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_MOOBLOOM_FLOWER_FOREST), 1).build();
         SimpleWeightedRandomList<Holder<CowVariant<?>>> chargelilyWeighted = SimpleWeightedRandomList.single(chargelilyMoobloom);
 
-        context.register(MoobloomKeys.BIRD_OF_PARADISE, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
-                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.BIRD_OF_PARADISE))),
-                new BlockReference<>(Optional.of(BovinesBlocks.BIRD_OF_PARADISE.defaultBlockState()), Optional.empty(), Optional.empty()),
-                new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("bird_of_paradise_bud")), Optional.empty()),
+        context.register(MoobloomKeys.ALSTROEMERIA, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(
+                new CowConfiguration.Settings(Optional.empty(), SimpleWeightedRandomList.empty(), chargelilyWeighted, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.ALSTROEMERIA))),
+                new BlockReference<>(Optional.of(BovinesBlocks.ALSTROEMERIA.defaultBlockState()), Optional.empty(), Optional.empty()),
+                new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("alstroemeria_bud")), Optional.empty()),
                 BovinesCowModelTypes.WARM,
                 List.of(new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/moobloom/moobloom_grass_layer"), List.of(new GrassTintTextureModifierFactory(),
                                 new FallbackTextureModifierFactory(List.of()))),
                         new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
                                 List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
-                Optional.of(BovinesItems.BIRD_OF_PARADISE_NECTAR_BOWL.getDefaultInstance()),
-                Optional.of(BovinesLootTables.SHEAR_BIRD_OF_PARADISE_MOOBLOOM.location()),
+                Optional.of(BovinesItems.ALSTROEMERIA_NECTAR_BOWL.getDefaultInstance()),
+                Optional.of(BovinesLootTables.SHEAR_ALSTROEMERIA_MOOBLOOM.location()),
                 SimpleWeightedRandomList.single(sombercupMoobloom),
                 new OffspringConditions(List.of(createCondition(
                         List.of(
@@ -131,7 +131,7 @@ public class BovinesCowVariants {
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.POPPY, Blocks.POTTED_POPPY),
                                 BlockPredicate.Builder.block().of(blockRegistry, Blocks.ACACIA_LOG, Blocks.ACACIA_WOOD, Blocks.ACACIA_SAPLING, Blocks.POTTED_ACACIA_SAPLING)
                         ),
-                        BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.BIRD_OF_PARADISE, BovinesBlocks.POTTED_BIRD_OF_PARADISE))),
+                        BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.ALSTROEMERIA, BovinesBlocks.POTTED_ALSTROEMERIA))),
                         List.of(),
                         OffspringConditions.Inheritance.PARENT))));
         context.register(MoobloomKeys.BUTTERCUP, new CowVariant<>(BovinesCowTypes.MOOBLOOM_TYPE, new MoobloomConfiguration(

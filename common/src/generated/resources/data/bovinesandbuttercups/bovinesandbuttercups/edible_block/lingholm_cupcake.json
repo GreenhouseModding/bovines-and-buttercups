@@ -547,6 +547,20 @@
               "#minecraft:candles": {
                 "active": true,
                 "count": {
+                  "min": 4
+                },
+                "item": []
+              }
+            }
+          },
+          "level": 3
+        },
+        {
+          "comparable": {
+            "attachments": {
+              "#minecraft:candles": {
+                "active": true,
+                "count": {
                   "min": 2
                 },
                 "item": []
@@ -574,20 +588,6 @@
             "attachments": {
               "#minecraft:candles": {
                 "active": true,
-                "item": []
-              }
-            }
-          },
-          "level": 3
-        },
-        {
-          "comparable": {
-            "attachments": {
-              "#minecraft:candles": {
-                "active": true,
-                "count": {
-                  "min": 4
-                },
                 "item": []
               }
             }

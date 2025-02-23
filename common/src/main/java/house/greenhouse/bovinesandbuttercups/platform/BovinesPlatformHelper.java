@@ -41,8 +41,6 @@ public interface BovinesPlatformHelper {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
 
-    <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey);
-
     String getAttachmentKey();
 
     LockdownAttachment getLockdownAttachment(LivingEntity entity);

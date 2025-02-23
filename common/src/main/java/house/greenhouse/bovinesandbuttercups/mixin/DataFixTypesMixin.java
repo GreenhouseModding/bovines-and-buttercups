@@ -12,8 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class DataFixTypesMixin {
     @ModifyReturnValue(method = "update(Lcom/mojang/datafixers/DataFixer;Lcom/mojang/serialization/Dynamic;II)Lcom/mojang/serialization/Dynamic;", at = @At("RETURN"))
     private <T> Dynamic<T> bovinesandbuttercups$updateWithDataFixers(Dynamic<T> original) {
-        if (BovinesDataFixer.get() == null)
-            return original;
         return BovinesDataFixer.get().updateWithFixers((DataFixTypes)(Object)this, original);
     }
 }

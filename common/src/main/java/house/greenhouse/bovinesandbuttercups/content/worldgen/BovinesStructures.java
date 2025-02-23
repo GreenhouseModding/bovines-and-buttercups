@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class BovinesStructures {
-    public static final ResourceKey<Structure> BIRD_OF_PARADISE_RANCH = ResourceKey.create(Registries.STRUCTURE, BovinesAndButtercups.asResource("ranch/bird_of_paradise"));
+    public static final ResourceKey<Structure> ALSTROEMERIA_RANCH = ResourceKey.create(Registries.STRUCTURE, BovinesAndButtercups.asResource("ranch/alstroemeria"));
     public static final ResourceKey<Structure> BUTTERCUP_RANCH = ResourceKey.create(Registries.STRUCTURE, BovinesAndButtercups.asResource("ranch/buttercup"));
     public static final ResourceKey<Structure> FREESIA_RANCH = ResourceKey.create(Registries.STRUCTURE, BovinesAndButtercups.asResource("ranch/freesia"));
     public static final ResourceKey<Structure> HYACINTH_RANCH = ResourceKey.create(Registries.STRUCTURE, BovinesAndButtercups.asResource("ranch/hyacinth"));

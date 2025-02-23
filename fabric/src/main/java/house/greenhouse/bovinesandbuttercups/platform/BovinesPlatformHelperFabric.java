@@ -57,11 +57,6 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey) {
-        return FabricRegistryBuilder.createSimple(registryKey).buildAndRegister();
-    }
-
-    @Override
     public String getAttachmentKey() {
         return "fabric:attachments";
     }

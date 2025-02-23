@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(NbtUtils.class)
 public class NbtUtilsMixin {
-    @ModifyReturnValue(method = "addCurrentDataVersion", at = @At("RETURN"))
+    @ModifyReturnValue(method = "addDataVersion", at = @At("RETURN"))
     private static CompoundTag bovinesandbuttercups$addBovinesDataVersion(CompoundTag original) {
         return BovinesDataFixer.setModDataVersion(original);
     }

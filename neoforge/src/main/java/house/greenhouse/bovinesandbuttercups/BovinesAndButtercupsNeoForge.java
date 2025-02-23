@@ -32,7 +32,6 @@ import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
 import house.greenhouse.bovinesandbuttercups.util.WeatherUtil;
-import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -323,7 +322,6 @@ public class BovinesAndButtercupsNeoForge {
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
             MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
-            BovinesDataFixer.register();
         }
 
         @SubscribeEvent

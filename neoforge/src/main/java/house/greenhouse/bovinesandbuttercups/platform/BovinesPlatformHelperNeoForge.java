@@ -11,9 +11,7 @@ import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachmen
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +29,6 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -58,11 +55,6 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     public boolean isDevelopmentEnvironment() {
 
         return !FMLLoader.isProduction();
-    }
-
-    @Override
-    public <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey) {
-        return new RegistryBuilder<>(registryKey).create();
     }
 
     @Override

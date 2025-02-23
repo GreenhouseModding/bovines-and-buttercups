@@ -22,9 +22,6 @@
     "main": [
       "house.greenhouse.bovinesandbuttercups.BovinesAndButtercupsFabric"
     ],
-    "preLaunch": [
-      "house.greenhouse.bovinesandbuttercups.BovinesAndButtercupsFabricPre"
-    ],
     "client": [
       "house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsFabricClient"
     ],

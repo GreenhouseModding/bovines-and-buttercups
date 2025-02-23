@@ -26,7 +26,7 @@ import java.util.function.Function;
 public record AddCowTypeSpawnsModifier(Holder<CowType<?>> cowType, Optional<HolderSet<Biome>> excludedBiomes, List<MobSpawnSettings.SpawnerData> spawners) implements BiomeModifier {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("add_cow_type_spawns");
     public static final MapCodec<AddCowTypeSpawnsModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            BovinesRegistries.COW_TYPE.holderByNameCodec().fieldOf("type").forGetter(AddCowTypeSpawnsModifier::cowType),
+            BovinesRegistries.COW_TYPE.holderByNameCodec().fieldOf("cow_type").forGetter(AddCowTypeSpawnsModifier::cowType),
             Biome.LIST_CODEC.optionalFieldOf("excluded_biomes").forGetter(AddCowTypeSpawnsModifier::excludedBiomes),
             Codec.either(MobSpawnSettings.SpawnerData.CODEC.listOf(), MobSpawnSettings.SpawnerData.CODEC).xmap(
                     either -> either.map(Function.identity(), List::of),

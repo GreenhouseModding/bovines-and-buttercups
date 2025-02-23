@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "bovinesandbuttercups:item/bird_of_paradise_nectar_bowl"
-  }
-}

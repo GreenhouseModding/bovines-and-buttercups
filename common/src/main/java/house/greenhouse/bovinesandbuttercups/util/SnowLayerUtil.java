@@ -3,7 +3,6 @@ package house.greenhouse.bovinesandbuttercups.util;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

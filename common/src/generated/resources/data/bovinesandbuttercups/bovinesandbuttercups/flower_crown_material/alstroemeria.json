@@ -1,0 +1,29 @@
+{
+  "description": {
+    "color": "#FF8C00",
+    "translate": "flower_crown_material.bovinesandbuttercups.alstroemeria"
+  },
+  "equipped_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_alstroemeria",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_left_alstroemeria",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/bottom_right_alstroemeria",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_left_alstroemeria",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/center_right_alstroemeria",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_alstroemeria",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_left_alstroemeria",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/models/top_right_alstroemeria"
+  },
+  "ingredient": {
+    "id": "bovinesandbuttercups:alstroemeria"
+  },
+  "item_textures": {
+    "bottom": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_alstroemeria",
+    "bottom_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_left_alstroemeria",
+    "bottom_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/bottom_right_alstroemeria",
+    "center_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_left_alstroemeria",
+    "center_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/center_right_alstroemeria",
+    "top": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_alstroemeria",
+    "top_left": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_left_alstroemeria",
+    "top_right": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/items/top_right_alstroemeria"
+  }
+}

@@ -24,7 +24,6 @@ public class BovinesAndButtercupsClient {
         clientHelper = helper;
         RenderStateObject.registerAll();
         BovinesSelectProperties.registerAll();
-        registerItemRenderers();
     }
 
     public static void registerItemRenderers() {

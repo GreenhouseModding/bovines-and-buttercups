@@ -12,7 +12,6 @@ import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.consume_effects.RemoveStatusEffectsConsumeEffect;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BovinesFoods {
     public static class Properties {
@@ -24,7 +23,7 @@ public class BovinesFoods {
     }
 
     public static class Consumables {
-        public static final Consumable BIRD_OF_PARADISE_NECTAR = Consumable.builder()
+        public static final Consumable ALSTROEMERIA_NECTAR = Consumable.builder()
                 .consumeSeconds(1.6F)
                 .animation(ItemUseAnimation.DRINK)
                 .sound(SoundEvents.GENERIC_DRINK)

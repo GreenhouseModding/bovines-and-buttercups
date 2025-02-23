@@ -1,0 +1,6 @@
+{
+  "parent": "bovinesandbuttercups:block/template_four_cupcakes",
+  "textures": {
+    "all": "bovinesandbuttercups:block/alstroemeria_cupcake"
+  }
+}

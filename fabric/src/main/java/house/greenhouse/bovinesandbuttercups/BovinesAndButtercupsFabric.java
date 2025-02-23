@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
+import house.greenhouse.bovinesandbuttercups.api.CowType;
 import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
@@ -10,9 +11,10 @@ import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIn
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
+import house.greenhouse.bovinesandbuttercups.platform.BovinesPlatformHelperFabric;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
-import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
@@ -80,13 +82,13 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        BovinesAndButtercups.init(new BovinesPlatformHelperFabric());
         registerContents();
         registerNetwork();
         registerCreativeTabEntries();
         registerCompostables();
         registerBiomeModifications();
         registerResourcePacks();
-        BovinesDataFixer.register();
         MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
@@ -150,23 +152,23 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
     }
 
     private static void registerContents() {
-        BovinesSoundEvents.registerHolders(Registry::registerForHolder);
-        BovinesBlockEntityTypes.registerAll(Registry::register);
-        BovinesBlocks.registerAll(Registry::register);
-        BovinesCowTypes.registerAll(Registry::register);
-        BovinesCriteriaTriggers.registerAll(Registry::register);
-        BovinesDataComponents.registerAll(Registry::register);
-        BovinesEffects.registerAll(Registry::registerForHolder);
-        BovinesEntitySubPredicateTypes.registerAll(Registry::register);
-        BovinesEntityTypes.registerAll(Registry::register);
-        BovinesLootItemConditionTypes.registerAll(Registry::register);
-        BovinesItems.registerAll(Registry::register);
-        BovinesParticleTypes.registerAll(Registry::register);
-        BovinesRecipeSerializers.registerAll(Registry::register);
-        BovinesSoundEvents.registerAll(Registry::register);
-        BovinesStructureTypes.registerAll(Registry::register);
-        BovinesTextureModifierFactories.registerAll(Registry::register);
-        BovinesCowModelTypes.registerAll(Registry::register);
+        registerRegistries();
+        BovinesSoundEvents.registerAll();
+        BovinesBlockEntityTypes.registerAll();
+        BovinesBlocks.registerAll();
+        BovinesEntityTypes.registerAll();
+        BovinesCowTypes.registerAll();
+        BovinesCriteriaTriggers.registerAll();
+        BovinesDataComponents.registerAll();
+        BovinesEffects.registerAll();
+        BovinesEntitySubPredicateTypes.registerAll();
+        BovinesLootItemConditionTypes.registerAll();
+        BovinesItems.registerAll();
+        BovinesParticleTypes.registerAll();
+        BovinesRecipeSerializers.registerAll();
+        BovinesStructureTypes.registerAll();
+        BovinesTextureModifierFactories.registerAll();
+        BovinesCowModelTypes.registerAll();
 
         BovinesAttachments.init();
         BovinesIngredients.init();
@@ -176,8 +178,14 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         });
     }
 
+    private static void registerRegistries() {
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.COW_TYPE, BovinesRegistries.COW_TYPE);
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.MODEL_TYPE, BovinesRegistries.MODEL_TYPE);
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.TEXTURE_MODIFIER, BovinesRegistries.TEXTURE_MODIFIER);
+    }
+
     private static void registerCompostables() {
-        CompostingChanceRegistry.INSTANCE.add(BovinesItems.BIRD_OF_PARADISE, 0.65F);
+        CompostingChanceRegistry.INSTANCE.add(BovinesItems.ALSTROEMERIA, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.BUTTERCUP, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.CHARGELILY, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.FREESIA, 0.65F);

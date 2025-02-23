@@ -4,20 +4,14 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandExceptionType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import com.mojang.brigadier.suggestion.Suggestion;
-import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
-import net.minecraft.client.gui.components.CommandSuggestions;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -34,8 +28,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class LockdownCommand {
     public static void register(CommandNode<CommandSourceStack> root, CommandBuildContext context) {

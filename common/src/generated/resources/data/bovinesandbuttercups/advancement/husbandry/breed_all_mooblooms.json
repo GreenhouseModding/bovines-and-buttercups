@@ -1,10 +1,10 @@
 {
   "parent": "bovinesandbuttercups:husbandry/breed_new_moobloom",
   "criteria": {
-    "bovinesandbuttercups:bird_of_paradise": {
+    "bovinesandbuttercups:alstroemeria": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
-        "variants": "bovinesandbuttercups:bird_of_paradise"
+        "variants": "bovinesandbuttercups:alstroemeria"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },
@@ -80,7 +80,7 @@
   },
   "requirements": [
     [
-      "bovinesandbuttercups:bird_of_paradise"
+      "bovinesandbuttercups:alstroemeria"
     ],
     [
       "bovinesandbuttercups:camellia"

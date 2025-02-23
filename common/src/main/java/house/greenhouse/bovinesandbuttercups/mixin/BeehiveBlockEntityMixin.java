@@ -1,7 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;

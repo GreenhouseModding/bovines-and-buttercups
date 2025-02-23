@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
@@ -11,16 +12,17 @@ import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemEdible;
+import house.greenhouse.bovinesandbuttercups.content.data.edible.BovinesEdibleBlockTypes;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
+import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.StringTagVisitor;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -228,13 +230,29 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        if (tag.contains("data"))
-            setEdibleType(ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("data")).getOrThrow().getFirst());
+        if (tag.contains("data")) {
+            ItemEdible edible = ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), createRemappedTag(tag.get("data"), registries)).getOrThrow().getFirst();
+            setEdibleType(edible);
+        }
 
         attachments.clear();
         if (tag.contains("attachments"))
             attachments.putAll(ATTACHMENTS_CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("attachments")).getOrThrow().getFirst());
         resetParticles();
+    }
+
+    private static Tag createRemappedTag(Tag oldTag, HolderLookup.Provider registries) {
+        Tag newTag = oldTag;
+
+        DataResult<Pair<ItemEdible, Tag>> dataResult = ItemEdible.CODEC.decode(registries.createSerializationContext(NbtOps.INSTANCE), oldTag);
+        if (dataResult.isError() && newTag.getAsString().equals("bovinesandbuttercups:bird_of_paradise_cupcake")) {
+            newTag = NbtOps.INSTANCE.createString("bovinesandbuttercups:alstroemeria_cupcake");
+        } else if (dataResult.isError() && newTag instanceof CompoundTag compoundTag && compoundTag.contains("type") && compoundTag.getString("type").equals("bovinesandbuttercups:bird_of_paradise_cupcake")) {
+            newTag = oldTag.copy();
+            ((CompoundTag)newTag).putString("type", "bovinesandbuttercups:alstroemeria_cupcake");
+        }
+
+        return newTag;
     }
 
     @Override
@@ -245,6 +263,8 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
         if (!attachments.isEmpty())
             tag.put("attachments", ATTACHMENTS_CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), attachments).getOrThrow());
+
+        tag.putInt("bovinesandbuttercups:data_version", BovinesDataFixer.CURRENT_VERSION);
     }
 
     @Override

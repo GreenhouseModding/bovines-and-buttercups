@@ -17,7 +17,6 @@ import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -40,7 +39,7 @@ public class CreativeTabHelper {
     public static List<ItemStack> getFlowersForCreativeTab(HolderLookup.Provider lookup) {
         return List.of(
                 BovinesItems.FREESIA.getDefaultInstance(),
-                BovinesItems.BIRD_OF_PARADISE.getDefaultInstance(),
+                BovinesItems.ALSTROEMERIA.getDefaultInstance(),
                 BovinesItems.BUTTERCUP.getDefaultInstance(),
                 BovinesItems.LIMELIGHT.getDefaultInstance(),
                 BovinesItems.LINGHOLM.getDefaultInstance(),
@@ -82,7 +81,7 @@ public class CreativeTabHelper {
     public static List<ItemStack> getNectarBowlsForCreativeTab(HolderLookup.Provider lookup) {
         return List.of(
                 BovinesItems.FREESIA_NECTAR_BOWL.getDefaultInstance(),
-                BovinesItems.BIRD_OF_PARADISE_NECTAR_BOWL.getDefaultInstance(),
+                BovinesItems.ALSTROEMERIA_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.BUTTERCUP_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.LIMELIGHT_NECTAR_BOWL.getDefaultInstance(),
                 BovinesItems.LINGHOLM_NECTAR_BOWL.getDefaultInstance(),

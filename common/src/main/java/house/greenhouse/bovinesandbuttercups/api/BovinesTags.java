@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class BovinesTags {
     public static class BiomeTags {
-        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BIRD_OF_PARADISE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/bird_of_paradise"));
+        public static final TagKey<Biome> HAS_RANCH_STRUCTURE_ALSTROEMERIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/alstroemeria"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_BUTTERCUP = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/buttercup"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CAMELLIA = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/camellia"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_CHARGELILY = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/chargelily"));
@@ -37,7 +37,7 @@ public class BovinesTags {
         public static final TagKey<Block> DOES_NOT_STICK_RICH_HONEY_BLOCK = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("does_not_stick/rich_honey_block"));
         public static final TagKey<Block> MOOBLOOM_FLOWERS = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("moobloom_flowers"));
 
-        public static final TagKey<Block> BIRD_OF_PARADISE_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/bird_of_paradise"));
+        public static final TagKey<Block> ALSTROEMERIA_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/alstroemeria"));
         public static final TagKey<Block> BUTTERCUP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/buttercup"));
         public static final TagKey<Block> CAMELLIA_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/camellia"));
         public static final TagKey<Block> CHARGELILY_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/chargelily"));
