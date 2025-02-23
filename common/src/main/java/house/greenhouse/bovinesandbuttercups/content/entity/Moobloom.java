@@ -144,7 +144,6 @@ public class Moobloom extends Cow {
         tag.putBoolean("has_snow", hasSnow());
         if (isSnowLayerPersistent())
             tag.putBoolean("snow_layer_persistent", true);
-        tag.putInt("bovinesandbuttercups:data_version", BovinesDataFixer.CURRENT_VERSION);
     }
 
     @Override
