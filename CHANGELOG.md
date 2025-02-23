@@ -1,16 +1,16 @@
 # 2.2.0 - The Texterity (and Partial Backport) Update
 ### Major Changes
-- Updated the model of the Freesia and Bird of Paradise Mooblooms to match the upcoming Warm cow variant's model.
+- Reflavoured Bird of Paradise to Alstroemeria.
+  - Birds of Paradise are far more linked to Jungles than Savannas, and Tropical Blues already fulfil the Savanna niche. So the change happened to make this orange flower fulfil the Savanna niche far more.
+  - There is backwards compatibility implemented for converting blocks, items, and items on vanilla block entities and entities.
+  - Cross-mod backwards compatibility may be impossible, so please make sure to put any Bird of Paradise items away from modded (block) entities, and to allow players a free cheat card if they don't do this.
+  - Language entries may be inaccurate after this change, but they were already so *shrug*.
+- Updated the model of the Freesia and Alstroemeria Mooblooms to match the upcoming Warm cow variant's model.
 - Updated the model of the Lingholm and Snowdrop Mooblooms to match the upcoming Cold cow variant's model.
 - Updated the model of the Limelight and Nightshade Mooblooms to more closely resemble a Zebu.
 - Upddated the textures of every Moobloom added by the mod to be closer to the upcoming 1.21.5 cow variant textures.
 - Updated the textures of certain Moobloom linked blocks/items (Flowers, Cupcakes, Flower Crowns) to match the new variant textures' colors.
 - Updated Lingholm flower texture.
-- Reflavoured Bird of Paradise to Alstroemeria.
-  - Birds of Paradise are far more linked to Jungles than Savannas, and Tropical Blues already fulfil the Savanna niche. So the change happened to make this orange flower fulfil the Savanna niche far more.
-  - There is backwards compatibility implemented for converting blocks, items, and items on vanilla block entities and entities.
-  - Modded backwards compatibility is outright impossible, so please make sure to put any Bird of Paradise items away from modded (block) entities, and to allow players a free cheat card if they don't do this.
-  - Language entries may be inaccurate.
 
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
