@@ -4,18 +4,14 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.Decoder;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.CowType;
+import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomFlowerType;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
 import house.greenhouse.bovinesandbuttercups.api.block.EdibleBlockType;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.RegistrationInfo;
-import net.minecraft.core.Registry;
-import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.*;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.RegistryOps;
@@ -70,23 +66,23 @@ public class RegistryDataLoaderMixin {
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.COW_VARIANT) {
             Optional<CowType<?>> optional = BovinesRegistries.COW_TYPE.stream().filter(k -> k.defaultKey().location().equals(key.location())).findFirst();
             if (optional.isPresent()) {
-                BovinesAndButtercups.LOG.error("Attempted modification of default cow type '{}'. (Skipping).", optional.get().defaultKey().location());
+                BovinesAndButtercups.LOG.error("Attempted modification of default cow variant '{}'. (Skipping).", optional.get().defaultKey().location());
                 ci.cancel();
             }
         }
 
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.CUSTOM_FLOWER_TYPE && key.location().equals(CustomFlowerType.MISSING_KEY.location())) {
-            BovinesAndButtercups.LOG.error("Attempted modification of default custom flower type '{}'. (Skipping).", CustomFlowerType.MISSING_KEY.location());
+            BovinesAndButtercups.LOG.error("Attempted modification of default custom flower variant '{}'. (Skipping).", CustomFlowerType.MISSING_KEY.location());
             ci.cancel();
         }
 
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.CUSTOM_MUSHROOM_TYPE && key.location().equals(CustomMushroomType.MISSING_KEY.location())){
-            BovinesAndButtercups.LOG.error("Attempted modification of default custom mushroom type '{}'. (Skipping).", CustomMushroomType.MISSING_KEY.location());
+            BovinesAndButtercups.LOG.error("Attempted modification of default custom mushroom variant '{}'. (Skipping).", CustomMushroomType.MISSING_KEY.location());
             ci.cancel();
         }
 
         if (registry.key() == (ResourceKey) BovinesRegistryKeys.EDIBLE_BLOCK_TYPE && key.location().equals(EdibleBlockType.MISSING_KEY.location())){
-            BovinesAndButtercups.LOG.error("Attempted modification of default edible block type '{}'. (Skipping).", EdibleBlockType.MISSING_KEY.location());
+            BovinesAndButtercups.LOG.error("Attempted modification of default edible block variant '{}'. (Skipping).", EdibleBlockType.MISSING_KEY.location());
             ci.cancel();
         }
     }

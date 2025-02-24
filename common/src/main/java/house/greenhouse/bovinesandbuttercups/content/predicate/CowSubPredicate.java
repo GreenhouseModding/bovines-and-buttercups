@@ -18,9 +18,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public record CowSubPredicate(Optional<Holder<CowVariant<?>>> type, Optional<Boolean> hasSnow) implements EntitySubPredicate {
+public record CowSubPredicate(Optional<Holder<CowVariant<?>>> variant, Optional<Boolean> hasSnow) implements EntitySubPredicate {
     public static final MapCodec<CowSubPredicate> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            RegistryFixedCodec.create(BovinesRegistryKeys.COW_VARIANT).optionalFieldOf("variant").forGetter(CowSubPredicate::type),
+            RegistryFixedCodec.create(BovinesRegistryKeys.COW_VARIANT).optionalFieldOf("variant").forGetter(CowSubPredicate::variant),
             Codec.BOOL.optionalFieldOf("has_snow").forGetter(CowSubPredicate::hasSnow)
     ).apply(inst, CowSubPredicate::new));
 
@@ -37,11 +37,11 @@ public record CowSubPredicate(Optional<Holder<CowVariant<?>>> type, Optional<Boo
         if (level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).stream().noneMatch(cowVariant -> cowVariant.type().isApplicable(entity)))
             return false;
 
-        if (type.isPresent()) {
+        if (variant.isPresent()) {
             CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (attachment == null)
                 return false;
-            if (attachment.cowVariant().isBound() && attachment.cowVariant().value().type().isApplicable(entity) && attachment.cowVariant().is(type.get()))
+            if (attachment.cowVariant().isBound() && attachment.cowVariant().value().type().isApplicable(entity) && attachment.cowVariant().is(variant.get()))
                 return false;
         }
 
@@ -49,8 +49,7 @@ public record CowSubPredicate(Optional<Holder<CowVariant<?>>> type, Optional<Boo
             CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (attachment == null)
                 return false;
-            if (attachment.cowVariant().isBound() && !attachment.cowVariant().value().configuration().hasSnow(entity))
-                return false;
+            return !attachment.cowVariant().isBound() || attachment.cowVariant().value().configuration().hasSnow(entity);
         }
 
         return true;

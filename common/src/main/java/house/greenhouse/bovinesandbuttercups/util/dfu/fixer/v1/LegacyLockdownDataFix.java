@@ -23,11 +23,11 @@ public class LegacyLockdownDataFix extends DataFix {
     @Override
     protected TypeRewriteRule makeRule() {
         return TypeRewriteRule.seq(
-                fixTypeEverywhereTyped("Fix Lockdown attachment for entities",
+                fixTypeEverywhereTyped("Fix lockdown attachment for entities",
                         this.getInputSchema().getType(References.ENTITY),
                         this.getOutputSchema().getType(References.ENTITY),
                         this::fix),
-                fixTypeEverywhereTyped("Fix Lockdown attachment for players",
+                fixTypeEverywhereTyped("Fix lockdown attachment for players",
                         this.getInputSchema().getType(References.PLAYER),
                         this.getOutputSchema().getType(References.PLAYER),
                         this::fix)

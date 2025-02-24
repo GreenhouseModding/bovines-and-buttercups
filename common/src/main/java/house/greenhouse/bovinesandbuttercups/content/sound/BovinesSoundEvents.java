@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
 public class BovinesSoundEvents {
+    public static final SoundEvent COW_CONVERT = register(BovinesAndButtercups.asResource("entity.cow.convert"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.cow.convert")));
     public static final SoundEvent MOOBLOOM_EAT = register(BovinesAndButtercups.asResource("entity.moobloom.eat"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.eat")));
     public static final SoundEvent MOOBLOOM_MILK = register(BovinesAndButtercups.asResource("entity.moobloom.milk"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.milk")));
     public static final SoundEvent MOOBLOOM_SHEAR = register(BovinesAndButtercups.asResource("entity.moobloom.shear"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.shear")));

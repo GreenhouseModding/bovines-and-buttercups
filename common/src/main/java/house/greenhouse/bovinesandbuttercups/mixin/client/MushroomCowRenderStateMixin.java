@@ -5,8 +5,8 @@ import house.greenhouse.bovinesandbuttercups.access.MushroomCowRenderStateLayerB
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
-import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
 import house.greenhouse.bovinesandbuttercups.client.api.RenderStateObject;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
@@ -51,8 +51,8 @@ public class MushroomCowRenderStateMixin implements CowVariantRenderState<Mushro
     public void extractModel(LivingEntityRenderer<MushroomCow, ?, CowModel> renderer, MushroomCow entity) {
         bovinesandbuttercups$cowVariant = CowVariantAttachment.getCowVariantHolderFromEntity(entity, BovinesCowTypes.MOOSHROOM_TYPE);
         if (renderer instanceof AgeableMobRendererAccessor accessor && bovinesandbuttercups$cowVariant != null) {
-            CowModelType cowModel = bovinesandbuttercups$cowVariant.value().configuration().model();
-            if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowVariant.value().configuration().model())) {
+            CowModelType cowModel = bovinesandbuttercups$cowVariant.value().configuration().settings().model();
+            if (!bovinesandbuttercups$models.containsKey(bovinesandbuttercups$cowVariant.value().configuration().settings().model())) {
                 ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
                 if (cowModel != null && cowModel.namespaceOverride() != null)
                     namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());

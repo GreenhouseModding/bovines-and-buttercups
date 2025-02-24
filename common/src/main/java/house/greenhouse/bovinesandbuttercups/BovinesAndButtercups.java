@@ -10,7 +10,6 @@ public class BovinesAndButtercups {
     public static final String MOD_ID = "bovinesandbuttercups";
     public static final String MOD_NAME = "Bovines and Buttercups";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
-    public static boolean convertedByBovines = false;
 
     private static BovinesPlatformHelper helper;
 

@@ -2,13 +2,14 @@ package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
-import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomNeoForge;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
+import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomNeoForge;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -28,15 +29,11 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
+import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
 
@@ -80,6 +77,21 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     @Override
     public boolean hasMooshroomExtrasAttachment(LivingEntity entity) {
         return entity.hasData(BovinesAttachments.MOOSHROOM_EXTRAS);
+    }
+
+    @Override
+    public CowExtrasAttachment getCowExtrasAttachment(LivingEntity entity) {
+        return entity.getExistingData(BovinesAttachments.COW_EXTRAS).orElse(CowExtrasAttachment.DEFAULT);
+    }
+
+    @Override
+    public void setCowExtrasAttachment(LivingEntity entity, CowExtrasAttachment attachment) {
+        entity.setData(BovinesAttachments.COW_EXTRAS, attachment);
+    }
+
+    @Override
+    public boolean hasCowExtrasAttachment(LivingEntity entity) {
+        return entity.hasData(BovinesAttachments.COW_EXTRAS);
     }
 
     @Override
@@ -188,5 +200,9 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
         if (customIngredient instanceof RemainderIngredient remainderIngredient)
             return remainderIngredient;
         return null;
+    }
+
+    public void runNeoForgeConversionEventPost(LivingEntity entity, LivingEntity outcome) {
+        EventHooks.onLivingConvert(entity, outcome);
     }
 }

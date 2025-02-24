@@ -3,21 +3,13 @@ package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 import com.google.gson.JsonObject;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
-import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryModelBakerImplInvoker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.block.model.TextureSlots;
 import net.minecraft.client.renderer.block.model.UnbakedBlockStateModel;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.MissingBlockModel;
-import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
-import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,7 +29,7 @@ public class StateDefinitionBovinesModelSetType implements BovinesModelSetType {
     public static BakedModel getBlockModel(BovinesModelSet modelSet, BlockState state) {
         if (modelSet == null)
             return Minecraft.getInstance().getModelManager().getMissingModel();
-        return modelSet.getModel(BlockModelShaper.stateToModelLocation(state).getVariant(), null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
+        return modelSet.getModel(BlockModelShaper.stateToModelLocation(state).getVariant(), null, () -> "Could not get blockstate bovines model set for block \"" + state.getBlockHolder().unwrapKey().orElseThrow().location() + "\" and for variant \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(BlockModelShaper.stateToModelLocation(state).getVariant()) + "\".");
     }
 
     @Override

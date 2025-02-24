@@ -62,7 +62,7 @@ public class MooshroomSpawnUtil {
         for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
             if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
-            Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
+            Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).findFirst();
             if (biome.isPresent()) {
                 moobloomList.add((Holder) cowVariant);
                 totalWeight += biome.get().weight().asInt();
@@ -74,7 +74,7 @@ public class MooshroomSpawnUtil {
         } else if (!moobloomList.isEmpty()) {
             int r = Mth.nextInt(random, 0, totalWeight - 1);
             for (Holder<CowVariant<MooshroomConfiguration>> cowVariant : moobloomList) {
-                int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
+                int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                 r -= max;
                 if (r < 0.0)
                     return cowVariant;

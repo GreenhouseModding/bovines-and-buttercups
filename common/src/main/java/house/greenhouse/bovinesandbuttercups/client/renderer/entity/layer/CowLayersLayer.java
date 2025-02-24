@@ -1,8 +1,8 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import house.greenhouse.bovinesandbuttercups.api.BaseCowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifier;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
@@ -20,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Comparator;
 
-public class CowLayersLayer<C extends CowConfiguration, T extends LivingEntityRenderState & CowVariantRenderState<LivingEntity, C, M>, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class CowLayersLayer<C extends BaseCowConfiguration, T extends LivingEntityRenderState & CowVariantRenderState<LivingEntity, C, M>, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     public CowLayersLayer(RenderLayerParent<T, M> context) {
         super(context);
@@ -29,10 +29,10 @@ public class CowLayersLayer<C extends CowConfiguration, T extends LivingEntityRe
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T renderState, float yRot, float xRot) {
         Holder<CowVariant<C>> attachment = renderState.getCowVariant();
-        if (renderState.isInvisible || attachment == null || !renderState.getCowVariant().isBound() || attachment.value().configuration().layers().isEmpty())
+        if (renderState.isInvisible || attachment == null || !renderState.getCowVariant().isBound() || attachment.value().configuration().settings().layers().isEmpty())
             return;
 
-        loop: for (CowModelLayer cowLayer : attachment.value().configuration().layers()) {
+        loop: for (CowModelLayer cowLayer : attachment.value().configuration().settings().layers()) {
             ResourceLocation mappedTextureLocation = cowLayer.textureLocation().withPath(string -> "textures/entity/" + string + ".png");
             RenderType renderType = RenderType.entityTranslucent(mappedTextureLocation);
             int color = 0xFFFFFFFF;

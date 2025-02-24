@@ -41,7 +41,7 @@ public class BovinesClientHelperFabric implements BovinesClientHelper {
 //            if (accessoriesCapability.isPresent()) {
 //                var flowerCrown = accessoriesCapability.get().getFirstEquipped(stack -> stack.has(BovinesDataComponents.FLOWER_CROWN), EquipmentChecking.COSMETICALLY_OVERRIDABLE);
 //                if (flowerCrown != null) {
-//                    var container = accessoriesCapability.get().getContainer(flowerCrown.reference().type());
+//                    var container = accessoriesCapability.get().getContainer(flowerCrown.reference().variant());
 //                    if (container != null && container.shouldRender(flowerCrown.reference().slot()))
 //                        return flowerCrown.stack();
 //                }

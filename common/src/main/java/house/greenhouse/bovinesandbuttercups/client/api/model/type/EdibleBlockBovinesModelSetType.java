@@ -1,14 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.client.api.model.type;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSet;
@@ -16,21 +9,12 @@ import house.greenhouse.bovinesandbuttercups.client.api.model.condition.Placeabl
 import house.greenhouse.bovinesandbuttercups.client.renderer.block.model.PlaceableEdibleMultiPart;
 import house.greenhouse.bovinesandbuttercups.content.block.PlaceableEdibleBlock;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.PlaceableEdibleBlockEntity;
-import house.greenhouse.bovinesandbuttercups.mixin.client.ModelBakeryModelBakerImplInvoker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.renderer.block.model.TextureSlots;
 import net.minecraft.client.renderer.block.model.Variant;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.MissingBlockModel;
-import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
-import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.Nullable;
@@ -55,7 +39,7 @@ public class EdibleBlockBovinesModelSetType implements BovinesModelSetType {
             if (first.isPresent())
                 return modelSet.getModel(first.get());
         }
-        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/"), () -> "Could not get edible block bovines model set for type \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
+        return modelSet.getModel(blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/" + acceptedProperties(blockEntity)), blockEntity.getEdibleType().holder().unwrapKey().orElseThrow().location().withPath(s -> s + "/"), () -> "Could not get edible block bovines model set for variant \"" + modelSet.id() + "\" with properties \"" + acceptedProperties(blockEntity) + "\".");
     }
 
     @Override

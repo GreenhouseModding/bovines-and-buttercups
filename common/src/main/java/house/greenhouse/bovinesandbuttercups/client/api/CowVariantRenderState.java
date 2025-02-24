@@ -1,13 +1,13 @@
 package house.greenhouse.bovinesandbuttercups.client.api;
 
+import house.greenhouse.bovinesandbuttercups.api.BaseCowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
-import house.greenhouse.bovinesandbuttercups.api.CowConfiguration;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 
-public interface CowVariantRenderState<T extends LivingEntity, C extends CowConfiguration, M extends EntityModel<?>> {
+public interface CowVariantRenderState<T extends LivingEntity, C extends BaseCowConfiguration, M extends EntityModel<?>> {
     Holder<CowVariant<C>> getCowVariant();
 
     void extractDefaultRenderStates(T t);

@@ -1,22 +1,20 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
+import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomFabric;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.loader.api.FabricLoader;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
-import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
-import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -31,11 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
 
@@ -79,6 +73,21 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     @Override
     public boolean hasMooshroomExtrasAttachment(LivingEntity entity) {
         return entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS);
+    }
+
+    @Override
+    public CowExtrasAttachment getCowExtrasAttachment(LivingEntity entity) {
+        return entity.getAttachedOrElse(BovinesAttachments.COW_EXTRAS, CowExtrasAttachment.DEFAULT);
+    }
+
+    @Override
+    public void setCowExtrasAttachment(LivingEntity entity, CowExtrasAttachment attachment) {
+        entity.setAttached(BovinesAttachments.COW_EXTRAS, attachment);
+    }
+
+    @Override
+    public boolean hasCowExtrasAttachment(LivingEntity entity) {
+        return entity.hasAttached(BovinesAttachments.COW_EXTRAS);
     }
 
     @Override

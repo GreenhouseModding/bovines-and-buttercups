@@ -25,7 +25,7 @@ public class RenderStateObject {
                 var attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
                 if (attachment == null)
                     return List.of();
-                return attachment.cowVariant().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream().map(textureModifierFactory -> {
+                return attachment.cowVariant().value().configuration().settings().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream().map(textureModifierFactory -> {
                     if (textureModifierFactory instanceof ConditionedTextureModifierFactory conditioned && conditioned.getConditionValue(entity))
                         return conditioned.getConditionId();
                     return null;
@@ -38,7 +38,7 @@ public class RenderStateObject {
 
     public static <T> void registerGlobalRenderStateObject(RenderStateObject.Type<T> type, Function<Entity, T> function) {
         if (GLOBAL_REGISTRY.containsKey(type)) {
-            throw new UnsupportedOperationException("Cannot register type '" + type.id() + "' twice.");
+            throw new UnsupportedOperationException("Cannot register variant '" + type.id() + "' twice.");
         }
         GLOBAL_REGISTRY.put((Type<Object>) type, (Function<Entity, Object>) function);
     }

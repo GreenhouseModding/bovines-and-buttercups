@@ -7,18 +7,16 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Cow.class)
-public abstract class CowSuperMixin extends Animal {
-    protected CowSuperMixin(EntityType<? extends Animal> entityType, Level level) {
-        super(entityType, level);
+public abstract class CowMixin extends Animal {
+    protected CowMixin(EntityType<? extends Animal> p_27557_, Level p_27558_) {
+        super(p_27557_, p_27558_);
     }
-    public abstract void thunderHit(ServerLevel level, LightningBolt bolt);
 
     @Unique
-    public void bovinesandbuttercups$thunderHit(ServerLevel level, LightningBolt bolt) {
+    public void bovinesandbuttercups$superThunderHit(ServerLevel level, LightningBolt bolt) {
         super.thunderHit(level, bolt);
     }
 }

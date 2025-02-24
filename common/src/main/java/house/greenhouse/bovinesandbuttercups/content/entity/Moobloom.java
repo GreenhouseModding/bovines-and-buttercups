@@ -3,23 +3,24 @@ package house.greenhouse.bovinesandbuttercups.content.entity;
 import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.util.ConversionUtil;
+import house.greenhouse.bovinesandbuttercups.api.variant.ConvertData;
 import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithVariantTrigger;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
 import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomFlower;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MoobloomConfiguration;
-import house.greenhouse.bovinesandbuttercups.mixin.EntityAccessor;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParams;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
+import house.greenhouse.bovinesandbuttercups.mixin.EntityAccessor;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
-import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -32,7 +33,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
@@ -43,14 +43,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.Animal;
@@ -71,18 +64,12 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class Moobloom extends Cow {
     private static final EntityDataAccessor<Integer> FLOWER_SPREAD_ATTEMPTS = SynchedEntityData.defineId(Moobloom.class, EntityDataSerializers.INT);
@@ -192,29 +179,20 @@ public class Moobloom extends Cow {
                     return;
                 }
 
-                List<WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>>> compatibleList = getCowVariant().value().configuration().settings().filterThunderConverts(BovinesCowTypes.MOOBLOOM_TYPE);
+                LootParams params = new LootParams.Builder(level)
+                        .withParameter(LootContextParams.THIS_ENTITY, this)
+                        .withParameter(LootContextParams.ORIGIN, position())
+                        .withParameter(LootContextParams.DAMAGE_SOURCE, this.damageSources().lightningBolt())
+                        .withParameter(LootContextParams.ATTACKING_ENTITY, bolt)
+                        .create(LootContextParamSets.ENTITY);
+                LootContext context = new LootContext.Builder(params).create(Optional.empty());
 
-                if (compatibleList.isEmpty()) {
-                    super.thunderHit(level, bolt);
-                    return;
-                } else if (compatibleList.size() == 1) {
-                    setCurrentWithPreviousCowType(compatibleList.getFirst().data());
-                    CowVariantAttachment.sync(this);
-                } else {
-                    int totalWeight = level.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
-                    for (WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>> cct : compatibleList) {
-                        totalWeight -= cct.weight().asInt();
-                        if (totalWeight < 0) {
-                            setCurrentWithPreviousCowType(cct.data());
-                            CowVariantAttachment.sync(this);
-                            break;
-                        }
-                    }
-                }
-            } else {
-                setCowVariant(getPreviousCowVariant());
-                CowVariantAttachment.sync(this);
-            }
+                List<WeightedEntry.Wrapper<ConvertData>> compatibleList = getCowVariant().value().configuration().settings().thunderConverts().unwrap().stream().filter(convertDataWrapper -> convertDataWrapper.data().conditions().isEmpty() || convertDataWrapper.data().conditions().stream().allMatch(condition -> condition.test(context))).toList();
+
+                ConversionUtil.convert(this, level, bolt, compatibleList);
+            } else
+                ConversionUtil.revertFromPrevious(this, level, bolt);
+
             lastLightningBoltUUID = uuid;
             playSound(BovinesSoundEvents.MOOBLOOM_CONVERT, 2.0F, 1.0F);
         }
@@ -331,7 +309,7 @@ public class Moobloom extends Cow {
             state = BovinesBlocks.CUSTOM_FLOWER.defaultBlockState();
 
         if (state == null) {
-            BovinesAndButtercups.LOG.warn("Moobloom with type '{}' tried to spread flowers without a valid flower type.", getCowVariant().getRegisteredName());
+            BovinesAndButtercups.LOG.warn("Moobloom with variant '{}' tried to spread flowers without a valid flower variant.", getCowVariant().getRegisteredName());
             return true;
         }
 
@@ -424,10 +402,10 @@ public class Moobloom extends Cow {
         List<Holder<CowVariant<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
         for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(type -> {
-            return type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY;
+            return type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).settings().offspringConditions() != OffspringConditions.EMPTY;
         }).toList()) {
             Holder.Reference<CowVariant<MoobloomConfiguration>> moobloomType = (Holder.Reference) cowVariant;
-            var conditions = moobloomType.value().configuration().offspringConditions();
+            var conditions = moobloomType.value().configuration().settings().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder(level);
             params.withParameter(LootContextParams.THIS_ENTITY, this);
@@ -457,7 +435,7 @@ public class Moobloom extends Cow {
 
             if (getLoveCause() != null)
                 BreedCowWithVariantTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
+            return randomType.value().configuration().settings().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
         }
 
         child.particlePositions.clear();
@@ -526,6 +504,10 @@ public class Moobloom extends Cow {
         CowVariantAttachment.setCowVariant(this, value, getCowVariant());
     }
 
+    public void setLastLightningBoltUUID(UUID uuid) {
+        lastLightningBoltUUID = uuid;
+    }
+
     public int getFlowerSpreadAttempts() {
         return entityData.get(FLOWER_SPREAD_ATTEMPTS);
     }
@@ -566,7 +548,6 @@ public class Moobloom extends Cow {
         entityData.set(ALLOW_CONVERSION, value);
     }
 
-
     public boolean hasSnow() {
         return entityData.get(HAS_SNOW);
     }
@@ -585,6 +566,9 @@ public class Moobloom extends Cow {
 
     public static int getTotalSpawnWeight(LevelAccessor level, BlockPos pos) {
         int totalWeight = 0;
+
+        if (!(level instanceof ServerLevel serverLevel))
+            return 0;
 
         for (CowVariant<?> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).stream().filter(cowVariant -> cowVariant.configuration() instanceof MoobloomConfiguration).toList()) {
             if (!(cowVariant.configuration() instanceof MoobloomConfiguration configuration))
@@ -652,7 +636,7 @@ public class Moobloom extends Cow {
                 }
             }
 
-            return (Holder)finalCowVariant;
+            return (Holder) finalCowVariant;
         }
 
         public Holder<CowVariant<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
@@ -663,7 +647,7 @@ public class Moobloom extends Cow {
             for (Holder.Reference<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
                 if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
-                Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
+                Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).findFirst();
                 if (biome.isPresent()) {
                     moobloomList.add((Holder) cowVariant);
                     totalWeight += biome.get().weight().asInt();
@@ -675,13 +659,13 @@ public class Moobloom extends Cow {
             } else if (!moobloomList.isEmpty()) {
                 int r = Mth.nextInt(random, 0, totalWeight - 1);
                 for (Holder<CowVariant<MoobloomConfiguration>> cowVariant : moobloomList) {
-                    int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
+                    int max = cowVariant.value().configuration().settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
                     r -= max;
                     if (r < 0.0)
                         return cowVariant;
                 }
             }
-            return (Holder)registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
+            return (Holder) registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
         }
     }
 }

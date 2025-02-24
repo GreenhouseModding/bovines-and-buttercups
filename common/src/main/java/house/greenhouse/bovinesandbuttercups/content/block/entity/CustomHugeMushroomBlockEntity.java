@@ -1,12 +1,11 @@
 package house.greenhouse.bovinesandbuttercups.content.block.entity;
 
-import com.mojang.serialization.DataResult;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.block.CustomMushroomType;
-import house.greenhouse.bovinesandbuttercups.content.block.CustomHugeMushroomBlock;
-import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.block.CustomHugeMushroomBlock;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
+import house.greenhouse.bovinesandbuttercups.content.component.ItemCustomMushroom;
 import house.greenhouse.bovinesandbuttercups.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -40,7 +39,7 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameab
 
     public void setMushroomType(@Nullable ItemCustomMushroom value) {
         if (value != null && !value.holder().value().hasHugeBlock()) {
-            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom type \"{}\" does not support huge mushroom blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
+            BovinesAndButtercups.LOG.warn("Failed to set custom mushroom to block at {{},{},{}}. Custom mushroom variant \"{}\" does not support huge mushroom blocks.", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), value.holder().getRegisteredName());
             return;
         }
         customMushroom = value;

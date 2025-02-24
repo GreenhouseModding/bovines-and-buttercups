@@ -33,9 +33,9 @@ public class MooshroomChildTypeUtil {
         List<Holder<CowVariant<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
         var registry = parent.level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).settings().offspringConditions() != OffspringConditions.EMPTY).toList()) {
             Holder<CowVariant<MooshroomConfiguration>> mooshroomVariant = (Holder) cowVariant;
-            var conditions = mooshroomVariant.value().configuration().offspringConditions();
+            var conditions = mooshroomVariant.value().configuration().settings().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder((ServerLevel) parent.level());
             params.withParameter(LootContextParams.THIS_ENTITY, parent);
@@ -64,7 +64,7 @@ public class MooshroomChildTypeUtil {
 
             if (parent.getLoveCause() != null)
                 BreedCowWithVariantTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(parent), BovinesAndButtercups.getHelper().getCowVariantAttachment(other));
+            return randomType.value().configuration().settings().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(parent), BovinesAndButtercups.getHelper().getCowVariantAttachment(other));
         }
 
         BovinesAndButtercups.getHelper().clearParticlePositions(child);

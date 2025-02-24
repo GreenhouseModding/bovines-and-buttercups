@@ -7,9 +7,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.client.renderer.modifier.ConditionedTextureModifier;
+import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
@@ -21,12 +21,7 @@ import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 
 public class ConditionedTextureModifierFactory extends TextureModifierFactory<ConditionedTextureModifier> {
     public static final MapCodec<ConditionedTextureModifierFactory> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
@@ -83,7 +78,7 @@ public class ConditionedTextureModifierFactory extends TextureModifierFactory<Co
         boolean conditionValue = condition.stream().allMatch(condition1 -> condition1.test(context));
         setConditionValue(entity, conditionValue);
         if (entity instanceof LivingEntity living && BovinesAndButtercups.getHelper().getCowVariantAttachment(living) != null)
-            // This guarantees that the cow type will be synced to the client before running this modifier's sync code.
+            // This guarantees that the cow variant will be synced to the client before running this modifier's sync code.
             BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowVariantClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), false), new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));
         else
             BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncConditionedTextureModifier(entity.getId(), getConditionId(), conditionValue));

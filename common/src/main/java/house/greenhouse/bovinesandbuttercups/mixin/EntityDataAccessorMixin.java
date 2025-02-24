@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -28,6 +29,8 @@ public class EntityDataAccessorMixin {
                 LockdownAttachment.sync(living);
             if (BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment(living))
                 MooshroomExtrasAttachment.sync(living);
+            if (BovinesAndButtercups.getHelper().hasCowExtrasAttachment(living))
+                CowExtrasAttachment.sync(living);
         }
     }
 }

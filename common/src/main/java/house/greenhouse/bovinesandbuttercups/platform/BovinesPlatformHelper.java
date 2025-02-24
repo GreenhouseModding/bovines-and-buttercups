@@ -1,15 +1,14 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -51,6 +50,12 @@ public interface BovinesPlatformHelper {
 
     boolean hasMooshroomExtrasAttachment(LivingEntity entity);
 
+    CowExtrasAttachment getCowExtrasAttachment(LivingEntity entity);
+
+    void setCowExtrasAttachment(LivingEntity entity, CowExtrasAttachment attachment);
+
+    boolean hasCowExtrasAttachment(LivingEntity entity);
+
     MooshroomExtrasAttachment getMooshroomExtrasAttachment(LivingEntity entity);
 
     void setMooshroomExtrasAttachment(LivingEntity entity, MooshroomExtrasAttachment attachment);
@@ -85,4 +90,6 @@ public interface BovinesPlatformHelper {
 
     @Nullable
     RemainderIngredient getRemainderIngredient(Ingredient ingredient);
+
+    default void runNeoForgeConversionEventPost(LivingEntity entity, LivingEntity outcome) {}
 }

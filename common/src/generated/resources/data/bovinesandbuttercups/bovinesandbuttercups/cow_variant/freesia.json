@@ -162,13 +162,17 @@
   },
   "sculk_conversion_types": [
     {
-      "type": "bovinesandbuttercups:sombercup"
+      "type": {
+        "variant": "bovinesandbuttercups:sombercup"
+      }
     }
   ],
   "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/freesia",
   "thunder_conversion_types": [
     {
-      "type": "bovinesandbuttercups:chargelily"
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
     }
   ]
 }

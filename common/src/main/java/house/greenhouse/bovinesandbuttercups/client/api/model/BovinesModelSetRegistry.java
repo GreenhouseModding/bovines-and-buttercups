@@ -31,7 +31,7 @@ public class BovinesModelSetRegistry {
     public static BovinesModelSetType registerType(ResourceLocation key, BovinesModelSetType type) {
         if (TYPE_REGISTRY.containsKey(key)) {
             if (!WARNED_EXISTENT_TYPE_KEYS.contains(key))
-                BovinesAndButtercups.LOG.error("Attempted to register a bovines model set type which already contains a key: {}.", key);
+                BovinesAndButtercups.LOG.error("Attempted to register a bovines model set variant which already contains a key: {}.", key);
             WARNED_EXISTENT_TYPE_KEYS.add(key);
             return type;
         }

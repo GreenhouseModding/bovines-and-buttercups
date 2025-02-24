@@ -74,8 +74,17 @@
   },
   "sculk_conversion_types": [
     {
-      "type": "bovinesandbuttercups:sombercup"
+      "type": {
+        "variant": "bovinesandbuttercups:sombercup"
+      }
     }
   ],
-  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/chargelily"
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/chargelily",
+  "thunder_conversion_types": [
+    {
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
+    }
+  ]
 }

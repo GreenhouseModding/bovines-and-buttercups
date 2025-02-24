@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class LegacyMooshroomTypeToAttachmentsFix extends NamedEntityFix {
     public LegacyMooshroomTypeToAttachmentsFix(Schema outputSchema) {
-        super(outputSchema, false, "Fix legacy Mooshroom type attachment/component/capability", References.ENTITY, "minecraft:mooshroom");
+        super(outputSchema, false, "Fix legacy mooshroom variant attachment/component/capability", References.ENTITY, "minecraft:mooshroom");
     }
 
     @Override

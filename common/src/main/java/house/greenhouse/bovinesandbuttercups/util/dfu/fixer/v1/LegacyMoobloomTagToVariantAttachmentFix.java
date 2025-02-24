@@ -13,7 +13,7 @@ import java.util.Map;
 public class LegacyMoobloomTagToVariantAttachmentFix extends NamedEntityFix {
 
     public LegacyMoobloomTagToVariantAttachmentFix(Schema outputSchema) {
-        super(outputSchema, false, "Fix legacy Moobloom tag", References.ENTITY, "bovinesandbuttercups:moobloom");
+        super(outputSchema, false, "Fix legacy moobloom tag", References.ENTITY, "bovinesandbuttercups:moobloom");
     }
 
     @Override

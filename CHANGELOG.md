@@ -21,6 +21,8 @@
 - Updated Nightshade text colors.
 
 ### Bugfixes
+- Reverted the previous variant being set to the old previous variant if present change, it was messing with thunder conversions.
+- Fixed Sombercup Moobloom's inability to be converted into a Chargelily Moobloom.
 - Fixed Moobloom getting up animation not playing after a bee has pollinated the Moobloom.
 - Fixed missing texture for Lockdown Effect background inside the inventory.
 - Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
@@ -31,6 +33,11 @@
 - Fixed Fabric platform helper initializing too early, causing conflicts with mods that implement non-loader Mixin Extras versions. ([#10](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/10))
 
 ### Data Pack/Resource Pack Changes
+- Added `bovinesandbuttercups:cow` cow variant type.
+  - Only has one instance by default, `bovinesandbuttercups:default_cow`.
+- Cow Variants can now reference differently typed cows in their conversion types, which will convert them to that type.
+- Conversion data JSON has been refactored, with backwards compatibility. You may read below to see the changes.
+- You may now set a cow type's spawn biomes as empty to make them spawn anywhere.
 - Updated Sombercup Moobloom's referenced sculk moss layer texture to `bovinesandbuttercups:bovinesandbuttercups/moobloom/sombercup_moobloom_sculk_moss_layer`.
 - Added model layer textures for all model variants.
   - Cold/Sculk Moobloom
@@ -57,3 +64,39 @@
   - `bovinesandbuttercups:buffalo` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:warm` instead).
   - `bovinesandbuttercups:highland` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
   - `bovinesandbuttercups:ox` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
+
+<details>
+<summary>Conversion Data JSON Update</summary>
+
+Before, you could only write the cow variant, such as the below:
+```json
+{
+  "type": "bovinesandbuttercups:chargelily"
+}
+```
+This still works, however, there have been two new fields added to this data.
+```json
+{
+  "type": {
+    "set_previous": false,
+    "this_conditions": [
+      {
+        "condition": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "location": {
+            "biomes": "minecraft:mushroom_fields"
+          }
+        }
+      }
+    ],
+    "variant": "bovinesandbuttercups:red_mushroom"
+  }
+}
+```
+`set_previous` defines whether this cow type will set the previous field on conversion.
+`predicate` is a vanilla predicate, I'm sure you understand these by now if you've ever worked with data packs.
+Thunder Conversion predicates operate off the cow being this entity, the thunderbolt as the attacker, the thunderbolt damage source as the damage source, and the position of the cow as the origin.
+Sculk Conversion predicates operate off the cow being this entity, and the position of the cow as the origin.
+
+</details>

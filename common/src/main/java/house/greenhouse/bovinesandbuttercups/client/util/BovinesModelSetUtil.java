@@ -7,16 +7,12 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetType;
 import house.greenhouse.bovinesandbuttercups.client.api.model.BovinesModelSetRegistry;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetType;
 import net.minecraft.Util;
 import net.minecraft.client.resources.model.MissingBlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderOwner;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
@@ -28,13 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
@@ -58,19 +48,19 @@ public class BovinesModelSetUtil {
                         reader.close();
                         if (json instanceof JsonObject jsonObject) {
                             if (!jsonObject.has("type")) {
-                                BovinesAndButtercups.LOG.error("Could not find 'type' field in Bovines and Buttercups model set json: {}.", resourceId);
+                                BovinesAndButtercups.LOG.error("Could not find 'variant' field in Bovines and Buttercups model set json: {}.", resourceId);
                                 return List.of();
                             }
 
                             if (!jsonObject.get("type").isJsonPrimitive() || !jsonObject.getAsJsonPrimitive("type").isString()) {
-                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a string in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                BovinesAndButtercups.LOG.error("'variant' field \"{}\" is not a string in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
                                 return List.of();
                             }
 
                             ResourceLocation typeLocation = ResourceLocation.tryParse(jsonObject.getAsJsonPrimitive("type").getAsString());
 
                             if (typeLocation == null) {
-                                BovinesAndButtercups.LOG.error("'type' field \"{}\" is not a resource location in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
+                                BovinesAndButtercups.LOG.error("'variant' field \"{}\" is not a resource location in Bovines and Buttercups model set json: {}.", jsonObject.get("type"), resourceId);
                                 return List.of();
                             }
 

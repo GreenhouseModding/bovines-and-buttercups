@@ -546,6 +546,9 @@
             "attachments": {
               "#minecraft:candles": {
                 "active": true,
+                "count": {
+                  "min": 2
+                },
                 "item": []
               }
             }
@@ -572,7 +575,7 @@
               "#minecraft:candles": {
                 "active": true,
                 "count": {
-                  "min": 2
+                  "min": 3
                 },
                 "item": []
               }
@@ -585,9 +588,6 @@
             "attachments": {
               "#minecraft:candles": {
                 "active": true,
-                "count": {
-                  "min": 3
-                },
                 "item": []
               }
             }
