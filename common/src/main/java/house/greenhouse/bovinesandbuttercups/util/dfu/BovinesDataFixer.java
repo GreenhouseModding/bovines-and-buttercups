@@ -9,7 +9,7 @@ import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
-import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyLockdownAttachmentFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyLockdownDataFix;
 import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyMoobloomTagToVariantAttachmentFix;
 import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyMooshroomTypeToAttachmentsFix;
 import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100.MoobloomAttributeIdPrefixFix;
@@ -67,7 +67,7 @@ public record BovinesDataFixer(DataFixer fixer) {
         builder.addFixer(new LegacyMoobloomTagToVariantAttachmentFix(schema1));
         builder.addFixer(new LegacyMooshroomTypeToAttachmentsFix(schema1));
         Schema schema1_1 = builder.addSchema(1, 1, SAME_NAMESPACED);
-        builder.addFixer(new LegacyLockdownAttachmentFix(schema1_1));
+        builder.addFixer(new LegacyLockdownDataFix(schema1_1));
 
         // Bovines 2.0.0 -> Bovines 2.1.0
         Schema schema2 = builder.addSchema(2, SAME_NAMESPACED);
