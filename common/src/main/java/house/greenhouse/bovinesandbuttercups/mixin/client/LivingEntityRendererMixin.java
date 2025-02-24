@@ -25,7 +25,7 @@ import java.util.Optional;
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> {
     @ModifyVariable(method = "getRenderType", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;)Lnet/minecraft/resources/ResourceLocation;"))
     private ResourceLocation bovinesandbuttercups$modifyTextureLocation(ResourceLocation value, @Local(argsOnly = true) LivingEntityRenderState state) {
-        if (state instanceof CowVariantRenderState<?, ?, ?> cowTypeRenderState && cowTypeRenderState.getCowVariant().isBound())
+        if (state instanceof CowVariantRenderState<?, ?, ?> cowTypeRenderState && cowTypeRenderState.getCowVariant() != null && cowTypeRenderState.getCowVariant().isBound())
             return BovinesAndButtercupsClient.getCachedTextures((Holder) cowTypeRenderState.getCowVariant(), value);
         return value;
     }

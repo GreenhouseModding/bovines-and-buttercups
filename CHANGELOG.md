@@ -14,11 +14,16 @@
 
 ### Minor Changes
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
+- Added data fix/world upgrade support for 1.x.x to 2.x.x.
 - Mooblooms' variant may now be set with the `variant` NBT tag. This tag follows the same rules as the Fabric/NeoForge attacHment.
+  - The `Type` tag no longer works when setting a Moobloom's type. This is now built into data fixing when upgrading a world from 1.x.x to 2.x.x.
+  - The `fabric/neoforge:attachments.bovinesandbuttercups:cow_type` tag no longer works when detting a Moobloom's type. This is now built into datafixing when updating a world from 2.0.0 to >2.2.0
 - Updated Nightshade text colors.
 
 ### Bugfixes
+- Fixed missing texture for Lockdown Effect background inside the inventory.
 - Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
+- Fixed entity equipment not data fixing with Bovines in mind.
 - Fixed special recipes causing an exception and returning items whilst crafting.
 - Fixed fallback textures always displaying when no conditions are specified.
 - Fixed an exception being thrown on startup, not allowing options.txt to be respected on NeoForge. ([#9](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/9))

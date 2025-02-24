@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v101;
 
 import com.mojang.datafixers.*;
 import com.mojang.datafixers.schemas.Schema;

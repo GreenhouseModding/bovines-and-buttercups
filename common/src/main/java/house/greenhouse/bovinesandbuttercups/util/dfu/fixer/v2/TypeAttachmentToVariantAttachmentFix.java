@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v2;
 
 import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFix;
@@ -8,9 +8,9 @@ import com.mojang.serialization.OptionalDynamic;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import net.minecraft.util.datafix.fixes.References;
 
-public class RenameToCowVariantAttachment extends DataFix {
+public class TypeAttachmentToVariantAttachmentFix extends DataFix {
 
-    public RenameToCowVariantAttachment(Schema outputSchema) {
+    public TypeAttachmentToVariantAttachmentFix(Schema outputSchema) {
         super(outputSchema, false);
     }
 

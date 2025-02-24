@@ -38,7 +38,7 @@ public abstract class EffectsInInventoryMixin {
         if (lockdownEffectInstance.isEmpty()) return;
 
         if (!(mobEffectInstance.getEffect().is(BovinesEffects.LOCKDOWN)) && BovinesAndButtercups.getHelper().getLockdownAttachment(minecraft.player).effects().entrySet().stream().anyMatch(instance -> instance.getKey() == mobEffectInstance.getEffect())) {
-            guiGraphics.blitSprite(RenderType::guiTextured, BovinesAndButtercups.asResource("container/inventory/lockdown_frame"), x, i, 32, 32);
+            guiGraphics.blitSprite(RenderType::guiTextured, BovinesAndButtercups.asResource("container/inventory/effect_background_lockdown"), x, i, 32, 32);
         }
     }
 

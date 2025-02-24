@@ -1,18 +1,15 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.*;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.Type;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
-import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 public class NectarDecomponentizeEquipmentFix extends DataFix {

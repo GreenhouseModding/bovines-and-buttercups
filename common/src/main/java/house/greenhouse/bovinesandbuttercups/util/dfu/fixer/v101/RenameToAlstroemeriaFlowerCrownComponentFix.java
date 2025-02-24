@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v101;
 
 import com.mojang.datafixers.*;
 import com.mojang.datafixers.schemas.Schema;
@@ -14,14 +14,17 @@ public class RenameToAlstroemeriaFlowerCrownComponentFix extends DataFix {
 
     @Override
     protected TypeRewriteRule makeRule() {
-        return fixTypeEverywhereTyped("Rename bird of paradise flower crown component", getInputSchema().getType(References.DATA_COMPONENTS), typed -> {
-            Dynamic<?> dynamic = typed.get(DSL.remainderFinder());
-            Optional<? extends Dynamic<?>> flowerCrown = dynamic.get("bovinesandbuttercups:flower_crown").result();
-            if (flowerCrown.isPresent()) {
-                return typed.set(DSL.remainderFinder(), dynamic.set("bovinesandbuttercups:flower_crown", updateDynamic(flowerCrown.get())));
-            }
-            return typed;
-        });
+        return fixTypeEverywhereTyped("Rename bird of paradise flower crown component",
+                getInputSchema().getType(References.DATA_COMPONENTS),
+                getOutputSchema().getType(References.DATA_COMPONENTS),
+                typed -> {
+                    Dynamic<?> dynamic = typed.get(DSL.remainderFinder());
+                    Optional<? extends Dynamic<?>> flowerCrown = dynamic.get("bovinesandbuttercups:flower_crown").result();
+                    if (flowerCrown.isPresent()) {
+                        return typed.set(DSL.remainderFinder(), dynamic.set("bovinesandbuttercups:flower_crown", updateDynamic(flowerCrown.get())));
+                    }
+                    return typed;
+                });
     }
 
     public static Dynamic<?> updateDynamic(Dynamic<?> dynamic) {

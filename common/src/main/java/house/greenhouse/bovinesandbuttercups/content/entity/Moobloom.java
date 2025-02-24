@@ -149,12 +149,11 @@ public class Moobloom extends Cow {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        backwardsCompat(tag);
         if (tag.contains("variant")) {
             var variantDataResult = CowVariantAttachment.CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, level().registryAccess()), tag.get("variant"));
-            if (!variantDataResult.hasResultOrPartial())
+            if (variantDataResult.isError())
                 BovinesAndButtercups.LOG.error(variantDataResult.error().get().message());
-            else
+            if (variantDataResult.hasResultOrPartial())
                 BovinesAndButtercups.getHelper().setCowVariantAttachment(this, variantDataResult.getOrThrow().getFirst());
         }
         if (tag.contains("flower_spread_attempts", Tag.TAG_INT))
@@ -173,40 +172,6 @@ public class Moobloom extends Cow {
             setSnow(tag.getBoolean("has_snow"));
         if (tag.contains("snow_layer_persistent", Tag.TAG_BYTE))
             setPersistentSnowLayer(tag.getBoolean("snow_layer_persistent"));
-    }
-
-    public void backwardsCompat(CompoundTag tag) {
-        if (tag.contains("Type", Tag.TAG_STRING)) {
-            Optional<Holder.Reference<CowVariant<?>>> cowVariant = level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).get(ResourceLocation.parse(tag.getString("Type")));
-            if (cowVariant.isEmpty()) {
-                BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
-                return;
-            }
-            if (!cowVariant.get().isBound() || cowVariant.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE)  {
-                BovinesAndButtercups.LOG.error("Cow Variant \"{}\" is not bound or is not a moobloom.", cowVariant);
-                return;
-            }
-            if (tag.contains("PreviousType", Tag.TAG_STRING)) {
-                Optional<Holder.Reference<CowVariant<?>>> previousCowType = level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).get(ResourceLocation.parse(tag.getString("Type")));
-                if (previousCowType.isEmpty()) {
-                    BovinesAndButtercups.LOG.error("Could not deserialize legacy cow type tag \"{}\" into a cow type holder.", tag.getString("Type"));
-                    return;
-                }
-                if (!previousCowType.get().isBound() || previousCowType.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE) {
-                    BovinesAndButtercups.LOG.error("Previous Cow Variant \"{}\" is not bound or is not a moobloom.", cowVariant);
-                    return;
-                }
-                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, new CowVariantAttachment(cowVariant.get(), previousCowType.map(cowVariantReference -> cowVariantReference)));
-                CowVariantAttachment.sync(this);
-            } else {
-                setCowVariant((Holder) cowVariant.get());
-                CowVariantAttachment.sync(this);
-            }
-        }
-        if (tag.contains("PollinatedResetTicks", Tag.TAG_INT))
-            setPollinatedResetTicks(tag.getInt("PollinatedResetTicks"));
-        if (tag.contains("AllowShearing", Tag.TAG_BYTE))
-            setAllowShearing(tag.getBoolean("AllowShearing"));
     }
 
     public void setBee(@Nullable Bee value) {

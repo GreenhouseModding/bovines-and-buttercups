@@ -9,7 +9,14 @@ import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.mojang.serialization.Dynamic;
 import house.greenhouse.bovinesandbuttercups.mixin.DataFixTypesAccessor;
-import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.*;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyLockdownAttachmentFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyMoobloomTagToVariantAttachmentFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v1.LegacyMooshroomTypeToAttachmentsFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100.MoobloomAttributeIdPrefixFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100.NectarDecomponentizeEquipmentFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100.NectarDecomponentizeFix;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v101.*;
+import house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v2.TypeAttachmentToVariantAttachmentFix;
 import house.greenhouse.bovinesandbuttercups.util.dfu.schema.BovinesSchemaV1;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
@@ -55,18 +62,25 @@ public record BovinesDataFixer(DataFixer fixer) {
         builder.addSchema(0, (integer, schema) -> DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())));
 
-        // Bovines 2.1.0
-        Schema schema1 = builder.addSchema(2, BovinesSchemaV1::new);
-        builder.addFixer(new RenameToCowVariantAttachment(schema1));
+        // Bovines 1.x.x -> Bovines 2.0.0
+        Schema schema1 = builder.addSchema(1, BovinesSchemaV1::new);
+        builder.addFixer(new LegacyMoobloomTagToVariantAttachmentFix(schema1));
+        builder.addFixer(new LegacyMooshroomTypeToAttachmentsFix(schema1));
+        Schema schema1_1 = builder.addSchema(1, 1, SAME_NAMESPACED);
+        builder.addFixer(new LegacyLockdownAttachmentFix(schema1_1));
 
-        // MC 1.21.4
+        // Bovines 2.0.0 -> Bovines 2.1.0
+        Schema schema2 = builder.addSchema(2, SAME_NAMESPACED);
+        builder.addFixer(new TypeAttachmentToVariantAttachmentFix(schema2));
+
+        // MC 1.21.1 -> MC 1.21.4
         Schema schema100 = builder.addSchema(100, SAME_NAMESPACED);
         builder.addFixer(new MoobloomAttributeIdPrefixFix(schema100)); // Implemented to make sure that Mooblooms have their attributes converted just like everything else.
         Schema schema100_1 = builder.addSchema(100, 1, SAME_NAMESPACED);
         builder.addFixer(new NectarDecomponentizeFix(schema100_1));
         builder.addFixer(new NectarDecomponentizeEquipmentFix(schema100_1));
 
-        // Bovines 2.2.0
+        // Bovines 2.1.0 -> Bovines 2.2.0
         Schema schema101 = builder.addSchema(101, SAME_NAMESPACED);
         builder.addFixer(BlockRenameFix.create(schema101, "Rename Bird of Paradise blocks", createRenamer(RENAMED_BIRD_OF_PARADISE_BLOCKS)));
         builder.addFixer(ItemRenameFix.create(schema101, "Rename Bird of Paradise items", createRenamer(RENAMED_BIRD_OF_PARADISE_ITEMS)));

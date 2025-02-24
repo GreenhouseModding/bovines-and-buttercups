@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v101;
 
 import com.mojang.datafixers.*;
 import com.mojang.datafixers.schemas.Schema;
@@ -6,15 +6,19 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.OptionalDynamic;
 import net.minecraft.util.datafix.fixes.References;
 
+import java.sql.Ref;
+
 public class RenameToAlstroemeriaCupcakeComponentFix extends DataFix {
     public RenameToAlstroemeriaCupcakeComponentFix(Schema outputSchema) {
-        super(outputSchema, true);
+        super(outputSchema, false);
     }
 
     @Override
     protected TypeRewriteRule makeRule() {
-        return fixTypeEverywhereTyped("Rename Bird of Paradise Edible Block Type component", getInputSchema().getType(References.DATA_COMPONENTS), typed ->
-                typed.set(DSL.remainderFinder(), updateDynamic(typed.get(DSL.remainderFinder()))));
+        return fixTypeEverywhereTyped("Rename Bird of Paradise Edible Block Type component",
+                getInputSchema().getType(References.DATA_COMPONENTS),
+                getOutputSchema().getType(References.DATA_COMPONENTS),
+                typed -> typed.set(DSL.remainderFinder(), updateDynamic(typed.get(DSL.remainderFinder()))));
     }
 
     public static Dynamic<?> updateDynamic(Dynamic<?> dynamic) {

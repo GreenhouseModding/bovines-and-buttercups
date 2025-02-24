@@ -1,4 +1,4 @@
-package house.greenhouse.bovinesandbuttercups.util.dfu.fixer;
+package house.greenhouse.bovinesandbuttercups.util.dfu.fixer.v100;
 
 import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFixUtils;
