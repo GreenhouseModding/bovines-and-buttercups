@@ -1,6 +1,5 @@
 package house.greenhouse.bovinesandbuttercups;
 
-import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
@@ -115,7 +114,6 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
                     CowVariantAttachment.sync((MushroomCow)entity);
                 }
-                ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
             } else if (entity.getType() == EntityType.COW) {
                 if (attachment == null) {
                     if (CowSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0)

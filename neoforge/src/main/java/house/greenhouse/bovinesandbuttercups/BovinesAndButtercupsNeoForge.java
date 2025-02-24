@@ -2,7 +2,6 @@ package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.BeeGoalAccess;
 import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
-import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -130,16 +129,13 @@ public class BovinesAndButtercupsNeoForge {
             Optional<CowVariantAttachment> attachment = entity.getExistingData(BovinesAttachments.COW_VARIANT);
             if (entity.getType() == EntityType.MOOSHROOM) {
                 if (attachment.isEmpty()) {
-                    if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomTypeFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
-                    } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
+                    if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnType(level, ((MushroomCow)entity).getVariant()));
                     }
                     CowVariantAttachment.sync((MushroomCow)entity);
                 }
-                ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
             }
         }
 

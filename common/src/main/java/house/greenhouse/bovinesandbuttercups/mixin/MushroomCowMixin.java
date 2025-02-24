@@ -2,7 +2,6 @@ package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
@@ -11,7 +10,6 @@ import house.greenhouse.bovinesandbuttercups.content.data.configuration.Mooshroo
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import house.greenhouse.bovinesandbuttercups.content.item.CustomFlowerItem;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.animal.Animal;
@@ -21,28 +19,16 @@ import net.minecraft.world.item.component.SuspiciousStewEffects;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
 @Mixin(MushroomCow.class)
-public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess {
+public abstract class MushroomCowMixin {
     @Shadow public abstract MushroomCow.Variant getVariant();
-
-    @Nullable
-    @Unique
-    private MushroomCow.Variant bovineandbuttercups$initializedType;
-
-    @Inject(method = "readAdditionalSaveData", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;contains(Ljava/lang/String;I)Z"))
-    private void bovinesandbuttercups$setInitializedType(CompoundTag compound, CallbackInfo ci) {
-         if (compound.contains("Type"))
-             bovineandbuttercups$initializedType = getVariant();
-    }
 
     @Inject(method = "getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/animal/MushroomCow;", at = @At(value = "RETURN"))
     private void bovinesandbuttercups$setDataDrivenMooshroomOffspringType(ServerLevel serverLevel, AgeableMob ageableMob, CallbackInfoReturnable<MushroomCow> cir, @Local(ordinal = 1) MushroomCow baby) {
@@ -70,15 +56,5 @@ public abstract class MushroomCowMixin implements MooshroomInitializedTypeAccess
             return CustomFlowerItem.getSuspiciousStewEffects(stack);
 
         return value;
-    }
-
-    @Override
-    public MushroomCow.Variant bovinesandbuttercups$initialType() {
-        return bovineandbuttercups$initializedType;
-    }
-
-    @Override
-    public void bovinesandbuttercups$clearInitialType() {
-        bovineandbuttercups$initializedType = null;
     }
 }
