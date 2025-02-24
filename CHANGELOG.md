@@ -21,6 +21,7 @@
 - Updated Nightshade text colors.
 
 ### Bugfixes
+- Fixed Moobloom getting up animation not playing after a bee has pollinated the Moobloom.
 - Fixed missing texture for Lockdown Effect background inside the inventory.
 - Fixed Mooblooms not spawning in Buttercup or Pink Daisy ranches due to a missing template pool.
 - Fixed entity equipment not data fixing with Bovines in mind.

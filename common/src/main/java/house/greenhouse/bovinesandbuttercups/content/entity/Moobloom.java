@@ -244,7 +244,7 @@ public class Moobloom extends Cow {
                 getUpAnimationState.startIfStopped(tickCount);
             }
 
-            if (getUpAnimationState.isStarted() && getUpAnimationState.getTimeInMillis(level().getGameTime()) >= 1000)
+            if (getUpAnimationState.isStarted() && getUpAnimationState.getTimeInMillis(tickCount) > 1000)
                 getUpAnimationState.stop();
         } else {
             if (ticksUntilSpread > 0)
