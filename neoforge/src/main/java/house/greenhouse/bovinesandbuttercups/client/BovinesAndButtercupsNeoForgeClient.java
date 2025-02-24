@@ -166,6 +166,8 @@ public class BovinesAndButtercupsNeoForgeClient {
             event.registerLayerDefinition(BovinesModelLayers.BABY_HIGHLAND_COW_MODEL_LAYER, () -> CustomCowModelLayers.createHighland().apply(CowModel.BABY_TRANSFORMER));
             event.registerLayerDefinition(BovinesModelLayers.OX_COW_MODEL_LAYER, CustomCowModelLayers::createOx);
             event.registerLayerDefinition(BovinesModelLayers.BABY_OX_COW_MODEL_LAYER, () -> CustomCowModelLayers.createOx().apply(CowModel.BABY_TRANSFORMER));
+            event.registerLayerDefinition(BovinesModelLayers.FLAT_COW_MODEL_LAYER, CustomCowModelLayers::createFlat);
+            event.registerLayerDefinition(BovinesModelLayers.BABY_FLAT_COW_MODEL_LAYER, () -> CustomCowModelLayers.createFlat().apply(CowModel.BABY_TRANSFORMER));
 
             event.registerLayerDefinition(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
             event.registerLayerDefinition(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));

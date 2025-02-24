@@ -21,7 +21,7 @@ public class BovinesCowModelTypes {
     @Deprecated
     public static final CowModelType OX = register(BovinesAndButtercups.asResource("ox"), new CowModelType(BovinesAndButtercups.MOD_ID, "ox_cow","_baby"));
     @Deprecated
-    public static final CowModelType FLAT = register(BovinesAndButtercups.asResource("flat"), new CowModelType(BovinesAndButtercups.MOD_ID, "sculk_cow","_baby"));
+    public static final CowModelType FLAT = register(BovinesAndButtercups.asResource("flat"), new CowModelType(BovinesAndButtercups.MOD_ID, "flat_cow","_baby"));
 
     public static void registerAll() {}
 

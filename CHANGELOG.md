@@ -16,8 +16,8 @@
 - Trees are no longer blocked from generating where Ranches generate. This will hopefully make the surroundings of Ranch structures less bare.
 - Added data fix/world upgrade support for 1.x.x to 2.x.x.
 - Mooblooms' variant may now be set with the `variant` NBT tag. This tag follows the same rules as the Fabric/NeoForge attacHment.
-  - The `Type` tag no longer works when setting a Moobloom's type. This is now built into data fixing when upgrading a world from 1.x.x to 2.x.x.
-  - The `fabric/neoforge:attachments.bovinesandbuttercups:cow_type` tag no longer works when detting a Moobloom's type. This is now built into datafixing when updating a world from 2.0.0 to >2.2.0
+  - The `Type` tag no longer works when setting a Moobloom's type. This is now built into data fixing when upgrading a world from 1.x.x to 2.2.0 or above.
+  - The `fabric/neoforge:attachments.bovinesandbuttercups:cow_type` tag no longer works when detting a Moobloom's type. This is now built into data fixing when updating a world from 2.0.0 to 2.2.0 or above.
 - Updated Nightshade text colors.
 
 ### Bugfixes
@@ -30,7 +30,24 @@
 - Fixed an exception being thrown on startup, not allowing options.txt to be respected on NeoForge. ([#9](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/9))
 - Fixed Fabric platform helper initializing too early, causing conflicts with mods that implement non-loader Mixin Extras versions. ([#10](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/10))
 
-### Datapacking Changes
+### Data Pack/Resource Pack Changes
+- Updated Sombercup Moobloom's referenced sculk moss layer texture to `bovinesandbuttercups:bovinesandbuttercups/moobloom/sombercup_moobloom_sculk_moss_layer`.
+- Added model layer textures for all model variants.
+  - Cold/Sculk Moobloom
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/cold_moobloom_grass_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/cold_moobloom_moss_layer` 
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/cold_moobloom_pale_moss_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/cold_moobloom_sculk_moss_layer`
+  - Lush Moobloom
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_grass_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_moss_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_pale_moss_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_sculk_moss_layer`
+  - Temperate/Warm Moobloom
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_grass_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_moss_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_pale_moss_layer`
+    - `bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_sculk_moss_layer`
 - Deprecated old model type ids, these will be removed when the mod updates to 1.21.5 or above.
   - `bovinesandbuttercups:default` -> `bovinesandbuttercups:temperate`
   - Not Applicable -> `bovinesandbuttercups:warm` (Used by Freesia and Alstroemeria)

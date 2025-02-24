@@ -22,6 +22,8 @@ public class BovinesModelLayers {
     public static final ModelLayerLocation BABY_HIGHLAND_COW_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("highland_cow_baby"), "main");
     public static final ModelLayerLocation OX_COW_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("ox_cow"), "main");
     public static final ModelLayerLocation BABY_OX_COW_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("ox_cow_baby"), "main");
+    public static final ModelLayerLocation FLAT_COW_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("flat_cow"), "main");
+    public static final ModelLayerLocation BABY_FLAT_COW_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("flat_cow_baby"), "main");
 
     public static final ModelLayerLocation FLOWER_CROWN_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("generic"), "flower_crown");
     public static final ModelLayerLocation PIGLIN_FLOWER_CROWN_MODEL_LAYER = new ModelLayerLocation(BovinesAndButtercups.asResource("piglin"), "flower_crown");

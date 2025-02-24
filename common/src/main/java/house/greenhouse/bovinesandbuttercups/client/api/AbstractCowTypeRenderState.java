@@ -42,7 +42,7 @@ public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C exten
             if (attachment != null)
                 cowModel = attachment.cowVariant().value().configuration().model();
             if (cowModel == null)
-                cowModel = BovinesCowModelTypes.DEFAULT;
+                cowModel = BovinesCowModelTypes.TEMPERATE;
             ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
             if (cowModel.namespaceOverride() != null)
                 namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
@@ -50,7 +50,7 @@ public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C exten
                 namedEntityTypeLocation = namedEntityTypeLocation.withPath(cowModel.pathOverride());
             if (!models.containsKey(cowModel)) {
                 M adultModel = bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation, "main"));
-                M babyModel = bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation.withSuffix(BovinesCowModelTypes.DEFAULT.babySuffix()), "main"));
+                M babyModel = bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation.withSuffix(BovinesCowModelTypes.TEMPERATE.babySuffix()), "main"));
                 models.put(cowModel, Pair.of(adultModel, babyModel));
             }
             accessor.bovinesandbuttercups$setAdultModel(models.get(cowModel).getFirst());

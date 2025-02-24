@@ -58,7 +58,7 @@ public class MushroomCowRenderStateMixin implements CowVariantRenderState<Mushro
                     namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
                 if (cowModel != null && cowModel.pathOverride() != null)
                     namedEntityTypeLocation = namedEntityTypeLocation.withPath(cowModel.pathOverride());
-                String babySuffix = cowModel != null ? cowModel.babySuffix() : BovinesCowModelTypes.DEFAULT.babySuffix();
+                String babySuffix = cowModel != null ? cowModel.babySuffix() : BovinesCowModelTypes.TEMPERATE.babySuffix();
                 CowModel adultModel = bovinesandbuttercups$bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation, "main"));
                 CowModel babyModel = bovinesandbuttercups$bakeLayerFunction.apply(new ModelLayerLocation(namedEntityTypeLocation.withSuffix(babySuffix), "main"));
                 bovinesandbuttercups$models.put(cowModel, Pair.of(adultModel, babyModel));
