@@ -21,10 +21,6 @@ public abstract class EntityMixin {
 
     @Inject(method = "thunderHit", at = @At("HEAD"), cancellable = true)
     private void bovinesandbuttercups$convertCowThroughLightning(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
-        if (ConversionUtil.CONVERTED_BY_BOVINES.contains((Entity)(Object)this)) {
-            ConversionUtil.CONVERTED_BY_BOVINES.remove((Entity)(Object)this);
-            return;
-        }
         if (!((Entity)(Object)this instanceof LivingEntity living) || BovinesAndButtercups.getHelper().getCowVariantAttachment(living) == null || !ConversionUtil.CONVERTED_BY_BOVINES.contains(living))
             return;
         if (living instanceof Cow)
