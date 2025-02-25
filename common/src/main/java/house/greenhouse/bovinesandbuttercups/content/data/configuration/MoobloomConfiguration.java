@@ -1,5 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.content.data.configuration;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
@@ -21,6 +22,7 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,7 @@ import java.util.Optional;
 public record MoobloomConfiguration(Settings settings,
                                     BlockReference<Holder<CustomFlowerType>> flower,
                                     BlockReference<Holder<CustomFlowerType>> bud,
+                                    boolean warnsBees,
                                     Optional<ItemStack> nectar,
                                     Optional<ResourceLocation> lootTable,
                                     SimpleWeightedRandomList<ConvertData> sculkConverts) implements BaseCowConfiguration {
@@ -35,14 +38,15 @@ public record MoobloomConfiguration(Settings settings,
             Settings.CODEC.forGetter(MoobloomConfiguration::settings),
             BlockReference.createCodec(CustomFlowerType.CODEC, "custom_flower").fieldOf("flower").forGetter(MoobloomConfiguration::flower),
             BlockReference.createCodec(CustomFlowerType.CODEC, "custom_flower").fieldOf("bud").forGetter(MoobloomConfiguration::bud),
+            Codec.BOOL.optionalFieldOf("warns_bees", false).forGetter(MoobloomConfiguration::warnsBees),
             ItemStack.STRICT_SINGLE_ITEM_CODEC.optionalFieldOf("nectar").forGetter(MoobloomConfiguration::nectar),
             ResourceLocation.CODEC.optionalFieldOf("shearing_loot_table").forGetter(MoobloomConfiguration::lootTable),
             BovinesCodecs.weightedEntryCodec(ConvertData.CODEC, "type").optionalFieldOf("sculk_conversion_types", SimpleWeightedRandomList.empty()).forGetter(MoobloomConfiguration::sculkConverts)
     ).apply(builder, MoobloomConfiguration::new));
 
     @Override
-    public void onThunderConversion(Entity oldEntity, Entity newEntity, LightningBolt bolt) {
-        if (newEntity instanceof Moobloom moobloom)
+    public void postConversion(Entity oldEntity, @Nullable Entity newEntity, @Nullable LightningBolt bolt) {
+        if (newEntity instanceof Moobloom moobloom && bolt != null)
             moobloom.setLastLightningBoltUUID(bolt.getUUID());
     }
 
@@ -65,6 +69,7 @@ public record MoobloomConfiguration(Settings settings,
                 OffspringConditions.EMPTY),
                 new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).orElseThrow().getter().getOrThrow(CustomFlowerType.MISSING_KEY))),
                 new BlockReference<>(Optional.empty(), Optional.empty(), Optional.of(lookup.lookup(BovinesRegistryKeys.CUSTOM_FLOWER_TYPE).orElseThrow().getter().getOrThrow(CustomFlowerType.MISSING_KEY))),
+                false,
                 Optional.empty(),
                 Optional.empty(),
                 SimpleWeightedRandomList.empty());

@@ -41,7 +41,9 @@ public interface BaseCowConfiguration {
         return false;
     }
 
-    default void onThunderConversion(Entity oldEntity, Entity newEntity, LightningBolt bolt) {}
+    default void preConversion(Entity entity) {}
+
+    default void postConversion(Entity oldEntity, @Nullable Entity newEntity, @Nullable LightningBolt bolt) {}
 
     /**
      * @return The settings of the cow variant, null if not set.

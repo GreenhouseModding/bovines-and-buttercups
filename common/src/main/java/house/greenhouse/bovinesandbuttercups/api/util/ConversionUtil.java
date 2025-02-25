@@ -56,21 +56,25 @@ public class ConversionUtil {
         if (!previous.isBound())
             return false;
         if (!previous.value().type().isApplicable(entity)) {
+            BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant().value().configuration().preConversion(entity);
             return entity.convertTo(previous.value().type().getDefaultEntityType(), ConversionParams.single(entity, false, false), cow -> {
                 if (bolt != null)
-                    previous.value().configuration().onThunderConversion(entity, cow, bolt);
+                    previous.value().configuration().postConversion(entity, cow, bolt);
                 BovinesAndButtercups.getHelper().runNeoForgeConversionEventPost(entity, cow);
                 cow.finalizeSpawn(level, level.getCurrentDifficultyAt(cow.blockPosition()), EntitySpawnReason.CONVERSION, null);
                 CowVariantAttachment.setCowVariant(cow, (Holder) previous);
                 CowVariantAttachment.sync(cow);
-                if (bolt != null && previous.value().type().isLightningLogicIndirect())
+                if (bolt != null && previous.value().type().isLightningLogicIndirect()) {
                     CONVERTED_BY_BOVINES.add(cow);
+                }
             }) != null;
         }
+        BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant().value().configuration().preConversion(entity);
         CowVariantAttachment.setCowVariant(entity, (Holder) previous);
         CowVariantAttachment.sync(entity);
         if (bolt != null && previous.value().type().isLightningLogicIndirect())
             CONVERTED_BY_BOVINES.add(entity);
+        previous.value().configuration().postConversion(entity, null, bolt);
         return true;
     }
 
@@ -80,21 +84,25 @@ public class ConversionUtil {
 
         CowVariant<?> variant = cowVariant.value();
         if (!variant.type().isApplicable(entity)) {
+            BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant().value().configuration().preConversion(entity);
             return entity.convertTo(variant.type().getDefaultEntityType(), ConversionParams.single(entity, false, false), cow -> {
                 if (bolt != null)
-                    variant.configuration().onThunderConversion(entity, cow, bolt);
+                    variant.configuration().postConversion(entity, cow, bolt);
                 BovinesAndButtercups.getHelper().runNeoForgeConversionEventPost(entity, cow);
                 cow.finalizeSpawn(level, level.getCurrentDifficultyAt(cow.blockPosition()), EntitySpawnReason.CONVERSION, null);
                 CowVariantAttachment.setCowVariant(cow, (Holder) cowVariant, !setPrevious ? Optional.empty() : (Optional) Optional.of(BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant()));
                 CowVariantAttachment.sync(cow);
-                if (bolt != null && variant.type().isLightningLogicIndirect())
+                if (bolt != null && variant.type().isLightningLogicIndirect()) {
                     CONVERTED_BY_BOVINES.add(cow);
+                }
             }) != null;
         }
+        BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant().value().configuration().preConversion(entity);
         CowVariantAttachment.setCowVariant(entity, (Holder) cowVariant, !setPrevious ? Optional.empty() : (Optional) Optional.of(BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).cowVariant()));
         CowVariantAttachment.sync(entity);
         if (bolt != null && variant.type().isLightningLogicIndirect())
             CONVERTED_BY_BOVINES.add(entity);
+        variant.configuration().postConversion(entity, null, bolt);
         return true;
     }
 }

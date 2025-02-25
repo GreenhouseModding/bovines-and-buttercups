@@ -19,6 +19,7 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.MushroomCow;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +44,8 @@ public record MooshroomConfiguration(Settings settings,
     ).apply(inst, MooshroomConfiguration::new));
 
     @Override
-    public void onThunderConversion(Entity oldEntity, Entity newEntity, LightningBolt bolt) {
-        if (newEntity instanceof MushroomCow mushroomCow)
+    public void postConversion(Entity oldEntity, @Nullable Entity newEntity, @Nullable LightningBolt bolt) {
+        if (newEntity instanceof MushroomCow mushroomCow && bolt != null)
             ((MushroomCowAccessor)mushroomCow).bovinesandbuttercups$setLastLightningBoltUUID(bolt.getUUID());
     }
 

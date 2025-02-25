@@ -6,6 +6,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BaseCowConfiguration;
 import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
+import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +19,11 @@ public record CowConfiguration(Settings settings) implements BaseCowConfiguratio
     public static final MapCodec<CowConfiguration> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Settings.CODEC.forGetter(CowConfiguration::settings)
     ).apply(inst, CowConfiguration::new));
+
+    @Override
+    public void preConversion(Entity entity) {
+        entity.playSound(BovinesSoundEvents.COW_CONVERT, 2.0F, 1.0F);
+    }
 
     public boolean allowsConversion(Entity entity) {
         return entity instanceof Cow cow && BovinesAndButtercups.getHelper().getCowExtrasAttachment(cow).allowConversion();
