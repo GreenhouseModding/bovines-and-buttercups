@@ -25,6 +25,7 @@
 
 ### Bugfixes
 - Reverted the previous variant being set to the old previous variant if present change, it was messing with thunder conversions.
+- Fixed Baby Sombercup Moobloom's back bud texture floating in mid air.
 - Fixed Sombercup Moobloom's inability to be converted into a Chargelily Moobloom.
 - Fixed Moobloom getting up animation not playing after a bee has pollinated the Moobloom.
 - Fixed missing texture for Lockdown Effect background inside the inventory.
