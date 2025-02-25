@@ -5,6 +5,9 @@
   - There is backwards compatibility implemented for converting blocks, items, and items on vanilla block entities and entities.
   - Cross-mod backwards compatibility may be impossible, so please make sure to put any Bird of Paradise items away from modded (block) entities, and to allow players a free cheat card if they don't do this.
   - Language entries may be inaccurate after this change, but they were already so *shrug*.
+- You may now convert a regular Cow into a Moobloom or Mooshroom by hitting them with lightning in the new cow's origin biome.
+  - Strike a cow with lightning in a Flower Forest for a Buttercup Moobloom.
+  - Strike a cow with lightning in a Mushroom Fields for a Red Mooshroom.
 - Updated the model of the Freesia and Alstroemeria Mooblooms to match the upcoming Warm cow variant's model.
 - Updated the model of the Lingholm and Snowdrop Mooblooms to match the upcoming Cold cow variant's model.
 - Updated the model of the Limelight and Nightshade Mooblooms to more closely resemble a Zebu.
