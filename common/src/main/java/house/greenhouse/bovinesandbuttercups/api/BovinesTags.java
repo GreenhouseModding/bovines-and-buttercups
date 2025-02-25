@@ -28,6 +28,7 @@ public class BovinesTags {
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_SNOWDROP = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/snowdrop"));
         public static final TagKey<Biome> HAS_RANCH_STRUCTURE_TROPICAL_BLUE = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_structure/ranch/tropical_blue"));
 
+        public static final TagKey<Biome> HAS_COW_DEFAULT = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_cow/default"));
         public static final TagKey<Biome> HAS_MOOBLOOM_FLOWER_FOREST = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_moobloom/flower_forest"));
         public static final TagKey<Biome> HAS_MOOSHROOM_MUSHROOM = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("has_mooshroom/mushroom"));
         public static final TagKey<Biome> PREVENT_COW_SPAWNS = TagKey.create(Registries.BIOME, BovinesAndButtercups.asResource("prevent_cow_spawns"));
