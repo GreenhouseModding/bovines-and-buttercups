@@ -40,7 +40,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -105,10 +107,10 @@ public class BovinesAndButtercupsNeoForge {
                             modifier.init(living);
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowVariantClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), true));
                 }
-                if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
-                if (living.hasData(BovinesAttachments.COW_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(living), true));
+                if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS) && living instanceof MushroomCow mooshroom)
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom), true));
+                if (living.hasData(BovinesAttachments.COW_EXTRAS) && living instanceof Cow cow)
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(cow), true));
             }
         }
 
@@ -116,11 +118,14 @@ public class BovinesAndButtercupsNeoForge {
         public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
             Level level = event.getLevel();
             Entity entity = event.getEntity();
-            if (entity instanceof Bee bee) {
-                PollinateMoobloomGoal pollinateGoal = new PollinateMoobloomGoal(bee);
-                bee.getGoalSelector().addGoal(3, pollinateGoal);
-                bee.getGoalSelector().addGoal(3, new MoveToMoobloomGoal(bee));
-                ((BeeGoalAccess) bee).bovinesandbuttercups$setPollinateMoobloomGoal(pollinateGoal);
+            if (entity instanceof Bee Bee) {
+                AvoidEntityGoal<Moobloom> avoidEntityGoal = new AvoidEntityGoal<>(Bee, Moobloom.class, living -> true, 12.0F, 1.4F, 1.4F, living ->
+                        EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(living) && BovinesAndButtercups.getHelper().getAvoidingMoobloom(Bee) != null && BovinesAndButtercups.getHelper().getAvoidingMoobloom(Bee).getUUID() == living.getUUID());
+                PollinateMoobloomGoal pollinateGoal = new PollinateMoobloomGoal(Bee);
+                Bee.getGoalSelector().addGoal(2, avoidEntityGoal);
+                Bee.getGoalSelector().addGoal(3, pollinateGoal);
+                Bee.getGoalSelector().addGoal(3, new MoveToMoobloomGoal(Bee));
+                ((BeeGoalAccess) Bee).bovinesandbuttercups$setPollinateMoobloomGoal(pollinateGoal);
             }
 
             if (level.isClientSide)
@@ -169,7 +174,8 @@ public class BovinesAndButtercupsNeoForge {
 
         @SubscribeEvent
         public static void onLivingTick(EntityTickEvent.Post event) {
-            if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof LivingEntity living && living.hasEffect(BovinesEffects.LOCKDOWN)) {
+            Entity entity = event.getEntity();
+            if (!entity.level().isClientSide() && entity instanceof LivingEntity living && living.hasEffect(BovinesEffects.LOCKDOWN)) {
                 HashMap<Holder<MobEffect>, Integer> lockdownEffectsToUpdate = new HashMap<>();
                 living.getExistingData(BovinesAttachments.LOCKDOWN).ifPresent(attachment -> attachment.effects().forEach(((effect, integer) -> {
                     if (integer > 0) {
@@ -182,7 +188,7 @@ public class BovinesAndButtercupsNeoForge {
                 LockdownAttachment.sync(living);
             }
 
-            if (event.getEntity().getType() == EntityType.MOOSHROOM && event.getEntity() instanceof MushroomCow mooshroom) {
+            if (entity.getType() == EntityType.MOOSHROOM && entity instanceof MushroomCow mooshroom) {
                 MooshroomExtrasAttachment attachment = BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom);
                 if (!attachment.hasSnow() && WeatherUtil.isInSnowyWeather(mooshroom) && !attachment.snowLayerPersistent() && !mooshroom.level().isClientSide() && mooshroom.getRandom().nextFloat() < 0.4F) {
                     BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(mooshroom, new MooshroomExtrasAttachment(true, false, attachment.allowShearing(), attachment.allowConversion()));
@@ -197,8 +203,15 @@ public class BovinesAndButtercupsNeoForge {
             if (event.getEntity().hasData(BovinesAttachments.COW_VARIANT) && event.getEntity().getData(BovinesAttachments.COW_VARIANT).cowVariant().isBound())
                 event.getEntity().getData(BovinesAttachments.COW_VARIANT).cowVariant().value().configuration().tick(event.getEntity());
 
-            if (event.getEntity() instanceof Bee bee && !event.getEntity().level().isClientSide() && ((BeeGoalAccess)event.getEntity()).bovinesandbuttercups$getPollinateMoobloomGoal() != null)
-                ((BeeGoalAccess)bee).bovinesandbuttercups$getPollinateMoobloomGoal().tickCooldown();
+            if (entity instanceof Bee bee && !entity.level().isClientSide()) {
+                if (((BeeGoalAccess)event.getEntity()).bovinesandbuttercups$getPollinateMoobloomGoal() != null)
+                    ((BeeGoalAccess)bee).bovinesandbuttercups$getPollinateMoobloomGoal().tickCooldown();
+
+                if (entity.hasData(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME) && entity.getExistingData(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME).map(integer -> integer > bee.getAge() + 200).orElse(false)) {
+                    entity.removeData(BovinesAttachments.AVOIDING_MOOBLOOM);
+                    entity.removeData(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME);
+                }
+            }
         }
 
         @SubscribeEvent

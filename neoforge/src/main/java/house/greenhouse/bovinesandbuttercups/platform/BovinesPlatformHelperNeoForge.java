@@ -19,6 +19,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -75,33 +77,55 @@ public class BovinesPlatformHelperNeoForge implements BovinesPlatformHelper {
     }
 
     @Override
-    public boolean hasMooshroomExtrasAttachment(LivingEntity entity) {
-        return entity.hasData(BovinesAttachments.MOOSHROOM_EXTRAS);
-    }
-
-    @Override
-    public CowExtrasAttachment getCowExtrasAttachment(LivingEntity entity) {
+    public CowExtrasAttachment getCowExtrasAttachment(Cow entity) {
         return entity.getExistingData(BovinesAttachments.COW_EXTRAS).orElse(CowExtrasAttachment.DEFAULT);
     }
 
     @Override
-    public void setCowExtrasAttachment(LivingEntity entity, CowExtrasAttachment attachment) {
+    public void setCowExtrasAttachment(Cow entity, CowExtrasAttachment attachment) {
         entity.setData(BovinesAttachments.COW_EXTRAS, attachment);
     }
 
     @Override
-    public boolean hasCowExtrasAttachment(LivingEntity entity) {
+    public boolean hasCowExtrasAttachment(Cow entity) {
         return entity.hasData(BovinesAttachments.COW_EXTRAS);
     }
 
     @Override
-    public MooshroomExtrasAttachment getMooshroomExtrasAttachment(LivingEntity entity) {
+    public MooshroomExtrasAttachment getMooshroomExtrasAttachment(MushroomCow entity) {
         return entity.getExistingData(BovinesAttachments.MOOSHROOM_EXTRAS).orElse(MooshroomExtrasAttachment.DEFAULT);
     }
 
     @Override
-    public void setMooshroomExtrasAttachment(LivingEntity entity, MooshroomExtrasAttachment attachment) {
+    public void setMooshroomExtrasAttachment(MushroomCow entity, MooshroomExtrasAttachment attachment) {
         entity.setData(BovinesAttachments.MOOSHROOM_EXTRAS, attachment);
+    }
+
+    @Override
+    public boolean hasMooshroomExtrasAttachment(MushroomCow entity) {
+        return entity.hasData(BovinesAttachments.MOOSHROOM_EXTRAS);
+    }
+
+    @Override
+    public Moobloom getAvoidingMoobloom(LivingEntity entity) {
+        if (entity.level() instanceof ServerLevel serverLevel && entity.hasData(BovinesAttachments.AVOIDING_MOOBLOOM) && serverLevel.getEntity(entity.getData(BovinesAttachments.AVOIDING_MOOBLOOM)) instanceof Moobloom moobloom)
+            return moobloom;
+        return null;
+    }
+
+    @Override
+    public void setAvoidingMoobloom(LivingEntity entity, Moobloom moobloom) {
+        entity.setData(BovinesAttachments.AVOIDING_MOOBLOOM, moobloom.getUUID());
+    }
+
+    @Override
+    public int getAvoidingMoobloomStartTime(Bee entity) {
+        return entity.getExistingData(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME).orElse(Integer.MIN_VALUE);
+    }
+
+    @Override
+    public void setAvoidingMoobloomStartTime(Bee entity, int time) {
+        entity.setData(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME, time);
     }
 
     @Override

@@ -166,5 +166,13 @@
       }
     }
   ],
-  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/nightshade"
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/nightshade",
+  "thunder_conversion_types": [
+    {
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
+    }
+  ],
+  "warns_bees": true
 }

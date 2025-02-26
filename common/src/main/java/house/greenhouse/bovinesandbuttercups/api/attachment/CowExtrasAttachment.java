@@ -3,10 +3,10 @@ package house.greenhouse.bovinesandbuttercups.api.attachment;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowExtrasClientboundPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Cow;
 
 public record CowExtrasAttachment(boolean allowConversion) {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("cow_extras");
@@ -19,15 +19,15 @@ public record CowExtrasAttachment(boolean allowConversion) {
         this(true);
     }
 
-    public static void sync(LivingEntity entity) {
+    public static void sync(Cow entity) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(entity), false));
+        BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncCowExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(entity), false));
     }
 
-    public static void syncToPlayer(LivingEntity entity, ServerPlayer player) {
+    public static void syncToPlayer(Cow entity, ServerPlayer player) {
         if (entity.level().isClientSide())
             return;
-        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(entity), false));
+        BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(entity), false));
     }
 }

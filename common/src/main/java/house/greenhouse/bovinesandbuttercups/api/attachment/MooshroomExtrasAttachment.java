@@ -6,7 +6,7 @@ import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.MushroomCow;
 
 public record MooshroomExtrasAttachment(boolean hasSnow, boolean snowLayerPersistent, boolean allowShearing, boolean allowConversion) {
     public static final ResourceLocation ID = BovinesAndButtercups.asResource("mooshroom_extras");
@@ -22,13 +22,13 @@ public record MooshroomExtrasAttachment(boolean hasSnow, boolean snowLayerPersis
         this(false, false, true, true);
     }
 
-    public static void sync(LivingEntity entity) {
+    public static void sync(MushroomCow entity) {
         if (entity.level().isClientSide())
             return;
         BovinesAndButtercups.getHelper().sendTrackingClientboundPacket(entity, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(entity), false));
     }
 
-    public static void syncToPlayer(LivingEntity entity, ServerPlayer player) {
+    public static void syncToPlayer(MushroomCow entity, ServerPlayer player) {
         if (entity.level().isClientSide())
             return;
         BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(entity), false));

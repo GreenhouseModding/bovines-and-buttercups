@@ -26,7 +26,11 @@ public class BovinesAttachments {
     public static final AttachmentType<MooshroomExtrasAttachment> MOOSHROOM_EXTRAS = AttachmentRegistry.createPersistent(MooshroomExtrasAttachment.ID, MooshroomExtrasAttachment.CODEC);
 
     public static final AttachmentType<Boolean> PRODUCES_RICH_HONEY = AttachmentRegistry.createPersistent(BovinesAndButtercups.asResource("produces_rich_honey"), Codec.BOOL);
+
     public static final AttachmentType<UUID> POLLINATING_MOOBLOOM = AttachmentRegistry.createPersistent(BovinesAndButtercups.asResource("pollinating_moobloom"), UUIDUtil.CODEC);
+    public static final AttachmentType<UUID> AVOIDING_MOOBLOOM = AttachmentRegistry.createPersistent(BovinesAndButtercups.asResource("avoiding_moobloom"), UUIDUtil.CODEC);
+    public static final AttachmentType<Integer> AVOIDING_MOOBLOOM_START_TIME = AttachmentRegistry.createPersistent(BovinesAndButtercups.asResource("avoiding_moobloom"), Codec.INT);
+
     public static final AttachmentType<Map<Holder<CowVariant<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = AttachmentRegistry.createDefaulted(BovinesAndButtercups.asResource("baby_particle_positions"), HashMap::new);
 
     public static void init() {}

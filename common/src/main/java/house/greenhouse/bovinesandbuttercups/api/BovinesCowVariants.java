@@ -94,6 +94,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.CHARGELILY.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("chargelily_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.CHARGELILY_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_CHARGELILY_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -114,6 +115,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.SOMBERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("sombercup_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.SOMBERCUP_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_SOMBERCUP_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -140,6 +142,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.ALSTROEMERIA.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("alstroemeria_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.ALSTROEMERIA_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_ALSTROEMERIA_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -161,7 +164,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.BUTTERCUP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("buttercup_bud")), Optional.empty()),
-
+                false,
                 Optional.of(BovinesItems.BUTTERCUP_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_BUTTERCUP_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -183,6 +186,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.CAMELLIA.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("camellia_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.CAMELLIA_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_CAMELLIA_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -204,6 +208,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.FREESIA.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("freesia_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.FREESIA_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_FREESIA_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -225,6 +230,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.HYACINTH.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("hyacinth_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.HYACINTH_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_HYACINTH_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -246,6 +252,7 @@ public class BovinesCowVariants {
                 ),
                 new BlockReference<>(Optional.of(BovinesBlocks.LIMELIGHT.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("limelight_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.LIMELIGHT_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_LIMELIGHT_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -267,6 +274,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.LINGHOLM.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("lingholm_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.LINGHOLM_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_LINGHOLM_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -276,7 +284,7 @@ public class BovinesCowVariants {
                                         new FallbackTextureModifierFactory(List.of()))),
                                 new CowModelLayer(BovinesAndButtercups.asResource("bovinesandbuttercups/lush_snow_layer"), List.of(new ConditionedTextureModifierFactory(BovinesAndButtercups.asResource("snow_layer_with_snow"),
                                         List.of(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(new CowSubPredicate(Optional.empty(),Optional.of(true))).build()).build()),1)))),
-                        SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.NIGHTSHADE)),
+                        SimpleWeightedRandomList.empty(), chargelilyConvertData, Optional.of(ColorParticleOption.create(BovinesParticleTypes.BLOOM, ColorConstants.NIGHTSHADE)),
                         new OffspringConditions(List.of(createCondition(
                                 List.of(
                                         BlockPredicate.Builder.block().of(blockRegistry, Blocks.PALE_HANGING_MOSS),
@@ -288,6 +296,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.NIGHTSHADE.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("nightshade_bud")), Optional.empty()),
+                true,
                 Optional.of(BovinesItems.NIGHTSHADE_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_NIGHTSHADE_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -309,6 +318,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.PINK_DAISY.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("pink_daisy_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.PINK_DAISY_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_PINK_DAISY_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -330,6 +340,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.SNOWDROP.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("snowdrop_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.SNOWDROP_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_SNOWDROP_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -351,6 +362,7 @@ public class BovinesCowVariants {
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.TROPICAL_BLUE.defaultBlockState()), Optional.empty(), Optional.empty()),
                 new BlockReference<>(Optional.empty(), Optional.of(BovinesAndButtercups.asResource("tropical_blue_bud")), Optional.empty()),
+                false,
                 Optional.of(BovinesItems.TROPICAL_BLUE_NECTAR_BOWL.getDefaultInstance()),
                 Optional.of(BovinesLootTables.SHEAR_TROPICAL_BLUE_MOOBLOOM.location()),
                 sombercupConvertData)));
@@ -402,7 +414,7 @@ public class BovinesCowVariants {
         context.register(CowKeys.DEFAULT_COW, new CowVariant<>(BovinesCowTypes.COW_TYPE, new CowConfiguration(
                 new BaseCowConfiguration.Settings(Optional.of(ResourceLocation.parse("cow/cow")), BovinesCowModelTypes.TEMPERATE,
                         List.of(),
-                        SimpleWeightedRandomList.single(HolderSet.empty()),
+                        SimpleWeightedRandomList.single(context.lookup(Registries.BIOME).getOrThrow(BovinesTags.BiomeTags.HAS_COW_DEFAULT)),
                         cowConvertData,
                         Optional.of(ColorParticleOption.create(BovinesParticleTypes.SHROOM, ColorConstants.BROWN_MUSHROOM)),
                         OffspringConditions.EMPTY)

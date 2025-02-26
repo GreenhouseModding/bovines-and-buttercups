@@ -98,10 +98,10 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                             modifier.init(living);
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowVariantClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), true));
                 }
-                if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
-                if (entity.hasAttached(BovinesAttachments.COW_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(living), true));
+                if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) && entity instanceof MushroomCow mooshroom)
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom), true));
+                if (entity.hasAttached(BovinesAttachments.COW_EXTRAS) && entity instanceof Cow cow)
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(cow), true));
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {

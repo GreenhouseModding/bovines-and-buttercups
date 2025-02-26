@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.access.BeeGoalAccess;
 import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -21,6 +22,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -74,6 +76,15 @@ public abstract class LivingEntityMixin extends Entity {
             if (attachment.hasSnow() && !attachment.snowLayerPersistent() && mooshroom.level().getBiome(mooshroom.blockPosition()).is(BiomeTags.SNOW_GOLEM_MELTS) && !mooshroom.level().isClientSide() && mooshroom.getRandom().nextFloat() < 0.4F) {
                 BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(mooshroom, new MooshroomExtrasAttachment(false, false, attachment.allowShearing(), attachment.allowConversion()));
                 MooshroomExtrasAttachment.sync(mooshroom);
+            }
+        }
+        if ((LivingEntity)(Object)this instanceof Bee bee && !bee   .level().isClientSide()) {
+            if (((BeeGoalAccess)bee).bovinesandbuttercups$getPollinateMoobloomGoal() != null)
+                ((BeeGoalAccess)bee).bovinesandbuttercups$getPollinateMoobloomGoal().tickCooldown();
+
+            if (bee.hasAttached(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME) && bee.getAttached(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME)  > bee.getAge() + 200) {
+                bee.removeAttached(BovinesAttachments.AVOIDING_MOOBLOOM);
+                bee.removeAttached(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME);
             }
         }
     }

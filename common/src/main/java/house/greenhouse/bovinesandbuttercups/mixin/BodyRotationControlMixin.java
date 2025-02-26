@@ -18,8 +18,8 @@ public abstract class BodyRotationControlMixin {
 
     @Inject(method = "clientTick", at = @At("HEAD"), cancellable = true)
     private void bovinesandbuttercups$cancelBodyRotation(CallbackInfo ci) {
-        if (this.mob instanceof Moobloom moobloom && moobloom.getStandingStillForBeeTicks() > 0) {
-            this.rotateHeadIfNecessary();
+        if (mob instanceof Moobloom moobloom && moobloom.getCowVariant().isBound() && !moobloom.getCowVariant().value().configuration().warnsBees() && moobloom.getStandingStillForBeeTicks() > 0) {
+            rotateHeadIfNecessary();
             ci.cancel();
         }
     }

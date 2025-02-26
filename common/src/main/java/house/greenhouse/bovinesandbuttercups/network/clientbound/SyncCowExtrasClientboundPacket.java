@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.MushroomCow;
 
 import java.util.Map;
@@ -54,11 +55,11 @@ public record SyncCowExtrasClientboundPacket(int entityId, CowExtrasAttachment a
 
         for (Map.Entry<Pair<Integer, CowExtrasAttachment>, Integer> pair : RETRIES.object2IntEntrySet()) {
             Entity entity = Minecraft.getInstance().level.getEntity(pair.getKey().getFirst());
-            if (!(entity instanceof LivingEntity living)) {
+            if (!(entity instanceof Cow cow)) {
                 RETRIES.put(pair.getKey(), pair.getValue() + 1);
                 continue;
             }
-            BovinesAndButtercups.getHelper().setCowExtrasAttachment(living, pair.getKey().getSecond());
+            BovinesAndButtercups.getHelper().setCowExtrasAttachment(cow, pair.getKey().getSecond());
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());
         }
         RETRIES.values().removeIf(integer -> {

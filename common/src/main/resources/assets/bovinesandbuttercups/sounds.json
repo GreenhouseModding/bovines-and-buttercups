@@ -54,6 +54,12 @@
     ],
     "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.plant"
   },
+  "entity.moobloom.warn": {
+    "sounds": [
+      "bovinesandbuttercups:mob/moobloom/warn"
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.warn"
+  },
   "item.armor.equip_flower_crown": {
     "sounds": [
       {

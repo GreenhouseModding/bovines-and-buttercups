@@ -215,9 +215,9 @@ public class Moobloom extends Cow {
         super.tick();
 
         if (level().isClientSide) {
-            if (getStandingStillForBeeTicks() > 0)
+            if (getStandingStillForBeeTicks() > 0 && !getCowVariant().value().configuration().warnsBees())
                 layDownAnimationState.startIfStopped(tickCount);
-            else if (layDownAnimationState.isStarted() && getStandingStillForBeeTicks() == 0) {
+            else if (layDownAnimationState.isStarted() && getStandingStillForBeeTicks() <= 0) {
                 layDownAnimationState.stop();
                 getUpAnimationState.startIfStopped(tickCount);
             }
@@ -242,7 +242,7 @@ public class Moobloom extends Cow {
                 }
             }
 
-            if (bee != null && !bee.isAlive()) {
+            if (bee != null && !bee.isAlive() || getCowVariant().value().configuration().warnsBees() && getStandingStillForBeeTicks() <= 0) {
                 setStandingStillForBeeTicks(0);
                 bee = null;
             }
@@ -269,8 +269,6 @@ public class Moobloom extends Cow {
                 ((EntityAccessor)this).bovinesandbuttercups$setEyeHeight(getDimensions(getPose()).height() * 0.85F);
                 hasRefreshedDimensionsForLaying = true;
             }
-            if (!level().isClientSide() && bee != null)
-                getLookControl().setLookAt(bee);
         } else if (hasRefreshedDimensionsForLaying) {
             refreshDimensions();
             ((EntityAccessor)this).bovinesandbuttercups$setEyeHeight(getDimensions(getPose()).height() * 0.85F);
@@ -567,9 +565,6 @@ public class Moobloom extends Cow {
     public static int getTotalSpawnWeight(LevelAccessor level, BlockPos pos) {
         int totalWeight = 0;
 
-        if (!(level instanceof ServerLevel serverLevel))
-            return 0;
-
         for (CowVariant<?> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).stream().filter(cowVariant -> cowVariant.configuration() instanceof MoobloomConfiguration).toList()) {
             if (!(cowVariant.configuration() instanceof MoobloomConfiguration configuration))
                 continue;
@@ -600,12 +595,18 @@ public class Moobloom extends Cow {
 
         @Override
         public boolean canUse() {
-            return Moobloom.this.getStandingStillForBeeTicks() > 0;
+            return bee != null && Moobloom.this.getStandingStillForBeeTicks() > 0;
         }
 
         @Override
         public void start() {
             Moobloom.this.getNavigation().stop();
+        }
+
+        @Override
+        public void tick() {
+            if (bee != null)
+                lookControl.setLookAt(bee);
         }
     }
 

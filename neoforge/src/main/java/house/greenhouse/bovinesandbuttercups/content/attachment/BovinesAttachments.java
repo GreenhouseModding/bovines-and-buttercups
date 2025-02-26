@@ -45,6 +45,14 @@ public class BovinesAttachments {
             .builder(() -> (UUID)null)
             .serialize(UUIDUtil.CODEC)
             .build());
+    public static final AttachmentType<UUID> AVOIDING_MOOBLOOM = register(BovinesAndButtercups.asResource("avoiding_moobloom"), AttachmentType
+            .builder(() -> (UUID)null)
+            .serialize(UUIDUtil.CODEC)
+            .build());
+    public static final AttachmentType<Integer> AVOIDING_MOOBLOOM_START_TIME = register(BovinesAndButtercups.asResource("avoiding_moobloom_start_time"), AttachmentType
+            .builder(() -> 0)
+            .serialize(Codec.INT)
+            .build());
     public static final AttachmentType<Map<Holder<CowVariant<?>>, List<Vec3>>> BABY_PARTICLE_POSITIONS = register(BovinesAndButtercups.asResource("baby_particle_positions"), AttachmentType
             .builder(() -> (Map<Holder<CowVariant<?>>, List<Vec3>>)new HashMap<Holder<CowVariant<?>>, List<Vec3>>())
             .build());

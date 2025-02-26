@@ -8,6 +8,7 @@
 - You may now convert a regular Cow into a Moobloom or Mooshroom by hitting them with lightning in the new cow's origin biome.
   - Strike a cow with lightning in a Flower Forest for a Buttercup Moobloom.
   - Strike a cow with lightning in a Mushroom Fields for a Red Mooshroom.
+- Nightshade Mooblooms now warn bees away from their poisonous flowers.
 - Updated the model of the Freesia and Alstroemeria Mooblooms to match the upcoming Warm cow variant's model.
 - Updated the model of the Lingholm and Snowdrop Mooblooms to match the upcoming Cold cow variant's model.
 - Updated the model of the Limelight and Nightshade Mooblooms to more closely resemble a Zebu.
@@ -22,6 +23,7 @@
   - The `Type` tag no longer works when setting a Moobloom's type. This is now built into data fixing when upgrading a world from 1.x.x to 2.2.0 or above.
   - The `fabric/neoforge:attachments.bovinesandbuttercups:cow_type` tag no longer works when detting a Moobloom's type. This is now built into data fixing when updating a world from 2.0.0 to 2.2.0 or above.
 - Updated Nightshade text colors.
+- Mooblooms now have to wait 15 seconds before being pollinated by a bee again.
 
 ### Bugfixes
 - Reverted the previous variant being set to the old previous variant if present change, it was messing with thunder conversions.
@@ -68,6 +70,7 @@
   - `bovinesandbuttercups:buffalo` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:warm` instead).
   - `bovinesandbuttercups:highland` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
   - `bovinesandbuttercups:ox` -> scheduled for removal but kept in for old packs (use `bovinesandbuttercups:cold` instead).
+- Added `warns_bees` field, used by the Nightshade Moobloom to determine which bee behaviour the Moobloom should operate on.
 
 <details>
 <summary>Conversion Data JSON Update</summary>

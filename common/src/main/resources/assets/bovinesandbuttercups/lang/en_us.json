@@ -147,6 +147,7 @@
   "subtitles.entity.bovinesandbuttercups.moobloom.eat": "Moobloom eats",
   "subtitles.entity.bovinesandbuttercups.moobloom.milk": "Moobloom gets milked",
   "subtitles.entity.bovinesandbuttercups.moobloom.plant": "Moobloom plants",
+  "subtitles.entity.bovinesandbuttercups.moobloom.warn": "Moobloom warns",
 
   "effect.bovinesandbuttercups.lockdown": "Lockdown",
   "potion.bovinesandbuttercups.lockdown": "Lockdown (%s) (%s)",

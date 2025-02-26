@@ -54,11 +54,11 @@ public record SyncMooshroomExtrasClientboundPacket(int entityId, MooshroomExtras
 
         for (Map.Entry<Pair<Integer, MooshroomExtrasAttachment>, Integer> pair : RETRIES.object2IntEntrySet()) {
             Entity entity = Minecraft.getInstance().level.getEntity(pair.getKey().getFirst());
-            if (!(entity instanceof LivingEntity living)) {
+            if (!(entity instanceof MushroomCow mooshroom)) {
                 RETRIES.put(pair.getKey(), pair.getValue() + 1);
                 continue;
             }
-            BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(living, pair.getKey().getSecond());
+            BovinesAndButtercups.getHelper().setMooshroomExtrasAttachment(mooshroom, pair.getKey().getSecond());
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());
         }
         RETRIES.values().removeIf(integer -> {

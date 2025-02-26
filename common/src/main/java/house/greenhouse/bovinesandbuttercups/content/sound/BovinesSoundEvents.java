@@ -14,6 +14,7 @@ public class BovinesSoundEvents {
     public static final SoundEvent MOOBLOOM_SHEAR = register(BovinesAndButtercups.asResource("entity.moobloom.shear"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.shear")));
     public static final SoundEvent MOOBLOOM_CONVERT = register(BovinesAndButtercups.asResource("entity.moobloom.convert"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.convert")));
     public static final SoundEvent MOOBLOOM_PLANT = register(BovinesAndButtercups.asResource("entity.moobloom.plant"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.plant")));
+    public static final SoundEvent MOOBLOOM_WARN = register(BovinesAndButtercups.asResource("entity.moobloom.warn"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("entity.moobloom.warn")));
     public static final Holder<SoundEvent> EQUIP_FLOWER_CROWN = registerHolder(BovinesAndButtercups.asResource("item.armor.equip_flower_crown"), SoundEvent.createVariableRangeEvent(BovinesAndButtercups.asResource("item.armor.equip_flower_crown")));
 
     public static void registerAll() {}

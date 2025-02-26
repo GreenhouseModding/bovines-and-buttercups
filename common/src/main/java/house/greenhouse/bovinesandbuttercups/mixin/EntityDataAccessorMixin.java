@@ -9,6 +9,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.commands.data.EntityDataAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.MushroomCow;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,10 +29,10 @@ public class EntityDataAccessorMixin {
                 CowVariantAttachment.sync(living);
             if (BovinesAndButtercups.getHelper().getLockdownAttachment(living) != null)
                 LockdownAttachment.sync(living);
-            if (BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment(living))
-                MooshroomExtrasAttachment.sync(living);
-            if (BovinesAndButtercups.getHelper().hasCowExtrasAttachment(living))
-                CowExtrasAttachment.sync(living);
+            if (entity instanceof MushroomCow mooshroom && BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment(mooshroom))
+                MooshroomExtrasAttachment.sync(mooshroom);
+            if (entity instanceof Cow cow && BovinesAndButtercups.getHelper().hasCowExtrasAttachment(cow))
+                CowExtrasAttachment.sync(cow);
         }
     }
 }
