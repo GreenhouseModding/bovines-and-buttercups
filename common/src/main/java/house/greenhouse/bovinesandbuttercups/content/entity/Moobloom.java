@@ -595,7 +595,7 @@ public class Moobloom extends Cow {
 
         @Override
         public boolean canUse() {
-            return bee != null && Moobloom.this.getStandingStillForBeeTicks() > 0;
+            return bee != null && bee.isAlive() && Moobloom.this.getStandingStillForBeeTicks() > 0;
         }
 
         @Override
@@ -605,8 +605,9 @@ public class Moobloom extends Cow {
 
         @Override
         public void tick() {
-            if (bee != null)
+            if (bee != null && bee.isAlive()) {
                 lookControl.setLookAt(bee);
+            }
         }
     }
 
