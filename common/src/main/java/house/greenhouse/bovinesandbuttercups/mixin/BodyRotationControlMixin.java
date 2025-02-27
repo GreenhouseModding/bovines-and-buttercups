@@ -16,10 +16,16 @@ public abstract class BodyRotationControlMixin {
 
     @Shadow protected abstract void rotateHeadIfNecessary();
 
+    @Shadow private float lastStableYHeadRot;
+
+    @Shadow private int headStableTime;
+
     @Inject(method = "clientTick", at = @At("HEAD"), cancellable = true)
     private void bovinesandbuttercups$cancelBodyRotation(CallbackInfo ci) {
         if (mob instanceof Moobloom moobloom && moobloom.getCowVariant().isBound() && !moobloom.getCowVariant().value().configuration().warnsBees() && moobloom.getStandingStillForBeeTicks() > 0) {
             rotateHeadIfNecessary();
+            this.lastStableYHeadRot = this.mob.yHeadRot;
+            this.headStableTime = 0;
             ci.cancel();
         }
     }

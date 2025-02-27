@@ -26,6 +26,7 @@
 - Mooblooms now have to wait 15 seconds before being pollinated by a bee again.
 
 ### Bugfixes
+- Fixed loading issues with cupcake models that resulted in inconsistent missing models.
 - Reverted the previous variant being set to the old previous variant if present change, it was messing with thunder conversions.
 - Fixed Baby Sombercup Moobloom's back bud texture floating in mid air.
 - Fixed Sombercup Moobloom's inability to be converted into a Chargelily Moobloom.

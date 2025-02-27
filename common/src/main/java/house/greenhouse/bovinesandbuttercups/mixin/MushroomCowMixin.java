@@ -1,10 +1,13 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.util.ConversionUtil;
 import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
@@ -12,22 +15,30 @@ import house.greenhouse.bovinesandbuttercups.content.item.CustomFlowerItem;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
 @Mixin(MushroomCow.class)
-public abstract class MushroomCowMixin {
+public abstract class MushroomCowMixin extends CowSuperMixin {
+    protected MushroomCowMixin(EntityType<? extends Animal> entityType, Level level) {
+        super(entityType, level);
+    }
+
     @Shadow public abstract MushroomCow.Variant getVariant();
 
     @Inject(method = "getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/animal/MushroomCow;", at = @At(value = "RETURN"))
@@ -56,5 +67,24 @@ public abstract class MushroomCowMixin {
             return CustomFlowerItem.getSuspiciousStewEffects(stack);
 
         return value;
+    }
+
+    @Inject(method = "thunderHit", at = @At(value = "HEAD"), cancellable = true)
+    private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
+        boolean bl = ConversionUtil.CONVERTED_BY_BOVINES.contains(this);
+        if (!bl && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment((MushroomCow)(Object) this) || BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment((MushroomCow)(Object) this) && BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment((MushroomCow)(Object) this).allowConversion()) {
+            bovinesandbuttercups$superThunderHit(level, lightning);
+            ci.cancel();
+        }
+    }
+
+    @WrapWithCondition(method = "thunderHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;setVariant(Lnet/minecraft/world/entity/animal/MushroomCow$Variant;)V"))
+    private boolean bovinesandbuttercups$cancelThunderConversion(MushroomCow instance, MushroomCow.Variant variant) {
+        boolean bl = ConversionUtil.CONVERTED_BY_BOVINES.contains(this);
+        if (bl || (BovinesAndButtercups.getHelper().hasMooshroomExtrasAttachment(instance) && !BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(instance).allowConversion())) {
+            ConversionUtil.CONVERTED_BY_BOVINES.remove(this);
+            return false;
+        }
+        return true;
     }
 }
