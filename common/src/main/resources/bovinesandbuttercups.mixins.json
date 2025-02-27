@@ -39,6 +39,7 @@
     "ServerLevelAccessor",
     "ShapesMixin",
     "SimpleJsonResourceReloadListenerMixin",
+    "UtilMixin",
     "VoxelShapeMixin"
   ],
   "client": [

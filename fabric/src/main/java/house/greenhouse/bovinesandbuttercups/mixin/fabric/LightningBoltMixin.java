@@ -3,12 +3,19 @@ package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.ConvertData;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
+import house.greenhouse.bovinesandbuttercups.util.ConversionUtil;
 import net.minecraft.core.Holder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,45 +23,50 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Mixin(LightningBolt.class)
-public class LightningBoltMixin {
+public abstract class LightningBoltMixin extends Entity {
     @Shadow @Final private Set<Entity> hitEntities;
+
+    public LightningBoltMixin(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"))
     private void bovinesandbuttercups$thunderHit(CallbackInfo ci, @Local Entity entity) {
-        if (hitEntities.contains(entity) || !(entity instanceof LivingEntity living) || (entity instanceof Moobloom) || !entity.hasAttached(BovinesAttachments.COW_VARIANT))
+        if (hitEntities.contains(entity) || ConversionUtil.CONVERTED_BY_BOVINES.contains(entity) || !(entity instanceof Mob mob) || !entity.hasAttached(BovinesAttachments.COW_VARIANT))
             return;
         CowVariantAttachment attachment = entity.getAttached(BovinesAttachments.COW_VARIANT);
-        if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
+        if (!attachment.cowVariant().value().type().isLightningLogicIndirect())
             return;
+        if (!attachment.cowVariant().isBound())
+            return;
+        if (!(level() instanceof ServerLevel serverLevel))
+            return;
+        if (!attachment.cowVariant().value().configuration().allowsConversion(entity)) {
+            ConversionUtil.CONVERTED_BY_BOVINES.add(entity);
+            return;
+        }
         if (attachment.previousCowVariant().isEmpty()) {
             if (attachment.cowVariant().value().configuration().settings().thunderConverts().isEmpty())
                 return;
 
-            var compatibleList = attachment.cowVariant().value().configuration().settings().filterThunderConverts(attachment.cowVariant().value().type());
+            LootParams params = new LootParams.Builder(serverLevel)
+                    .withParameter(LootContextParams.THIS_ENTITY, this)
+                    .withParameter(LootContextParams.ORIGIN, position())
+                    .withParameter(LootContextParams.DAMAGE_SOURCE, this.damageSources().lightningBolt())
+                    .withParameter(LootContextParams.ATTACKING_ENTITY, this)
+                    .create(LootContextParamSets.ENTITY);
+            LootContext context = new LootContext.Builder(params).create(Optional.empty());
 
-            if (compatibleList.size() == 1) {
-                CowVariantAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
-                CowVariantAttachment.sync(living);
-                BovinesAndButtercups.convertedByBovines = true;
-            } else if (!compatibleList.isEmpty()) {
-                int totalWeight = entity.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
-                for (var cct : compatibleList) {
-                    totalWeight -= cct.weight().asInt();
-                    if (totalWeight < 0) {
-                        CowVariantAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
-                        CowVariantAttachment.sync(living);
-                        BovinesAndButtercups.convertedByBovines = true;
-                        break;
-                    }
-                }
-            }
+            List<WeightedEntry.Wrapper<ConvertData>> compatibleList = attachment.cowVariant().value().configuration().settings().thunderConverts().unwrap().stream().filter(convertDataWrapper -> convertDataWrapper.data().conditions().isEmpty() || convertDataWrapper.data().conditions().stream().allMatch(condition -> condition.test(context))).toList();
+
+            ConversionUtil.convert(mob, serverLevel, (LightningBolt)(Object)this, compatibleList);
         } else {
-            CowVariantAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
-            CowVariantAttachment.sync(living);
-            BovinesAndButtercups.convertedByBovines = true;
+            ConversionUtil.revertFromPrevious(mob, serverLevel, (LightningBolt)(Object)this);
         }
     }
 

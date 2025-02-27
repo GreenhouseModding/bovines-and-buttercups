@@ -1,0 +1,8 @@
+{
+  "stew_effects": [
+    {
+      "id": "minecraft:invisibility",
+      "duration": 40
+    }
+  ]
+}

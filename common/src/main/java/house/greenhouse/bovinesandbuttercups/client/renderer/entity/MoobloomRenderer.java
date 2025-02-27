@@ -33,7 +33,7 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomModel> {
     @Override
     public void render(Moobloom moobloom, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(moobloom.getType());
-        CowModelType cowModel = moobloom.getCowVariant().value().configuration().model();
+        CowModelType cowModel = moobloom.getCowVariant().value().configuration().settings().model();
         if (cowModel != null && cowModel.namespaceOverride() != null)
             namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
         if (cowModel != null && cowModel.pathOverride() != null)

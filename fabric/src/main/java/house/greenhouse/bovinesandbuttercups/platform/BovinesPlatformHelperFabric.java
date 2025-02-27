@@ -1,11 +1,11 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.entity.MoobloomFabric;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.RemainderIngredient;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
@@ -14,18 +14,17 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,11 +58,6 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey) {
-        return FabricRegistryBuilder.createSimple(registryKey).buildAndRegister();
-    }
-
-    @Override
     public String getAttachmentKey() {
         return "fabric:attachments";
     }
@@ -84,18 +78,56 @@ public class BovinesPlatformHelperFabric implements BovinesPlatformHelper {
     }
 
     @Override
-    public boolean hasMooshroomExtrasAttachment(LivingEntity entity) {
+    public boolean hasMooshroomExtrasAttachment(MushroomCow entity) {
         return entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS);
     }
 
     @Override
-    public MooshroomExtrasAttachment getMooshroomExtrasAttachment(LivingEntity entity) {
+    public MooshroomExtrasAttachment getMooshroomExtrasAttachment(MushroomCow entity) {
         return entity.getAttachedOrElse(BovinesAttachments.MOOSHROOM_EXTRAS, MooshroomExtrasAttachment.DEFAULT);
     }
 
     @Override
-    public void setMooshroomExtrasAttachment(LivingEntity entity, MooshroomExtrasAttachment attachment) {
+    public void setMooshroomExtrasAttachment(MushroomCow entity, MooshroomExtrasAttachment attachment) {
         entity.setAttached(BovinesAttachments.MOOSHROOM_EXTRAS, attachment);
+    }
+
+    @Override
+    public boolean hasCowExtrasAttachment(Cow entity) {
+        return entity.hasAttached(BovinesAttachments.COW_EXTRAS);
+    }
+
+    @Override
+    public CowExtrasAttachment getCowExtrasAttachment(Cow entity) {
+        return entity.getAttachedOrElse(BovinesAttachments.COW_EXTRAS, CowExtrasAttachment.DEFAULT);
+    }
+
+    @Override
+    public void setCowExtrasAttachment(Cow entity, CowExtrasAttachment attachment) {
+        entity.setAttached(BovinesAttachments.COW_EXTRAS, attachment);
+    }
+
+    @Override
+    public Moobloom getAvoidingMoobloom(LivingEntity entity) {
+        if (entity.level() instanceof ServerLevel serverLevel &&
+                entity.hasAttached(BovinesAttachments.AVOIDING_MOOBLOOM) && serverLevel.getEntity(entity.getAttached(BovinesAttachments.AVOIDING_MOOBLOOM)) instanceof Moobloom moobloom)
+            return moobloom;
+        return null;
+    }
+
+    @Override
+    public void setAvoidingMoobloom(LivingEntity entity, Moobloom moobloom) {
+        entity.setAttached(BovinesAttachments.AVOIDING_MOOBLOOM, moobloom.getUUID());
+    }
+
+    @Override
+    public int getAvoidingMoobloomStartTime(Bee entity) {
+        return entity.getAttachedOrElse(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME, Integer.MIN_VALUE);
+    }
+
+    @Override
+    public void setAvoidingMoobloomStartTime(Bee entity, int time) {
+        entity.setAttached(BovinesAttachments.AVOIDING_MOOBLOOM_START_TIME, time);
     }
 
     @Override

@@ -10,7 +10,7 @@
   },
   "layers": [
     {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/moobloom_moss_layer",
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/moobloom/lush_moobloom_moss_layer",
       "texture_modifiers": [
         {
           "type": "bovinesandbuttercups:fallback"
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/snow_layer",
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/lush_snow_layer",
       "texture_modifiers": [
         {
           "type": "bovinesandbuttercups:conditioned",
@@ -39,6 +39,7 @@
       ]
     }
   ],
+  "model": "bovinesandbuttercups:lush",
   "nectar": "bovinesandbuttercups:limelight",
   "offspring_conditions": [
     {
@@ -158,12 +159,16 @@
   },
   "sculk_conversion_types": [
     {
-      "type": "bovinesandbuttercups:sombercup"
+      "type": {
+        "variant": "bovinesandbuttercups:sombercup"
+      }
     }
   ],
   "thunder_conversion_types": [
     {
-      "type": "bovinesandbuttercups:chargelily"
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
     }
   ]
 }

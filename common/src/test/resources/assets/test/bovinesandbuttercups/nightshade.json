@@ -1,0 +1,9 @@
+{
+  "type": "bovinesandbuttercups:flower",
+  "variants": {
+    "": {
+      "model": "test:block/nightshade"
+    }
+  },
+  "item_model": "test:nightshade"
+}

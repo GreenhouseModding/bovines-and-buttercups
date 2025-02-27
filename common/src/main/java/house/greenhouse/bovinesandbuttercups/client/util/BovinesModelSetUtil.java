@@ -36,12 +36,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 // TODO: Remove as soon as data driven blocks are introduced.
 public class BovinesModelSetUtil {
-    private static final Map<ResourceLocation, ResourceLocation> MODEL_TO_TYPE_MAP = new HashMap<>();
+    private static final Map<ResourceLocation, ResourceLocation> MODEL_TO_TYPE_MAP = new ConcurrentHashMap<>();
 
     public static CompletableFuture<List<ResourceLocation>> getModels(ResourceManager manager, Executor executor) {
         BovinesModelSetRegistry.clear();

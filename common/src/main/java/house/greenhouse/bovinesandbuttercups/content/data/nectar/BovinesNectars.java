@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffects;
 import java.util.List;
 
 public class BovinesNectars {
-    public static final ResourceKey<Nectar> BIRD_OF_PARADISE = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("bird_of_paradise"));
+    public static final ResourceKey<Nectar> ALSTROEMERIA = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("alstroemeria"));
     public static final ResourceKey<Nectar> BUTTERCUP = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("buttercup"));
     public static final ResourceKey<Nectar> CAMELLIA = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("camellia"));
     public static final ResourceKey<Nectar> CHARGELILY = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("chargelily"));
@@ -23,7 +23,7 @@ public class BovinesNectars {
     public static final ResourceKey<Nectar> TROPICAL_BLUE = ResourceKey.create(BovinesRegistryKeys.NECTAR, BovinesAndButtercups.asResource("tropical_blue"));
 
     public static void bootstrap(BootstrapContext<Nectar> context) {
-        context.register(BIRD_OF_PARADISE,
+        context.register(ALSTROEMERIA,
                 new Nectar(BovinesAndButtercups.asResource("item/bird_of_paradise_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.SLOW_FALLING, 7200)))));
         context.register(BUTTERCUP,

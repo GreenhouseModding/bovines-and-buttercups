@@ -42,7 +42,7 @@
       ]
     }
   ],
-  "model": "bovinesandbuttercups:buffalo",
+  "model": "bovinesandbuttercups:warm",
   "nectar": "bovinesandbuttercups:freesia",
   "offspring_conditions": [
     {
@@ -160,12 +160,16 @@
   },
   "sculk_conversion_types": [
     {
-      "type": "bovinesandbuttercups:sombercup"
+      "type": {
+        "variant": "bovinesandbuttercups:sombercup"
+      }
     }
   ],
   "thunder_conversion_types": [
     {
-      "type": "bovinesandbuttercups:chargelily"
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
     }
   ]
 }

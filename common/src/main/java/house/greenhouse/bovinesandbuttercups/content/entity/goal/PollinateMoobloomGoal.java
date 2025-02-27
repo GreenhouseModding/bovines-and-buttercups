@@ -2,6 +2,7 @@ package house.greenhouse.bovinesandbuttercups.content.entity.goal;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
+import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
 import house.greenhouse.bovinesandbuttercups.mixin.BeeAccessor;
 import house.greenhouse.bovinesandbuttercups.mixin.MobAccessor;
 import net.minecraft.core.particles.ParticleTypes;
@@ -65,6 +66,17 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
         } else {
             Optional<Moobloom> moobloom = findMoobloom();
             if (moobloom.isPresent()) {
+                if (moobloom.get().getCowVariant().value().configuration().warnsBees()) {
+                    BovinesAndButtercups.getHelper().setAvoidingMoobloom(bee, moobloom.get());
+                    moobloom.get().playSound(BovinesSoundEvents.MOOBLOOM_WARN, 0.6F, 1.0F);
+                    moobloom.get().setBee(bee);
+                    moobloom.get().setStandingStillForBeeTicks(400);
+                    moobloom.get().setPollinatedResetTicks(1200);
+                    if (!moobloom.get().level().isClientSide())
+                        ((ServerLevel)moobloom.get().level()).sendParticles(ParticleTypes.ANGRY_VILLAGER, moobloom.get().getX(), moobloom.get().getY(0.8), moobloom.get().getZ(), 4, 0.3, 0.2, 0.3, 0.1);
+                    remainingCooldownBeforeLocatingNewCow = Mth.nextInt(bee.getRandom(), 120, 240);
+                    return false;
+                }
                 this.moobloom = moobloom.get();
                 BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, moobloom.get().getUUID());
                 setMoobloom();
@@ -135,7 +147,7 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
         if (this.hasPollinatedLongEnough()) {
             ((BeeAccessor)bee).bovinesandbuttercups$invokeSetHasNectar(true);
             BovinesAndButtercups.getHelper().setProducesRichHoney(bee, true);
-            moobloom.setPollinatedResetTicks(1800);
+            moobloom.setPollinatedResetTicks(400);
             if (!moobloom.level().isClientSide) {
                 ((ServerLevel) moobloom.level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, moobloom.position().x(), moobloom.position().y() + 1.4D, moobloom.position().z(), 8, 0.5, 0.1, 0.4, 0.0);
             }
@@ -166,49 +178,46 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
             BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, null);
             this.moobloom = null;
         } else if (BovinesAndButtercups.getHelper().getPollinatingMoobloom(bee).isPresent() && !bee.level().isClientSide()) {
-            Entity entity = ((ServerLevel)bee.level()).getEntity(BovinesAndButtercups.getHelper().getPollinatingMoobloom(bee).get());
-            if ((entity instanceof Moobloom moobloom)) {
-                moobloom.setStandingStillForBeeTicks(MAX_POLLINATING_TICKS);
-                moobloom.setBee(this.bee);
-                Vec3 vec3 = moobloom.position().add(0.0f, moobloom.getBoundingBox().getYsize() * 1.3, 0.0f);
-                if (vec3.distanceTo(bee.position()) > 1.0D) {
+            moobloom.setStandingStillForBeeTicks(MAX_POLLINATING_TICKS);
+            moobloom.setBee(this.bee);
+            Vec3 vec3 = moobloom.position().add(0.0f, moobloom.getBoundingBox().getYsize() * 1.3, 0.0f);
+            if (vec3.distanceTo(bee.position()) > 1.0D) {
+                this.hoverPos = vec3;
+                this.setWantedPos();
+            } else {
+                if (this.hoverPos == null) {
                     this.hoverPos = vec3;
-                    this.setWantedPos();
+                }
+
+                boolean flag = bee.position().distanceTo(this.hoverPos) <= ARRIVAL_THRESHOLD;
+                boolean flag1 = true;
+                if (!flag && this.pollinatingTicks > MAX_POLLINATING_TICKS) {
+                    moobloom.setStandingStillForBeeTicks(0);
+                    moobloom.setBee(null);
+                    bee.setSavedFlowerPos(null);
+                    BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, null);
+                    this.moobloom = null;
                 } else {
-                    if (this.hoverPos == null) {
-                        this.hoverPos = vec3;
+                    if (flag) {
+                        boolean flag2 = bee.getRandom().nextInt(POSITION_CHANGE_CHANCE) == 0;
+                        if (flag2) {
+                            this.hoverPos = new Vec3(vec3.x() + (double) this.getOffset(), vec3.y(), vec3.z() + (double) this.getOffset());
+                            bee.getNavigation().stop();
+                        } else {
+                            flag1 = false;
+                        }
+
+                        bee.getLookControl().setLookAt(vec3.x(), vec3.y(), vec3.z());
                     }
 
-                    boolean flag = bee.position().distanceTo(this.hoverPos) <= ARRIVAL_THRESHOLD;
-                    boolean flag1 = true;
-                    if (!flag && this.pollinatingTicks > MAX_POLLINATING_TICKS) {
-                        moobloom.setStandingStillForBeeTicks(0);
-                        moobloom.setBee(null);
-                        bee.setSavedFlowerPos(null);
-                        BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, null);
-                        this.moobloom = null;
-                    } else {
-                        if (flag) {
-                            boolean flag2 = bee.getRandom().nextInt(POSITION_CHANGE_CHANCE) == 0;
-                            if (flag2) {
-                                this.hoverPos = new Vec3(vec3.x() + (double)this.getOffset(), vec3.y(), vec3.z() + (double)this.getOffset());
-                                bee.getNavigation().stop();
-                            } else {
-                                flag1 = false;
-                            }
+                    if (flag1) {
+                        this.setWantedPos();
+                    }
 
-                            bee.getLookControl().setLookAt(vec3.x(), vec3.y(), vec3.z());
-                        }
-
-                        if (flag1) {
-                            this.setWantedPos();
-                        }
-
-                        ++this.successfulPollinatingTicks;
-                        if (bee.getRandom().nextFloat() < 0.05F && this.successfulPollinatingTicks > this.lastSoundPlayedTick + 60) {
-                            this.lastSoundPlayedTick = this.successfulPollinatingTicks;
-                            bee.playSound(SoundEvents.BEE_POLLINATE, 1.0F, 1.0F);
-                        }
+                    ++this.successfulPollinatingTicks;
+                    if (bee.getRandom().nextFloat() < 0.05F && this.successfulPollinatingTicks > this.lastSoundPlayedTick + 60) {
+                        this.lastSoundPlayedTick = this.successfulPollinatingTicks;
+                        bee.playSound(SoundEvents.BEE_POLLINATE, 1.0F, 1.0F);
                     }
                 }
             }
@@ -224,7 +233,7 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
     }
 
     private Optional<Moobloom> findMoobloom() {
-        Moobloom moobloom = this.bee.level().getNearestEntity(Moobloom.class, TargetingConditions.forNonCombat().selector(entity -> entity.getLastHurtByMobTimestamp() <= entity.tickCount - 100 && entity.level().getBlockState(entity.blockPosition().above(2)).isAir() && !entity.isBaby() && ((Moobloom)entity).bee == null), null, bee.getX(), bee.getY(), bee.getZ(), bee.getBoundingBox().inflate(12.0F, 8.0F, 12.0F));
+        Moobloom moobloom = this.bee.level().getNearestEntity(Moobloom.class, TargetingConditions.forNonCombat().selector(entity -> entity.getLastHurtByMobTimestamp() <= entity.tickCount - 100 && entity.level().getBlockState(entity.blockPosition().above(2)).isAir() && !entity.isBaby() && ((Moobloom)entity).getPollinatedResetTicks() <= 0 && ((Moobloom)entity).bee == null), null, bee.getX(), bee.getY(), bee.getZ(), bee.getBoundingBox().inflate(12.0F, 8.0F, 12.0F));
         return Optional.ofNullable(moobloom);
     }
 }

@@ -2,20 +2,31 @@ package house.greenhouse.bovinesandbuttercups.api.variant.model;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
-import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 
 public class BovinesCowModelTypes {
-    public static final CowModelType BUFFALO = new CowModelType(BovinesAndButtercups.MOD_ID, "buffalo");
-    public static final CowModelType DEFAULT = new CowModelType(null, null);
-    public static final CowModelType HIGHLAND = new CowModelType(BovinesAndButtercups.MOD_ID, "highland");
-    public static final CowModelType OX = new CowModelType(BovinesAndButtercups.MOD_ID, "ox");
-    public static final CowModelType FLAT = new CowModelType(BovinesAndButtercups.MOD_ID, "flat");
+    public static final CowModelType TEMPERATE = register(BovinesAndButtercups.asResource("temperate"), new CowModelType(null, null));
+    public static final CowModelType WARM = register(BovinesAndButtercups.asResource("warm"), new CowModelType(BovinesAndButtercups.MOD_ID, "warm_cow"));
+    public static final CowModelType COLD = register(BovinesAndButtercups.asResource("cold"), new CowModelType(BovinesAndButtercups.MOD_ID, "cold_cow"));
+    public static final CowModelType LUSH = register(BovinesAndButtercups.asResource("lush"), new CowModelType(BovinesAndButtercups.MOD_ID, "lush_cow"));
+    public static final CowModelType SCULK = register(BovinesAndButtercups.asResource("sculk"), new CowModelType(BovinesAndButtercups.MOD_ID, "sculk_cow"));
 
-    public static void registerAll(RegistrationCallback<CowModelType> callback) {
-        callback.register(BovinesRegistries.MODEL_TYPE, BovinesAndButtercups.asResource("buffalo"), BUFFALO);
-        callback.register(BovinesRegistries.MODEL_TYPE, BovinesAndButtercups.asResource("default"), DEFAULT);
-        callback.register(BovinesRegistries.MODEL_TYPE, BovinesAndButtercups.asResource("highland"), HIGHLAND);
-        callback.register(BovinesRegistries.MODEL_TYPE, BovinesAndButtercups.asResource("ox"), OX);
-        callback.register(BovinesRegistries.MODEL_TYPE, BovinesAndButtercups.asResource("flat"), FLAT);
+    @Deprecated
+    public static final CowModelType BUFFALO = register(BovinesAndButtercups.asResource("buffalo"), new CowModelType(BovinesAndButtercups.MOD_ID, "buffalo_cow"));
+    @Deprecated
+    public static final CowModelType DEFAULT = register(BovinesAndButtercups.asResource("default"), new CowModelType(null, null));
+    @Deprecated
+    public static final CowModelType HIGHLAND = register(BovinesAndButtercups.asResource("highland"), new CowModelType(BovinesAndButtercups.MOD_ID, "highland_cow"));
+    @Deprecated
+    public static final CowModelType OX = register(BovinesAndButtercups.asResource("ox"), new CowModelType(BovinesAndButtercups.MOD_ID, "ox_cow"));
+    @Deprecated
+    public static final CowModelType FLAT = register(BovinesAndButtercups.asResource("flat"), new CowModelType(BovinesAndButtercups.MOD_ID, "flat_cow"));
+
+    public static void registerAll() {}
+
+    private static CowModelType register(ResourceLocation id, CowModelType type) {
+        return Registry.register(BovinesRegistries.MODEL_TYPE, id, type);
     }
+
 }

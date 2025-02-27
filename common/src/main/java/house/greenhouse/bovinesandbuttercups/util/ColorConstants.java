@@ -4,7 +4,7 @@ package house.greenhouse.bovinesandbuttercups.util;
  * Constants for Moobloom/Mooshroom colors.
  */
 public class ColorConstants {
-    public static final int BIRD_OF_PARADISE = 0xff823a;
+    public static final int ALSTROEMERIA = 0xff8c00;
     public static final int BUTTERCUP = 0xffe524;
     public static final int CAMELLIA = 0xe748c9;
     public static final int CHARGELILY = 0x65caf7;

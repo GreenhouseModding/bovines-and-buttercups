@@ -1,37 +1,26 @@
 package house.greenhouse.bovinesandbuttercups.content.block.entity;
 
-import com.mojang.datafixers.types.Type;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.platform.BovinesPlatform;
-import house.greenhouse.bovinesandbuttercups.registry.RegistrationCallback;
 import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.References;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Supplier;
 
 public class BovinesBlockEntityTypes {
-    public static final BlockEntityType<CustomFlowerBlockEntity> CUSTOM_FLOWER = BlockEntityType.Builder.of(CustomFlowerBlockEntity::new, BovinesBlocks.CUSTOM_FLOWER).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_flower").toString())));
-    public static final BlockEntityType<CustomMushroomBlockEntity> CUSTOM_MUSHROOM = BlockEntityType.Builder.of(CustomMushroomBlockEntity::new, BovinesBlocks.CUSTOM_MUSHROOM).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_mushroom").toString())));
-    public static final BlockEntityType<CustomFlowerPotBlockEntity> POTTED_CUSTOM_FLOWER = BlockEntityType.Builder.of(CustomFlowerPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_FLOWER).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_flower").toString())));
-    public static final BlockEntityType<CustomMushroomPotBlockEntity> POTTED_CUSTOM_MUSHROOM = BlockEntityType.Builder.of(CustomMushroomPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_MUSHROOM).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_mushroom").toString())));
-    public static final BlockEntityType<CustomHugeMushroomBlockEntity> CUSTOM_MUSHROOM_BLOCK = BlockEntityType.Builder.of(CustomHugeMushroomBlockEntity::new, BovinesBlocks.CUSTOM_MUSHROOM_BLOCK).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_mushroom_block").toString())));
-    public static final BlockEntityType<PlaceableEdibleBlockEntity> PLACEABLE_EDIBLE = BlockEntityType.Builder.of(PlaceableEdibleBlockEntity::new, BovinesBlocks.PLACEABLE_EDIBLE).build(getType(() -> Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("placeable_edible").toString())));
+    public static final BlockEntityType<CustomFlowerBlockEntity> CUSTOM_FLOWER = register(BovinesAndButtercups.asResource("custom_flower"), BlockEntityType.Builder.of(CustomFlowerBlockEntity::new, BovinesBlocks.CUSTOM_FLOWER).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_flower").toString())));
+    public static final BlockEntityType<CustomMushroomBlockEntity> CUSTOM_MUSHROOM = register(BovinesAndButtercups.asResource("custom_mushroom"), BlockEntityType.Builder.of(CustomMushroomBlockEntity::new, BovinesBlocks.CUSTOM_MUSHROOM).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_mushroom").toString())));
+    public static final BlockEntityType<CustomFlowerPotBlockEntity> POTTED_CUSTOM_FLOWER = register(BovinesAndButtercups.asResource("potted_custom_flower"), BlockEntityType.Builder.of(CustomFlowerPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_FLOWER).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_flower").toString())));
+    public static final BlockEntityType<CustomMushroomPotBlockEntity> POTTED_CUSTOM_MUSHROOM = register(BovinesAndButtercups.asResource("custom_mushroom"), BlockEntityType.Builder.of(CustomMushroomPotBlockEntity::new, BovinesBlocks.POTTED_CUSTOM_MUSHROOM).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_potted_mushroom").toString())));
+    public static final BlockEntityType<CustomHugeMushroomBlockEntity> CUSTOM_MUSHROOM_BLOCK = register(BovinesAndButtercups.asResource("custom_mushroom_block"), BlockEntityType.Builder.of(CustomHugeMushroomBlockEntity::new, BovinesBlocks.CUSTOM_MUSHROOM_BLOCK).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("custom_mushroom_block").toString())));
+    public static final BlockEntityType<PlaceableEdibleBlockEntity> PLACEABLE_EDIBLE = register(BovinesAndButtercups.asResource("placeable_edible"), BlockEntityType.Builder.of(PlaceableEdibleBlockEntity::new, BovinesBlocks.PLACEABLE_EDIBLE).build(Util.fetchChoiceType(References.BLOCK_ENTITY, BovinesAndButtercups.asResource("placeable_edible").toString())));
 
-    @Nullable
-    private static Type<?> getType(Supplier<Type<?>> type) {
-        return BovinesAndButtercups.getHelper().getPlatform() == BovinesPlatform.FABRIC ? null : type.get();
-    }
-    
-    public static void registerAll(RegistrationCallback<BlockEntityType<?>> callback) {
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_flower"), CUSTOM_FLOWER);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_mushroom"), CUSTOM_MUSHROOM);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("custom_mushroom_block"), CUSTOM_MUSHROOM_BLOCK);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("potted_custom_flower"), POTTED_CUSTOM_FLOWER);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("potted_custom_mushroom"), POTTED_CUSTOM_MUSHROOM);
-        callback.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BovinesAndButtercups.asResource("placeable_edible"), PLACEABLE_EDIBLE);
+    public static void registerAll() {}
+
+    private static <T extends BlockEntity> BlockEntityType<T> register(ResourceLocation id, BlockEntityType<T> type) {
+        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, type);
     }
 }

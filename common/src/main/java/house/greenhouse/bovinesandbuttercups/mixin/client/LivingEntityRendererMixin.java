@@ -45,7 +45,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private void bovinesandbuttercups$modifyRenderLayerBakerAccessModel(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
         var attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
         if (this instanceof EntityRendererLayerBakerAccess access && attachment != null && attachment.cowVariant().isBound() && attachment.cowVariant().value().type().isApplicable(entity)) {
-            CowModelType cowModel = attachment.cowVariant().value().configuration().model();
+            CowModelType cowModel = attachment.cowVariant().value().configuration().settings().model();
             if (!bovinesandbuttercups$models.containsKey(cowModel)) {
                 ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
                 if (cowModel != null && cowModel.namespaceOverride() != null)

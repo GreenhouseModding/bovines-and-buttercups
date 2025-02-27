@@ -18,7 +18,7 @@ public abstract class CowSuperMixin extends Animal {
     public abstract void thunderHit(ServerLevel level, LightningBolt bolt);
 
     @Unique
-    public void bovinesandbuttercups$thunderHit(ServerLevel level, LightningBolt bolt) {
+    public void bovinesandbuttercups$superThunderHit(ServerLevel level, LightningBolt bolt) {
         super.thunderHit(level, bolt);
     }
 }

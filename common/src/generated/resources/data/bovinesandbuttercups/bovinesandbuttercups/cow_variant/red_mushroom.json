@@ -48,7 +48,9 @@
   "texture_location": "minecraft:cow/red_mooshroom",
   "thunder_conversion_types": [
     {
-      "type": "bovinesandbuttercups:brown_mushroom"
+      "type": {
+        "variant": "bovinesandbuttercups:brown_mushroom"
+      }
     }
   ],
   "vanilla_type": "red"

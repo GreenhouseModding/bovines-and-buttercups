@@ -1,0 +1,61 @@
+{
+  "type": "bovinesandbuttercups:moobloom",
+  "bud": {
+    "model_set": "test:nightshade_bud"
+  },
+  "flower": {
+    "custom_flower": "test:nightshade"
+  },
+  "layers": [
+    {
+      "texture_location": "test:bovinesandbuttercups/moobloom/lush_moobloom_pale_moss_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:fallback"
+        }
+      ]
+    },
+    {
+      "texture_location": "bovinesandbuttercups:bovinesandbuttercups/lush_snow_layer",
+      "texture_modifiers": [
+        {
+          "type": "bovinesandbuttercups:conditioned",
+          "condition": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type_specific": {
+                  "type": "bovinesandbuttercups:cow",
+                  "has_snow": true
+                }
+              }
+            }
+          ],
+          "id": "bovinesandbuttercups:snow_layer_with_snow"
+        }
+      ]
+    }
+  ],
+  "model": "bovinesandbuttercups:lush",
+  "particle": {
+    "type": "bovinesandbuttercups:bloom",
+    "color": 10863813
+  },
+  "sculk_conversion_types": [
+    {
+      "type": {
+        "variant": "bovinesandbuttercups:sombercup"
+      }
+    }
+  ],
+  "shearing_loot_table": "bovinesandbuttercups:shearing/moobloom/nightshade",
+  "thunder_conversion_types": [
+    {
+      "type": {
+        "variant": "bovinesandbuttercups:chargelily"
+      }
+    }
+  ],
+  "warns_bees": true
+}

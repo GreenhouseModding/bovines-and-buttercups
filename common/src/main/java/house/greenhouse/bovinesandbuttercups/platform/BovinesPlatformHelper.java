@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.platform;
 
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
+import house.greenhouse.bovinesandbuttercups.api.attachment.CowExtrasAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
@@ -15,6 +16,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -41,8 +44,6 @@ public interface BovinesPlatformHelper {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
 
-    <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey);
-
     String getAttachmentKey();
 
     LockdownAttachment getLockdownAttachment(LivingEntity entity);
@@ -51,11 +52,25 @@ public interface BovinesPlatformHelper {
 
     void setCowVariantAttachment(LivingEntity entity, CowVariantAttachment attachment);
 
-    boolean hasMooshroomExtrasAttachment(LivingEntity entity);
+    boolean hasMooshroomExtrasAttachment(MushroomCow entity);
 
-    MooshroomExtrasAttachment getMooshroomExtrasAttachment(LivingEntity entity);
+    MooshroomExtrasAttachment getMooshroomExtrasAttachment(MushroomCow entity);
 
-    void setMooshroomExtrasAttachment(LivingEntity entity, MooshroomExtrasAttachment attachment);
+    void setMooshroomExtrasAttachment(MushroomCow entity, MooshroomExtrasAttachment attachment);
+
+    boolean hasCowExtrasAttachment(Cow entity);
+
+    CowExtrasAttachment getCowExtrasAttachment(Cow entity);
+
+    void setCowExtrasAttachment(Cow entity, CowExtrasAttachment attachment);
+
+    Moobloom getAvoidingMoobloom(LivingEntity entity);
+
+    void setAvoidingMoobloom(LivingEntity entity, Moobloom moobloom);
+
+    int getAvoidingMoobloomStartTime(Bee entity);
+
+    void setAvoidingMoobloomStartTime(Bee entity, int time);
 
     void sendClientboundPacket(ServerPlayer player, CustomPacketPayload... payloads);
 
@@ -87,4 +102,6 @@ public interface BovinesPlatformHelper {
 
     @Nullable
     RemainderIngredient getRemainderIngredient(Ingredient ingredient);
+
+    default void runNeoForgeConversionEventPost(LivingEntity entity, LivingEntity outcome) {}
 }

@@ -44,7 +44,7 @@ public record SyncCowVariantClientboundPacket(int entityId, CowVariantAttachment
                 return;
             }
             BovinesAndButtercups.getHelper().setCowVariantAttachment(living, attachment);
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().settings().layers())
                 for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                     modifier.init(living);
         });
@@ -63,7 +63,7 @@ public record SyncCowVariantClientboundPacket(int entityId, CowVariantAttachment
                 continue;
             }
             BovinesAndButtercups.getHelper().setCowVariantAttachment(living, pair.getKey().getSecond());
-            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().layers())
+            for (CowModelLayer layer : BovinesAndButtercups.getHelper().getCowVariantAttachment(living).cowVariant().value().configuration().settings().layers())
                 for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                     modifier.init(living);
             RETRIES.object2IntEntrySet().removeIf(p -> pair.getKey() == p.getKey());

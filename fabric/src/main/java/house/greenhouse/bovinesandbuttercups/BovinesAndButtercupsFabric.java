@@ -1,20 +1,21 @@
 package house.greenhouse.bovinesandbuttercups;
 
-import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.MoobloomEatDispenseBehavior;
 import house.greenhouse.bovinesandbuttercups.content.command.BovinesCommands;
+import house.greenhouse.bovinesandbuttercups.content.item.BovinesArmorMaterials;
 import house.greenhouse.bovinesandbuttercups.content.recipe.ingredient.BovinesIngredients;
 import house.greenhouse.bovinesandbuttercups.integration.accessories.BovinesAccessoriesEvents;
 import house.greenhouse.bovinesandbuttercups.integration.trinkets.BovinesTrinketsEvents;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.*;
 import house.greenhouse.bovinesandbuttercups.content.predicate.BovinesEntitySubPredicateTypes;
+import house.greenhouse.bovinesandbuttercups.platform.BovinesPlatformHelperFabric;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import house.greenhouse.bovinesandbuttercups.util.CowSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
-import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
@@ -30,10 +31,6 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import house.greenhouse.bovinesandbuttercups.api.BovinesTags;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.content.item.BovinesArmorMaterials;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
@@ -66,6 +63,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -84,13 +82,13 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        BovinesAndButtercups.init(new BovinesPlatformHelperFabric());
         registerContents();
         registerNetwork();
         registerCreativeTabEntries();
         registerCompostables();
         registerBiomeModifications();
         registerResourcePacks();
-        BovinesDataFixer.register();
         MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
@@ -99,29 +97,35 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (entity.hasAttached(BovinesAttachments.COW_VARIANT)) {
                     CowVariantAttachment attachment = living.getAttached(BovinesAttachments.COW_VARIANT);
-                    for (CowModelLayer layer : attachment.cowVariant().value().configuration().layers())
+                    for (CowModelLayer layer : attachment.cowVariant().value().configuration().settings().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowVariantClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), true));
                 }
-                if (entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
+                if (entity instanceof MushroomCow mooshroom && entity.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS))
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom), true));
+                if (entity instanceof Cow cow && entity.hasAttached(BovinesAttachments.COW_EXTRAS))
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowExtrasClientboundPacket(entity.getId(), BovinesAndButtercups.getHelper().getCowExtrasAttachment(cow), true));
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
             CowVariantAttachment attachment = entity.getAttached(BovinesAttachments.COW_VARIANT);
-            if (entity.getType() == EntityType.MOOSHROOM) {
-                if (attachment == null) {
-                    if (((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType() != null) {
-                        CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomVariantFromMushroomType(level, ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$initialType()));
-                    } else if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
+            if (attachment == null) {
+                if (entity.getType() == EntityType.MOOSHROOM) {
+                    if (MooshroomSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMooshroomSpawnTypeDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
                     } else {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnVariant(level, ((MushroomCow)entity).getVariant()));
                     }
                     CowVariantAttachment.sync((MushroomCow)entity);
                 }
-                ((MooshroomInitializedTypeAccess)entity).bovinesandbuttercups$clearInitialType();
+                if (entity.getType() == EntityType.COW) {
+                    if (CowSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0) {
+                        CowVariantAttachment.setCowVariant((Cow)entity, CowSpawnUtil.getCowSpawnVariantDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
+                    } else {
+                        CowVariantAttachment.setCowVariant((Cow)entity, CowSpawnUtil.getMostCommonCowSpawnVariant(level));
+                    }
+                }
             }
         });
         UseEntityCallback.EVENT.register((player, world, hand, target, hitResult) -> {
@@ -154,24 +158,24 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
     }
 
     private static void registerContents() {
-        BovinesSoundEvents.registerHolders(Registry::registerForHolder);
-        BovinesArmorMaterials.registerAll(Registry::registerForHolder);
-        BovinesBlockEntityTypes.registerAll(Registry::register);
-        BovinesBlocks.registerAll(Registry::register);
-        BovinesCowTypes.registerAll(Registry::register);
-        BovinesCriteriaTriggers.registerAll(Registry::register);
-        BovinesDataComponents.registerAll(Registry::register);
-        BovinesEffects.registerAll(Registry::registerForHolder);
-        BovinesEntitySubPredicateTypes.registerAll(Registry::register);
-        BovinesEntityTypes.registerAll(Registry::register);
-        BovinesLootItemConditionTypes.registerAll(Registry::register);
-        BovinesItems.registerAll(Registry::register);
-        BovinesParticleTypes.registerAll(Registry::register);
-        BovinesRecipeSerializers.registerAll(Registry::register);
-        BovinesSoundEvents.registerAll(Registry::register);
-        BovinesStructureTypes.registerAll(Registry::register);
-        BovinesTextureModifierFactories.registerAll(Registry::register);
-        BovinesCowModelTypes.registerAll(Registry::register);
+        registerRegistries();
+        BovinesSoundEvents.registerAll();
+        BovinesArmorMaterials.registerAll();
+        BovinesBlockEntityTypes.registerAll();
+        BovinesBlocks.registerAll();
+        BovinesEntityTypes.registerAll();
+        BovinesCowTypes.registerAll();
+        BovinesCriteriaTriggers.registerAll();
+        BovinesDataComponents.registerAll();
+        BovinesEffects.registerAll();
+        BovinesEntitySubPredicateTypes.registerAll();
+        BovinesLootItemConditionTypes.registerAll();
+        BovinesItems.registerAll();
+        BovinesParticleTypes.registerAll();
+        BovinesRecipeSerializers.registerAll();
+        BovinesStructureTypes.registerAll();
+        BovinesTextureModifierFactories.registerAll();
+        BovinesCowModelTypes.registerAll();
 
         BovinesAttachments.init();
         BovinesIngredients.init();
@@ -181,8 +185,14 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         });
     }
 
+    private static void registerRegistries() {
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.COW_TYPE, BovinesRegistries.COW_TYPE);
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.MODEL_TYPE, BovinesRegistries.MODEL_TYPE);
+        Registry.register((Registry) BuiltInRegistries.REGISTRY, BovinesRegistryKeys.TEXTURE_MODIFIER, BovinesRegistries.TEXTURE_MODIFIER);
+    }
+
     private static void registerCompostables() {
-        CompostingChanceRegistry.INSTANCE.add(BovinesItems.BIRD_OF_PARADISE, 0.65F);
+        CompostingChanceRegistry.INSTANCE.add(BovinesItems.ALSTROEMERIA, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.BUTTERCUP, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.CHARGELILY, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(BovinesItems.FREESIA, 0.65F);
@@ -200,7 +210,7 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(entries -> {
             entries.addAfter(Items.SPORE_BLOSSOM, Stream.of(
                     BovinesItems.FREESIA,
-                    BovinesItems.BIRD_OF_PARADISE,
+                    BovinesItems.ALSTROEMERIA,
                     BovinesItems.BUTTERCUP,
                     BovinesItems.LIMELIGHT,
                     BovinesItems.LINGHOLM,

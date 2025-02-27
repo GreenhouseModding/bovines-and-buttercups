@@ -11,7 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import java.util.List;
 
 public class BovinesEdibleBlockTypes {
-    public static final ResourceKey<EdibleBlockType> BIRD_OF_PARADISE_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("bird_of_paradise_cupcake"));
+    public static final ResourceKey<EdibleBlockType> ALSTROEMERIA_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("alstroemeria_cupcake"));
     public static final ResourceKey<EdibleBlockType> BUTTERCUP_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("buttercup_cupcake"));
     public static final ResourceKey<EdibleBlockType> CAMELLIA_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("camellia_cupcake"));
     public static final ResourceKey<EdibleBlockType> CHARGELILY_CUPCAKE = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("chargelily_cupcake"));
@@ -30,7 +30,7 @@ public class BovinesEdibleBlockTypes {
     public static final ResourceKey<EdibleBlockType> SUSPICIOUS_RED_MUSHROOM_PUFF_PASTRY = ResourceKey.create(BovinesRegistryKeys.EDIBLE_BLOCK_TYPE, BovinesAndButtercups.asResource("suspicious_red_mushroom_puff_pastry"));
 
     public static void bootstrap(BootstrapContext<EdibleBlockType> context) {
-        context.register(BIRD_OF_PARADISE_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.SLOW_FALLING, 7200)))));
+        context.register(ALSTROEMERIA_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.SLOW_FALLING, 7200)))));
         context.register(BUTTERCUP_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.POISON, 2400)))));
         context.register(CAMELLIA_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.HUNGER, 2400)))));
         context.register(CHARGELILY_CUPCAKE, EdibleBlockType.cupcake(context, new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.DIG_SPEED, 1200)))));

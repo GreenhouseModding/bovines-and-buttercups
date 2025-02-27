@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.ConvertData;
 import house.greenhouse.bovinesandbuttercups.api.variant.OffspringConditions;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.BreedCowWithVariantTrigger;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.CustomFlowerBlockEntity;
@@ -21,6 +22,7 @@ import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextPara
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParams;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import house.greenhouse.bovinesandbuttercups.content.sound.BovinesSoundEvents;
+import house.greenhouse.bovinesandbuttercups.util.ConversionUtil;
 import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -33,6 +35,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -72,6 +75,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -150,7 +154,13 @@ public class Moobloom extends Cow {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        backwardsCompat(tag);
+        if (tag.contains("variant")) {
+            var variantDataResult = CowVariantAttachment.CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, level().registryAccess()), tag.get("variant"));
+            if (variantDataResult.isError())
+                BovinesAndButtercups.LOG.error(variantDataResult.error().get().message());
+            if (variantDataResult.hasResultOrPartial())
+                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, variantDataResult.getOrThrow().getFirst());
+        }
         if (tag.contains("flower_spread_attempts", Tag.TAG_INT))
             setFlowerSpreadAttempts(tag.getInt("flower_spread_attempts"));
         if (tag.contains("previous_flower_pos", Tag.TAG_INT_ARRAY))
@@ -169,40 +179,6 @@ public class Moobloom extends Cow {
             setPersistentSnowLayer(tag.getBoolean("snow_layer_persistent"));
     }
 
-    public void backwardsCompat(CompoundTag tag) {
-        if (tag.contains("Type", Tag.TAG_STRING)) {
-            Optional<Holder.Reference<CowVariant<?>>> cowVariant = level().registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
-            if (cowVariant.isEmpty()) {
-                BovinesAndButtercups.LOG.error("Could not deserialize legacy cow variant tag \"{}\" into a cow variant holder.", tag.getString("Type"));
-                return;
-            }
-            if (!cowVariant.get().isBound() || cowVariant.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE)  {
-                BovinesAndButtercups.LOG.error("Cow Type \"{}\" is not bound or is not a moobloom.", cowVariant);
-                return;
-            }
-            if (tag.contains("PreviousType", Tag.TAG_STRING)) {
-                Optional<Holder.Reference<CowVariant<?>>> previousCowType = level().registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(ResourceLocation.parse(tag.getString("Type")));
-                if (previousCowType.isEmpty()) {
-                    BovinesAndButtercups.LOG.error("Could not deserialize legacy cow variant tag \"{}\" into a cow variant holder.", tag.getString("Type"));
-                    return;
-                }
-                if (!previousCowType.get().isBound() || previousCowType.get().value().type() != BovinesCowTypes.MOOBLOOM_TYPE) {
-                    BovinesAndButtercups.LOG.error("Previous Cow Type \"{}\" is not bound or is not a moobloom.", cowVariant);
-                    return;
-                }
-                BovinesAndButtercups.getHelper().setCowVariantAttachment(this, new CowVariantAttachment(cowVariant.get(), previousCowType.map(cowTypeReference -> cowTypeReference)));
-                CowVariantAttachment.sync(this);
-            } else {
-                setCowVariant((Holder) cowVariant.get());
-                CowVariantAttachment.sync(this);
-            }
-        }
-        if (tag.contains("PollinatedResetTicks", Tag.TAG_INT))
-            setPollinatedResetTicks(tag.getInt("PollinatedResetTicks"));
-        if (tag.contains("AllowShearing", Tag.TAG_BYTE))
-            setAllowShearing(tag.getBoolean("AllowShearing"));
-    }
-    
     public void setBee(@Nullable Bee value) {
         bee = value;
     }
@@ -221,29 +197,20 @@ public class Moobloom extends Cow {
                     return;
                 }
 
-                List<WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>>> compatibleList = getCowVariant().value().configuration().settings().filterThunderConverts(BovinesCowTypes.MOOBLOOM_TYPE);
+                LootParams params = new LootParams.Builder(level)
+                        .withParameter(LootContextParams.THIS_ENTITY, this)
+                        .withParameter(LootContextParams.ORIGIN, position())
+                        .withParameter(LootContextParams.DAMAGE_SOURCE, this.damageSources().lightningBolt())
+                        .withParameter(LootContextParams.ATTACKING_ENTITY, bolt)
+                        .create(LootContextParamSets.ENTITY);
+                LootContext context = new LootContext.Builder(params).create(Optional.empty());
 
-                if (compatibleList.isEmpty()) {
-                    super.thunderHit(level, bolt);
-                    return;
-                } else if (compatibleList.size() == 1) {
-                    setCurrentWithPreviousCowVariant(compatibleList.getFirst().data());
-                    CowVariantAttachment.sync(this);
-                } else {
-                    int totalWeight = level.getRandom().nextInt(compatibleList.stream().map(holderWrapper -> holderWrapper.weight().asInt()).reduce(Integer::sum).orElse(0));
-                    for (WeightedEntry.Wrapper<Holder<CowVariant<MoobloomConfiguration>>> cct : compatibleList) {
-                        totalWeight -= cct.weight().asInt();
-                        if (totalWeight < 0) {
-                            setCurrentWithPreviousCowVariant(cct.data());
-                            CowVariantAttachment.sync(this);
-                            break;
-                        }
-                    }
-                }
-            } else {
-                setCowVariant(getPreviousCowVariant());
-                CowVariantAttachment.sync(this);
-            }
+                List<WeightedEntry.Wrapper<ConvertData>> compatibleList = getCowVariant().value().configuration().settings().thunderConverts().unwrap().stream().filter(wrapper -> wrapper.data().conditions().isEmpty() || wrapper.data().conditions().stream().anyMatch(condition -> condition.test(context))).toList();
+
+                ConversionUtil.convert(this, level, bolt, compatibleList);
+            } else
+                ConversionUtil.revertFromPrevious(this, level, bolt);
+
             lastLightningBoltUUID = uuid;
             playSound(BovinesSoundEvents.MOOBLOOM_CONVERT, 2.0F, 1.0F);
         }
@@ -266,9 +233,9 @@ public class Moobloom extends Cow {
         super.tick();
 
         if (level().isClientSide) {
-            if (getStandingStillForBeeTicks() > 0)
+            if (getStandingStillForBeeTicks() > 0 && !getCowVariant().value().configuration().warnsBees())
                 layDownAnimationState.startIfStopped(tickCount);
-            else if (layDownAnimationState.isStarted() && getStandingStillForBeeTicks() == 0) {
+            else if (layDownAnimationState.isStarted() && getStandingStillForBeeTicks() <= 0) {
                 layDownAnimationState.stop();
                 getUpAnimationState.startIfStopped(tickCount);
             }
@@ -293,7 +260,7 @@ public class Moobloom extends Cow {
                 }
             }
 
-            if (bee != null && !bee.isAlive()) {
+            if (bee != null && !bee.isAlive() || getCowVariant().value().configuration().warnsBees() && getStandingStillForBeeTicks() <= 0) {
                 setStandingStillForBeeTicks(0);
                 bee = null;
             }
@@ -320,8 +287,6 @@ public class Moobloom extends Cow {
                 ((EntityAccessor)this).bovinesandbuttercups$setEyeHeight(getDimensions(getPose()).height() * 0.85F);
                 hasRefreshedDimensionsForLaying = true;
             }
-            if (!level().isClientSide() && bee != null)
-                getLookControl().setLookAt(bee);
         } else if (hasRefreshedDimensionsForLaying) {
             refreshDimensions();
             ((EntityAccessor)this).bovinesandbuttercups$setEyeHeight(getDimensions(getPose()).height() * 0.85F);
@@ -453,9 +418,9 @@ public class Moobloom extends Cow {
     public Pair<Holder<CowVariant<MoobloomConfiguration>>, Optional<Holder<CowVariant<MoobloomConfiguration>>>> chooseBabyType(ServerLevel level, Moobloom otherParent, Moobloom child) {
         List<Holder<CowVariant<MoobloomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOBLOOM_TYPE && ((MoobloomConfiguration)type.value().configuration()).settings().offspringConditions() != OffspringConditions.EMPTY).toList()) {
             Holder.Reference<CowVariant<MoobloomConfiguration>> moobloomVariant = (Holder.Reference) cowVariant;
-            var conditions = moobloomVariant.value().configuration().offspringConditions();
+            var conditions = moobloomVariant.value().configuration().settings().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder(level);
             params.withParameter(LootContextParams.THIS_ENTITY, this);
@@ -485,7 +450,7 @@ public class Moobloom extends Cow {
 
             if (getLoveCause() != null)
                 BreedCowWithVariantTrigger.INSTANCE.trigger(getLoveCause(), this, otherParent, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
+            return randomType.value().configuration().settings().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(this), BovinesAndButtercups.getHelper().getCowVariantAttachment(otherParent));
         }
 
         child.particlePositions.clear();
@@ -552,6 +517,10 @@ public class Moobloom extends Cow {
 
     public void setCurrentWithPreviousCowVariant(Holder<CowVariant<MoobloomConfiguration>> value) {
         CowVariantAttachment.setCowVariant(this, value, getCowVariant());
+    }
+
+    public void setLastLightningBoltUUID(UUID uuid) {
+        lastLightningBoltUUID = uuid;
     }
 
     public int getFlowerSpreadAttempts() {
@@ -644,12 +613,18 @@ public class Moobloom extends Cow {
 
         @Override
         public boolean canUse() {
-            return Moobloom.this.getStandingStillForBeeTicks() > 0;
+            return bee != null && bee.isAlive() && Moobloom.this.getStandingStillForBeeTicks() > 0;
         }
 
         @Override
         public void start() {
             Moobloom.this.getNavigation().stop();
+        }
+
+        @Override
+        public void tick() {
+            if (bee != null)
+                lookControl.setLookAt(bee);
         }
     }
 

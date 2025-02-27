@@ -32,9 +32,9 @@ public class MooshroomChildTypeUtil {
     public static Pair<Holder<CowVariant<MooshroomConfiguration>>, Optional<Holder<CowVariant<MooshroomConfiguration>>>> chooseMooshroomBabyVariant(MushroomCow parent, MushroomCow other, MushroomCow child, @Nullable Player player) {
         List<Holder<CowVariant<MooshroomConfiguration>>> eligibleCowTypes = new ArrayList<>();
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).offspringConditions() != OffspringConditions.EMPTY).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : parent.level().registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT).holders().filter(type -> type.isBound() && type.value().type() == BovinesCowTypes.MOOSHROOM_TYPE && ((MooshroomConfiguration)type.value().configuration()).settings().offspringConditions() != OffspringConditions.EMPTY).toList()) {
             Holder<CowVariant<MooshroomConfiguration>> mooshroomVariant = (Holder) cowVariant;
-            var conditions = mooshroomVariant.value().configuration().offspringConditions();
+            var conditions = mooshroomVariant.value().configuration().settings().offspringConditions();
 
             LootParams.Builder params = new LootParams.Builder((ServerLevel) parent.level());
             params.withParameter(LootContextParams.THIS_ENTITY, parent);
@@ -63,7 +63,7 @@ public class MooshroomChildTypeUtil {
 
             if (parent.getLoveCause() != null)
                 BreedCowWithVariantTrigger.INSTANCE.trigger(parent.getLoveCause(), parent, other, child, true, (Holder) randomType);
-            return randomType.value().configuration().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(parent), BovinesAndButtercups.getHelper().getCowVariantAttachment(other));
+            return randomType.value().configuration().settings().offspringConditions().inheritance().handleInheritance(randomType, BovinesAndButtercups.getHelper().getCowVariantAttachment(parent), BovinesAndButtercups.getHelper().getCowVariantAttachment(other));
         }
 
         BovinesAndButtercups.getHelper().clearParticlePositions(child);

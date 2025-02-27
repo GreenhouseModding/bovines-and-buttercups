@@ -4,7 +4,7 @@
     "bovinesandbuttercups:bird_of_paradise": {
       "conditions": {
         "type": "bovinesandbuttercups:moobloom",
-        "variants": "bovinesandbuttercups:bird_of_paradise"
+        "variants": "bovinesandbuttercups:alstroemeria"
       },
       "trigger": "bovinesandbuttercups:breed_cow_with_variant"
     },

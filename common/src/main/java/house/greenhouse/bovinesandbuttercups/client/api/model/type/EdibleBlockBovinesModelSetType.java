@@ -34,12 +34,13 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType {
     public static final EdibleBlockBovinesModelSetType INSTANCE = new EdibleBlockBovinesModelSetType();
-    private static final Map<ResourceLocation, BlockModelDefinition> LOADED = new HashMap<>();
+    private static final Map<ResourceLocation, BlockModelDefinition> LOADED = new ConcurrentHashMap<>();
 
     protected EdibleBlockBovinesModelSetType() {}
 
@@ -73,8 +74,13 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
         BlockModelDefinition definition = Deserializer.GSON.fromJson(json, BlockModelDefinition.class);
         if (definition != null) {
             if (definition.isMultiPart() && definition.getMultiPart() instanceof PlaceableEdibleMultiPart multiPart) {
+                Map<String, Integer> idMap = new HashMap<>();
                 for (PlaceableEdibleSelector selector : multiPart.getEdibleSelectors()) {
-                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + selector.condition().toModelVariantString());
+                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + selector.condition().toModelVariantString() + "." + idMap.compute(selector.condition().toModelVariantString(), (str, integer) -> {
+                        if (integer == null)
+                            return 0;
+                        return integer + 1;
+                    }));
                     ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
                     modelIds.put(filePath, resolvedPath);
                     lookup.put(selector, filePath);
@@ -92,6 +98,8 @@ public class EdibleBlockBovinesModelSetType extends InventoryBovinesModelSetType
             }
         }
 
+        // FIXME: Remove when finished testing.
+        var loadedRef = LOADED;
         return new BovinesModelSet(fileId, this, modelIds, lookup);
     }
 

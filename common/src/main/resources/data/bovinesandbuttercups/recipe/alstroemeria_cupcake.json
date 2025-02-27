@@ -1,0 +1,57 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "tag": "c:foods/honey"
+    },
+    "N": {
+      "fabric:type": "fabric:components",
+      "base": {
+        "item": "bovinesandbuttercups:nectar_bowl"
+      },
+      "type": "neoforge:components",
+      "items": [
+        "bovinesandbuttercups:nectar_bowl"
+      ],
+      "components": {
+        "bovinesandbuttercups:nectar": "bovinesandbuttercups:alstroemeria"
+      }
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    " H ",
+    "WNW",
+    " P "
+  ],
+  "result": {
+    "count": 4,
+    "id": "bovinesandbuttercups:placeable_edible",
+    "components": {
+      "bovinesandbuttercups:edible_type": {
+        "type": "bovinesandbuttercups:alstroemeria_cupcake",
+        "effects": [
+          {
+            "effect": {
+              "id": "bovinesandbuttercups:lockdown",
+              "duration": 1800,
+              "bovinesandbuttercups:lockdown_data":[
+                {
+                  "linked_effect": "minecraft:slow_falling"
+                }
+              ]
+            },
+            "max_duration": 7200
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

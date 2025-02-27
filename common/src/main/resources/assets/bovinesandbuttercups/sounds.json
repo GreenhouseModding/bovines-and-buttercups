@@ -1,4 +1,17 @@
 {
+  "entity.cow.convert": {
+    "sounds": [
+      {
+        "name": "mob/mooshroom/convert1",
+        "volume": 0.75
+      },
+      {
+        "name": "mob/mooshroom/convert2",
+        "volume": 0.75
+      }
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.cow.convert"
+  },
   "entity.moobloom.convert": {
     "sounds": [
       {
@@ -40,6 +53,12 @@
       "bovinesandbuttercups:mob/moobloom/plant"
     ],
     "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.plant"
+  },
+  "entity.moobloom.warn": {
+    "sounds": [
+      "bovinesandbuttercups:mob/moobloom/warn"
+    ],
+    "subtitle": "subtitles.entity.bovinesandbuttercups.moobloom.warn"
   },
   "item.armor.equip_flower_crown": {
     "sounds": [

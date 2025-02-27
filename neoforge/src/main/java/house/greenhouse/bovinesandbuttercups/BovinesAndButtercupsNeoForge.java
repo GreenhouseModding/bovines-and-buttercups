@@ -2,10 +2,10 @@ package house.greenhouse.bovinesandbuttercups;
 
 import house.greenhouse.bovinesandbuttercups.access.BeeGoalAccess;
 import house.greenhouse.bovinesandbuttercups.access.MobEffectInstanceLockdownDataAccess;
-import house.greenhouse.bovinesandbuttercups.access.MooshroomInitializedTypeAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.LockdownAttachment;
 import house.greenhouse.bovinesandbuttercups.api.attachment.MooshroomExtrasAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.ConvertData;
 import house.greenhouse.bovinesandbuttercups.api.variant.CowModelLayer;
 import house.greenhouse.bovinesandbuttercups.api.variant.modifier.TextureModifierFactory;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.LockEffectTrigger;
@@ -28,23 +28,19 @@ import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachmen
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
-import house.greenhouse.bovinesandbuttercups.util.CreativeTabHelper;
-import house.greenhouse.bovinesandbuttercups.util.LockdownData;
-import house.greenhouse.bovinesandbuttercups.util.MooshroomChildTypeUtil;
-import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
-import house.greenhouse.bovinesandbuttercups.util.SnowLayerUtil;
-import house.greenhouse.bovinesandbuttercups.util.WeatherUtil;
-import house.greenhouse.bovinesandbuttercups.util.dfu.BovinesDataFixer;
+import house.greenhouse.bovinesandbuttercups.util.*;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -64,6 +60,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -115,13 +115,13 @@ public class BovinesAndButtercupsNeoForge {
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncLockdownEffectsClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getLockdownAttachment(living), true));
                 if (living.hasData(BovinesAttachments.COW_VARIANT)) {
                     CowVariantAttachment attachment = living.getData(BovinesAttachments.COW_VARIANT);
-                    for (CowModelLayer layer : attachment.cowVariant().value().configuration().layers())
+                    for (CowModelLayer layer : attachment.cowVariant().value().configuration().settings().layers())
                         for (TextureModifierFactory<?> modifier : layer.textureModifiers())
                             modifier.init(living);
                     BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncCowVariantClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getCowVariantAttachment(living), true));
                 }
-                if (living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
-                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(living), true));
+                if (living instanceof MushroomCow mooshroom && living.hasData(BovinesAttachments.MOOSHROOM_EXTRAS))
+                    BovinesAndButtercups.getHelper().sendClientboundPacket(player, new SyncMooshroomExtrasClientboundPacket(living.getId(), BovinesAndButtercups.getHelper().getMooshroomExtrasAttachment(mooshroom), true));
             }
         }
 
@@ -285,37 +285,27 @@ public class BovinesAndButtercupsNeoForge {
         @SubscribeEvent
         public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
             Entity entity = event.getEntity();
-            if (entity instanceof LivingEntity living && !(entity instanceof Moobloom) && entity.hasData(BovinesAttachments.COW_VARIANT)) {
+            if (!ConversionUtil.CONVERTED_BY_BOVINES.contains(entity) && entity.level() instanceof ServerLevel serverLevel && entity instanceof Mob mob && entity.hasData(BovinesAttachments.COW_VARIANT)) {
                 CowVariantAttachment attachment = entity.getData(BovinesAttachments.COW_VARIANT);
-                if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
+                if (!attachment.cowVariant().isBound() || !attachment.cowVariant().value().type().isLightningLogicIndirect() || !attachment.cowVariant().value().configuration().allowsConversion(entity))
                     return;
                 if (attachment.previousCowVariant().isEmpty()) {
                     if (attachment.cowVariant().value().configuration().settings().thunderConverts().isEmpty())
                         return;
 
-                    var compatibleList = attachment.cowVariant().value().configuration().settings().filterThunderConverts(attachment.cowVariant().value().type());
-                    int totalWeight = 0;
+                    LootParams params = new LootParams.Builder(serverLevel)
+                            .withParameter(LootContextParams.THIS_ENTITY, entity)
+                            .withParameter(LootContextParams.ORIGIN, entity.position())
+                            .withParameter(LootContextParams.DAMAGE_SOURCE, entity.damageSources().lightningBolt())
+                            .withParameter(LootContextParams.ATTACKING_ENTITY, event.getLightning())
+                            .create(LootContextParamSets.ENTITY);
+                    LootContext context = new LootContext.Builder(params).create(Optional.empty());
 
-                    if (compatibleList.size() == 1) {
-                        CowVariantAttachment.setCowVariant(living, (Holder) compatibleList.getFirst().data(), (Holder) attachment.cowVariant());
-                        CowVariantAttachment.sync(living);
-                        BovinesAndButtercups.convertedByBovines = true;
-                    } else if (!compatibleList.isEmpty()) {
-                        for (var cct : compatibleList) {
-                            totalWeight -= cct.weight().asInt();
-                            if (totalWeight <= 0) {
-                                CowVariantAttachment.setCowVariant(living, (Holder) cct.data(), (Holder) attachment.cowVariant());
-                                CowVariantAttachment.sync(living);
-                                BovinesAndButtercups.convertedByBovines = true;
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    CowVariantAttachment.setCowVariant(living, (Holder) attachment.previousCowVariant().get());
-                    CowVariantAttachment.sync(living);
-                    BovinesAndButtercups.convertedByBovines = true;
-                }
+                    List<WeightedEntry.Wrapper<ConvertData>> compatibleList = attachment.cowVariant().value().configuration().settings().thunderConverts().unwrap().stream().filter(convertDataWrapper -> convertDataWrapper.data().conditions().isEmpty() || convertDataWrapper.data().conditions().stream().allMatch(condition -> condition.test(context))).toList();
+
+                    ConversionUtil.convert(mob, serverLevel, event.getLightning(), compatibleList);
+                } else
+                    ConversionUtil.revertFromPrevious(mob, serverLevel, event.getLightning());
             }
         }
     }
@@ -325,7 +315,6 @@ public class BovinesAndButtercupsNeoForge {
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
             MoobloomEatDispenseBehavior.registerBehavior(MoobloomEatDispenseBehavior.INSTANCE);
-            BovinesDataFixer.register();
         }
 
         @SubscribeEvent
@@ -359,7 +348,7 @@ public class BovinesAndButtercupsNeoForge {
             if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
                 insertAfter(event.getParentEntries(), Items.SPORE_BLOSSOM, List.of(
                         BovinesItems.FREESIA,
-                        BovinesItems.BIRD_OF_PARADISE,
+                        BovinesItems.ALSTROEMERIA,
                         BovinesItems.BUTTERCUP,
                         BovinesItems.LIMELIGHT,
                         BovinesItems.LINGHOLM,

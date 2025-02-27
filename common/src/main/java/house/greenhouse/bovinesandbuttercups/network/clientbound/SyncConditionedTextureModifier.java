@@ -34,7 +34,7 @@ public record SyncConditionedTextureModifier(int entityId, ResourceLocation cond
             CowVariantAttachment cowVariant = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
             if (cowVariant == null || !cowVariant.cowVariant().isBound())
                 return;
-            cowVariant.cowVariant().value().configuration().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream()).filter(textureModifierFactory -> {
+            cowVariant.cowVariant().value().configuration().settings().layers().stream().flatMap(cowModelLayer -> cowModelLayer.textureModifiers().stream()).filter(textureModifierFactory -> {
                 if (textureModifierFactory instanceof ConditionedTextureModifierFactory conditioned)
                     return conditioned.getConditionId().equals(conditionId);
                 return false;
