@@ -15,7 +15,7 @@
     "ChunkGeneratorMixin",
     "ChunkStorageMixin",
     "ConversionTypeInvoker",
-    "CowMixin",
+    "CowSuperMixin",
     "CraftingRecipeMixin",
     "DataFixTypesAccessor",
     "DataFixTypesMixin",

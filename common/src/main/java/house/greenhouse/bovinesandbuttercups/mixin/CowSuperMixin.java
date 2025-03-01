@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Cow.class)
-public abstract class CowMixin extends Animal {
-    protected CowMixin(EntityType<? extends Animal> p_27557_, Level p_27558_) {
+public abstract class CowSuperMixin extends Animal {
+    protected CowSuperMixin(EntityType<? extends Animal> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
     }
 

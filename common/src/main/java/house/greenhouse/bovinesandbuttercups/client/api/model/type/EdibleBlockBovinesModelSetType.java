@@ -23,11 +23,12 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class EdibleBlockBovinesModelSetType implements BovinesModelSetType {
     public static final EdibleBlockBovinesModelSetType INSTANCE = new EdibleBlockBovinesModelSetType();
-    private static final Map<ResourceLocation, EdibleModelDefinition> LOADED = new HashMap<>();
+    private static final Map<ResourceLocation, EdibleModelDefinition> LOADED = new ConcurrentHashMap<>();
 
     protected EdibleBlockBovinesModelSetType() {}
 
@@ -51,8 +52,13 @@ public class EdibleBlockBovinesModelSetType implements BovinesModelSetType {
 
         if (definition != null) {
             if (definition.multiPart != null) {
+                Map<String, Integer> idMap = new HashMap<>();
                 for (PlaceableEdibleSelector selector : definition.multiPart.getEdibleSelectors()) {
-                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + selector.condition().toModelVariantString());
+                    ResourceLocation filePath = fileId.withPath(s -> s + "/" + selector.condition().toModelVariantString() + "." + idMap.compute(selector.condition().toModelVariantString(), (str, integer) -> {
+                        if (integer == null)
+                            return 0;
+                        return integer + 1;
+                    }));
                     ResourceLocation resolvedPath = filePath.withPath(s -> "bovinesandbuttercups/" + s);
                     modelIds.put(filePath, resolvedPath);
                     lookup.put(selector, filePath);

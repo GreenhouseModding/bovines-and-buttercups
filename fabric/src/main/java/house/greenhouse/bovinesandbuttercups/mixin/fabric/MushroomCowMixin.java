@@ -1,14 +1,10 @@
 package house.greenhouse.bovinesandbuttercups.mixin.fabric;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
-import house.greenhouse.bovinesandbuttercups.api.util.ConversionUtil;
 import house.greenhouse.bovinesandbuttercups.content.attachment.BovinesAttachments;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.mixin.AnimalAccessor;
-import house.greenhouse.bovinesandbuttercups.mixin.CowMixin;
+import house.greenhouse.bovinesandbuttercups.mixin.CowSuperMixin;
 import house.greenhouse.bovinesandbuttercups.util.MooshroomSpawnUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +14,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -34,34 +29,10 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MushroomCow.class)
-public abstract class MushroomCowMixin extends CowMixin {
-
-    protected MushroomCowMixin(EntityType<? extends Animal> entityType, Level level) {
-        super(entityType, level);
-    }
-
+public abstract class MushroomCowMixin {
     @ModifyReturnValue(method = "checkMushroomSpawnRules", at = @At("RETURN"))
     private static boolean bovinesandbuttercups$allowSpawning(boolean original, EntityType<MushroomCow> entityType, LevelAccessor levelAccessor, EntitySpawnReason reason, BlockPos blockPos, RandomSource randomSource) {
         return (original || !levelAccessor.getBiome(blockPos).is(Biomes.MUSHROOM_FIELDS) && levelAccessor.getBlockState(blockPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && AnimalAccessor.bovinesandbuttercups$invokeIsBrightEnoughToSpawn(levelAccessor, blockPos)) && MooshroomSpawnUtil.getTotalSpawnWeight(levelAccessor, blockPos) > 0;
-    }
-
-    @Inject(method = "thunderHit", at = @At(value = "HEAD"), cancellable = true)
-    private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
-        boolean bl = ConversionUtil.CONVERTED_BY_BOVINES.contains(this);
-        if (!bl && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) || getAttached(BovinesAttachments.MOOSHROOM_EXTRAS) != null && getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
-            bovinesandbuttercups$superThunderHit(level, lightning);
-            ci.cancel();
-        }
-    }
-
-    @WrapWithCondition(method = "thunderHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;setVariant(Lnet/minecraft/world/entity/animal/MushroomCow$Variant;)V"))
-    private boolean bovinesandbuttercups$cancelThunderConversion(MushroomCow instance, MushroomCow.Variant variant) {
-        boolean bl = ConversionUtil.CONVERTED_BY_BOVINES.contains(this);
-        if (bl || (instance.hasAttached(BovinesAttachments.MOOSHROOM_EXTRAS) && !instance.getAttached(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion())) {
-            ConversionUtil.CONVERTED_BY_BOVINES.remove(this);
-            return false;
-        }
-        return true;
     }
 
     @Inject(method = "method_63648", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/MushroomCow;dropFromShearingLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/BiConsumer;)V"), cancellable = true)

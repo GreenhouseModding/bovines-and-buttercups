@@ -15,8 +15,8 @@ public class MoobloomModel extends QuadrupedModel<MoobloomRenderState> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         if (animateLayingDown(state)) {
             if (state.layDownAnimationState.isStarted()) {
-                head.xRot = head.xRot * (float) (Math.PI / 180.0);
-                head.yRot = head.yRot * (float) (Math.PI / 180.0);
+                head.xRot = state.xRot * (float) (Math.PI / 180.0);
+                head.yRot = state.yRot * (float) (Math.PI / 180.0);
             }
             return;
         }
