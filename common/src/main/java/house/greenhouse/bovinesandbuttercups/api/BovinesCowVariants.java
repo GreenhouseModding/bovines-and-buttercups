@@ -59,17 +59,14 @@ public class BovinesCowVariants {
         public static final ResourceKey<CowVariant<?>> SNOWDROP = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("snowdrop"));
         public static final ResourceKey<CowVariant<?>> SOMBERCUP = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("sombercup"));
         public static final ResourceKey<CowVariant<?>> TROPICAL_BLUE = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("tropical_blue"));
-        public static final ResourceKey<CowVariant<?>> MISSING_MOOBLOOM = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("missing_moobloom"));
     }
 
     public static class MooshroomKeys {
         public static final ResourceKey<CowVariant<?>> RED_MUSHROOM = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("red_mushroom"));
         public static final ResourceKey<CowVariant<?>> BROWN_MUSHROOM = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("brown_mushroom"));
-        public static final ResourceKey<CowVariant<?>> MISSING_MOOSHROOM = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("missing_mooshroom"));
     }
 
     public static class CowKeys {
-        public static final ResourceKey<CowVariant<?>> MISSING_COW = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("missing_cow"));
         public static final ResourceKey<CowVariant<?>> DEFAULT_COW = ResourceKey.create(BovinesRegistryKeys.COW_VARIANT, BovinesAndButtercups.asResource("default_cow"));
     }
 

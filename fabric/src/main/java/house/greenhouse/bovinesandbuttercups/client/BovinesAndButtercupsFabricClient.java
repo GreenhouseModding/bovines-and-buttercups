@@ -1,46 +1,35 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
+import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
+import house.greenhouse.bovinesandbuttercups.client.particle.BloomParticle;
+import house.greenhouse.bovinesandbuttercups.client.particle.ModelLocationParticle;
+import house.greenhouse.bovinesandbuttercups.client.particle.ShroomParticle;
+import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelperFabric;
+import house.greenhouse.bovinesandbuttercups.client.renderer.block.*;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.CustomCowModelLayers;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
+import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMoobloomSnowLayerClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncMooshroomExtrasClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
+import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
+import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
+import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
+import house.greenhouse.bovinesandbuttercups.network.clientbound.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
-import house.greenhouse.bovinesandbuttercups.client.particle.BloomParticle;
-import house.greenhouse.bovinesandbuttercups.client.particle.ModelLocationParticle;
-import house.greenhouse.bovinesandbuttercups.client.particle.ShroomParticle;
-import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelperFabric;
-import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerPotBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomHugeMushroomBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomPotBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
-import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
-import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncConditionedTextureModifier;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncCowVariantClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.network.clientbound.SyncLockdownEffectsClientboundPacket;
-import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
-import house.greenhouse.bovinesandbuttercups.content.block.BovinesBlocks;
-import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
-import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -56,11 +45,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -115,13 +100,6 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
                 return listener.reload(barrier, manager, backgroundExecutor, gameExecutor);
             }
         });
-
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            if (!client.isLocalServer())
-                BovinesRegistries.COW_TYPE.forEach(cowType ->
-                        cowType.setFromRegistries(client.level.registryAccess()));
-        });
-
 
         PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
             for (ResourceLocation entry : data) {

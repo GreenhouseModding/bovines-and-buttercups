@@ -13,9 +13,9 @@ import net.minecraft.world.entity.EntityType;
 import java.util.List;
 
 public class BovinesCowTypes {
-    public static final CowType<MoobloomConfiguration> MOOBLOOM_TYPE = register(BovinesAndButtercups.asResource("moobloom"), new CowType<>(MoobloomConfiguration.CODEC, List.of(BovinesEntityTypes.MOOBLOOM), BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM, "bovinesandbuttercups/moobloom/%s_moobloom", MoobloomConfiguration::createMissing));
-    public static final CowType<MooshroomConfiguration> MOOSHROOM_TYPE = register(BovinesAndButtercups.asResource("mooshroom"), new CowType<>(MooshroomConfiguration.CODEC, List.of(EntityType.MOOSHROOM), BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM,"bovinesandbuttercups/mooshroom/%s_mooshroom", MooshroomConfiguration::createMissing, true));
-    public static final CowType<CowConfiguration> COW_TYPE = register(BovinesAndButtercups.asResource("cow"), new CowType<>(CowConfiguration.CODEC, List.of(EntityType.COW), BovinesCowVariants.CowKeys.MISSING_COW,"bovinesandbuttercups/cow/%s_cow", CowConfiguration::createMissing, true));
+    public static final CowType<MoobloomConfiguration> MOOBLOOM_TYPE = register(BovinesAndButtercups.asResource("moobloom"), new CowType<>(MoobloomConfiguration.CODEC, List.of(BovinesEntityTypes.MOOBLOOM), BovinesCowVariants.MoobloomKeys.BUTTERCUP, "bovinesandbuttercups/moobloom/%s_moobloom"));
+    public static final CowType<MooshroomConfiguration> MOOSHROOM_TYPE = register(BovinesAndButtercups.asResource("mooshroom"), new CowType<>(MooshroomConfiguration.CODEC, List.of(EntityType.MOOSHROOM), BovinesCowVariants.MooshroomKeys.RED_MUSHROOM,"bovinesandbuttercups/mooshroom/%s_mooshroom", true));
+    public static final CowType<CowConfiguration> COW_TYPE = register(BovinesAndButtercups.asResource("cow"), new CowType<>(CowConfiguration.CODEC, List.of(EntityType.COW), BovinesCowVariants.CowKeys.DEFAULT_COW,"bovinesandbuttercups/cow/%s_cow", true));
 
     public static void registerAll() {}
 

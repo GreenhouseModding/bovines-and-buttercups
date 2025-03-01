@@ -3,7 +3,6 @@ package house.greenhouse.bovinesandbuttercups.util;
 import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.CowConfiguration;
-import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -35,7 +34,7 @@ public class CowSpawnUtil {
 
     public static Holder<CowVariant<CowConfiguration>> getMostCommonCowSpawnVariant(LevelAccessor level) {
         int largestWeight = 0;
-        Holder<CowVariant<CowConfiguration>> finalCowVariant = (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.CowKeys.MISSING_COW);
+        Holder<CowVariant<CowConfiguration>> finalCowVariant = (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.CowKeys.DEFAULT_COW);
 
         for (Holder<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof CowConfiguration cc && !cc.settings().biomes().isEmpty()).toList()) {
             if (!(cowVariant.value().configuration() instanceof CowConfiguration configuration)) continue;
@@ -54,7 +53,7 @@ public class CowSpawnUtil {
         List<Holder<CowVariant<CowConfiguration>>> cowVariantList = new ArrayList<>();
         int totalWeight = 0;
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof CowConfiguration).toList()) {
             if (!(cowVariant.value().configuration() instanceof CowConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -75,7 +74,7 @@ public class CowSpawnUtil {
                     return cowVariant;
             }
         }
-        return (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.CowKeys.MISSING_COW);
+        return (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.CowKeys.DEFAULT_COW);
     }
 
 }

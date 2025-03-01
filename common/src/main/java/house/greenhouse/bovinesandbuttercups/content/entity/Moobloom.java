@@ -482,7 +482,7 @@ public class Moobloom extends Cow {
     }
 
     public Holder<CowVariant<MoobloomConfiguration>> getCowVariant() {
-        return Optional.ofNullable(CowVariantAttachment.getCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM));
+        return Optional.ofNullable(CowVariantAttachment.getCowVariantHolderFromEntity(this, BovinesCowTypes.MOOBLOOM_TYPE)).orElse((Holder) level().registryAccess().get(BovinesCowVariants.MoobloomKeys.BUTTERCUP).orElseThrow());
     }
 
     @Nullable
@@ -622,12 +622,12 @@ public class Moobloom extends Cow {
                 return getMostCommonMoobloomSpawnVariant(level, random);
         }
 
-        public Holder<CowVariant<MoobloomConfiguration>> getMostCommonMoobloomSpawnVariant(ServerLevelAccessor level, RandomSource random) {
+        public static Holder<CowVariant<MoobloomConfiguration>> getMostCommonMoobloomSpawnVariant(ServerLevelAccessor level, RandomSource random) {
             var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
             int largestWeight = 0;
-            Holder<CowVariant<?>> finalCowVariant = registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
+            Holder<CowVariant<?>> finalCowVariant = registry.getOrThrow(BovinesCowVariants.MoobloomKeys.BUTTERCUP);
 
-            for (Holder<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+            for (Holder<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration).toList()) {
                 if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 int max = configuration.settings().biomes().unwrap().stream().map(wrapper -> wrapper.weight().asInt()).max(Comparator.comparingInt(value -> value)).orElse(0);
@@ -640,12 +640,12 @@ public class Moobloom extends Cow {
             return (Holder) finalCowVariant;
         }
 
-        public Holder<CowVariant<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
+        public static Holder<CowVariant<MoobloomConfiguration>> getMoobloomSpawnTypeDependingOnBiome(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
             var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
             List<Holder<CowVariant<MoobloomConfiguration>>> moobloomList = new ArrayList<>();
             int totalWeight = 0;
 
-            for (Holder.Reference<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+            for (Holder.Reference<CowVariant<?>> cowVariant : registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MoobloomConfiguration).toList()) {
                 if (!(cowVariant.value().configuration() instanceof MoobloomConfiguration configuration)) continue;
 
                 Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -666,7 +666,7 @@ public class Moobloom extends Cow {
                         return cowVariant;
                 }
             }
-            return (Holder) registry.getOrThrow(BovinesCowVariants.MoobloomKeys.MISSING_MOOBLOOM);
+            return (Holder) registry.getOrThrow(BovinesCowVariants.MoobloomKeys.BUTTERCUP);
         }
     }
 }

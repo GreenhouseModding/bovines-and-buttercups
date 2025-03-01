@@ -1,39 +1,29 @@
 package house.greenhouse.bovinesandbuttercups.client;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
 import house.greenhouse.bovinesandbuttercups.client.particle.BloomParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ModelLocationParticle;
 import house.greenhouse.bovinesandbuttercups.client.particle.ShroomParticle;
 import house.greenhouse.bovinesandbuttercups.client.platform.BovinesClientHelperNeoForge;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.PlaceableEdibleBlockRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.block.*;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.FlowerCrownLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MooshroomDatapackMushroomLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.CustomCowModelLayers;
-import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerPotBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomFlowerRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomHugeMushroomBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomPotBlockRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.block.CustomMushroomRenderer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.MoobloomRenderer;
-import house.greenhouse.bovinesandbuttercups.client.api.model.type.BovinesModelSetTypes;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.FlowerCrownModel;
 import house.greenhouse.bovinesandbuttercups.client.renderer.item.FlowerCrownItemRenderer;
+import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelSetUtil;
 import house.greenhouse.bovinesandbuttercups.client.util.ClearTextureCacheReloadListener;
-import house.greenhouse.bovinesandbuttercups.mixin.neoforge.client.EntityRenderersEventAddLayersAccessor;
 import house.greenhouse.bovinesandbuttercups.content.block.entity.BovinesBlockEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.effect.BovinesEffects;
 import house.greenhouse.bovinesandbuttercups.content.entity.BovinesEntityTypes;
 import house.greenhouse.bovinesandbuttercups.content.particle.BovinesParticleTypes;
-import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import house.greenhouse.bovinesandbuttercups.mixin.neoforge.client.EntityRenderersEventAddLayersAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.IllagerModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.VillagerModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -42,13 +32,8 @@ import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.BlockModelRotation;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.client.resources.model.ModelBakery.TextureGetter;
-import net.minecraft.client.resources.model.ModelDebugName;
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
@@ -57,7 +42,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 import java.util.ArrayList;
@@ -70,15 +58,6 @@ import java.util.function.Function;
 public class BovinesAndButtercupsNeoForgeClient {
     public BovinesAndButtercupsNeoForgeClient(IEventBus eventBus) {
         BovinesAndButtercupsClient.init(new BovinesClientHelperNeoForge());
-    }
-
-    @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-    public static class GameEvents {
-        @SubscribeEvent
-        public static void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-            BovinesRegistries.COW_TYPE.forEach(cowType ->
-                    cowType.setFromRegistries(Minecraft.getInstance().level.registryAccess()));
-        }
     }
 
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

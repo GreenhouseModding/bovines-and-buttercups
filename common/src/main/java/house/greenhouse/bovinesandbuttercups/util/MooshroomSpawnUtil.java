@@ -33,9 +33,9 @@ public class MooshroomSpawnUtil {
         return totalWeight;
     }
 
-    public static Holder<CowVariant<MooshroomConfiguration>> getMostCommonMooshroomSpawnType(LevelAccessor level, MushroomCow.Variant mushroomType) {
+    public static Holder<CowVariant<MooshroomConfiguration>> getMostCommonMooshroomSpawnVariant(LevelAccessor level, MushroomCow.Variant mushroomType) {
         int largestWeight = 0;
-        Holder<CowVariant<MooshroomConfiguration>> finalCowVariant = getMooshroomTypeFromMushroomType(level, mushroomType);
+        Holder<CowVariant<MooshroomConfiguration>> finalCowVariant = getMooshroomVariantFromMushroomVariant(level, mushroomType);
 
         for (Holder<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && !mc.settings().biomes().isEmpty()).toList()) {
             if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
@@ -50,16 +50,16 @@ public class MooshroomSpawnUtil {
         return finalCowVariant;
     }
 
-    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomTypeFromMushroomType(LevelAccessor level, MushroomCow.Variant mushroomType) {
+    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomVariantFromMushroomVariant(LevelAccessor level, MushroomCow.Variant mushroomType) {
         var registry = level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT);
-        return (Holder)registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse(registry.getOrThrow(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM));
+        return (Holder)registry.registryKeySet().stream().map(registry::getOrThrow).filter(cowVariant -> cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse(registry.getOrThrow(BovinesCowVariants.MooshroomKeys.RED_MUSHROOM));
     }
 
-    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomSpawnTypeDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
+    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomSpawnVariantDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
         List<Holder<CowVariant<MooshroomConfiguration>>> moobloomList = new ArrayList<>();
         int totalWeight = 0;
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).registryKeySet().stream().map(key -> level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(key)).filter(cowVariant -> cowVariant.isBound()).toList()) {
             if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(wrapper -> wrapper.data().size() == 0 || wrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -80,7 +80,7 @@ public class MooshroomSpawnUtil {
                     return cowVariant;
             }
         }
-        return (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM);
+        return (Holder)level.registryAccess().lookupOrThrow(BovinesRegistryKeys.COW_VARIANT).getOrThrow(BovinesCowVariants.MooshroomKeys.RED_MUSHROOM);
     }
 
 }

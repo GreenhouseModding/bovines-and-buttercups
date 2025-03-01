@@ -8,6 +8,8 @@ import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment
 import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.mixin.client.AgeableMobRendererAccessor;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -42,7 +44,7 @@ public abstract class AbstractCowTypeRenderState<T extends LivingEntity, C exten
             if (attachment != null)
                 cowModel = attachment.cowVariant().value().configuration().settings().model();
             if (cowModel == null)
-                cowModel = BovinesCowModelTypes.TEMPERATE;
+                cowModel = BovinesRegistries.COW_TYPE.stream().filter(cowType -> cowType.isApplicable(entity)).map(cowType -> cowType.defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration().settings().model()).findFirst().orElse(BovinesCowModelTypes.TEMPERATE);
             ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
             if (cowModel.namespaceOverride() != null)
                 namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());

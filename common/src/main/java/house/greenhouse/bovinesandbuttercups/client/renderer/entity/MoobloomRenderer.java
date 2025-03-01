@@ -1,21 +1,17 @@
 package house.greenhouse.bovinesandbuttercups.client.renderer.entity;
 
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
+import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MoobloomFlowerLayer;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.MoobloomModel;
 import house.greenhouse.bovinesandbuttercups.client.renderer.entity.model.state.MoobloomRenderState;
 import house.greenhouse.bovinesandbuttercups.client.util.BovinesModelLayers;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.MoobloomFlowerLayer;
-import house.greenhouse.bovinesandbuttercups.client.renderer.entity.layer.CowLayersLayer;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.state.WardenRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.monster.warden.Warden;
 
 import java.util.function.Function;
 
@@ -31,7 +27,7 @@ public class MoobloomRenderer extends AgeableMobRenderer<Moobloom, MoobloomRende
 
     @Override
     public ResourceLocation getTextureLocation(MoobloomRenderState entity) {
-        return BovinesAndButtercups.asResource("textures/entity/bovinesandbuttercups/moobloom/missing_moobloom.png");
+        return BovinesAndButtercups.asResource("textures/entity/bovinesandbuttercups/moobloom/buttercup_moobloom.png");
     }
 
     @Override
