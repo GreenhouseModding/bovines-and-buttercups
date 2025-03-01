@@ -27,6 +27,7 @@
     "MobAccessor",
     "MobEffectInstanceMixin",
     "MobMixin",
+    "MushroomCowAccessor",
     "MushroomCowMixin",
     "NbtUtilsMixin",
     "PistonMovingBlockEntityMixin",
