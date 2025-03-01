@@ -30,7 +30,7 @@ public record CowConfiguration(BaseCowConfiguration.Settings settings) implement
     }
 
     public static CowConfiguration createMissing(RegistryOps.RegistryInfoLookup lookup) {
-        return new CowConfiguration(new Settings(Optional.of(BovinesAndButtercups.asResource("cow/missing_cow")), BovinesCowModelTypes.TEMPERATE,
+        return new CowConfiguration(new Settings(Optional.of(BovinesAndButtercups.asResource("bovinesandbuttercups/cow/missing_cow")), BovinesCowModelTypes.TEMPERATE,
                 List.of(), SimpleWeightedRandomList.empty(), SimpleWeightedRandomList.empty(), Optional.empty(), OffspringConditions.EMPTY));
     }
 }
