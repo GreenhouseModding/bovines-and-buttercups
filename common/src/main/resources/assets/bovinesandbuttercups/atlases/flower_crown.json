@@ -19,7 +19,7 @@
       ],
       "palette_key": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/flower_crown_palette",
       "permutations": {
-        "bird_of_paradise": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/bird_of_paradise",
+        "alstroemeria": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/alstroemeria",
         "buttercup": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/buttercup",
         "camellia": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/camellia",
         "chargelily": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/chargelily",
@@ -29,6 +29,7 @@
         "lingholm": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/lingholm",
         "pink_daisy": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/pink_daisy",
         "snowdrop": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/snowdrop",
+        "sombercup": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/sombercup",
         "tropical_blue": "bovinesandbuttercups:bovinesandbuttercups/flower_crown/color_palettes/tropical_blue"
       }
     }
