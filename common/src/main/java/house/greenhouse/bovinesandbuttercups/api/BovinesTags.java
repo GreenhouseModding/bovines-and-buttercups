@@ -46,7 +46,6 @@ public class BovinesTags {
         public static final TagKey<Block> HYACINTH_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/hyacinth"));
         public static final TagKey<Block> LIMELIGHT_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/limelight"));
         public static final TagKey<Block> LINGHOLM_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/lingholm"));
-        public static final TagKey<Block> NIGHTSHADE_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/nightshade"));
         public static final TagKey<Block> PINK_DAISY_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/pink_daisy"));
         public static final TagKey<Block> SNOWDROP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/snowdrop"));
         public static final TagKey<Block> SOMBERCUP_PLACEABLE = TagKey.create(Registries.BLOCK, BovinesAndButtercups.asResource("placeable/sombercup"));

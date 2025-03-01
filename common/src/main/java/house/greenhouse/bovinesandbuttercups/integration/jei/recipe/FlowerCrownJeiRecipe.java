@@ -1,6 +1,7 @@
 package house.greenhouse.bovinesandbuttercups.integration.jei.recipe;
 
 import house.greenhouse.bovinesandbuttercups.content.component.FlowerCrown;
+import house.greenhouse.bovinesandbuttercups.content.data.flowercrown.FlowerCrownMaterial;
 import house.greenhouse.bovinesandbuttercups.content.item.FlowerCrownItem;
 import house.greenhouse.bovinesandbuttercups.content.recipe.FlowerCrownRecipe;
 import house.greenhouse.bovinesandbuttercups.integration.recipe.BovinesRecipeViewerUtil;
@@ -23,7 +24,7 @@ import java.util.Random;
 public class FlowerCrownJeiRecipe implements ICraftingCategoryExtension<FlowerCrownRecipe> {
     public void setRecipe(RecipeHolder<FlowerCrownRecipe> recipe, IRecipeLayoutBuilder builder, ICraftingGridHelper helper, IFocusGroup focuses) {
         ItemStack stack = FlowerCrownItem.createRainbowCrown(Minecraft.getInstance().level.registryAccess());
-        Ingredient flowerCrownIngredient = Ingredient.of(Minecraft.getInstance().level.registryAccess().registryOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).stream().map(material -> material.ingredient()));
+        Ingredient flowerCrownIngredient = Ingredient.of(Minecraft.getInstance().level.registryAccess().registryOrThrow(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).stream().map(FlowerCrownMaterial::ingredient));
         List<Ingredient> ingredients = List.of(
                 flowerCrownIngredient,
                 flowerCrownIngredient,
