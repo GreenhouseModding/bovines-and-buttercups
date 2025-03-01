@@ -24,7 +24,7 @@ public class BovinesNectars {
 
     public static void bootstrap(BootstrapContext<Nectar> context) {
         context.register(ALSTROEMERIA,
-                new Nectar(BovinesAndButtercups.asResource("item/bird_of_paradise_nectar_bowl"),
+                new Nectar(BovinesAndButtercups.asResource("item/alstroemeria_nectar_bowl"),
                         new NectarEffects(List.of(new NectarEffects.Entry(MobEffects.SLOW_FALLING, 7200)))));
         context.register(BUTTERCUP,
                 new Nectar(BovinesAndButtercups.asResource("item/buttercup_nectar_bowl"),
