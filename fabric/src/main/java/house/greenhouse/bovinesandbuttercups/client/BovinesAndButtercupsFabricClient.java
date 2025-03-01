@@ -95,12 +95,6 @@ public class BovinesAndButtercupsFabricClient implements ClientModInitializer {
             }
         });
 
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            if (!client.isLocalServer())
-                BovinesRegistries.COW_TYPE.forEach(cowType ->
-                        cowType.setFromRegistries(client.level.registryAccess()));
-        });
-
         PreparableModelLoadingPlugin.register(BovinesModelSetUtil::getModels, (data, context) -> {
             context.addModels(data);
             context.resolveModel().register((ctx) -> BovinesModelSetUtil.getUnbakedModel(ctx.id(), ctx::getOrLoadModel));

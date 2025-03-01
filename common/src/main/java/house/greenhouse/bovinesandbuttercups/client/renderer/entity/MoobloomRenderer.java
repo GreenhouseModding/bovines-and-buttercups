@@ -49,6 +49,6 @@ public class MoobloomRenderer extends MobRenderer<Moobloom, MoobloomModel> {
 
     @Override
     public ResourceLocation getTextureLocation(Moobloom entity) {
-        return BovinesAndButtercups.asResource("textures/entity/bovinesandbuttercups/moobloom/missing_moobloom.png");
+        return BovinesAndButtercups.asResource("textures/entity/bovinesandbuttercups/moobloom/buttercup_moobloom.png");
     }
 }

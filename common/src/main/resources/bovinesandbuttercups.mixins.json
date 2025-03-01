@@ -44,6 +44,7 @@
   ],
   "client": [
     "client.AtlasSetMixin",
+    "client.CowRendererMixin",
     "client.EffectRenderingInventoryScreenMixin",
     "client.GuiGraphicsMixin",
     "client.LivingEntityRendererMixin",

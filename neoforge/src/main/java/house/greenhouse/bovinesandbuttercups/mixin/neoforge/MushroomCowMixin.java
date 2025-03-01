@@ -33,7 +33,7 @@ public abstract class MushroomCowMixin extends CowSuperMixin {
     private void bovinesandbuttercups$useSuperThunderWhenNotSpecified(ServerLevel level, LightningBolt lightning, CallbackInfo ci) {
         boolean bl = BovinesAndButtercups.convertedByBovines;
         if (!bl && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE) != null && CowVariantAttachment.getCowVariantFromEntity(this, BovinesCowTypes.MOOSHROOM_TYPE).configuration().vanillaType().isEmpty() && !hasData(BovinesAttachments.MOOSHROOM_EXTRAS) || getExistingData(BovinesAttachments.MOOSHROOM_EXTRAS).isPresent() && getData(BovinesAttachments.MOOSHROOM_EXTRAS).allowConversion()) {
-            bovinesandbuttercups$thunderHit(level, lightning);
+            bovinesandbuttercups$superThunderHit(level, lightning);
             ci.cancel();
         }
     }

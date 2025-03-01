@@ -1,6 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.util;
 
-import house.greenhouse.bovinesandbuttercups.api.BovinesCowVariants;
+import house.greenhouse.bovinesandbuttercups.api.BovinesCowTypes;
 import house.greenhouse.bovinesandbuttercups.api.CowVariant;
 import house.greenhouse.bovinesandbuttercups.content.data.configuration.MooshroomConfiguration;
 import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistryKeys;
@@ -52,14 +52,14 @@ public class MooshroomSpawnUtil {
 
     public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomVariantFromMushroomType(LevelAccessor level, MushroomCow.MushroomType mushroomType) {
         var registry = level.registryAccess().registryOrThrow(BovinesRegistryKeys.COW_VARIANT);
-        return (Holder)registry.holders().filter(cowVariant -> cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse(registry.getHolderOrThrow(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM));
+        return (Holder)registry.holders().filter(cowVariant -> cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent() && mc.vanillaType().get() == mushroomType).findFirst().orElse((Holder.Reference) BovinesCowTypes.MOOBLOOM_TYPE.defaultConfig(level.registryAccess()));
     }
 
-    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomSpawnTypeDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
+    public static Holder<CowVariant<MooshroomConfiguration>> getMooshroomSpawnVariantDependingOnBiome(LevelAccessor level, BlockPos pos, RandomSource random) {
         List<Holder<CowVariant<MooshroomConfiguration>>> moobloomList = new ArrayList<>();
         int totalWeight = 0;
 
-        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig()).toList()) {
+        for (Holder.Reference<CowVariant<?>> cowVariant : level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().holders().filter(cowVariant -> cowVariant.isBound() && cowVariant.value().configuration() instanceof MooshroomConfiguration && cowVariant.value().configuration() != cowVariant.value().type().defaultConfig(level.registryAccess())).toList()) {
             if (!(cowVariant.value().configuration() instanceof MooshroomConfiguration configuration)) continue;
 
             Optional<WeightedEntry.Wrapper<HolderSet<Biome>>> biome = configuration.settings().biomes().unwrap().stream().filter(holderSetWrapper -> holderSetWrapper.data().contains(level.getBiome(pos))).findFirst();
@@ -80,7 +80,7 @@ public class MooshroomSpawnUtil {
                     return cowVariant;
             }
         }
-        return (Holder)level.registryAccess().registry(BovinesRegistryKeys.COW_VARIANT).orElseThrow().getHolder(BovinesCowVariants.MooshroomKeys.MISSING_MOOSHROOM).get();
+        return (Holder) BovinesCowTypes.MOOSHROOM_TYPE.defaultConfig(level.registryAccess());
     }
 
 }

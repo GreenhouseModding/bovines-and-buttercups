@@ -70,15 +70,6 @@ public class BovinesAndButtercupsNeoForgeClient {
         BovinesAndButtercupsClient.init(new BovinesClientHelperNeoForge());
     }
 
-    @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-    public static class GameEvents {
-        @SubscribeEvent
-        public static void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-            BovinesRegistries.COW_TYPE.forEach(cowType ->
-                    cowType.setFromRegistries(Minecraft.getInstance().level.registryAccess()));
-        }
-    }
-
     @EventBusSubscriber(modid = BovinesAndButtercups.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ModEvents {
         @SubscribeEvent
@@ -130,10 +121,14 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(BovinesModelLayers.MOOBLOOM_MODEL_LAYER, CowModel::createBodyLayer);
-            event.registerLayerDefinition(BovinesModelLayers.HIGHLAND_MODEL_LAYER, CustomCowModelLayers::createHighland);
-            event.registerLayerDefinition(BovinesModelLayers.BUFFALO_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
-            event.registerLayerDefinition(BovinesModelLayers.OX_MODEL_LAYER, CustomCowModelLayers::createOx);
-            event.registerLayerDefinition(BovinesModelLayers.FLAT_MODEL_LAYER, CustomCowModelLayers::createFlat);
+            event.registerLayerDefinition(BovinesModelLayers.WARM_COW_MODEL_LAYER, CustomCowModelLayers::createWarm);
+            event.registerLayerDefinition(BovinesModelLayers.COLD_COW_MODEL_LAYER, CustomCowModelLayers::createCold);
+            event.registerLayerDefinition(BovinesModelLayers.LUSH_COW_MODEL_LAYER, CustomCowModelLayers::createLush);
+            event.registerLayerDefinition(BovinesModelLayers.SCULK_COW_MODEL_LAYER, CustomCowModelLayers::createSculk);
+            event.registerLayerDefinition(BovinesModelLayers.HIGHLAND_COW_MODEL_LAYER, CustomCowModelLayers::createHighland);
+            event.registerLayerDefinition(BovinesModelLayers.BUFFALO_COW_MODEL_LAYER, CustomCowModelLayers::createBuffalo);
+            event.registerLayerDefinition(BovinesModelLayers.OX_COW_MODEL_LAYER, CustomCowModelLayers::createOx);
+            event.registerLayerDefinition(BovinesModelLayers.FLAT_COW_MODEL_LAYER, CustomCowModelLayers::createFlat);
             event.registerLayerDefinition(BovinesModelLayers.FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(0.75F)));
             event.registerLayerDefinition(BovinesModelLayers.PIGLIN_FLOWER_CROWN_MODEL_LAYER, () -> FlowerCrownModel.createLayer(new CubeDeformation(1.5F, 0.5F, 0.5F)));
         }

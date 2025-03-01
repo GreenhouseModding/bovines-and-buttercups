@@ -1,11 +1,7 @@
 {
   "type": "bovinesandbuttercups:cow",
-  "natural_spawns": [
-    {
-      "biomes": "#bovinesandbuttercups:has_cow/default"
-    }
-  ],
-  "texture_location": "minecraft:cow/cow",
+  "texture_location": "test:bovinesandbuttercups/cow/cold_cow",
+  "model": "bovinesandbuttercups:cold",
   "thunder_conversion_types": [
     {
       "type": {

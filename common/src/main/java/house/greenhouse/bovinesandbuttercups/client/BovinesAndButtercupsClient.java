@@ -35,17 +35,17 @@ public class BovinesAndButtercupsClient {
     }
 
     public static ResourceLocation getCachedTextures(Holder<CowVariant<?>> cowVariant, ResourceLocation original) {
-        if (cowVariant.value().configuration().settings() == null || cowVariant.value().type().defaultConfig().settings() == null)
+        if (cowVariant.value().configuration().settings() == null || cowVariant.value().type().defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration().settings() == null)
             return original;
         ResourceLocation remappedLocation = getTextureFromCowType(cowVariant.value().configuration(), cowVariant.value().type().fallbackTexturePath(), cowVariant.unwrapKey().orElse(cowVariant.value().type().defaultKey()).location());
 
         if (LOADED_COW_TEXTURES.contains(remappedLocation))
             return remappedLocation;
         if (FAILED_COW_TEXTURES.contains(remappedLocation)) {
-            if (cowVariant.value().type().defaultConfig().settings() == null)
+            if (cowVariant.value().type().defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration().settings() == null)
                 return original;
 
-            return getTextureFromCowType(cowVariant.value().type().defaultConfig(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
+            return getTextureFromCowType(cowVariant.value().type().defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
         }
 
         if (!((SimpleTextureExceptionAccess)Minecraft.getInstance().getTextureManager().getTexture(remappedLocation)).bovinesandbuttercups$causedException()) {
@@ -55,7 +55,7 @@ public class BovinesAndButtercupsClient {
         else
             FAILED_COW_TEXTURES.add(remappedLocation);
 
-        return getTextureFromCowType(cowVariant.value().type().defaultConfig(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
+        return getTextureFromCowType(cowVariant.value().type().defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration(), cowVariant.value().type().fallbackTexturePath(), cowVariant.value().type().defaultKey().location());
     }
 
     private static ResourceLocation getTextureFromCowType(BaseCowConfiguration configuration, String fallbackTexturePath, ResourceLocation originalLocation) {

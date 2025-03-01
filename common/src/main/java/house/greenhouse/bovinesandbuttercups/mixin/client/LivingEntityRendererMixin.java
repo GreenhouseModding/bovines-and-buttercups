@@ -1,11 +1,15 @@
 package house.greenhouse.bovinesandbuttercups.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.datafixers.util.Pair;
 import house.greenhouse.bovinesandbuttercups.BovinesAndButtercups;
 import house.greenhouse.bovinesandbuttercups.access.EntityRendererLayerBakerAccess;
 import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
+import house.greenhouse.bovinesandbuttercups.api.variant.model.BovinesCowModelTypes;
 import house.greenhouse.bovinesandbuttercups.api.variant.model.CowModelType;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
+import house.greenhouse.bovinesandbuttercups.registry.BovinesRegistries;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -29,7 +33,7 @@ import java.util.Map;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> {
     @Unique
-    private final Map<CowModelType, CowModel<MushroomCow>> bovinesandbuttercups$models = new HashMap<>();
+    private final Map<CowModelType, M> bovinesandbuttercups$models = new HashMap<>();
 
     @Shadow protected M model;
 
@@ -43,19 +47,23 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
     @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
     private void bovinesandbuttercups$modifyRenderLayerBakerAccessModel(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
-        var attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
-        if (this instanceof EntityRendererLayerBakerAccess access && attachment != null && attachment.cowVariant().isBound() && attachment.cowVariant().value().type().isApplicable(entity)) {
-            CowModelType cowModel = attachment.cowVariant().value().configuration().settings().model();
+        if (this instanceof EntityRendererLayerBakerAccess<?> access) {
+            var attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
+            CowModelType cowModel = null;
+            if (attachment != null)
+                cowModel = attachment.cowVariant().value().configuration().settings().model();
+            if (cowModel == null)
+                cowModel = BovinesRegistries.COW_TYPE.stream().filter(cowType -> cowType.isApplicable(entity)).map(cowType -> cowType.defaultConfig(Minecraft.getInstance().level.registryAccess()).value().configuration().settings().model()).findFirst().orElse(BovinesCowModelTypes.TEMPERATE);
+            ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+            if (cowModel.namespaceOverride() != null)
+                namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
+            if (cowModel.pathOverride() != null)
+                namedEntityTypeLocation = namedEntityTypeLocation.withPath(cowModel.pathOverride());
             if (!bovinesandbuttercups$models.containsKey(cowModel)) {
-                ResourceLocation namedEntityTypeLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
-                if (cowModel != null && cowModel.namespaceOverride() != null)
-                    namedEntityTypeLocation = ResourceLocation.fromNamespaceAndPath(cowModel.namespaceOverride(), namedEntityTypeLocation.getPath());
-                if (cowModel != null && cowModel.pathOverride() != null)
-                    namedEntityTypeLocation = namedEntityTypeLocation.withPath(cowModel.pathOverride());
-                CowModel<MushroomCow> model = access.bovinesandbuttercups$getMooshroomLayerBakeFunction().apply(new ModelLayerLocation(namedEntityTypeLocation, "main"));
-                bovinesandbuttercups$models.put(cowModel, model);
+                M bakedModel = (M) access.bovinesandbuttercups$getLayerBakeFunction().apply(new ModelLayerLocation(namedEntityTypeLocation, "main"));
+                bovinesandbuttercups$models.put(cowModel, bakedModel);
             }
-            model = (M) bovinesandbuttercups$models.get(cowModel);
+            model = bovinesandbuttercups$models.get(cowModel);
         }
     }
 }
