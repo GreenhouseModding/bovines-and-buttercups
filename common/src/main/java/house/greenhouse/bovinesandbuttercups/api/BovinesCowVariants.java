@@ -178,7 +178,7 @@ public class BovinesCowVariants {
                                         BlockPredicate.Builder.block().of(blockRegistry, Blocks.PINK_PETALS),
                                         BlockPredicate.Builder.block().of(blockRegistry, Blocks.CHERRY_LOG, Blocks.CHERRY_WOOD, Blocks.CHERRY_SAPLING, Blocks.POTTED_CHERRY_SAPLING)
                                 ),
-                                BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.PINK_DAISY, BovinesBlocks.POTTED_PINK_DAISY))),
+                                BlockPredicate.Builder.block().of(blockRegistry, BovinesBlocks.CAMELLIA, BovinesBlocks.POTTED_CAMELLIA))),
                                 List.of(),
                                 OffspringConditions.Inheritance.PARENT)),
                 new BlockReference<>(Optional.of(BovinesBlocks.CAMELLIA.defaultBlockState()), Optional.empty(), Optional.empty()),
