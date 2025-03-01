@@ -15,7 +15,6 @@ public abstract class CowSuperMixin extends Animal {
     protected CowSuperMixin(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
-    public abstract void thunderHit(ServerLevel level, LightningBolt bolt);
 
     @Unique
     public void bovinesandbuttercups$superThunderHit(ServerLevel level, LightningBolt bolt) {
