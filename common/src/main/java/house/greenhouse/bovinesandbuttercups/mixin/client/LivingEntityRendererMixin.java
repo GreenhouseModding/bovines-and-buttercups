@@ -3,8 +3,8 @@ package house.greenhouse.bovinesandbuttercups.mixin.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import house.greenhouse.bovinesandbuttercups.client.BovinesAndButtercupsClient;
 import house.greenhouse.bovinesandbuttercups.client.access.FlowerCrownRenderStateAccess;
+import house.greenhouse.bovinesandbuttercups.client.access.LivingEntityRenderStateAccess;
 import house.greenhouse.bovinesandbuttercups.client.api.CowVariantRenderState;
-import house.greenhouse.bovinesandbuttercups.content.component.BovinesDataComponents;
 import house.greenhouse.bovinesandbuttercups.content.item.BovinesItems;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -19,14 +19,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> {
     @ModifyVariable(method = "getRenderType", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;)Lnet/minecraft/resources/ResourceLocation;"))
     private ResourceLocation bovinesandbuttercups$modifyTextureLocation(ResourceLocation value, @Local(argsOnly = true) LivingEntityRenderState state) {
+        var stateExtension = ((LivingEntityRenderStateAccess)state).getRenderStateExtension();
         if (state instanceof CowVariantRenderState<?, ?, ?> cowTypeRenderState && cowTypeRenderState.getCowVariant() != null && cowTypeRenderState.getCowVariant().isBound())
             return BovinesAndButtercupsClient.getCachedTextures((Holder) cowTypeRenderState.getCowVariant(), value);
+        if (stateExtension != null && stateExtension.cowVariant != null && stateExtension.cowVariant.isBound())
+            return BovinesAndButtercupsClient.getCachedTextures((Holder) stateExtension.getCowVariant(), value);
         return value;
     }
 

@@ -34,34 +34,34 @@ public record CowVariantAttachment(Holder<CowVariant<?>> cowVariant, Optional<Ho
     });
 
     @Nullable
-    public static <C extends BaseCowConfiguration, T extends CowType<C>> CowVariant<C> getCowVariantFromEntity(LivingEntity living, T cowVariant) {
-        Holder<CowVariant<C>> type = getCowVariantHolderFromEntity(living, cowVariant);
+    public static <C extends BaseCowConfiguration, T extends CowType<C>> CowVariant<C> getCowVariantFromEntity(LivingEntity living, T cowType) {
+        Holder<CowVariant<C>> type = getCowVariantHolderFromEntity(living, cowType);
         if (type != null && type.isBound())
             return type.value();
         return null;
     }
 
     @Nullable
-    public static <C extends BaseCowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getCowVariantHolderFromEntity(LivingEntity living, T cowVariant) {
+    public static <C extends BaseCowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getCowVariantHolderFromEntity(LivingEntity living, T cowType) {
         CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
-        if (attachment != null && attachment.cowVariant.isBound() && attachment.cowVariant.value().type() == cowVariant) {
+        if (attachment != null && attachment.cowVariant.isBound() && attachment.cowVariant.value().type() == cowType) {
             return (Holder)attachment.cowVariant;
         }
         return null;
     }
 
     @Nullable
-    public static <C extends BaseCowConfiguration, T extends CowType<C>> CowVariant<C> getPreviousCowVariantFromEntity(LivingEntity living, T cowVariant) {
-        Holder<CowVariant<C>> type = getPreviousCowVariantHolderFromEntity(living, cowVariant);
+    public static <C extends BaseCowConfiguration, T extends CowType<C>> CowVariant<C> getPreviousCowVariantFromEntity(LivingEntity living, T cowType) {
+        Holder<CowVariant<C>> type = getPreviousCowVariantHolderFromEntity(living, cowType);
         if (type != null && type.isBound())
             return type.value();
         return null;
     }
 
     @Nullable
-    public static <C extends BaseCowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getPreviousCowVariantHolderFromEntity(LivingEntity living, T cowVariant) {
+    public static <C extends BaseCowConfiguration, T extends CowType<C>> Holder<CowVariant<C>> getPreviousCowVariantHolderFromEntity(LivingEntity living, T cowType) {
         CowVariantAttachment attachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(living);
-        if (attachment != null && attachment.previousCowVariant.isPresent() && attachment.previousCowVariant.get().isBound() && attachment.previousCowVariant.get().value().type() == cowVariant) {
+        if (attachment != null && attachment.previousCowVariant.isPresent() && attachment.previousCowVariant.get().isBound() && attachment.previousCowVariant.get().value().type() == cowType) {
             return (Holder)attachment.previousCowVariant.get();
         }
         return null;

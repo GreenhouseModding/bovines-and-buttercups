@@ -48,6 +48,7 @@
     "client.AbstractContainerScreenAccessor",
     "client.AgeableMobRendererAccessor",
     "client.AtlasSetMixin",
+    "client.CowRendererMixin",
     "client.CustomHeadLayerMixin",
     "client.EffectsInInventoryMixin",
     "client.EntityRendererAccessor",
@@ -56,10 +57,10 @@
     "client.HumanoidRenderStateMixin",
     "client.IllagerRenderStateMixin",
     "client.LivingEntityRendererMixin",
+    "client.LivingEntityRenderStateMixin",
     "client.ModelBakeryModelBakerImplInvoker",
     "client.MushroomCowMushroomLayerMixin",
     "client.MushroomCowRendererMixin",
-    "client.MushroomCowRenderStateMixin",
     "client.VillagerRenderStateMixin"
   ],
   "injectors": {

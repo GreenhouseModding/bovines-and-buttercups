@@ -119,12 +119,13 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                         CowVariantAttachment.setCowVariant((MushroomCow) entity, MooshroomSpawnUtil.getMostCommonMooshroomSpawnVariant(level, ((MushroomCow) entity).getVariant()));
                     CowVariantAttachment.sync((MushroomCow) entity);
                 }
-            } else if (entity.getType() == EntityType.COW) {
-                if (CowSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0)
-                    CowVariantAttachment.setCowVariant((Cow) entity, CowSpawnUtil.getCowSpawnVariantDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
-                else
-                    CowVariantAttachment.setCowVariant((Cow) entity, CowSpawnUtil.getMostCommonCowSpawnVariant(level));
-                CowVariantAttachment.sync((Cow) entity);
+                if (entity.getType() == EntityType.COW) {
+                    if (CowSpawnUtil.getTotalSpawnWeight(level, entity.blockPosition()) > 0)
+                        CowVariantAttachment.setCowVariant((Cow) entity, CowSpawnUtil.getCowSpawnVariantDependingOnBiome(level, entity.blockPosition(), level.getRandom()));
+                    else
+                        CowVariantAttachment.setCowVariant((Cow) entity, CowSpawnUtil.getMostCommonCowSpawnVariant(level));
+                    CowVariantAttachment.sync((Cow) entity);
+                }
             }
         });
         UseEntityCallback.EVENT.register((player, world, hand, target, hitResult) -> {

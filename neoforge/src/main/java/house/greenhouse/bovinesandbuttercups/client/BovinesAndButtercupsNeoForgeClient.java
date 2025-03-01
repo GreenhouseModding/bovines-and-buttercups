@@ -47,6 +47,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,6 +78,13 @@ public class BovinesAndButtercupsNeoForgeClient {
         @SubscribeEvent
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerMobEffect(LockdownClientEffectExtensions.INSTANCE, BovinesEffects.LOCKDOWN);
+        }
+
+        @SubscribeEvent
+        public static void registerRenderStateModifiers(RegisterRenderStateModifiersEvent event) {
+            event.registerEntityModifier(MushroomCowRenderer.class, (mushroomCow, state) -> {
+
+            });
         }
 
         private static final Map<ResourceLocation, UnbakedModel> MODEL_CACHE = new HashMap<>();
