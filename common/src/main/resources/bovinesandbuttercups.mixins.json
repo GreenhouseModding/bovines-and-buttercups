@@ -13,6 +13,7 @@
     "BeePollinateGoalMixin",
     "BodyRotationControlMixin",
     "ChunkGeneratorMixin",
+    "ChunkStorageMixin",
     "CowSuperMixin",
     "DataFixTypesAccessor",
     "DataFixTypesMixin",

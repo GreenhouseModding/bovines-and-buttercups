@@ -1,1 +1,4 @@
-- Fixed Camellia Mooblooms being able to be bred from Pink Daisy flowers instead of Camellia flowers.
+- Fixed an accidental duplicate block entity registration resource location, causing crashes with anything that relies on knowing registry values.
+- Fixed a call to a broken Fabric API method, causing world load breakages with most dimension adding mods ([#11](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/11))
+- Fixed DFU not fixing old Nectar items.
+- Fixed DFU not fixing Bird of Paradise Cupcakes to Alstroemeria Cupcakes when loading an old 1.21.1 world.

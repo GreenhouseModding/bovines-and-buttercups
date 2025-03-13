@@ -23,8 +23,8 @@ public class BovinesSchemaV1 extends NamespacedSchema {
         Map<String, Supplier<TypeTemplate>> map = super.registerBlockEntities(schema);
         schema.registerSimple(map, "bovinesandbuttercups:custom_flower");
         schema.registerSimple(map, "bovinesandbuttercups:custom_mushroom");
-        schema.registerSimple(map, "bovinesandbuttercups:custom_potted_flower");
-        schema.registerSimple(map, "bovinesandbuttercups:custom_potted_mushroom");
+        schema.registerSimple(map, "bovinesandbuttercups:potted_custom_flower");
+        schema.registerSimple(map, "bovinesandbuttercups:potted_custom_mushroom");
         schema.registerSimple(map, "bovinesandbuttercups:custom_mushroom_block");
         schema.registerSimple(map, "bovinesandbuttercups:placeable_edible");
         return map;

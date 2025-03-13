@@ -26,6 +26,7 @@ repositories {
     maven("https://maven.su5ed.dev/releases")
     maven("https://maven.fabricmc.net")
     maven("https://maven.shedaniel.me/")
+    maven("https://api.modrinth.com/maven")
     maven {
         name = "TerraformersMC"
         url = uri("https://maven.terraformersmc.com/")
