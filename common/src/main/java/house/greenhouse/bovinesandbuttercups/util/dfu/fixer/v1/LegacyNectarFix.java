@@ -36,7 +36,7 @@ public class LegacyNectarFix extends DataFix {
             var source = components.get("minecraft:custom_data").orElseEmptyMap().get("Source");
             components = components.set("bovinesandbuttercups:nectar", source.result().orElse((Dynamic) dynamic.createString("bovinesandbuttercups:buttercup")));
 
-            var customData = components.get("minecraft:custom_data").orElseEmptyMap().remove("effects");
+            var customData = components.get("minecraft:custom_data").orElseEmptyMap().remove("Source").remove("Effects");
             boolean shouldRemoveCustomData = customData.asMap(Dynamic::getValue, Dynamic::getValue).isEmpty();
 
             if (shouldRemoveCustomData)

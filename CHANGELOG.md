@@ -1,4 +1,2 @@
-- Fixed an accidental duplicate block entity registration resource location, causing crashes with anything that relies on knowing registry values.
-- Fixed a call to a broken Fabric API method exposed by Bovines and Buttercups, causing world load breakages with most dimension adding mods ([#11](https://github.com/GreenhouseModding/bovines-and-buttercups/issues/11))
-- Fixed DFU not fixing old Nectar items.
-- Fixed DFU not fixing Bird of Paradise Cupcakes to Alstroemeria Cupcakes when loading an old 1.21.1 world.
+- Fixed old tags persisting in data in <2.0.0 Nectar data fix.
+- Fixed Sombercup 
