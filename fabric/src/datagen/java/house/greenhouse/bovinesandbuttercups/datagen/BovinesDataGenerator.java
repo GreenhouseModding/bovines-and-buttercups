@@ -326,6 +326,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             oneToOneConversionRecipe(output, Items.PINK_DYE, BovinesBlocks.PINK_DAISY, "pink_dye");
             oneToOneConversionRecipe(output, Items.WHITE_DYE, BovinesBlocks.SNOWDROP, "white_dye");
             oneToOneConversionRecipe(output, Items.BLUE_DYE, BovinesBlocks.TROPICAL_BLUE, "blue_dye");
+            oneToOneConversionRecipe(output, Items.BLACK_DYE, BovinesBlocks.SOMBERCUP, "black_dye");
 
             ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.SUGAR, 3)
                     .requires(BovinesItems.RICH_HONEY_BOTTLE)
@@ -361,6 +362,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             dropSelf(BovinesBlocks.LINGHOLM);
             dropSelf(BovinesBlocks.PINK_DAISY);
             dropSelf(BovinesBlocks.SNOWDROP);
+            dropSelf(BovinesBlocks.SOMBERCUP);
             dropSelf(BovinesBlocks.TROPICAL_BLUE);
 
             dropPottedContents(BovinesBlocks.POTTED_ALSTROEMERIA);
@@ -372,6 +374,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
             dropPottedContents(BovinesBlocks.POTTED_LIMELIGHT);
             dropPottedContents(BovinesBlocks.POTTED_LINGHOLM);
             dropPottedContents(BovinesBlocks.POTTED_PINK_DAISY);
+            dropPottedContents(BovinesBlocks.POTTED_SOMBERCUP);
             dropPottedContents(BovinesBlocks.POTTED_SNOWDROP);
             dropPottedContents(BovinesBlocks.POTTED_TROPICAL_BLUE);
 
@@ -590,6 +593,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                             reverseLookup(BovinesBlocks.LIMELIGHT),
                             reverseLookup(BovinesBlocks.LINGHOLM),
                             reverseLookup(BovinesBlocks.PINK_DAISY),
+                            reverseLookup(BovinesBlocks.SOMBERCUP),
                             reverseLookup(BovinesBlocks.SNOWDROP),
                             reverseLookup(BovinesBlocks.TROPICAL_BLUE)
                     );
@@ -673,6 +677,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesEdibleBlockTypes.CAMELLIA_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.PINK_DAISY_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.SNOWDROP_CUPCAKE)
+                    .add(BovinesEdibleBlockTypes.SOMBERCUP_CUPCAKE)
                     .add(BovinesEdibleBlockTypes.BROWN_MUSHROOM_PUFF_PASTRY)
                     .add(BovinesEdibleBlockTypes.RED_MUSHROOM_PUFF_PASTRY)
                     .add(BovinesEdibleBlockTypes.SUSPICIOUS_BROWN_MUSHROOM_PUFF_PASTRY)
@@ -715,7 +720,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesFlowerCrownMaterials.HYACINTH)
                     .add(BovinesFlowerCrownMaterials.CAMELLIA)
                     .add(BovinesFlowerCrownMaterials.PINK_DAISY)
-                    .add(BovinesFlowerCrownMaterials.SNOWDROP);
+                    .add(BovinesFlowerCrownMaterials.SNOWDROP)
+                    .add(BovinesFlowerCrownMaterials.SOMBERCUP);
         }
     }
 
@@ -740,6 +746,7 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                             reverseLookup(BovinesItems.LIMELIGHT),
                             reverseLookup(BovinesItems.LINGHOLM),
                             reverseLookup(BovinesItems.PINK_DAISY),
+                            reverseLookup(BovinesItems.SOMBERCUP),
                             reverseLookup(BovinesItems.SNOWDROP),
                             reverseLookup(BovinesItems.TROPICAL_BLUE)
                     );
@@ -769,7 +776,8 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
                     .add(BovinesNectars.HYACINTH)
                     .add(BovinesNectars.CAMELLIA)
                     .add(BovinesNectars.PINK_DAISY)
-                    .add(BovinesNectars.SNOWDROP);
+                    .add(BovinesNectars.SNOWDROP)
+                    .add(BovinesNectars.SOMBERCUP);
         }
     }
 

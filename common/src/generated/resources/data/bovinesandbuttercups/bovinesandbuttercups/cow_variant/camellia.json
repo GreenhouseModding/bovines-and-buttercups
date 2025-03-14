@@ -129,8 +129,8 @@
         {
           "block": {
             "blocks": [
-              "bovinesandbuttercups:pink_daisy",
-              "bovinesandbuttercups:potted_pink_daisy"
+              "bovinesandbuttercups:camellia",
+              "bovinesandbuttercups:potted_camellia"
             ]
           },
           "condition": "bovinesandbuttercups:block_in_radius",
