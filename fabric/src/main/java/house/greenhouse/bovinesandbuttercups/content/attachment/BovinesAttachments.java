@@ -19,7 +19,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class BovinesAttachments {
-    public static final AttachmentType<LockdownAttachment> LOCKDOWN = AttachmentRegistry.createPersistent(LockdownAttachment.ID, LockdownAttachment.CODEC);
+    public static final AttachmentType<LockdownAttachment> LOCKDOWN = AttachmentRegistry.create(LockdownAttachment.ID, builder -> builder
+            .persistent(LockdownAttachment.CODEC)
+            .initializer(() -> new LockdownAttachment()));
     public static final AttachmentType<CowVariantAttachment> COW_VARIANT = AttachmentRegistry.createPersistent(CowVariantAttachment.ID, CowVariantAttachment.CODEC);
 
     public static final AttachmentType<CowExtrasAttachment> COW_EXTRAS = AttachmentRegistry.createPersistent(CowExtrasAttachment.ID, CowExtrasAttachment.CODEC);

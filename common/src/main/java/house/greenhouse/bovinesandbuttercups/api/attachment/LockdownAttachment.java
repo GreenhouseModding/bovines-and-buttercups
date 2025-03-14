@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
@@ -20,6 +21,10 @@ public record LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
     public static final Codec<LockdownAttachment> CODEC = Codec.simpleMap(
             BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.INT, Keyable.forStrings(() -> Stream.of("effect", "duration"))
     ).codec().xmap(LockdownAttachment::new, LockdownAttachment::effects);
+
+    public LockdownAttachment() {
+        this(Collections.emptyMap());
+    }
 
     public LockdownAttachment(Map<Holder<MobEffect>, Integer> effects) {
         this.effects = new ConcurrentHashMap<>(effects);

@@ -1,1 +1,2 @@
-- Fixed Camellia Mooblooms being able to be bred from Pink Daisy flowers instead of Camellia flowers.
+- Ported over 1.21.1 DFU changes.
+- Fixed a crash upon gaining the Lockdown effect.
