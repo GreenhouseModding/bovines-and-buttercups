@@ -27,6 +27,7 @@ import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
@@ -45,9 +46,19 @@ public record BovinesDataFixer(DataFixer fixer) {
             .put("bovinesandbuttercups:bird_of_paradise", "bovinesandbuttercups:alstroemeria")
             .put("bovinesandbuttercups:bird_of_paradise_nectar_bowl", "bovinesandbuttercups:alstroemeria_nectar_bowl")
             .build();
-    public static final Map<String, String> RENAMED_EDIBLE_TYPE_RECIPES = ImmutableMap.<String, String>builder()
+    public static final Map<String, String> RENAMED_BIRD_OF_PARADISE_RECIPES = ImmutableMap.<String, String>builder()
+            .put("bovinesandbuttercups:orange_dye_from_bird_of_paradise", "bovinesandbuttercups:orange_dye_from_alstroemeria")
             .put("bovinesandbuttercups:bird_of_paradise_cupcake", "bovinesandbuttercups:alstroemeria_cupcake")
             .build();
+    // Don't run DFU on everything. See: https://github.com/GreenhouseModding/bovines-and-buttercups/issues/11, which is caused by a Fabric API bug.
+    public static final Set<DataFixTypes> AFFECTED_TYPES = Set.of(
+            DataFixTypes.ADVANCEMENTS,
+            DataFixTypes.CHUNK,
+            DataFixTypes.ENTITY_CHUNK,
+            DataFixTypes.HOTBAR,
+            DataFixTypes.PLAYER,
+            DataFixTypes.STRUCTURE
+    );
 
     public static BovinesDataFixer get() {
         if (instance == null)
@@ -69,10 +80,12 @@ public record BovinesDataFixer(DataFixer fixer) {
 
         // Bovines 1.x.x -> Bovines 2.0.0
         Schema schema1_1 = builder.addSchema(1, 1, SAME_NAMESPACED);
-        builder.addFixer(new LegacyMoobloomTagToVariantAttachmentFix(schema1));
-        builder.addFixer(new LegacyMooshroomTypeToAttachmentsFix(schema1));
+        builder.addFixer(new LegacyMoobloomTagToVariantAttachmentFix(schema1_1));
+        builder.addFixer(new LegacyMooshroomTypeToAttachmentsFix(schema1_1));
         Schema schema1_2 = builder.addSchema(1, 2, SAME_NAMESPACED);
-        builder.addFixer(new LegacyLockdownDataFix(schema1_1));
+        builder.addFixer(new LegacyLockdownDataFix(schema1_2));
+        Schema schema1_3 = builder.addSchema(1, 3, SAME_NAMESPACED);
+        builder.addFixer(new LegacyNectarFix(schema1_3));
 
         // Bovines 2.0.0 -> Bovines 2.1.0
         Schema schema2 = builder.addSchema(2, SAME_NAMESPACED);
@@ -96,7 +109,7 @@ public record BovinesDataFixer(DataFixer fixer) {
         builder.addFixer(new RenameToAlstroemeriaRanchChunkFix(schema101));
         builder.addFixer(new VanillaEntityEquipmentFix(schema101, "Fix Bird of Paradise Flower Crown equipment", "bovinesandbuttercups:flower_crown", RenameToAlstroemeriaFlowerCrownComponentFix::updateDynamic));
         builder.addFixer(new VanillaEntityEquipmentFix(schema101, "Fix Bird of Paradise Cupcake equipment", "bovinesandbuttercups:edible_type", RenameToAlstroemeriaCupcakeComponentFix::updateDynamic));
-        builder.addFixer(new NamespacedTypeRenameFix(schema101, "Rename Bird of Paradise Cupcake recipe", References.RECIPE, createRenamer(RENAMED_EDIBLE_TYPE_RECIPES)));
+        builder.addFixer(new NamespacedTypeRenameFix(schema101, "Rename Bird of Paradise Cupcake recipe", References.RECIPE, createRenamer(RENAMED_BIRD_OF_PARADISE_RECIPES)));
 
         return builder.build().fixer();
     }
@@ -107,7 +120,9 @@ public record BovinesDataFixer(DataFixer fixer) {
     }
 
     public <T> Dynamic<T> updateWithFixers(DataFixTypes types, Dynamic<T> dynamic) {
-        return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
+        if (AFFECTED_TYPES.contains(types))
+            return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
+        return dynamic;
     }
 
     @Deprecated(forRemoval = true, since = "2.2.0")
