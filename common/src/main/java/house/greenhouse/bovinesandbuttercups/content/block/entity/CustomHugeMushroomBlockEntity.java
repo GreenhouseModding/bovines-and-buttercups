@@ -111,8 +111,15 @@ public class CustomHugeMushroomBlockEntity extends BlockEntity implements Nameab
 
     @Override
     public Component getName() {
+        if (getCustomName() != null)
+            return getCustomName();
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom_block"));
+    }
+
+    @Override
+    public Component getCustomName() {
         if (customMushroom.holder().isBound())
             return BlockUtil.getOrCreateBlockNameTranslationKey(customMushroom.holder().unwrapKey().orElseThrow().location().withPath(s -> s + "_block"));
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom_block"));
+        return getName();
     }
 }
