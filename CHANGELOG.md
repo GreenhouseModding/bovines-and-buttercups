@@ -1,1 +1,2 @@
-- Fixed Bovines attempting to load ungenerated chunks whilst filtering out disallowed feature placements from ranches.
+- Fixed crash from the previous version's ranch generation bugfix.
+- Fixed WTHIT/any other WALIA fork compat.

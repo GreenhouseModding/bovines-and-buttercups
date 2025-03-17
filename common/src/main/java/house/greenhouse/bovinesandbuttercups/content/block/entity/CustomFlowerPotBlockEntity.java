@@ -71,8 +71,13 @@ public class CustomFlowerPotBlockEntity extends BlockEntity implements Nameable 
 
     @Override
     public Component getName() {
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("potted_missing_flower"));
+    }
+
+    @Override
+    public Component getCustomName() {
         if (customFlower.holder().isBound())
             return BlockUtil.getOrCreateBlockNameTranslationKey(customFlower.holder().unwrapKey().orElseThrow().location().withPath(s -> "potted_" + s));
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("potted_missing_flower"));
+        return null;
     }
 }

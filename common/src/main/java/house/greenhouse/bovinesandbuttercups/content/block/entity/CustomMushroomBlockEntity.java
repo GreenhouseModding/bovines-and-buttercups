@@ -70,8 +70,13 @@ public class CustomMushroomBlockEntity extends BlockEntity implements Nameable {
 
     @Override
     public Component getName() {
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom"));
+    }
+
+    @Override
+    public Component getCustomName() {
         if (customMushroom.holder().isBound())
             return BlockUtil.getOrCreateBlockNameTranslationKey(customMushroom.holder().unwrapKey().orElseThrow().location());
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_mushroom"));
+        return null;
     }
 }

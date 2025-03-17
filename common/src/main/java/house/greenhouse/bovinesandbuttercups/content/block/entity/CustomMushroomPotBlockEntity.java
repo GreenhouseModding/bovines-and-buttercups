@@ -74,8 +74,13 @@ public class CustomMushroomPotBlockEntity extends BlockEntity implements Nameabl
 
     @Override
     public Component getName() {
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("potted_missing_mushroom"));
+    }
+
+    @Override
+    public Component getCustomName() {
         if (customMushroom.holder().isBound())
             return BlockUtil.getOrCreateBlockNameTranslationKey(customMushroom.holder().unwrapKey().orElseThrow().location().withPath(s -> "potted_" + s));
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("potted_missing_mushroom"));
+        return null;
     }
 }

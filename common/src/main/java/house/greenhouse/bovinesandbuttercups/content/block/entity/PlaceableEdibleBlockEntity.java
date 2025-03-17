@@ -287,9 +287,14 @@ public class PlaceableEdibleBlockEntity extends BlockEntity implements Nameable 
 
     @Override
     public Component getName() {
+        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_edible"));
+    }
+
+    @Override
+    public Component getCustomName() {
         if (type.holder().isBound())
             return BlockUtil.getOrCreateBlockNameTranslationKey(type.holder().unwrapKey().orElseThrow().location());
-        return BlockUtil.getOrCreateBlockNameTranslationKey(BovinesAndButtercups.asResource("missing_edible"));
+        return null;
     }
 
     public record AttachmentState(List<ItemStack> items, boolean active) {
