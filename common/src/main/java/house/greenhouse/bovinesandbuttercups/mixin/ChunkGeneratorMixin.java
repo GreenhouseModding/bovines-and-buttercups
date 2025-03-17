@@ -35,9 +35,12 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 @Mixin(ChunkGenerator.class)
-public class ChunkGeneratorMixin implements ChunkGeneratorAccess {
+public abstract class ChunkGeneratorMixin implements ChunkGeneratorAccess {
+
     @Unique
     private GenerationStep.Decoration bovinesandbuttercups$step;
+    @Unique
+    private StructureManager bovinesandbuttercups$structureManager;
 
     @Inject(method = "getStructureGeneratingAt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/StructureManager;checkStructurePresence(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/levelgen/structure/Structure;Lnet/minecraft/world/level/levelgen/structure/placement/StructurePlacement;Z)Lnet/minecraft/world/level/levelgen/structure/StructureCheckResult;"), cancellable = true)
     private static void bovinesandbuttercups$dontLocateRanchesInFluids(Set<Holder<Structure>> structureHoldersSet, LevelReader level, StructureManager structureManager, boolean skipKnownStructures, StructurePlacement placement, ChunkPos chunkPos, CallbackInfoReturnable<Pair<BlockPos, Holder<Structure>>> cir, @Local Holder<Structure> structure) {
@@ -77,6 +80,16 @@ public class ChunkGeneratorMixin implements ChunkGeneratorAccess {
         return original.call(instance, sectionPos, structure);
     }
 
+    @Inject(method = "applyBiomeDecoration", at = @At("HEAD"))
+    private void bovinesandbuttercups$setStructureManager(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager, CallbackInfo ci) {
+        bovinesandbuttercups$structureManager = structureManager;
+    }
+
+    @Inject(method = "applyBiomeDecoration", at = @At("TAIL"))
+    private void bovinesandbuttercups$clearStructureManager(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager, CallbackInfo ci) {
+        bovinesandbuttercups$structureManager = null;
+    }
+
     @Inject(method = "applyBiomeDecoration", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/StructureManager;shouldGenerateStructures()Z"))
     private void bovinesandbuttercups$setStep(WorldGenLevel level, ChunkAccess chunkAccess, StructureManager structureManager, CallbackInfo ci, @Local(ordinal = 2) int stepValue) {
         for (GenerationStep.Decoration step : GenerationStep.Decoration.values()) {
@@ -90,5 +103,11 @@ public class ChunkGeneratorMixin implements ChunkGeneratorAccess {
     @Override
     public GenerationStep.Decoration bovinesandbuttercups$getStep() {
         return bovinesandbuttercups$step;
+    }
+
+
+    @Override
+    public StructureManager bovinesandbuttercups$getStructureManager() {
+        return bovinesandbuttercups$structureManager;
     }
 }
