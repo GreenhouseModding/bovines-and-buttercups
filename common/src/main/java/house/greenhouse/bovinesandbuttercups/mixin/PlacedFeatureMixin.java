@@ -26,11 +26,15 @@ public abstract class PlacedFeatureMixin {
 
     @Inject(method = "placeWithContext", at = @At(value = "INVOKE", target = "Ljava/util/stream/Stream;forEach(Ljava/util/function/Consumer;)V"), cancellable = true)
     private void bovinesandbuttercups$cancelPlacementIfInRanch(PlacementContext context, RandomSource randomSource, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (!(context.getLevel() instanceof WorldGenRegion region) || ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStep() != GenerationStep.Decoration.VEGETAL_DECORATION || ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStructureManager() == null)
+        if (
+                (!(context.getLevel() instanceof WorldGenRegion region)) ||
+                        ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStep() != GenerationStep.Decoration.VEGETAL_DECORATION
+        )
             return;
+
         for (var structureSet : ((ServerChunkCache)region.getChunkSource()).getGeneratorState().possibleStructureSets()) {
             for (var structure : structureSet.value().structures()) {
-                if (structure.structure().value() instanceof RanchStructure ranchStructure && (ranchStructure.getAllowedFeatures().isPresent() && !ranchStructure.getAllowedFeatures().get().contains(feature)) && ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStructureManager().checkStructurePresence(new ChunkPos(pos), ranchStructure, structureSet.value().placement(), false) != StructureCheckResult.START_NOT_PRESENT)
+                if (structure.structure().value() instanceof RanchStructure ranchStructure && (ranchStructure.getAllowedFeatures().isPresent() && !ranchStructure.getAllowedFeatures().get().contains(feature)) && ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStructureManager() != null && ((ChunkGeneratorAccess)context.generator()).bovinesandbuttercups$getStructureManager().checkStructurePresence(new ChunkPos(pos), ranchStructure, structureSet.value().placement(), false) != StructureCheckResult.START_NOT_PRESENT)
                     cir.setReturnValue(false);
             }
         }
