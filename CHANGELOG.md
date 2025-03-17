@@ -1,2 +1,1 @@
-- Fixed old tags persisting in data in <2.0.0 Nectar data fix.
-- Fixed Sombercup related datapack contents not being included in the mod.
+- Fixed Bovines attempting to load ungenerated chunks whilst filtering out disallowed feature placements from ranches.
