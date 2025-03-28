@@ -1,2 +1,1 @@
-- Fixed crash from the previous version's ranch generation bugfix.
-- Fixed WTHIT/any other WALIA fork compat.
+- Fixed `bovinesandbuttercups:breed_cow_with_variant` trigger activating without specific context in circumstances.
