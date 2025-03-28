@@ -56,7 +56,14 @@ public class BreedCowWithVariantTrigger extends SimpleCriterionTrigger<BreedCowW
                                   Optional<Boolean> differentFromParents) implements SimpleInstance {
 
         public boolean matches(LootContext parentContext, LootContext partnerContext, LootContext childContext, boolean isNewType, Holder<CowVariant<?>> variant) {
-            return variant.isBound() && (type.isEmpty() || type.get().isBound() && type.get().value() == variant.value().type()) && (variants.size() == 0 || variants.contains(variant)) && (this.child.isEmpty() || this.child.get().matches(childContext)) && ((this.parent.isEmpty() || this.parent.get().matches(parentContext)) && (this.partner.isEmpty() || this.partner.get().matches(partnerContext)) || (this.parent.isEmpty() || this.parent.get().matches(partnerContext)) && (this.partner.isEmpty() || this.partner.get().matches(parentContext))) && (differentFromParents.isEmpty() || isNewType == differentFromParents.get());
+            return variant.isBound() && (type.isEmpty() || type.get().isBound() && type.get().value() == variant.value().type()) &&
+                    (variants.size() == 0 || variants.contains(variant)) &&
+                    (this.child.isEmpty() || this.child.get().matches(childContext)) &&
+                    (
+                            (this.parent.isEmpty() || this.parent.get().matches(parentContext)) && (this.partner.isEmpty() || this.partner.get().matches(partnerContext)) ||
+                            (this.parent.isEmpty() || this.parent.get().matches(partnerContext)) && (this.partner.isEmpty() || this.partner.get().matches(parentContext))
+                    ) &&
+                    (differentFromParents.isEmpty() || isNewType == differentFromParents.get());
         }
 
         @Override
