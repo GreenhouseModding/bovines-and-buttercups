@@ -1,1 +1,1 @@
-- Fixed `bovinesandbuttercups:breed_cow_with_variant` trigger activating without specific context in circumstances.
+- [FABRIC} Fixed Camellia and Sombercup flowers not having cutout layer applied.
