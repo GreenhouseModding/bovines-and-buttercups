@@ -1,7 +1,6 @@
 package house.greenhouse.bovinesandbuttercups.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import house.greenhouse.bovinesandbuttercups.api.attachment.CowVariantAttachment;
 import house.greenhouse.bovinesandbuttercups.content.advancement.criterion.ConvertMoobloomFromSculkTrigger;
 import house.greenhouse.bovinesandbuttercups.content.entity.Moobloom;
 import house.greenhouse.bovinesandbuttercups.content.loot.BovinesLootContextParamSets;
@@ -40,6 +39,7 @@ public class SculkCatalystBlockEntityMixin {
 
                 var compatibleList = moobloom.getCowVariant().value().configuration().sculkConverts().unwrap().stream().filter(data -> data.data().conditions().isEmpty() || data.data().conditions().stream().allMatch(condition -> condition.test(lootContext))).toList();
 
+                ConversionUtil.revertFromPrevious(moobloom, serverLevel);
                 if (!ConversionUtil.convert(moobloom, serverLevel, compatibleList))
                     return;
 

@@ -1,1 +1,3 @@
 - [FABRIC} Fixed Camellia and Sombercup flowers not having cutout layer applied.
+- Fixed Mooblooms being unable to convert into another Moobloom when previously converted and converted back.
+- Fixed Sculk Catalyst conversion using the current variant (for example, using Chargelily when it shouldn't) if the Moobloom was previously converted.

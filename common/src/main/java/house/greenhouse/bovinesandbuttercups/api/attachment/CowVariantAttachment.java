@@ -77,8 +77,7 @@ public record CowVariantAttachment(Holder<CowVariant<?>> cowVariant, Optional<Ho
 
     public static <C extends BaseCowConfiguration> void setCowVariant(LivingEntity entity, Holder<CowVariant<C>> cowVariant, Optional<Holder<CowVariant<C>>> previousCowVariant) {
         if (cowVariant.isBound() && cowVariant.value().type().isApplicable(entity)) {
-            var previousAttachment = BovinesAndButtercups.getHelper().getCowVariantAttachment(entity);
-            Optional<Holder<CowVariant<?>>> previousType = previousAttachment != null && previousAttachment.previousCowVariant().isPresent() ? BovinesAndButtercups.getHelper().getCowVariantAttachment(entity).previousCowVariant() : previousCowVariant.map(holder -> (Holder)holder);
+            Optional<Holder<CowVariant<?>>> previousType = previousCowVariant.map(holder -> (Holder)holder);
             BovinesAndButtercups.getHelper().setCowVariantAttachment(entity, new CowVariantAttachment((Holder) cowVariant, previousType));
             if (entity.getType() == EntityType.MOOSHROOM && cowVariant.value().configuration() instanceof MooshroomConfiguration mc && mc.vanillaType().isPresent())
                 ((MushroomCow)entity).setVariant(mc.vanillaType().get());
