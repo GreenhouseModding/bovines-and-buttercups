@@ -366,7 +366,8 @@ public class BovinesAndButtercupsNeoForge {
                         BovinesItems.HYACINTH,
                         BovinesItems.CAMELLIA,
                         BovinesItems.PINK_DAISY,
-                        BovinesItems.SNOWDROP
+                        BovinesItems.SNOWDROP,
+                        BovinesItems.SOMBERCUP
                 ), event::insertAfter);
                 CreativeTabHelper.getCustomFlowersForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(BovinesItems.SNOWDROP), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
                 CreativeTabHelper.getCustomMushroomsForCreativeTab(event.getParameters().holders()).reversed().forEach(stack -> event.insertAfter(new ItemStack(Items.RED_MUSHROOM), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));

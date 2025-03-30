@@ -223,7 +223,8 @@ public class BovinesAndButtercupsFabric implements ModInitializer {
                     BovinesItems.HYACINTH,
                     BovinesItems.CAMELLIA,
                     BovinesItems.PINK_DAISY,
-                    BovinesItems.SNOWDROP
+                    BovinesItems.SNOWDROP,
+                    BovinesItems.SOMBERCUP
             ).map(ItemStack::new).toList());
             entries.addAfter(BovinesItems.SNOWDROP, CreativeTabHelper.getCustomFlowersForCreativeTab(entries.getContext().holders()));
             entries.addAfter(Items.RED_MUSHROOM, CreativeTabHelper.getCustomMushroomsForCreativeTab(entries.getContext().holders()));
