@@ -49,7 +49,7 @@
         "modmenu.curseforge": "${curseforge_page}",
         "modmenu.modrinth": "${modrinth_page}",
         "modmenu.github_releases": "https://github.com/${sources}/releases",
-        "modmenu.kofi": "https://ko-fi.com/merchantpug"
+        "modmenu.kofi": "https://ko-fi.com/merchantcalico"
       }
     }
   }

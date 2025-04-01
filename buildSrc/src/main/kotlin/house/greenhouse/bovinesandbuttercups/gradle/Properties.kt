@@ -5,7 +5,7 @@ object Properties {
     const val MOD_NAME = "Bovines and Buttercups"
     const val MOD_ID = "bovinesandbuttercups"
     const val MOD_AUTHOR = "Greenhouse Team"
-    val MOD_CONTRIBUTORS = listOf("MerchantPug", "SpiderKolo", "Omniv")
+    val MOD_CONTRIBUTORS = listOf("MerchantCalico", "SpiderKolo", "Omniv")
     const val DESCRIPTION = "A reimagining of Mojang's Moobloom mob."
     const val LICENSE = "MPL-2.0"
 

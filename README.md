@@ -1,7 +1,7 @@
 # Bovines and Buttercups
 This is the repository for Bovines and Buttercups. 
 
-To access the old pre 1.21/2.0.0 repository, you may go [here.](https://github.com/MerchantPug/bovines-and-buttercups-archive)
+To access the old pre 1.21/2.0.0 repository, you may go [here.](https://github.com/MerchantCalico/bovines-and-buttercups-archive)
 
 ## Downloads
 You may download the mod through any of these sources.
