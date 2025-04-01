@@ -1,1 +1,2 @@
-- [FABRIC] Fixed Potted Chargelily not having the cutout layer applied.
+- Updated credits from referencing MerchantPug to MerchantCalico.
+- Updated Turkish translation ([#14](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/14) - Hexasan).
