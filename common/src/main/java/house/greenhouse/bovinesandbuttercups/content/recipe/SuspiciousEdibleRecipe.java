@@ -47,6 +47,9 @@ public class SuspiciousEdibleRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput input, Level level) {
+        if (!canCraftInDimensions(input.width(), input.height()))
+            return false;
+
         for (int i = 0; i < pattern.height(); i++) {
             for (int j = 0; j < pattern.width(); j++) {
                 Ingredient ingredient;

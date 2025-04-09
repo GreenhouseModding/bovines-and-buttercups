@@ -1,3 +1,1 @@
-- Updated credits from referencing MerchantPug to MerchantCalico.
-- Updated Turkish (tr_tr) translation ([#14](https://github.com/GreenhouseModding/bovines-and-buttercups/pull/14) - Hexasan).
-- Added Spanish (es_es) translation (otterfromthewilds)
+- Fixed a crash involving mod recipes that aren't a valid width and height.

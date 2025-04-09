@@ -32,13 +32,16 @@ public class FlowerCrownRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput input, Level level) {
+        if (!canCraftInDimensions(input.width(), input.height()))
+            return false;
+
         List<ItemStack> list = Lists.newArrayList();
 
         for (int i = 0; i < input.height(); i++) {
             for (int j = 0; j < input.width(); j++) {
                 Optional<Unit> hasItem = SHAPE.get(j + i * input.width());
                 ItemStack stack = input.getItem(j, i);
-                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().registry(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).orElseThrow().stream().noneMatch(petal -> ItemStack.isSameItemSameComponents(petal.ingredient(), stack))) {
+                if (hasItem.isEmpty() && !stack.isEmpty() || hasItem.isPresent() && level.registryAccess().registry(BovinesRegistryKeys.FLOWER_CROWN_MATERIAL).orElseThrow().stream().noneMatch(material -> ItemStack.isSameItemSameComponents(material.ingredient(), stack))) {
                     return false;
                 }
                 if (hasItem.isEmpty())
