@@ -577,6 +577,22 @@ public class BovinesDataGenerator implements DataGeneratorEntrypoint {
         protected void addTags(HolderLookup.Provider lookup) {
             ((FabricTagBuilder)tag(BlockTags.SMALL_FLOWERS))
                     .forceAddTag(BovinesTags.BlockTags.MOOBLOOM_FLOWERS);
+            ((FabricTagBuilder)tag(BlockTags.FLOWER_POTS))
+                    .add(
+                            reverseLookup(BovinesBlocks.POTTED_ALSTROEMERIA),
+                            reverseLookup(BovinesBlocks.POTTED_BUTTERCUP),
+                            reverseLookup(BovinesBlocks.POTTED_CAMELLIA),
+                            reverseLookup(BovinesBlocks.POTTED_CHARGELILY),
+                            reverseLookup(BovinesBlocks.POTTED_CUSTOM_FLOWER),
+                            reverseLookup(BovinesBlocks.POTTED_FREESIA),
+                            reverseLookup(BovinesBlocks.POTTED_HYACINTH),
+                            reverseLookup(BovinesBlocks.POTTED_LIMELIGHT),
+                            reverseLookup(BovinesBlocks.POTTED_LINGHOLM),
+                            reverseLookup(BovinesBlocks.POTTED_PINK_DAISY),
+                            reverseLookup(BovinesBlocks.POTTED_SOMBERCUP),
+                            reverseLookup(BovinesBlocks.POTTED_SNOWDROP),
+                            reverseLookup(BovinesBlocks.POTTED_TROPICAL_BLUE)
+                    );
 
             ((FabricTagBuilder)tag(BovinesTags.BlockTags.DOES_NOT_STICK_RICH_HONEY_BLOCK))
                     .add(reverseLookup(Blocks.SLIME_BLOCK))
