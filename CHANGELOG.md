@@ -1,1 +1,2 @@
-- Fixed a crash involving mod recipes that aren't a valid width and height.
+- Fixed Bovines and Buttercups Flower Pots not being in the `minecraft:flower_pots` tag.
+- Fixed render leak in custom item renderers.

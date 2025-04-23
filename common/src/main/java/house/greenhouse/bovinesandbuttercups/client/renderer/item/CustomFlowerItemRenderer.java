@@ -40,18 +40,11 @@ public class CustomFlowerItemRenderer {
         poseStack.translate(0.5F, 0.5F, 0.5F);
 
         boolean bl = context == ItemDisplayContext.GUI && !bakedModel.usesBlockLight();
-        MultiBufferSource.BufferSource source = null;
 
         if (bl) {
             Lighting.setupForFlatItems();
-            source = Minecraft.getInstance().renderBuffers().bufferSource();
         }
 
-        Minecraft.getInstance().getItemRenderer().render(stack, context, left, poseStack, source == null ? bufferSource : source, light, overlay, bakedModel);
-
-        if (bl) {
-            source.endBatch();
-            Lighting.setupFor3DItems();
-        }
+        Minecraft.getInstance().getItemRenderer().render(stack, context, left, poseStack, bufferSource, light, overlay, bakedModel);
     }
 }

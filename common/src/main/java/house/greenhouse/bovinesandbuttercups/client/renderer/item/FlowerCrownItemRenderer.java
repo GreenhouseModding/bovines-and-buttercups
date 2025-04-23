@@ -47,19 +47,12 @@ public class FlowerCrownItemRenderer {
         pose.translate(0.5F, 0.5F, 0.5F);
 
         boolean bl = context == ItemDisplayContext.GUI && !model.usesBlockLight();
-        MultiBufferSource.BufferSource source = null;
 
         if (bl) {
             Lighting.setupForFlatItems();
-            source = Minecraft.getInstance().renderBuffers().bufferSource();
         }
 
-        Minecraft.getInstance().getItemRenderer().render(stack, context, left, pose, source == null ? buffer : source, light, overlay, model);
-
-        if (bl) {
-            source.endBatch();
-            Lighting.setupFor3DItems();
-        }
+        Minecraft.getInstance().getItemRenderer().render(stack, context, left, pose, buffer, light, overlay, model);
     }
 
     private static BakedModel createModel(TextureMap component) {
