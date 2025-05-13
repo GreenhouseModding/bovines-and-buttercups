@@ -81,14 +81,15 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
                 BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, moobloom.get().getUUID());
                 setMoobloom();
                 return true;
-            } else {
-                this.remainingCooldownBeforeLocatingNewCow = Mth.nextInt(bee.getRandom(), 20, 60);
-                return false;
             }
+            this.remainingCooldownBeforeLocatingNewCow = Mth.nextInt(bee.getRandom(), 20, 60);
+            return false;
         }
     }
 
     private void setMoobloom() {
+        if (moobloom == null)
+            return;
         moobloom.setStandingStillForBeeTicks(MAX_POLLINATING_TICKS);
         moobloom.setBee(bee);
         bee.setSavedFlowerPos(null);
@@ -99,22 +100,25 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
     public boolean canBeeContinueToUse() {
         if (!this.pollinating) {
             return false;
-        } else if (this.moobloom == null) {
+        }
+        if (this.moobloom == null) {
             return false;
-        } else if (bee.level().isRaining()) {
+        }
+        if (bee.level().isRaining()) {
             return false;
-        } else if (this.hasPollinatedLongEnough()) {
+        }
+        if (this.hasPollinatedLongEnough()) {
             return bee.getRandom().nextFloat() < 0.2F;
-        } if (bee.tickCount % 20 == 0 && (!moobloom.isAlive() || moobloom.getLastHurtByMobTimestamp() > moobloom.tickCount - 100)) {
+        }
+        if (bee.tickCount % 20 == 0 && (!moobloom.isAlive() || moobloom.getLastHurtByMobTimestamp() > moobloom.tickCount - 100)) {
             moobloom.setStandingStillForBeeTicks(0);
             moobloom.setBee(null);
             BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, null);
             bee.setSavedFlowerPos(null);
             this.moobloom = null;
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     private boolean hasPollinatedLongEnough() {
@@ -147,15 +151,18 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
         if (this.hasPollinatedLongEnough()) {
             ((BeeAccessor)bee).bovinesandbuttercups$invokeSetHasNectar(true);
             BovinesAndButtercups.getHelper().setProducesRichHoney(bee, true);
-            moobloom.setPollinatedResetTicks(400);
-            if (!moobloom.level().isClientSide) {
-                ((ServerLevel) moobloom.level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, moobloom.position().x(), moobloom.position().y() + 1.4D, moobloom.position().z(), 8, 0.5, 0.1, 0.4, 0.0);
+            if (this.moobloom != null) {
+                moobloom.setPollinatedResetTicks(400);
+                if (!moobloom.level().isClientSide) {
+                    ((ServerLevel) moobloom.level()).sendParticles(ParticleTypes.HAPPY_VILLAGER, moobloom.position().x(), moobloom.position().y() + 1.4D, moobloom.position().z(), 8, 0.5, 0.1, 0.4, 0.0);
+                }
             }
         }
 
         this.pollinating = false;
         bee.getNavigation().stop();
-        if (this.moobloom != null) {
+
+        if (moobloom != null) {
             moobloom.setStandingStillForBeeTicks(0);
             moobloom.setBee(null);
             BovinesAndButtercups.getHelper().setPollinatingMoobloom(bee, null);
@@ -169,7 +176,9 @@ public class PollinateMoobloomGoal extends Bee.BaseBeeGoal {
     }
 
     public void tick() {
-        if (this.moobloom == null) return;
+        if (this.moobloom == null)
+            return;
+
         ++this.pollinatingTicks;
         if (this.pollinatingTicks > MAX_POLLINATING_TICKS) {
             moobloom.setStandingStillForBeeTicks(0);
