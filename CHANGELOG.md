@@ -1,2 +1,1 @@
-- Fixed Bovines and Buttercups Flower Pots not being in the `minecraft:flower_pots` tag.
-- Fixed render leak in custom item renderers.
+- Fixed NPEs for bees happening when attempting to pollinate Mooblooms.
